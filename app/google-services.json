@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "917990523248",
+    "firebase_url": "https://giveandtake-20774.firebaseio.com",
+    "project_id": "giveandtake-20774",
+    "storage_bucket": "giveandtake-20774.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:917990523248:android:681cb8afe059bac0",
+        "android_client_info": {
+          "package_name": "com.example.win10.giveandtake"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "917990523248-redcti1imp9cdhnr3qom2j4o72cdcs0q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.win10.giveandtake",
+            "certificate_hash": "daac28499a6786d88ae074cd70b379b35ca02f9d"
+          }
+        },
+        {
+          "client_id": "917990523248-iq18cvbqbv2uju4sv37t46mv53mgdl6e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_ScvoV5oH3Osq1Fyc9MvTz3Qcxl-EC8U"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "917990523248-iq18cvbqbv2uju4sv37t46mv53mgdl6e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

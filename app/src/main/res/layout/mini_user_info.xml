@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mini_user_info_layout"
+    android:layout_width="300dp"
+    android:layout_height="300dp"
+    android:background="@drawable/button_shape"
+    android:layout_marginRight="30dp"
+    android:layout_marginTop="70dp"
+
+
+    >
+
+
+    <ImageView
+        android:id="@+id/user_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/temp_user_image_100px"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="100dp"/>
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="@string/user_name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_marginTop="150dp"
+        android:layout_marginRight="30dp"
+
+        />
+
+    <TextView
+        android:id="@+id/user_balance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/balance"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_marginTop="200dp"
+        android:layout_marginRight="30dp"
+        />
+
+
+
+</android.support.design.widget.CoordinatorLayout>

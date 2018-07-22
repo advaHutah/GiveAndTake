@@ -1,0 +1,52 @@
+<resources>
+    <string name="app_name">GiveAndTake</string>
+    <string name="action_sign_in_short">הירשם</string>
+    <string name="email">כתובת דואר אלקטרוני</string>
+    <string name="btn_link_to_register">לא רשום? הירשם עכשיו!</string>
+    <string name="btn_link_to_login">כבר רשום. הכנס אותי!</string>
+    <string name="btn_forgot_password">שכחת סיסמא?</string>
+    <string name="btn_login">התחבר</string>
+    <string name="btn_explore">סייר</string>
+    <string name="hint_email">כתובת דואר אלקטרוני</string>
+    <string name="hint_password">סיסמא</string>
+    <string name="hint_first_name">שם פרטי</string>
+    <string name="hint_last_name">שם משפחה</string>
+    <string name="hint_phone">מספר טלפון</string>
+    <string name="enter_email">הזן כתובת מייל</string>
+    <string name="enter_password">הכנס סיסמא</string>
+    <string name="enter_firstName">הכנס שם פרטי</string>
+    <string name="enter_lastName">הכנס שם משפחה</string>
+    <string name="gender_female">נקבה</string>
+    <string name="gender_male">זכר</string>
+    <string name="enter_more_then_6_characters">הסיסמא קצרה מדי, הכנס מינימום 6 תוים</string>
+    <string name="lbl_forgot_password">שכחת סיסמא?</string>
+    <string name="forgot_password_msg">אנו צריכים את כתובת הדואר האלקטרוני שלך על מנת לשלוח לך סיסמא חדשה.</string>
+    <string name="btn_reset_password">איפוס סיסמא</string>
+    <string name="btn_back"><![CDATA[<< חזור]]></string>
+
+
+    <string name="menu_explore">סייר</string>
+    <string name="menu_full_account_info">החשבון שלי</string>
+    <string name="menu_history">היסטוריה</string>
+    <string name="menu_give_request">לתת</string>
+    <string name="menu_take_request">לקחת</string>
+    <string name="menu_header">מה תרצה לעשות?</string>
+    <string name="menu_editUser">ערוך פרטי משתמש</string>
+    <string name="menu_connect">צור קשר</string>
+    <string name="balance">יתרה :</string>
+    <string name="user_name">שם :</string>
+    <string name="create_req_lable">צור בקשה</string>
+    <string name="take">לקחת</string>
+    <string name="give">לתת</string>
+    <string name="match_details">פרטי התאמה :</string>
+    <string name="match_discription">תיאור:</string>
+    <string name="create_meeting">צור מפגש</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_temp">tempActivity</string>
+    <string name="search_text_hint">הכנס טקסט לחיפוש</string>
+    <string name="btn_search_text">חפש</string>
+
+
+</resources>
