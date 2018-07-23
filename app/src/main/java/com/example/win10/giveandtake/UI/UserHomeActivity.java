@@ -1,5 +1,6 @@
 package com.example.win10.giveandtake.UI;
 
+import android.content.Intent;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -7,13 +8,16 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.win10.giveandtake.R;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class UserHomeActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +43,12 @@ public class UserHomeActivity extends AppCompatActivity {
 
                         // Add code here to update the UI based on the item selected
                         // For example, swap UI fragments here
+                        Log.d("check menu" , "somthong pressed");
                         //TODO
-
+                        if(menuItem.getTitle().equals(R.string.menu_logout)) {
+                            auth.signOut();
+                            startActivity(new Intent(UserHomeActivity.this, LoginActivity.class));
+                        }
                         return true;
                     }
                 });

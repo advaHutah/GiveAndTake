@@ -3,10 +3,12 @@ package com.example.win10.giveandtake.UI;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,9 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.win10.giveandtake.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SignupActivity extends AppCompatActivity {
@@ -51,11 +56,15 @@ public class SignupActivity extends AppCompatActivity {
         //Todo add birthdate
         //TODO add user image
 
+
+        //Get Firebase auth instance
+        auth = FirebaseAuth.getInstance();
+
         //buttons actions
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(SignupActivity.this, SetMeetingActivity.class));
+                startActivity(new Intent(SignupActivity.this, ResetPasswordActivity.class));
             }
         });
 
@@ -73,7 +82,8 @@ public class SignupActivity extends AppCompatActivity {
 
                 final String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
-                String firsttName = inputFirstName.getText().toString().trim();
+                String firstName = inputFirstName.getText().toString().trim();
+                String phone = inputPhoneNumber.getText().toString().trim();
                 String lastName = inputLastName.getText().toString().trim();
 
 
@@ -86,7 +96,7 @@ public class SignupActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), R.string.enter_password, Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if (TextUtils.isEmpty(firsttName)) {
+                if (TextUtils.isEmpty(firstName)) {
                     Toast.makeText(getApplicationContext(), R.string.enter_firstName, Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -100,7 +110,10 @@ public class SignupActivity extends AppCompatActivity {
                     return;
                 }
 
-                //TODO check first and last name validation
+                if(!isValidPhone(phone)) {
+                    Toast.makeText(getApplicationContext(), R.string.invalid_phone, Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 //define input buttons - radio button-gender
                 inputGenderGroup = (RadioGroup) findViewById(R.id.select_gender_radio);
@@ -113,14 +126,35 @@ public class SignupActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
 
                 //create user
+                auth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(SignupActivity.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                Toast.makeText(SignupActivity.this, getString(R.string.user_created) + task.isSuccessful(), Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                                // If sign in fails, display a message to the user. If sign in succeeds
+                                // the auth state listener will be notified and logic to handle the
+                                // signed in user can be handled in the listener.
+                                if (!task.isSuccessful()) {
+                                    Toast.makeText(SignupActivity.this, getString(R.string.authentication_faild) + task.getException(),
+                                            Toast.LENGTH_SHORT).show();
+                                } else {
 
-                //TODO create User
-
+                                    //TODO create new User in logic and there i need to register in DB in full user info table                                   //add to DB
+                                    //restaurantManager.writeUser(role, name, auth.getCurrentUser().getUid());
+                                    startActivity(new Intent(SignupActivity.this, LoginActivity.class));
+                                    finish();
+                                }
+                            }
+                        });
 
             }
         });
+    }
 
 
+    private boolean isValidPhone(String phone) {
+        return phone.matches("\\d{10}");
     }
 
 
