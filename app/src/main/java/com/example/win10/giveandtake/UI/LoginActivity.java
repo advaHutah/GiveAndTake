@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.win10.giveandtake.DBLogic.GiveAndTakeFirebaseInstanceIDService;
 import com.example.win10.giveandtake.DBLogic.GiveAndTakeFirebaseMessagingService;
+import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,6 +27,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private EditText inputEmail, inputPassword;
     private FirebaseAuth auth;
+    private AppManager appManager;
     private ProgressBar progressBar;
     private Button btnSignup, btnLogin, btnReset, btnExplore;
     private String token;
@@ -46,6 +48,7 @@ public class LoginActivity extends AppCompatActivity {
         btnReset = (Button) findViewById(R.id.btn_reset_password);
         btnExplore = (Button) findViewById(R.id.btn_explore);
 
+        appManager = AppManager.getInstance();
         auth = FirebaseAuth.getInstance();
 //        GiveAndTakeFirebaseInstanceIDService tokenizer = new GiveAndTakeFirebaseInstanceIDService();
 //        token = tokenizer.getToken();
@@ -114,15 +117,15 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = auth.getCurrentUser();
-            //updateUI(currentUser);
+        //todo remove mark when logout is working
+        //updateUI(currentUser);
     }
 
     private void updateUI(FirebaseUser currentUser) {
-
-        //TODO open existing user profile
-        if(currentUser!=null)
+        if (currentUser != null) {
+            appManager.readCurrentUserFromDB(currentUser);
             startActivity(new Intent(LoginActivity.this, UserHomeActivity.class));
-
+        }
     }
 
 }

@@ -19,6 +19,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -35,7 +36,8 @@ public class SignupActivity extends AppCompatActivity {
     private Button btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth auth;
-    // private RestaurantManager restaurantManager = RestaurantManager.getInstance();
+    private AppManager appManager = AppManager.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,9 +84,9 @@ public class SignupActivity extends AppCompatActivity {
 
                 final String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
-                String firstName = inputFirstName.getText().toString().trim();
-                String phone = inputPhoneNumber.getText().toString().trim();
-                String lastName = inputLastName.getText().toString().trim();
+                final String firstName = inputFirstName.getText().toString().trim();
+                final String phone = inputPhoneNumber.getText().toString().trim();
+                final String lastName = inputLastName.getText().toString().trim();
 
 
                 if (TextUtils.isEmpty(email)) {
@@ -110,7 +112,7 @@ public class SignupActivity extends AppCompatActivity {
                     return;
                 }
 
-                if(!isValidPhone(phone)) {
+                if (!isValidPhone(phone)) {
                     Toast.makeText(getApplicationContext(), R.string.invalid_phone, Toast.LENGTH_SHORT).show();
                     return;
                 }
@@ -140,8 +142,8 @@ public class SignupActivity extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
                                 } else {
 
-                                    //TODO create new User in logic and there i need to register in DB in full user info table                                   //add to DB
-                                    //restaurantManager.writeUser(role, name, auth.getCurrentUser().getUid());
+                                    appManager.createNewUser(auth.getCurrentUser().getUid(), email, firstName, lastName, phone, gender);
+                                    //TODO open current user profile
                                     startActivity(new Intent(SignupActivity.this, LoginActivity.class));
                                     finish();
                                 }

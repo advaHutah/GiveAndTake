@@ -55,6 +55,7 @@
     <string name="enter_email_address">הכנס כתובת אימייל</string>
     <string name="reset_password_txt">נשלח מייל לאתחול הסיסמא</string>
     <string name="cannot_send_reset_email">מייל אתחול סיסמא לא נשלח</string>
+    <string name="female_hebrew">נקבה</string>
 
 
 </resources>

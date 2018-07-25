@@ -10,7 +10,11 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.EditText;
+import android.widget.TextView;
 
+import com.example.win10.giveandtake.Logic.AppManager;
+import com.example.win10.giveandtake.Logic.User;
 import com.example.win10.giveandtake.R;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -18,11 +22,23 @@ public class UserHomeActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
+    private TextView nameText, balanceText;
+    private AppManager appManager = AppManager.getInstance();
+    private User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
+        //get current logged user and se info in activity
+        currentUser = appManager.getCurrentUser();
+        nameText = (TextView) findViewById(R.id.user_name_text);
+        balanceText = (TextView) findViewById(R.id.user_balance_text);
+        nameText.setText(currentUser.getFullName());
+        balanceText.setText(currentUser.getBalance());
+
+
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -43,9 +59,9 @@ public class UserHomeActivity extends AppCompatActivity {
 
                         // Add code here to update the UI based on the item selected
                         // For example, swap UI fragments here
-                        Log.d("check menu" , "somthong pressed");
+                        Log.d("check menu", "somthong pressed");
                         //TODO
-                        if(menuItem.getTitle().equals(R.string.menu_logout)) {
+                        if (menuItem.getTitle().equals(R.string.menu_logout)) {
                             auth.signOut();
                             startActivity(new Intent(UserHomeActivity.this, LoginActivity.class));
                         }
