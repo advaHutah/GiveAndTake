@@ -9,79 +9,12 @@
     android:fitsSystemWindows="true"
     tools:context="com.example.win10.giveandtake.UI.UserHomeActivity">
 
-    <android.support.design.widget.NavigationView
-        android:id="@+id/menu"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/menu_header"
-        app:menu="@menu/user_profile_menu"></android.support.design.widget.NavigationView>
 
-    <android.support.design.widget.CoordinatorLayout
+    <LinearLayout
         android:id="@+id/content_frame"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <include
-            layout="@layout/mini_user_info"
-            app:layout_constraintBottom_toBottomOf="@+id/content_frame" />
-
-        <LinearLayout
-            android:id="@+id/request_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:orientation="vertical"
-
-            >
-
-            <TextView
-                android:id="@+id/request_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="130dp"
-                android:layout_marginTop="300dp"
-                android:text="@string/create_req_lable"
-                android:textColor="@android:color/black"
-                android:textSize="25dp" />
-
-            <LinearLayout
-                android:id="@+id/give_take_buttons"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="50dp"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal">
-
-
-                <Button
-                    android:id="@+id/btn_give"
-                    android:layout_width="126dp"
-                    android:layout_height="51dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="@drawable/button_shape"
-                    android:text="@string/give"
-                    android:textColor="@android:color/black" />
-
-                <Button
-                    android:id="@+id/btn_take"
-                    android:layout_width="125dp"
-                    android:layout_height="47dp"
-                    android:background="@drawable/button_shape"
-                    android:text="@string/take"
-                    android:textColor="@android:color/black" />
-
-            </LinearLayout>
-
-            <ImageView
-                android:id="@+id/imageView"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                android:layout_marginRight="100dp"
-                android:layout_marginTop="0dp"
-                app:srcCompat="@drawable/temp_logo" />
-        </LinearLayout>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -90,8 +23,15 @@
             android:background="@color/Yellow_PaleGoldenrod"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar" />
 
+    </LinearLayout>
 
-    </android.support.design.widget.CoordinatorLayout>
-
+    <android.support.design.widget.NavigationView
+        android:id="@+id/menu"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/menu_header"
+        app:menu="@menu/user_profile_menu"></android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

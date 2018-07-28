@@ -118,12 +118,12 @@ public class LoginActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = auth.getCurrentUser();
         //todo remove mark when logout is working
-        //updateUI(currentUser);
+        updateUI(currentUser);
     }
 
     private void updateUI(FirebaseUser currentUser) {
         if (currentUser != null) {
-            appManager.readCurrentUserFromDB(currentUser);
+           // appManager.readCurrentUserFromDB(currentUser); //todo remove when fix loading user info from DB
             startActivity(new Intent(LoginActivity.this, UserHomeActivity.class));
         }
     }

@@ -56,6 +56,9 @@
     <string name="reset_password_txt">נשלח מייל לאתחול הסיסמא</string>
     <string name="cannot_send_reset_email">מייל אתחול סיסמא לא נשלח</string>
     <string name="female_hebrew">נקבה</string>
+    <string name="email_title">דואר אלקטרוני:</string>
+    <string name="phone_title">טלפון:</string>
+    <string name="gender_title">מין:</string>
 
 
 </resources>

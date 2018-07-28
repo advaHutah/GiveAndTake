@@ -26,7 +26,7 @@ public class UserService {
     private String lastName;
     private String phoneNumber;
     private String gender;
-    private long balance;
+    private int balance;
     private User currentUser;
     private ArrayList<User> users = new ArrayList<>();
 
@@ -46,17 +46,17 @@ public class UserService {
     }
 
 
-    //    public void addUserInfoToDB(String uid, String email, String firstName, String lastName, String phoneNumber, String gender , int balance) {
-//        db.child("Users").child(uid).child("email").setValue(email);
-//        db.child("Users").child(uid).child("firstName").setValue(firstName);
-//        db.child("Users").child(uid).child("lastName").setValue(lastName);
-//        db.child("Users").child(uid).child("phoneNumber").setValue(phoneNumber);
-//        db.child("Users").child(uid).child("gender").setValue(gender);
-//        db.child("Users").child(uid).child("balance").setValue(balance);
-//    }
-    public void addUserInfoToDB(User newUser) {
-        db.child("Users").setValue(newUser);
+        public void addUserInfoToDB(String uid, String email, String firstName, String lastName, String phoneNumber, String gender , int balance) {
+        db.child("Users").child(uid).child("email").setValue(email);
+        db.child("Users").child(uid).child("firstName").setValue(firstName);
+        db.child("Users").child(uid).child("lastName").setValue(lastName);
+        db.child("Users").child(uid).child("phoneNumber").setValue(phoneNumber);
+        db.child("Users").child(uid).child("gender").setValue(gender);
+        db.child("Users").child(uid).child("balance").setValue(balance);
     }
+//    public void addUserInfoToDB(User newUser) {
+//        db.child("Users").setValue(newUser);
+//    }
 
     public void updateUserInfoInDB() {
         //TODO
@@ -85,7 +85,7 @@ public class UserService {
                 lastName = (String) dataSnapshot.child(uid).child("lastName").getValue(String.class);
                 phoneNumber = (String) dataSnapshot.child(uid).child("phoneNumber").getValue(String.class);
                 gender = (String) dataSnapshot.child(uid).child("gender").getValue(String.class);
-                balance = (long) dataSnapshot.child(uid).child("balance").getValue(Long.class);
+                balance = (int) dataSnapshot.child(uid).child("balance").getValue(Integer.class);
             }
 
             @Override
@@ -93,7 +93,8 @@ public class UserService {
 
             }
         });
-        //currentUser=users.get(uid);
+        while (email==null);
+        currentUser=new User(uid,email,firstName,lastName,phoneNumber,gender,balance);
         return currentUser;
     }
 }

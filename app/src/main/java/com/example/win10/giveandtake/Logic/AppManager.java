@@ -1,5 +1,8 @@
 package com.example.win10.giveandtake.Logic;
 
+import android.util.Log;
+import android.widget.Toast;
+
 import com.example.win10.giveandtake.DBLogic.UserService;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -25,8 +28,8 @@ public class AppManager {
 
 
     public void createNewUser(String uid, String email, String firstName, String lastName, String phoneNumber, String gender) {
-        User newUser = new User(uid,email, firstName, lastName, phoneNumber, gender);
-        userService.addUserInfoToDB(newUser);
+       // User newUser = new User(uid,email, firstName, lastName, phoneNumber, gender);
+        userService.addUserInfoToDB(uid,email, firstName, lastName, phoneNumber, gender , User.INIT_BALANCE);
     }
 
     public User getCurrentUser() {
@@ -34,7 +37,12 @@ public class AppManager {
     }
 
     public void readCurrentUserFromDB(FirebaseUser firebaseUser) {
-        currentUser = userService.getCurrentUserInfoFromDB(firebaseUser.getUid());
+        try {
+            currentUser = userService.getCurrentUserInfoFromDB(firebaseUser.getUid());
+        }catch (NullPointerException e) {
+            Log.d("null","basa");
+        }
+
     }
 
 

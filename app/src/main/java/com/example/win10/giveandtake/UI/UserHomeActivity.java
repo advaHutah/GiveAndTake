@@ -2,6 +2,8 @@ package com.example.win10.giveandtake.UI;
 
 import android.content.Intent;
 import android.support.design.widget.NavigationView;
+import android.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -10,6 +12,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -22,30 +26,31 @@ public class UserHomeActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
-    private TextView nameText, balanceText;
     private AppManager appManager = AppManager.getInstance();
     private User currentUser;
+
+    private FragmentManager fragmentManager ;
+    private UserHomeDefultFragment userHomeDefultFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
-        //get current logged user and se info in activity
-        currentUser = appManager.getCurrentUser();
-        nameText = (TextView) findViewById(R.id.user_name_text);
-        balanceText = (TextView) findViewById(R.id.user_balance_text);
-        nameText.setText(currentUser.getFullName());
-        balanceText.setText(currentUser.getBalance());
 
+        fragmentManager = getFragmentManager();
+        userHomeDefultFragment = new UserHomeDefultFragment();
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, userHomeDefultFragment)
+                .commit();
 
-
-
+        //define menu toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu);
 
+        //define menu slide bar
         mDrawerLayout = findViewById(R.id.userProfileActivity);
         NavigationView navigationView = findViewById(R.id.menu);
         navigationView.setNavigationItemSelectedListener(
@@ -53,17 +58,34 @@ public class UserHomeActivity extends AppCompatActivity {
                     @Override
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         // set item as selected to persist highlight
-                        menuItem.setChecked(true);
+                        menuItem.setChecked(false);
                         // close drawer when item is tapped
                         mDrawerLayout.closeDrawers();
+                        // TODO update the UI based on the item selected
+                        switch (menuItem.getItemId()) {
+                            case R.id.nav_explore: {
+                            }
+                            case R.id.nav_full_account_info: {
+                                FullUserInfoFragment fullUserInfoFragment = new FullUserInfoFragment();
+                                fragmentManager.beginTransaction()
+                                        .replace(R.id.content_frame, fullUserInfoFragment)
+                                        .commit();
+                                break;
+                            }
 
-                        // Add code here to update the UI based on the item selected
-                        // For example, swap UI fragments here
-                        Log.d("check menu", "somthong pressed");
-                        //TODO
-                        if (menuItem.getTitle().equals(R.string.menu_logout)) {
-                            auth.signOut();
-                            startActivity(new Intent(UserHomeActivity.this, LoginActivity.class));
+                            case R.id.nav_give_request: {
+                            }
+                            case R.id.nav_history: {
+                            }
+                            case R.id.nav_edit_user_info: {
+                            }
+                            case R.id.nav_connect: {
+                            }
+                            case R.id.nav_logout: {
+                                auth.signOut();
+                                startActivity(new Intent(UserHomeActivity.this, LoginActivity.class));
+                                break;
+                            }
                         }
                         return true;
                     }
@@ -73,9 +95,10 @@ public class UserHomeActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case android.R.id.home:
+            case android.R.id.home: {
                 mDrawerLayout.openDrawer(GravityCompat.START);
                 return true;
+            }
         }
         return super.onOptionsItemSelected(item);
     }
