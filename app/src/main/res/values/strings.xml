@@ -59,6 +59,9 @@
     <string name="email_title">דואר אלקטרוני:</string>
     <string name="phone_title">טלפון:</string>
     <string name="gender_title">מין:</string>
+    <string name="give_request_input_text">מה ברצונך לתת?</string>
+    <string name="request_btn">בצע</string>
+    <string name="take_request_input_text">מה ברצונך לקחת?</string>
 
 
 </resources>

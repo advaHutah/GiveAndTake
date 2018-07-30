@@ -5,30 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/button_shape"
     >
 
     <ImageView
         android:id="@+id/user_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="100dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginRight="120dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/temp_user_image_100px" />
 
     <LinearLayout
         android:id="@+id/user_name_layout"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_marginRight="30dp"
-        android:layout_marginTop="150dp"
-        android:orientation="vertical">
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="30dp"
+        android:orientation="vertical"
+        android:background="@drawable/button_shape">
 
         <TextView
             android:id="@+id/user_name_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/user_name"
+            android:layout_marginRight="10dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
@@ -42,16 +44,19 @@
     <LinearLayout
         android:id="@+id/user_balance_layout"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_marginRight="30dp"
-        android:layout_marginTop="200dp"
-        android:orientation="vertical">
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="30dp"
+        android:orientation="vertical"
+        android:background="@drawable/button_shape">
 
         <TextView
             android:id="@+id/user_balance_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/balance"
+            android:layout_marginRight="10dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
@@ -65,16 +70,19 @@
     <LinearLayout
         android:id="@+id/user_email_layout"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_marginRight="30dp"
-        android:layout_marginTop="150dp"
-        android:orientation="vertical">
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="30dp"
+        android:orientation="vertical"
+        android:background="@drawable/button_shape">
 
         <TextView
             android:id="@+id/user_email_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/email_title"
+            android:layout_marginRight="10dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
@@ -88,16 +96,19 @@
     <LinearLayout
         android:id="@+id/user_phone_layout"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_marginRight="30dp"
-        android:layout_marginTop="150dp"
-        android:orientation="vertical">
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="30dp"
+        android:orientation="vertical"
+        android:background="@drawable/button_shape">
 
         <TextView
             android:id="@+id/user_phone_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/phone_title"
+            android:layout_marginRight="10dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
@@ -111,16 +122,19 @@
     <LinearLayout
         android:id="@+id/user_gender_layout"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_marginRight="30dp"
-        android:layout_marginTop="150dp"
-        android:orientation="vertical">
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="30dp"
+        android:orientation="vertical"
+        android:background="@drawable/button_shape">
 
         <TextView
             android:id="@+id/user_gender_title"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/gender_title"
+            android:layout_marginRight="10dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView

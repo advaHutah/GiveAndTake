@@ -1,6 +1,7 @@
 package com.example.win10.giveandtake.UI;
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -23,6 +24,11 @@ public class UserHomeDefultFragment extends Fragment{
     private AppManager appManager = AppManager.getInstance();
     private User currentUser;
 
+    private FragmentManager fragmentManager ;
+    private TakeRequestFragment takeRequestFragment;
+    private GiveRequestFragment giveRequestFragment;
+
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
@@ -31,6 +37,8 @@ public class UserHomeDefultFragment extends Fragment{
         currentUser = appManager.getCurrentUser();
         nameText = (TextView)view.findViewById(R.id.user_name_text);
         balanceText = (TextView) view.findViewById(R.id.user_balance_text);
+
+        fragmentManager = getFragmentManager();
 
         //get current logged user and se info in activity
 
@@ -46,14 +54,20 @@ public class UserHomeDefultFragment extends Fragment{
         btnTake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo create request
+                takeRequestFragment = new TakeRequestFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_frame, takeRequestFragment)
+                        .commit();
             }
         });
 
         btnGive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo create request
+                giveRequestFragment = new GiveRequestFragment();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.content_frame, giveRequestFragment)
+                        .commit();
             }
         });
 

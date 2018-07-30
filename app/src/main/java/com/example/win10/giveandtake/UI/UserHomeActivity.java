@@ -29,14 +29,18 @@ public class UserHomeActivity extends AppCompatActivity {
     private AppManager appManager = AppManager.getInstance();
     private User currentUser;
 
-    private FragmentManager fragmentManager ;
+    private FragmentManager fragmentManager;
     private UserHomeDefultFragment userHomeDefultFragment;
+    private FullUserInfoFragment fullUserInfoFragment;
+    private TakeRequestFragment takeRequestFragment;
+    private GiveRequestFragment giveRequestFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
 
+        //open userHomeDefultFragment
         fragmentManager = getFragmentManager();
         userHomeDefultFragment = new UserHomeDefultFragment();
         fragmentManager.beginTransaction()
@@ -61,29 +65,44 @@ public class UserHomeActivity extends AppCompatActivity {
                         menuItem.setChecked(false);
                         // close drawer when item is tapped
                         mDrawerLayout.closeDrawers();
-                        // TODO update the UI based on the item selected
                         switch (menuItem.getItemId()) {
                             case R.id.nav_explore: {
                             }
                             case R.id.nav_full_account_info: {
-                                FullUserInfoFragment fullUserInfoFragment = new FullUserInfoFragment();
+                                fullUserInfoFragment = new FullUserInfoFragment();
                                 fragmentManager.beginTransaction()
                                         .replace(R.id.content_frame, fullUserInfoFragment)
                                         .commit();
                                 break;
                             }
 
+                            case R.id.nav_take_request: {
+                                takeRequestFragment = new TakeRequestFragment();
+                                fragmentManager.beginTransaction()
+                                        .replace(R.id.content_frame, takeRequestFragment)
+                                        .commit();
+                                break;
+                            }
                             case R.id.nav_give_request: {
+                                giveRequestFragment = new GiveRequestFragment();
+                                fragmentManager.beginTransaction()
+                                        .replace(R.id.content_frame, giveRequestFragment)
+                                        .commit();
+                                break;
                             }
                             case R.id.nav_history: {
+                                //todo if there is time
+                                break;
                             }
                             case R.id.nav_edit_user_info: {
+                                break;
                             }
                             case R.id.nav_connect: {
+                                //todo if there is time
+                                break;
                             }
                             case R.id.nav_logout: {
-                                auth.signOut();
-                                startActivity(new Intent(UserHomeActivity.this, LoginActivity.class));
+                                logout();
                                 break;
                             }
                         }
@@ -101,5 +120,11 @@ public class UserHomeActivity extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void logout() {
+        auth.signOut();
+        finish();
+        //todo close db connection
     }
 }

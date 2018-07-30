@@ -6,27 +6,50 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
-/**
- * Created by win10 on 7/28/2018.
- */
+import com.example.win10.giveandtake.Logic.AppManager;
+import com.example.win10.giveandtake.Logic.User;
+import com.example.win10.giveandtake.R;
 
 public class FullUserInfoFragment extends Fragment {
 
+    private View view;
+    private TextView nameText, balanceText, emailText, phoneText, genderText;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    private AppManager appManager = AppManager.getInstance();
+    private User currentUser;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
+
+        view = inflater.inflate(R.layout.fragment_full_user_info, container, false);
+        currentUser = appManager.getCurrentUser();
+
+        nameText = (TextView) view.findViewById(R.id.user_name_text);
+        balanceText = (TextView) view.findViewById(R.id.user_balance_text);
+        emailText = (TextView) view.findViewById(R.id.user_email_text);
+        phoneText = (TextView) view.findViewById(R.id.user_phone_text);
+        genderText = (TextView) view.findViewById(R.id.user_gender_text);
+
+        //todo remove when fix loading user info from DB
+        //get current logged user and se info in activity
+        //appManager.getCurrentUser();
+
+        // nameText.setText(currentUser.getFullName());
+        // balanceText.setText(currentUser.getBalance());
+//        emailText.setText(currentUser.getEmail());
+//        phoneText.setText(currentUser.getPhoneNumber());
+//        genderText.setText(currentUser.getGender().toString());
+        return view;
     }
+
 
     @Override
     public void onPause() {
         super.onPause();
     }
+
 }
