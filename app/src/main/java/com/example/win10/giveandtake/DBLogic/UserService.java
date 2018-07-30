@@ -2,7 +2,11 @@ package com.example.win10.giveandtake.DBLogic;
 
 import android.util.Log;
 
+import com.example.win10.giveandtake.Logic.AppManager;
+import com.example.win10.giveandtake.Logic.GiveRequest;
+import com.example.win10.giveandtake.Logic.TakeRequest;
 import com.example.win10.giveandtake.Logic.User;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,6 +24,10 @@ public class UserService {
     private static UserService singletonUserService = null;
     private FirebaseDatabase database;
     private DatabaseReference db;
+    private FirebaseAuth auth;
+
+    private String uid;
+
 
     private String email;
     private String firstName;
@@ -36,6 +44,7 @@ public class UserService {
         database = FirebaseDatabase.getInstance();
         db = database.getReference();
         db.keepSynced(true);
+
     }
 
     public static UserService getInstance() {
@@ -46,7 +55,7 @@ public class UserService {
     }
 
 
-        public void addUserInfoToDB(String uid, String email, String firstName, String lastName, String phoneNumber, String gender , int balance) {
+    public void addUserInfoToDB(String uid, String email, String firstName, String lastName, String phoneNumber, String gender, int balance) {
         db.child("Users").child(uid).child("email").setValue(email);
         db.child("Users").child(uid).child("firstName").setValue(firstName);
         db.child("Users").child(uid).child("lastName").setValue(lastName);
@@ -66,35 +75,24 @@ public class UserService {
         //TODO
     }
 
-    public void addRequestToDB() {
-        //TODO
+
+
+    public void setUserLogin(String currentUserId) {
+
+        db.child("Users").child(currentUserId).child("isLogin").setValue(1);
     }
 
-    public User getCurrentUserInfoFromDB(final String uid) {
+    public void setUserLogout(String currentUserId) {
+        db.child("Users").child(currentUserId).child("isLogin").setValue(0);
 
-        database.getReference("Users").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-//                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//                    User u = postSnapshot.getValue(User.class);
-//                    users.add(u);
-//                    Log.d("user:", u.toString());
-//                }
-                email = dataSnapshot.child(uid).child("email").getValue(String.class);
-                firstName = (String) dataSnapshot.child(uid).child("firstName").getValue(String.class);
-                lastName = (String) dataSnapshot.child(uid).child("lastName").getValue(String.class);
-                phoneNumber = (String) dataSnapshot.child(uid).child("phoneNumber").getValue(String.class);
-                gender = (String) dataSnapshot.child(uid).child("gender").getValue(String.class);
-                balance = (int) dataSnapshot.child(uid).child("balance").getValue(Integer.class);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-        while (email==null);
-        currentUser=new User(uid,email,firstName,lastName,phoneNumber,gender,balance);
-        return currentUser;
     }
+
+    public void addGiveRequestToDB(GiveRequest newGiveRequest) {
+        db.child("GiveRequest").push().setValue(newGiveRequest);
+
+    }
+    public void addTakeRequestToDB(TakeRequest takeRequest) {
+        db.child("TakeRequest").push().setValue(takeRequest);
+    }
+
 }

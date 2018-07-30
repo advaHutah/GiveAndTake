@@ -21,6 +21,11 @@ import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.User;
 import com.example.win10.giveandtake.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class UserHomeActivity extends AppCompatActivity {
 
@@ -39,6 +44,7 @@ public class UserHomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
+
 
         //open userHomeDefultFragment
         fragmentManager = getFragmentManager();
@@ -123,8 +129,11 @@ public class UserHomeActivity extends AppCompatActivity {
     }
 
     public void logout() {
+        appManager.setUserLogout(auth.getCurrentUser().getUid());
         auth.signOut();
         finish();
         //todo close db connection
     }
+
+
 }

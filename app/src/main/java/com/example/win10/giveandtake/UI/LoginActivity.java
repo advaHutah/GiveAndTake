@@ -13,12 +13,18 @@ import android.widget.Toast;
 import com.example.win10.giveandtake.DBLogic.GiveAndTakeFirebaseInstanceIDService;
 import com.example.win10.giveandtake.DBLogic.GiveAndTakeFirebaseMessagingService;
 import com.example.win10.giveandtake.Logic.AppManager;
+import com.example.win10.giveandtake.Logic.User;
 import com.example.win10.giveandtake.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
@@ -31,13 +37,17 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private Button btnSignup, btnLogin, btnReset, btnExplore;
     private String token;
+    //private User currentUser;
     //private RestaurantManager restaurantManager = RestaurantManager.getInstance();
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference db = database.getReference();
 
         //define input /buttons
         inputEmail = (EditText) findViewById(R.id.email);
@@ -50,14 +60,6 @@ public class LoginActivity extends AppCompatActivity {
 
         appManager = AppManager.getInstance();
         auth = FirebaseAuth.getInstance();
-//        GiveAndTakeFirebaseInstanceIDService tokenizer = new GiveAndTakeFirebaseInstanceIDService();
-//        token = tokenizer.getToken();
-//        if (auth.getCurrentUser() != null) {
-//            //start NotificationListener
-//            NotificationListener listener = new NotificationListener(this);
-//            startActivity(new Intent(LoginActivity.this, ChooseEmployeeRoleActivity.class));
-//            finish();
-//        }
 
 
         //buttons actions
@@ -115,17 +117,55 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onStart() {
         super.onStart();
-        // Check if user is signed in (non-null) and update UI accordingly.
         FirebaseUser currentUser = auth.getCurrentUser();
         //todo remove mark when logout is working
         updateUI(currentUser);
     }
+       private void updateUI(FirebaseUser currentUser) {
+           if (currentUser != null) {
+//            //todo fix loading user info from DB
+               appManager.setUserLogin(currentUser.getUid());
+               startActivity(new Intent(LoginActivity.this, UserHomeActivity.class));
+           }
+       }
 
-    private void updateUI(FirebaseUser currentUser) {
-        if (currentUser != null) {
-           // appManager.readCurrentUserFromDB(currentUser); //todo remove when fix loading user info from DB
-            startActivity(new Intent(LoginActivity.this, UserHomeActivity.class));
-        }
-    }
 
+//    private void updateUI(FirebaseUser mycurrentUser) {
+//        // Check if user is signed in (non-null) and update UI accordingly.
+//        if (mycurrentUser != null) {
+//            //todo remove when fix loading user info from DB
+//            mAuth = FirebaseAuth.getInstance();
+//            mFirebaseDatabase = FirebaseDatabase.getInstance();
+//            myRef = mFirebaseDatabase.getReference();
+//            userID = mycurrentUser.getUid();
+//            myRef.addValueEventListener(new ValueEventListener() {
+//                @Override
+//                public void onDataChange(DataSnapshot dataSnapshot) {
+//                    // This method is called once with the initial value and again
+//                    // whenever data at this location is updated.
+//                    showData(dataSnapshot);
+//                }
+//
+//                @Override
+//                public void onCancelled(DatabaseError databaseError) {
+//
+//                }
+//            });
+//            appManager.setUserLogin(mycurrentUser.getUid());
+//            startActivity(new Intent(LoginActivity.this, UserHomeActivity.class));
+//        }
+//    }
+//
+//    private void showData(DataSnapshot dataSnapshot) {
+//        for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//            currentUser = new User();
+//            currentUser.setFirstName(ds.child(userID).getValue(User.class).getFirstName());
+//            currentUser.setLastName(ds.child(userID).getValue(User.class).getLastName());
+//            currentUser.setPhoneNumber(ds.child(userID).getValue(User.class).getPhoneNumber());
+//            currentUser.setEmail(ds.child(userID).getValue(User.class).getEmail());
+//            currentUser.setBalance(ds.child(userID).getValue(User.class).getBalance());
+//            currentUser.setGender(ds.child(userID).getValue(User.class).getGender());
+//            appManager.setCurrentUser(currentUser);
+//        }
+//    }
 }
