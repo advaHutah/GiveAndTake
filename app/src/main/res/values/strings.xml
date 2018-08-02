@@ -62,6 +62,7 @@
     <string name="give_request_input_text">מה ברצונך לתת?</string>
     <string name="request_btn">בצע</string>
     <string name="take_request_input_text">מה ברצונך לקחת?</string>
+    <string name="take_request_find_text_btn">סנן טקסט</string>
 
 
 </resources>

@@ -10,9 +10,11 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.win10.giveandtake.DBLogic.FirebaseManager;
 import com.example.win10.giveandtake.DBLogic.GiveAndTakeFirebaseInstanceIDService;
 import com.example.win10.giveandtake.DBLogic.GiveAndTakeFirebaseMessagingService;
 import com.example.win10.giveandtake.Logic.AppManager;
+import com.example.win10.giveandtake.Logic.TakeRequest;
 import com.example.win10.giveandtake.Logic.User;
 import com.example.win10.giveandtake.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -120,6 +122,13 @@ public class LoginActivity extends AppCompatActivity {
         FirebaseUser currentUser = auth.getCurrentUser();
         //todo remove mark when logout is working
         updateUI(currentUser);
+
+        FirebaseManager.getInstance().getUserDetailFromDB("1234", new FirebaseManager.FirebaseCallback<User>() {
+            @Override
+            public void onDataArrived(User value) {
+
+            }
+        });
     }
        private void updateUI(FirebaseUser currentUser) {
            if (currentUser != null) {
@@ -130,42 +139,4 @@ public class LoginActivity extends AppCompatActivity {
        }
 
 
-//    private void updateUI(FirebaseUser mycurrentUser) {
-//        // Check if user is signed in (non-null) and update UI accordingly.
-//        if (mycurrentUser != null) {
-//            //todo remove when fix loading user info from DB
-//            mAuth = FirebaseAuth.getInstance();
-//            mFirebaseDatabase = FirebaseDatabase.getInstance();
-//            myRef = mFirebaseDatabase.getReference();
-//            userID = mycurrentUser.getUid();
-//            myRef.addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    // This method is called once with the initial value and again
-//                    // whenever data at this location is updated.
-//                    showData(dataSnapshot);
-//                }
-//
-//                @Override
-//                public void onCancelled(DatabaseError databaseError) {
-//
-//                }
-//            });
-//            appManager.setUserLogin(mycurrentUser.getUid());
-//            startActivity(new Intent(LoginActivity.this, UserHomeActivity.class));
-//        }
-//    }
-//
-//    private void showData(DataSnapshot dataSnapshot) {
-//        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//            currentUser = new User();
-//            currentUser.setFirstName(ds.child(userID).getValue(User.class).getFirstName());
-//            currentUser.setLastName(ds.child(userID).getValue(User.class).getLastName());
-//            currentUser.setPhoneNumber(ds.child(userID).getValue(User.class).getPhoneNumber());
-//            currentUser.setEmail(ds.child(userID).getValue(User.class).getEmail());
-//            currentUser.setBalance(ds.child(userID).getValue(User.class).getBalance());
-//            currentUser.setGender(ds.child(userID).getValue(User.class).getGender());
-//            appManager.setCurrentUser(currentUser);
-//        }
-//    }
 }

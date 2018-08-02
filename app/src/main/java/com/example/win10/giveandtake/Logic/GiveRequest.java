@@ -14,12 +14,35 @@ public class GiveRequest {
         this.userInputText = userInputText;
         this.uid = uid;
         this.tags = new ArrayList<>();
-        findTags(userInputText);
     }
 
-    public void findTags(String userInputText) {
-        //TODO
+    public GiveRequest(String userInputText, String uid ,ArrayList<String> tags ) {
+        this.userInputText = userInputText;
+        this.uid = uid;
+        this.tags = tags;
     }
 
+    public void setTags(ArrayList<String> tags) {
+        this.tags = tags;
+    }
 
+    public ArrayList<String> getTags() {
+        return tags;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public String getUserInputText() {
+        return userInputText;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public void setUserInputText(String userInputText) {
+        this.userInputText = userInputText;
+    }
 }

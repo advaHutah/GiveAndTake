@@ -75,7 +75,7 @@ public class User {
     }
 
     public String getGender() {
-        return gender.toString();
+        return gender.name();
     }
 
     public int getBalance() {
