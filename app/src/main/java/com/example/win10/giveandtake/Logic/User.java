@@ -1,6 +1,6 @@
 package com.example.win10.giveandtake.Logic;
 
-import com.example.win10.giveandtake.DBLogic.UserService;
+import com.example.win10.giveandtake.DBLogic.FirebaseManager;
 import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.UI.GiveRequestFragment;
 import com.example.win10.giveandtake.UI.TakeRequestFragment;
@@ -30,9 +30,9 @@ public class User {
 
     private ArrayList<TakeRequest> myTakeRequest;
     private ArrayList<GiveRequest> myGiveRequests;
-    private Service[] myService;
+    private ArrayList<Service>myService;
 
-    private UserService userService = UserService.getInstance();
+    private FirebaseManager userService = FirebaseManager.getInstance();
 
     public User() {
     }
@@ -47,6 +47,7 @@ public class User {
         this.balance = INIT_BALANCE;
         myTakeRequest = new ArrayList<TakeRequest>();
         myGiveRequests = new ArrayList<GiveRequest>();
+        myService = new ArrayList<Service>();
     }
 
     public User(String id, String email, String firstName, String lastName, String phoneNumber, String gender, int balance) {
@@ -118,13 +119,23 @@ public class User {
 
 
     public void addTakeRequest(TakeRequest newTakeRequest) {
-        //TODO
+        if(myTakeRequest == null)
+            myTakeRequest = new ArrayList<TakeRequest>();
         myTakeRequest.add(newTakeRequest);
     }
 
     public void addGiveRequest(GiveRequest newGiveRequest) {
-        //TODO
+        if(myGiveRequests == null)
+            myGiveRequests = new ArrayList<GiveRequest>();
         myGiveRequests.add(newGiveRequest);
     }
 
+    public void addService(Service service)
+    {
+        if(myService==null)
+        {
+            myService = new ArrayList<>();
+        }
+        myService.add(service);
+    }
 }

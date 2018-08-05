@@ -8,23 +8,15 @@ public class Service {
         DATE_SPECIFIDE_NOT_COMPLETE,
         COMPLETED
     };
-    private User userGive;
-    private User userTake;
-    private Status status;
+    protected Status status;
+    protected TakeRequest takeRequest;
+    protected GiveRequest giveRequest;
 
 
-    public Service(User userGive, User userTake) {
-        this.userGive = userGive;
-        this.userTake = userTake;
+    public Service(TakeRequest takeRequest,GiveRequest giveRequest) {
         this.status = Status.NO_DATE_SPECIFIDE;
-    }
-
-    public User getUserGive() {
-        return userGive;
-    }
-
-    public User getUserTake() {
-        return userTake;
+        this.takeRequest= takeRequest;
+        this.giveRequest = giveRequest;
     }
 
     public Status getStatus() {
@@ -33,5 +25,21 @@ public class Service {
 
     public void setStatus(Status status) {
         this.status = status;
+    }
+
+    public GiveRequest getGiveRequest() {
+        return giveRequest;
+    }
+
+    public void setGiveRequest(GiveRequest giveRequest) {
+        this.giveRequest = giveRequest;
+    }
+
+    public TakeRequest getTakeRequest() {
+        return takeRequest;
+    }
+
+    public void setTakeRequest(TakeRequest takeRequest) {
+        this.takeRequest = takeRequest;
     }
 }

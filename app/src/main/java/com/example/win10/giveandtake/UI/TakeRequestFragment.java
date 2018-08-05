@@ -63,8 +63,11 @@ public class TakeRequestFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 appManager.addTakeRequest(text,new ArrayList<String>(selectedTags));
-                //todo need to change fragment to defult
-            }
+                //change fragment to defult
+                UserHomeDefultFragment userHomeDefultFragment = new UserHomeDefultFragment();
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, userHomeDefultFragment)
+                        .commit();            }
         });
         return view;
     }

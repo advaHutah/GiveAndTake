@@ -22,7 +22,7 @@
         android:layout_marginRight="30dp"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="30dp"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:background="@drawable/button_shape">
 
         <TextView
@@ -48,7 +48,7 @@
         android:layout_marginRight="30dp"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="30dp"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:background="@drawable/button_shape">
 
         <TextView
@@ -70,7 +70,7 @@
     <LinearLayout
         android:id="@+id/user_email_layout"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_marginRight="30dp"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="30dp"
@@ -79,17 +79,18 @@
 
         <TextView
             android:id="@+id/user_email_title"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text="@string/email_title"
             android:layout_marginRight="10dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
 
         <TextView
             android:id="@+id/user_email_text"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:text=""
+            android:layout_marginLeft="10dp"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
     </LinearLayout>
 
@@ -100,7 +101,7 @@
         android:layout_marginRight="30dp"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="30dp"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:background="@drawable/button_shape">
 
         <TextView
@@ -126,7 +127,7 @@
         android:layout_marginRight="30dp"
         android:layout_marginTop="15dp"
         android:layout_marginLeft="30dp"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:background="@drawable/button_shape">
 
         <TextView

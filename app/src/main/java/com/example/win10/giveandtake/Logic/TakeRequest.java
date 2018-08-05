@@ -15,9 +15,8 @@ public class TakeRequest {
         this.uid = uid;
     }
     public TakeRequest(String userInputText,String uid,ArrayList<String> tags) {
-        this.userInputText = userInputText;
-        this.tags = new ArrayList<String>();
-        this.uid = uid;
+        this(userInputText,uid);
+        this.tags = tags;
     }
     public void setTags(ArrayList<String> tags) {
         this.tags = tags;

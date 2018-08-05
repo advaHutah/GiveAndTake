@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.win10.giveandtake.DBLogic.FirebaseManager;
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.User;
 import com.example.win10.giveandtake.R;
@@ -29,15 +30,10 @@ public class UserHomeDefultFragment extends Fragment {
 
     private AppManager appManager = AppManager.getInstance();
     private String uid;
-    private User currentUser;
 
     private FragmentManager fragmentManager;
     private TakeRequestFragment takeRequestFragment;
     private GiveRequestFragment giveRequestFragment;
-
-    private FirebaseAuth auth;
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference myRef;
 
 
     @Nullable
@@ -48,21 +44,14 @@ public class UserHomeDefultFragment extends Fragment {
         nameText = (TextView) view.findViewById(R.id.user_name_text);
         balanceText = (TextView) view.findViewById(R.id.user_balance_text);
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        myRef = mFirebaseDatabase.getReference();
-        auth = FirebaseAuth.getInstance();
-        uid = auth.getCurrentUser().getUid();
-
-        //get current logged user and se info in activity
-        //todo remove when fix loading user info from DB
-
+        nameText.setText(appManager.getCurrentUser().getFullName());
+        balanceText.setText(appManager.getCurrentUser().getBalance() + "");
 
         //initials buttons
         btnTake = (Button) view.findViewById(R.id.btn_take);
         btnGive = (Button) view.findViewById(R.id.btn_give);
 
-//        nameText.setText(currentUser.getFullName());
-  //         balanceText.setText(currentUser.getBalance() + "");
+
         fragmentManager = getFragmentManager();
 
         //buttonActions

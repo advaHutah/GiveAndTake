@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.win10.giveandtake.DBLogic.FirebaseManager;
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.User;
 import com.example.win10.giveandtake.R;
@@ -32,7 +33,8 @@ public class UserHomeActivity extends AppCompatActivity {
     private DrawerLayout mDrawerLayout;
     private FirebaseAuth auth = FirebaseAuth.getInstance();
     private AppManager appManager = AppManager.getInstance();
-    private User currentUser;
+    private FirebaseManager firebaseManager = FirebaseManager.getInstance();
+
 
     private FragmentManager fragmentManager;
     private UserHomeDefultFragment userHomeDefultFragment;
@@ -52,6 +54,10 @@ public class UserHomeActivity extends AppCompatActivity {
         fragmentManager.beginTransaction()
                 .replace(R.id.content_frame, userHomeDefultFragment)
                 .commit();
+
+        //register current user as listener to match
+
+        firebaseManager.matchListener(this);
 
         //define menu toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -129,7 +135,7 @@ public class UserHomeActivity extends AppCompatActivity {
     }
 
     public void logout() {
-        appManager.setUserLogout(auth.getCurrentUser().getUid());
+        //appManager.setUserLogout(auth.getCurrentUser().getUid());
         auth.signOut();
         finish();
         //todo close db connection

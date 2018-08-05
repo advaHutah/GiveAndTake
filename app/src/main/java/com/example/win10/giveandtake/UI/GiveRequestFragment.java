@@ -2,6 +2,7 @@ package com.example.win10.giveandtake.UI;
 
 
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -46,24 +47,31 @@ public class GiveRequestFragment extends Fragment {
 
         inputText = (EditText) view.findViewById(R.id.give_request_input_text);
         requestBtn = (Button) view.findViewById(R.id.give_request_btn);
-        findText = (Button)view.findViewById(R.id.give_request_find_text_btn);
-        tagsGrid = (GridView)view.findViewById(R.id.give_request_tags_result);
+        findText = (Button) view.findViewById(R.id.give_request_find_text_btn);
+        tagsGrid = (GridView) view.findViewById(R.id.give_request_tags_result);
 
 
         findText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                text =inputText.getText().toString().trim();
-                tags = appManager.findTags(text);
-                selectedTags = new HashSet<String >();
-                showTags(tags);
+                    text = inputText.getText().toString().trim();
+                if (!text.equals("") ) {
+                    tags = appManager.findTags(text);
+                    selectedTags = new HashSet<String>();
+                    showTags(tags);
+                }
             }
         });
         requestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                appManager.addTakeRequest(text,new ArrayList<String>(selectedTags));
-                //todo need to change fragment to defult
+                if (!text.equals("") && selectedTags != null)
+                    appManager.addGiveRequest(text, new ArrayList<String>(selectedTags));
+                //change fragment to defult
+                UserHomeDefultFragment userHomeDefultFragment = new UserHomeDefultFragment();
+                getFragmentManager().beginTransaction()
+                        .replace(R.id.content_frame, userHomeDefultFragment)
+                        .commit();
             }
         });
         return view;
@@ -75,9 +83,8 @@ public class GiveRequestFragment extends Fragment {
         super.onPause();
     }
 
-    public void showTags(final ArrayList<String> tags)
-    {
-        ArrayAdapter arrayadapter = new ArrayAdapter<String>(view.getContext(),R.layout.item,tags);
+    public void showTags(final ArrayList<String> tags) {
+        ArrayAdapter arrayadapter = new ArrayAdapter<String>(view.getContext(), R.layout.item, tags);
         tagsGrid.setAdapter(arrayadapter);
         tagsGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,

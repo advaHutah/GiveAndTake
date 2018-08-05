@@ -26,7 +26,6 @@ public class FullUserInfoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.fragment_full_user_info, container, false);
-        currentUser = appManager.getCurrentUser();
 
         nameText = (TextView) view.findViewById(R.id.user_name_text);
         balanceText = (TextView) view.findViewById(R.id.user_balance_text);
@@ -35,14 +34,14 @@ public class FullUserInfoFragment extends Fragment {
         genderText = (TextView) view.findViewById(R.id.user_gender_text);
 
         //todo remove when fix loading user info from DB
-        //get current logged user and se info in activity
-        //appManager.getCurrentUser();
+        //get current logged user and update info in activity
+        currentUser = appManager.getCurrentUser();
 
-        // nameText.setText(currentUser.getFullName());
-        // balanceText.setText(currentUser.getBalance());
-//        emailText.setText(currentUser.getEmail());
-//        phoneText.setText(currentUser.getPhoneNumber());
-//        genderText.setText(currentUser.getGender().toString());
+        nameText.setText(currentUser.getFullName());
+        balanceText.setText(currentUser.getBalance()+"");
+        emailText.setText(currentUser.getEmail());
+        phoneText.setText(currentUser.getPhoneNumber());
+        genderText.setText(currentUser.getGender().toString());
         return view;
     }
 

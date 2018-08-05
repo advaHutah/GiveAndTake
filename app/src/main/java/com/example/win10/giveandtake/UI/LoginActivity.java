@@ -38,20 +38,13 @@ public class LoginActivity extends AppCompatActivity {
     private AppManager appManager;
     private ProgressBar progressBar;
     private Button btnSignup, btnLogin, btnReset, btnExplore;
-    private String token;
-    //private User currentUser;
-    //private RestaurantManager restaurantManager = RestaurantManager.getInstance();
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference db = database.getReference();
 
-        //define input /buttons
+        //define input buttons
         inputEmail = (EditText) findViewById(R.id.email);
         inputPassword = (EditText) findViewById(R.id.password);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
@@ -91,7 +84,6 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO check is the user exist
                 final String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
                 auth.signInWithEmailAndPassword(email, password)
@@ -119,24 +111,19 @@ public class LoginActivity extends AppCompatActivity {
 
     public void onStart() {
         super.onStart();
-        FirebaseUser currentUser = auth.getCurrentUser();
-        //todo remove mark when logout is working
-        updateUI(currentUser);
+        updateUI(auth.getCurrentUser());
 
-        FirebaseManager.getInstance().getUserDetailFromDB("1234", new FirebaseManager.FirebaseCallback<User>() {
-            @Override
-            public void onDataArrived(User value) {
-
-            }
-        });
     }
-       private void updateUI(FirebaseUser currentUser) {
-           if (currentUser != null) {
-//            //todo fix loading user info from DB
-               appManager.setUserLogin(currentUser.getUid());
-               startActivity(new Intent(LoginActivity.this, UserHomeActivity.class));
-           }
-       }
 
-
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            FirebaseManager.getInstance().getUserDetailFromDB(auth.getCurrentUser().getUid(), new FirebaseManager.FirebaseCallback<User>() {
+                @Override
+                public void onDataArrived(User value) {
+                    appManager.setCurrentUser(value);
+                    startActivity(new Intent(LoginActivity.this, UserHomeActivity.class));
+                }
+            });
+        }
+    }
 }
