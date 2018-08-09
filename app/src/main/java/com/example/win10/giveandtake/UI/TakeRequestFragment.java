@@ -44,30 +44,34 @@ public class TakeRequestFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_take_request, container, false);
-        appManager=AppManager.getInstance();
-        inputText = (EditText)view.findViewById(R.id.take_request_input_text);
-        requestBtn = (Button)view.findViewById(R.id.take_request_btn);
-        findText = (Button)view.findViewById(R.id.take_request_find_text_btn);
-        tagsGrid = (GridView)view.findViewById(R.id.take_request_tags_result);
+        appManager = AppManager.getInstance();
+        inputText = (EditText) view.findViewById(R.id.take_request_input_text);
+        requestBtn = (Button) view.findViewById(R.id.take_request_btn);
+        findText = (Button) view.findViewById(R.id.take_request_find_text_btn);
+        tagsGrid = (GridView) view.findViewById(R.id.take_request_tags_result);
 
         findText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                text =inputText.getText().toString().trim();
-                tags = appManager.findTags(text);
-                selectedTags = new HashSet<String >();
-                showTags(tags);
+                text = inputText.getText().toString().trim();
+                if (!text.equals("")) {
+                    tags = appManager.findTags(text);
+                    selectedTags = new HashSet<String>();
+                    showTags(tags);
+                }
             }
         });
         requestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                appManager.addTakeRequest(text,new ArrayList<String>(selectedTags));
+                if (!text.equals("") &&  !selectedTags.isEmpty())
+                    appManager.addTakeRequest(text, new ArrayList<String>(selectedTags));
                 //change fragment to defult
                 UserHomeDefultFragment userHomeDefultFragment = new UserHomeDefultFragment();
                 getFragmentManager().beginTransaction()
                         .replace(R.id.content_frame, userHomeDefultFragment)
-                        .commit();            }
+                        .commit();
+            }
         });
         return view;
     }
@@ -77,9 +81,8 @@ public class TakeRequestFragment extends Fragment {
         super.onPause();
     }
 
-    public void showTags(final ArrayList<String> tags)
-    {
-        ArrayAdapter arrayadapter = new ArrayAdapter<String>(view.getContext(),R.layout.item,tags);
+    public void showTags(final ArrayList<String> tags) {
+        ArrayAdapter arrayadapter = new ArrayAdapter<String>(view.getContext(), R.layout.item, tags);
         tagsGrid.setAdapter(arrayadapter);
         tagsGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View v,
@@ -89,8 +92,7 @@ public class TakeRequestFragment extends Fragment {
         });
     }
 
-    public void findMatch()
-    {
+    public void findMatch() {
         //todo
     }
 }

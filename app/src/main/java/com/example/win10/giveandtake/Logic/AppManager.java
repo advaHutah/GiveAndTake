@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.example.win10.giveandtake.Logic.Service;
 
 //Handles all app actions and DB read/write
 public class AppManager {
@@ -16,6 +17,7 @@ public class AppManager {
     private FirebaseManager firebaseManager;
     private User currentUser;
     private FirebaseAuth auth;
+    private Service selectedService;
 
     private Map<Integer, List<String>> conjunctions = new HashMap<Integer, List<String>>() {
         {
@@ -52,27 +54,49 @@ public class AppManager {
             public void onDataArrived(ArrayList<GiveRequest> value) {
                 Service newService = null;
                 for (GiveRequest giveRequest : value) {
-                    for (String takeR_tag:newTakeRequest.getTags()) {
+                    for (String takeR_tag : newTakeRequest.getTags()) {
                         if (giveRequest.getTags().contains(takeR_tag)) {
                             //create new Service
-                            newService = new Service(newTakeRequest, giveRequest);
+                            newService = new Service(newTakeRequest, giveRequest, takeR_tag);
                             currentUser.addService(newService);
                             //save service in DB
-                            firebaseManager.addServiceInDB(newService);
+                            firebaseManager.addServiceInDB(currentUser.getId(), newService);
                             //send notifictaion for service users
                             //TODO
                             break;
                         }
                     }
-                    if(newService!=null)
+                    if (newService != null)
                         break;
                 }
             }
         });
 
     }
-    public void findMatch(GiveRequest newGiveRequest) {
-        //TODO
+
+    public void findMatch(final GiveRequest newGiveRequest) {
+        FirebaseManager.getInstance().getAllTakeRequestFromDB(new FirebaseManager.FirebaseCallback<ArrayList<TakeRequest>>() {
+            @Override
+            public void onDataArrived(ArrayList<TakeRequest> value) {
+                Service newService = null;
+                for (TakeRequest takeRequest : value) {
+                    for (String giveR_tag : newGiveRequest.getTags()) {
+                        if (takeRequest.getTags().contains(giveR_tag)) {
+                            //create new Service
+                            newService = new Service(takeRequest, newGiveRequest, giveR_tag);
+                            currentUser.addService(newService);
+                            //save service in DB
+                            firebaseManager.addServiceInDB(currentUser.getId(), newService);
+                            //send notifictaion for service users
+                            //TODO
+                            break;
+                        }
+                    }
+                    if (newService != null)
+                        break;
+                }
+            }
+        });
     }
 
 
@@ -88,20 +112,9 @@ public class AppManager {
         currentUser = user;
     }
 
-//    //todo remove if there is no use
-//    public void setUserLogin(String currentUserId) {
-//        firebaseManager.setUserLogin(currentUserId);
-//    }
-//
-//    //todo remove if there is no use
-//    public void setUserLogout(String currentUserId) {
-//        firebaseManager.setUserLogout(currentUserId);
-//
-//    }
-
     public void addTakeRequest(String text, ArrayList<String> selectedTags) {
         //create new take request
-        TakeRequest newTakeRequest = new TakeRequest(text, auth.getCurrentUser().getUid(), selectedTags);
+        TakeRequest newTakeRequest = new TakeRequest(text, currentUser.getId(), currentUser.getFullName(), selectedTags, null);
         // add this request to the user
         currentUser.addTakeRequest(newTakeRequest);
         //add the request to firebase
@@ -117,7 +130,7 @@ public class AppManager {
 
     public void addGiveRequest(String text, ArrayList<String> selectedTags) {
         //create new give request
-        GiveRequest newGiveRequest = new GiveRequest(text, auth.getCurrentUser().getUid(), selectedTags);
+        GiveRequest newGiveRequest = new GiveRequest(text, currentUser.getId(), currentUser.getFullName(), selectedTags, null);
         // add this request to the user
         currentUser.addGiveRequest(newGiveRequest);
         //add the request to firebase
@@ -125,6 +138,8 @@ public class AppManager {
         //add selected tags to the tags collection
         firebaseManager.addTagsToDB(selectedTags);
         //find match
+        findMatch(newGiveRequest);
+
 
     }
 
@@ -144,5 +159,29 @@ public class AppManager {
             tags.remove("_");
         //return tag array
         return tags;
+    }
+
+    public void setSelectedService(Service selectedService) {
+        this.selectedService = selectedService;
+    }
+
+    public Service getSelectedService() {
+        return selectedService;
+    }
+
+    public void serviceEnd(Service service , int minuts)
+    {
+        //send notification to other user
+        //todo
+        //update service minuts
+        service.setMinuts(minuts);
+        //update service status
+        service.setStatus(Service.Status.COMPLETED);
+        //update service in db
+        firebaseManager.updateServiceInDB(service);
+        //update users info in db
+        firebaseManager.updateUserServcieInDB(service.getTakeRequest().getUid(),service);
+        firebaseManager.updateUserServcieInDB(service.getGiveRequest().getUid(),service);
+
     }
 }

@@ -44,10 +44,11 @@ public class UserHomeDefultFragment extends Fragment {
         nameText = (TextView) view.findViewById(R.id.user_name_text);
         balanceText = (TextView) view.findViewById(R.id.user_balance_text);
 
-        nameText.setText(appManager.getCurrentUser().getFullName());
-        balanceText.setText(appManager.getCurrentUser().getBalance() + "");
-
-        //initials buttons
+        if(appManager.getCurrentUser()!=null) {
+            nameText.setText(appManager.getCurrentUser().getFullName());
+            balanceText.setText(appManager.getCurrentUser().getBalance() + "");
+        }
+        //initial buttons
         btnTake = (Button) view.findViewById(R.id.btn_take);
         btnGive = (Button) view.findViewById(R.id.btn_give);
 

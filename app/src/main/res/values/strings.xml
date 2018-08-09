@@ -38,7 +38,7 @@
     <string name="create_req_lable">צור בקשה</string>
     <string name="take">לקחת</string>
     <string name="give">לתת</string>
-    <string name="match_details">פרטי התאמה :</string>
+    <string name="match_details">פרטי התאמה </string>
     <string name="match_discription">תיאור:</string>
     <string name="create_meeting">צור מפגש</string>
 
@@ -63,6 +63,11 @@
     <string name="request_btn">בצע</string>
     <string name="take_request_input_text">מה ברצונך לקחת?</string>
     <string name="take_request_find_text_btn">סנן טקסט</string>
+    <string name="confirm_meeting">אישור מפגש</string>
+    <string name="giver_name_match">שם נותן השירות:</string>
+    <string name="taker_name_match">שם מקבל השירות:</string>
+    <string name="service_type_match">סוג השירות :</string>
+    <string name="nav_my_services">השירותים שלי</string>
 
 
 </resources>

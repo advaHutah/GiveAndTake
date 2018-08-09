@@ -28,7 +28,6 @@ public class FirebaseManager {
 
 
 
-
     public interface FirebaseCallback<T> {
         void onDataArrived(T value);
     }
@@ -59,7 +58,7 @@ public class FirebaseManager {
         db.child(Keys.USERS).child(uid).setValue(user);
     }
 
-//    public void matchListener(final Context context){
+    //    public void matchListener(final Context context){
 //        db.child(Keys.SERVICES).addValueEventListener(new ValueEventListener() {
 //                @Override
 //                public void onDataChange(DataSnapshot dataSnapshot) {
@@ -112,17 +111,38 @@ public class FirebaseManager {
         });
     }
 
-    public void getAllGiveRequestFromDB(final FirebaseCallback <ArrayList<GiveRequest>>callback) {
+    public void getAllGiveRequestFromDB(final FirebaseCallback<ArrayList<GiveRequest>> callback) {
         db.child(Keys.GIVE_REQUEST).addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 List<GiveRequest> list = new ArrayList<GiveRequest>();
-                for (DataSnapshot child: dataSnapshot.getChildren()) {
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
                     list.add(child.getValue(GiveRequest.class));
                 }                // get the values from map.values();
-                callback.onDataArrived((ArrayList<GiveRequest>)list);
+                callback.onDataArrived((ArrayList<GiveRequest>) list);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: ");
+                callback.onDataArrived(null);
+            }
+        });
+    }
+
+    public void getAllTakeRequestFromDB(final FirebaseCallback<ArrayList<TakeRequest>> callback) {
+        db.child(Keys.TAKE_REQUEST).addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                List<TakeRequest> list = new ArrayList<TakeRequest>();
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    list.add(child.getValue(TakeRequest.class));
+                }                // get the values from map.values();
+                callback.onDataArrived((ArrayList<TakeRequest>) list);
             }
 
             @Override
@@ -134,38 +154,47 @@ public class FirebaseManager {
     }
 
 
-//    public void setUserLogin(String currentUserId) {
-//
-//        db.child("Users").child(currentUserId).child("isLogin").setValue(1);
-//    }
-//
-//    public void setUserLogout(String currentUserId) {
-//        db.child("Users").child(currentUserId).child("isLogin").setValue(0);
-//
-//    }
-
     public void addGiveRequestToDB(GiveRequest newGiveRequest) {
-        db.child(Keys.GIVE_REQUEST).push().setValue(newGiveRequest);
+
+        String rid = db.child(Keys.GIVE_REQUEST).push().getKey();
+        newGiveRequest.setRid(rid);
+        db.child(Keys.GIVE_REQUEST).child(rid).setValue(newGiveRequest);
 
     }
 
     public void addTakeRequestToDB(TakeRequest takeRequest) {
-        db.child(Keys.TAKE_REQUEST).push().setValue(takeRequest);
+        String rid =  db.child(Keys.TAKE_REQUEST).push().getKey();
+        takeRequest.setRid(rid);
+        db.child(Keys.TAKE_REQUEST).child(rid).setValue(takeRequest);
+
     }
 
-    public void addServiceInDB(Service newService) {
-        db.child(Keys.SERVICES).push().setValue(newService);
+    public void addServiceInDB(String uid, Service newService) {
+        String sKey = db.child(Keys.SERVICES).push().getKey();
+        newService.setSid(sKey);
+        db.child(Keys.SERVICES).child(sKey).setValue(newService);
+        db.child(Keys.USERS).child(uid).child(Keys.MY_SERVICES).child(sKey).setValue(newService);
     }
-    public void matchNotification(Service service)
-    {
+
+    public void updateUserServcieInDB(String uid,Service service){
+        db.child(Keys.USERS).child(uid).child(Keys.MY_SERVICES).child(service.getSid()).setValue(service);
+    }
+
+    public void updateServiceInDB(Service service) {
+        db.child(Keys.SERVICES).child(service.getSid()).setValue(service);
+    }
+
+
+    public void matchNotification(Service service) {
 
     }
 
     private class Keys {
         public static final String USERS = "users";
         public static final String TAGS = "tags";
-        public static final String GIVE_REQUEST = "GiveRequest";
-        public static final String TAKE_REQUEST = "TakeRequest";
+        public static final String GIVE_REQUEST = "giveRequest";
+        public static final String TAKE_REQUEST = "takeRequest";
         public static final String SERVICES = "services";
+        public static final String MY_SERVICES = "myServices";
     }
 }

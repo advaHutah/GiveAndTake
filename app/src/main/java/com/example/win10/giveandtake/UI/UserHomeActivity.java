@@ -57,7 +57,7 @@ public class UserHomeActivity extends AppCompatActivity {
 
         //register current user as listener to match
 
-        firebaseManager.matchListener(this);
+        //firebaseManager.matchListener(this);
 
         //define menu toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -106,6 +106,11 @@ public class UserHomeActivity extends AppCompatActivity {
                                 //todo if there is time
                                 break;
                             }
+                            case R.id.nav_my_services: {
+                                startActivity(new Intent(UserHomeActivity.this, MyServicesActivity.class));
+                                break;
+                            }
+
                             case R.id.nav_edit_user_info: {
                                 break;
                             }

@@ -5,9 +5,11 @@ import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.UI.GiveRequestFragment;
 import com.example.win10.giveandtake.UI.TakeRequestFragment;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 
-public class User {
+public class User implements Serializable {
 
     final static int INIT_BALANCE = 0;
 
@@ -28,9 +30,9 @@ public class User {
     //TODO add birthdate
     //TODO add image resource
 
-    private ArrayList<TakeRequest> myTakeRequest;
-    private ArrayList<GiveRequest> myGiveRequests;
-    private ArrayList<Service>myService;
+    private HashMap<String, TakeRequest> myTakeRequest;
+    private HashMap<String, GiveRequest> myGiveRequests;
+    private HashMap<String, Service> myServices;
 
     private FirebaseManager userService = FirebaseManager.getInstance();
 
@@ -45,14 +47,21 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.gender = gender.equals("נקבה") ? Gender.FEMALE : Gender.MALE;
         this.balance = INIT_BALANCE;
-        myTakeRequest = new ArrayList<TakeRequest>();
-        myGiveRequests = new ArrayList<GiveRequest>();
-        myService = new ArrayList<Service>();
+        myTakeRequest = new HashMap<String, TakeRequest>();
+        myGiveRequests = new HashMap<String, GiveRequest>();
+        myServices = new HashMap<String, Service>();
     }
 
     public User(String id, String email, String firstName, String lastName, String phoneNumber, String gender, int balance) {
         this(id, email, firstName, lastName, phoneNumber, gender);
         this.balance = balance;
+    }
+
+    public User(String id, String email, String firstName, String lastName, String phoneNumber, String gender, int balance, HashMap<String, TakeRequest> myTakeRequest, HashMap<String, GiveRequest> myGiveRequests, HashMap<String, Service> myServices) {
+        this(id, email, firstName, lastName, phoneNumber, gender, balance);
+        this.myTakeRequest = myTakeRequest;
+        this.myGiveRequests = myGiveRequests;
+        this.myServices = myServices;
     }
 
     public String getId() {
@@ -119,23 +128,45 @@ public class User {
 
 
     public void addTakeRequest(TakeRequest newTakeRequest) {
-        if(myTakeRequest == null)
-            myTakeRequest = new ArrayList<TakeRequest>();
-        myTakeRequest.add(newTakeRequest);
+        if (myTakeRequest == null)
+            myTakeRequest = new HashMap<String, TakeRequest>();
+        myTakeRequest.put(newTakeRequest.getRid(), newTakeRequest);
     }
 
     public void addGiveRequest(GiveRequest newGiveRequest) {
-        if(myGiveRequests == null)
-            myGiveRequests = new ArrayList<GiveRequest>();
-        myGiveRequests.add(newGiveRequest);
+        if (myGiveRequests == null)
+            myGiveRequests = new HashMap<String, GiveRequest>();
+        myGiveRequests.put(newGiveRequest.getRid(), newGiveRequest);
     }
 
-    public void addService(Service service)
-    {
-        if(myService==null)
-        {
-            myService = new ArrayList<>();
+    public void addService(Service service) {
+        if (myServices == null) {
+            myServices = new HashMap<String, Service>();
         }
-        myService.add(service);
+        myServices.put(service.getSid(), service);
+    }
+
+    public HashMap<String, GiveRequest> getMyGiveRequests() {
+        return myGiveRequests;
+    }
+
+    public HashMap<String, Service> getMyServices() {
+        return myServices;
+    }
+
+    public HashMap<String, TakeRequest> getMyTakeRequest() {
+        return myTakeRequest;
+    }
+
+    public void setMyGiveRequests(HashMap<String, GiveRequest> myGiveRequests) {
+        this.myGiveRequests = myGiveRequests;
+    }
+
+    public void setMyServices(HashMap<String, Service> myServices) {
+        this.myServices = myServices;
+    }
+
+    public void setMyTakeRequest(HashMap<String, TakeRequest> myTakeRequest) {
+        this.myTakeRequest = myTakeRequest;
     }
 }

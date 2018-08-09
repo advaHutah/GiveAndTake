@@ -65,7 +65,7 @@ public class GiveRequestFragment extends Fragment {
         requestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!text.equals("") && selectedTags != null)
+                if (!text.equals("") && !selectedTags.isEmpty())
                     appManager.addGiveRequest(text, new ArrayList<String>(selectedTags));
                 //change fragment to defult
                 UserHomeDefultFragment userHomeDefultFragment = new UserHomeDefultFragment();
