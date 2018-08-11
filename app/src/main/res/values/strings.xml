@@ -68,6 +68,9 @@
     <string name="taker_name_match">שם מקבל השירות:</string>
     <string name="service_type_match">סוג השירות :</string>
     <string name="nav_my_services">השירותים שלי</string>
+    <string name="start_service">התחל שירות</string>
+    <string name="finish_service">סיים שירות</string>
+    <string name="cancel_service">בטל שירות</string>
 
 
 </resources>

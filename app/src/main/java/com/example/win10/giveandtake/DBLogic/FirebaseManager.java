@@ -27,7 +27,6 @@ public class FirebaseManager {
     private static final String TAG = FirebaseManager.class.getSimpleName();
 
 
-
     public interface FirebaseCallback<T> {
         void onDataArrived(T value);
     }
@@ -153,6 +152,27 @@ public class FirebaseManager {
         });
     }
 
+    public void getAllTagsFromDB(final FirebaseCallback<ArrayList<String>> callback) {
+        db.child(Keys.TAGS).addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                List<String> list = new ArrayList<String>();
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    list.add(child.getValue(String.class));
+                }                // get the values from map.values();
+                callback.onDataArrived((ArrayList<String>) list);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: ");
+                callback.onDataArrived(null);
+            }
+        });
+    }
+
 
     public void addGiveRequestToDB(GiveRequest newGiveRequest) {
 
@@ -163,7 +183,7 @@ public class FirebaseManager {
     }
 
     public void addTakeRequestToDB(TakeRequest takeRequest) {
-        String rid =  db.child(Keys.TAKE_REQUEST).push().getKey();
+        String rid = db.child(Keys.TAKE_REQUEST).push().getKey();
         takeRequest.setRid(rid);
         db.child(Keys.TAKE_REQUEST).child(rid).setValue(takeRequest);
 
@@ -176,7 +196,7 @@ public class FirebaseManager {
         db.child(Keys.USERS).child(uid).child(Keys.MY_SERVICES).child(sKey).setValue(newService);
     }
 
-    public void updateUserServcieInDB(String uid,Service service){
+    public void updateUserServcieInDB(String uid, Service service) {
         db.child(Keys.USERS).child(uid).child(Keys.MY_SERVICES).child(service.getSid()).setValue(service);
     }
 
@@ -184,10 +204,35 @@ public class FirebaseManager {
         db.child(Keys.SERVICES).child(service.getSid()).setValue(service);
     }
 
-
-    public void matchNotification(Service service) {
-
+    public void updateToken(String uid, String token) {
+        db.child(Keys.NOTIFICATIONS).child(Keys.USERS_TOKENS).child(uid).child(Keys.FSM_TOKEN).setValue(token);
     }
+
+    public void getToken(String uid, final FirebaseCallback<String> callback) {
+        db.child(Keys.NOTIFICATIONS).child(Keys.USERS_TOKENS).child(uid).child(Keys.FSM_TOKEN).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                callback.onDataArrived(dataSnapshot.getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: ");
+                callback.onDataArrived(null);
+            }
+        });
+    }
+
+
+    public void removeService(Service theService) {
+        //remove service
+        db.child(Keys.SERVICES).child(theService.getSid()).removeValue();
+        //remoce service from giver my services
+        db.child(Keys.USERS).child(theService.getGiveRequest().getUid()).child(Keys.MY_SERVICES).child(theService.getSid()).removeValue();
+        //remoce service from taker my services
+        db.child(Keys.USERS).child(theService.getTakeRequest().getUid()).child(Keys.MY_SERVICES).child(theService.getSid()).removeValue();
+    }
+
 
     private class Keys {
         public static final String USERS = "users";
@@ -196,5 +241,11 @@ public class FirebaseManager {
         public static final String TAKE_REQUEST = "takeRequest";
         public static final String SERVICES = "services";
         public static final String MY_SERVICES = "myServices";
+        public static final String NOTIFICATIONS = "notifications";
+        public static final String USERS_TOKENS = "usersTokens";
+        public static final String FSM_TOKEN = "fcmToken";
+
     }
+
+
 }

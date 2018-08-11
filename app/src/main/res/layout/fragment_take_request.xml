@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fragment_take_request"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,19 +8,20 @@
 
     <android.support.design.widget.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="20dp">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
 
         <EditText
             android:id="@+id/take_request_input_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLines="5"
-            android:paddingStart="10dp"
+            android:background="@drawable/button_shape"
             android:hint="@string/take_request_input_text"
-            android:textColor="@android:color/black"
-            android:background="@drawable/button_shape"/>
+            android:maxLines="5"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp"
+            android:textColor="@android:color/black" />
     </android.support.design.widget.TextInputLayout>
 
     <Button
@@ -29,7 +29,8 @@
         style="?android:textAppearanceSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
         android:background="@drawable/button_shape"
         android:text="@string/take_request_find_text_btn"
         android:textColor="@android:color/black"
@@ -37,12 +38,11 @@
 
     <GridView
         android:id="@+id/take_request_tags_result"
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:numColumns="3">
-    </GridView>
+        android:layout_marginTop="10dp"
+        android:numColumns="3"></GridView>
 
 
     <Button
@@ -50,7 +50,7 @@
         style="?android:textAppearanceSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="100dp"
+        android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:background="@drawable/button_shape"
         android:text="@string/request_btn"

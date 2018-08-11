@@ -11,7 +11,7 @@ import java.util.HashMap;
 
 public class User implements Serializable {
 
-    final static int INIT_BALANCE = 0;
+    final static int INIT_BALANCE = 8*60;
 
     public enum Gender {
         MALE,

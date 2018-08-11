@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.win10.giveandtake.DBLogic.FirebaseManager;
 import com.example.win10.giveandtake.Logic.AppManager;
@@ -27,6 +28,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class UserHomeActivity extends AppCompatActivity {
 
@@ -48,12 +50,16 @@ public class UserHomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user_home);
 
 
+
         //open userHomeDefultFragment
         fragmentManager = getFragmentManager();
         userHomeDefultFragment = new UserHomeDefultFragment();
         fragmentManager.beginTransaction()
                 .replace(R.id.content_frame, userHomeDefultFragment)
                 .commit();
+
+        //set user FSM token
+        firebaseManager.updateToken(appManager.getCurrentUser().getId(),FirebaseInstanceId.getInstance().getToken());
 
         //register current user as listener to match
 
@@ -79,6 +85,8 @@ public class UserHomeActivity extends AppCompatActivity {
                         mDrawerLayout.closeDrawers();
                         switch (menuItem.getItemId()) {
                             case R.id.nav_explore: {
+                                startActivity(new Intent(UserHomeActivity.this, ExploreActivity.class));
+                                break;
                             }
                             case R.id.nav_full_account_info: {
                                 fullUserInfoFragment = new FullUserInfoFragment();
@@ -107,7 +115,11 @@ public class UserHomeActivity extends AppCompatActivity {
                                 break;
                             }
                             case R.id.nav_my_services: {
-                                startActivity(new Intent(UserHomeActivity.this, MyServicesActivity.class));
+                                if(appManager.getCurrentUser().getMyServices()!=null) {
+                                    startActivity(new Intent(UserHomeActivity.this, MyServicesActivity.class));
+                                }else
+                                    Toast.makeText(UserHomeActivity.this, "You dont have service",
+                                            Toast.LENGTH_SHORT).show();
                                 break;
                             }
 

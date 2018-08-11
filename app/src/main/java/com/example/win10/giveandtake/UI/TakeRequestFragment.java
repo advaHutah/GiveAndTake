@@ -92,9 +92,6 @@ public class TakeRequestFragment extends Fragment {
         });
     }
 
-    public void findMatch() {
-        //todo
-    }
 }
 
 

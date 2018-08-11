@@ -34,7 +34,6 @@ public class ServicesListFragment extends Fragment {
 
         @Override
         public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-            // TODO Auto-generated method stub
             if(myServices.get(position).getStatus()!= Service.Status.COMPLETED) {
                 serviceInfoFragment = new ServiceInfoFragment();
                 appManager.setSelectedService(myServices.get(position));
@@ -52,17 +51,23 @@ public class ServicesListFragment extends Fragment {
 
         appManager = AppManager.getInstance();
         fragmentManager= getFragmentManager();
-        myServices = new ArrayList<Service>(appManager.getCurrentUser().getMyServices().values());
-        servicesListView = (ListView) view.findViewById(R.id.service_list_view);
-        serviceAdapter = new ServicesListFragment.ServiceAdapter();
-        servicesListView.setAdapter(serviceAdapter);
-        servicesListView.setOnItemClickListener(onItemClickListener);
+            myServices = new ArrayList<Service>(appManager.getCurrentUser().getMyServices().values());
+            servicesListView = (ListView) view.findViewById(R.id.service_list_view);
+            serviceAdapter = new ServicesListFragment.ServiceAdapter();
+            servicesListView.setAdapter(serviceAdapter);
+            servicesListView.setOnItemClickListener(onItemClickListener);
         return view;
     }
 
     @Override
     public void onPause() {
         super.onPause();
+            myServices = new ArrayList<Service>(appManager.getCurrentUser().getMyServices().values());
+            servicesListView = (ListView) view.findViewById(R.id.service_list_view);
+            serviceAdapter = new ServicesListFragment.ServiceAdapter();
+            servicesListView.setAdapter(serviceAdapter);
+            servicesListView.setOnItemClickListener(onItemClickListener);
+
     }
 
     class ServiceAdapter extends BaseAdapter {

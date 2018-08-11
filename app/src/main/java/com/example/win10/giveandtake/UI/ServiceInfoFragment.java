@@ -26,10 +26,11 @@ public class ServiceInfoFragment extends Fragment {
     private TextView giverName;
     private TextView takerName;
     private TextView description;
-    private EditText minuts;
-    private Button confirmMeeting_btn;
+    private Button startServiceBtn;
+    private Button endServiceBtn;
+    private Button cancelServiceBtn;
 
-    private FragmentManager fragmentManager ;
+    private FragmentManager fragmentManager;
     private ServicesListFragment servicesListFragment;
 
 
@@ -46,25 +47,57 @@ public class ServiceInfoFragment extends Fragment {
         giverName = (TextView) view.findViewById(R.id.giver_user_name_text);
         takerName = (TextView) view.findViewById(R.id.taker_user_name_text);
         description = (TextView) view.findViewById(R.id.service_description_text);
-        minuts = (EditText) view.findViewById(R.id.minut_input_text);
-        confirmMeeting_btn = (Button) view.findViewById(R.id.confirm_meeting_btn);
+        startServiceBtn = (Button) view.findViewById(R.id.start_service_btn);
+        endServiceBtn = (Button) view.findViewById(R.id.end_service_btn);
+        cancelServiceBtn = (Button) view.findViewById(R.id.cancel_service_btn);
 
         //set service info in view
         giverName.setText(theService.getGiveRequest().getUserName());
         takerName.setText(theService.getTakeRequest().getUserName());
         description.setText(theService.getDescription());
 
-        //finish meeting
-        confirmMeeting_btn.setOnClickListener(new View.OnClickListener() {
+        //start service
+        startServiceBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //start timer
+                //todo
+
+
+            }
+        });
+        //end service
+        endServiceBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //calculate total time int minuts
+                //todo
+                int minuts = 0;
                 //update manager that service end
-                appManager.serviceEnd(theService, Integer.parseInt(minuts.getText().toString()));
+                appManager.serviceEnd(theService, minuts);
+                //change status in the list
                 servicesListFragment = new ServicesListFragment();
+                //go to service list
                 fragmentManager.beginTransaction()
                         .replace(R.id.match_activity_frame, servicesListFragment)
                         .commit();
+                //hand shake
+                //todo
 
+            }
+        });
+
+        cancelServiceBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //app manager remove this service
+                appManager.removeService(theService);
+                //change to list
+                servicesListFragment = new ServicesListFragment();
+                //go to service list
+                fragmentManager.beginTransaction()
+                        .replace(R.id.match_activity_frame, servicesListFragment)
+                        .commit();
             }
         });
 

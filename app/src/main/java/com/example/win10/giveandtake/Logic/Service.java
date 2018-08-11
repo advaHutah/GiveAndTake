@@ -7,8 +7,7 @@ public class Service implements Serializable {
 
 
     public enum Status {
-        NO_DATE_SPECIFIDE,
-        DATE_SPECIFIDE_NOT_COMPLETE,
+        NOT_COMPLETE,
         COMPLETED
     }
 
@@ -26,7 +25,7 @@ public class Service implements Serializable {
     }
 
     public Service(TakeRequest takeRequest, GiveRequest giveRequest, String description) {
-        this.status = Status.NO_DATE_SPECIFIDE;
+        this.status = Status.NOT_COMPLETE;
         this.takeRequest = takeRequest;
         this.giveRequest = giveRequest;
         this.description = description;

@@ -97,23 +97,33 @@
         </LinearLayout>
     </LinearLayout>
 
-    <EditText
-        android:id="@+id/minut_input_text"
-        android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_marginTop="50dp"
-        android:layout_gravity="center"
-        android:background="@color/white"
-        android:hint=" כמה זמן? "/>
 
     <Button
-        android:id="@+id/confirm_meeting_btn"
+        android:id="@+id/start_service_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
         android:background="@drawable/button_shape"
-        android:text="@string/confirm_meeting"
-        android:textSize="30dp" />
+        android:text="@string/start_service"
+        android:textSize="25dp" />
+    <Button
+        android:id="@+id/end_service_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/button_shape"
+        android:text="@string/finish_service"
+        android:textSize="25dp" />
+    <Button
+        android:id="@+id/cancel_service_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/button_shape"
+        android:text="@string/cancel_service"
+        android:textSize="25dp" />
 
 </LinearLayout>
