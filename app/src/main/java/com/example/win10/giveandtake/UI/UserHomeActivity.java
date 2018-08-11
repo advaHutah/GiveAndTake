@@ -43,6 +43,7 @@ public class UserHomeActivity extends AppCompatActivity {
     private FullUserInfoFragment fullUserInfoFragment;
     private TakeRequestFragment takeRequestFragment;
     private GiveRequestFragment giveRequestFragment;
+    private EditUserInfoFragment editUserInfoFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +125,10 @@ public class UserHomeActivity extends AppCompatActivity {
                             }
 
                             case R.id.nav_edit_user_info: {
+                                editUserInfoFragment = new EditUserInfoFragment();
+                                fragmentManager.beginTransaction()
+                                        .replace(R.id.content_frame, editUserInfoFragment)
+                                        .commit();
                                 break;
                             }
                             case R.id.nav_connect: {

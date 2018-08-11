@@ -71,6 +71,7 @@
     <string name="start_service">התחל שירות</string>
     <string name="finish_service">סיים שירות</string>
     <string name="cancel_service">בטל שירות</string>
+    <string name="edit_user_info_btn">בצע</string>
 
 
 </resources>

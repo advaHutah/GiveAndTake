@@ -85,8 +85,13 @@ public class FirebaseManager {
 //        });
 //
 //    }
-    public void updateUserInfoInDB() {
-        //TODO
+    public void updateUserInfoInDB (String uid,String firstName, String lastName, String phoneNumber) {
+        db.child(Keys.USERS).child(uid).child(Keys.FIRTS_NAME).setValue(firstName);
+        db.child(Keys.USERS).child(uid).child(Keys.LAST_NAME).setValue(lastName);
+        db.child(Keys.USERS).child(uid).child(Keys.PHONE).setValue(phoneNumber);
+        db.child(Keys.USERS).child(uid).child(Keys.FULL_NAME).setValue(firstName+" "+lastName);
+
+
     }
 
     public void addTagsToDB(ArrayList<String> selectedTags) {
@@ -244,7 +249,10 @@ public class FirebaseManager {
         public static final String NOTIFICATIONS = "notifications";
         public static final String USERS_TOKENS = "usersTokens";
         public static final String FSM_TOKEN = "fcmToken";
-
+        public static final String FIRTS_NAME= "firstName";
+        public static final String LAST_NAME = "lastName";
+        public static final String PHONE = "phoneNumber";
+        public static final String FULL_NAME ="fullName" ;
     }
 
 
