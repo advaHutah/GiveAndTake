@@ -58,7 +58,7 @@ public class UserHomeActivity extends AppCompatActivity {
                 .replace(R.id.content_frame, userHomeDefultFragment)
                 .commit();
 
-        //set user FSM token
+        //set user FCM token
         firebaseManager.updateToken(appManager.getCurrentUser().getId(),FirebaseInstanceId.getInstance().getToken());
 
         //register current user as listener to match

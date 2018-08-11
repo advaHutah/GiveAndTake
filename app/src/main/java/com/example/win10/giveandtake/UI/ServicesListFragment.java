@@ -62,12 +62,6 @@ public class ServicesListFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-            myServices = new ArrayList<Service>(appManager.getCurrentUser().getMyServices().values());
-            servicesListView = (ListView) view.findViewById(R.id.service_list_view);
-            serviceAdapter = new ServicesListFragment.ServiceAdapter();
-            servicesListView.setAdapter(serviceAdapter);
-            servicesListView.setOnItemClickListener(onItemClickListener);
-
     }
 
     class ServiceAdapter extends BaseAdapter {
