@@ -30,10 +30,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NotificationManager {
+    private static NotificationManager singletonNotificationManager = null;
+
 
     private static final OkHttpClient httpClient = new OkHttpClient();
     private static final String TAG = "Notification";
+    private static int noti_id=0;
     private FirebaseManager firebaseManager = FirebaseManager.getInstance();
+
+    private NotificationManager() {
+    }
+
+    public static NotificationManager getInstance() {
+        if (singletonNotificationManager == null)
+            singletonNotificationManager = new NotificationManager();
+        return singletonNotificationManager;
+    }
 
     public void sendNotificationToTheUser(String uid, String title, final String body) {
 
@@ -47,7 +59,7 @@ public class NotificationManager {
                     @Override
                     public void onDataArrived(Response value) {
                         Log.d(TAG, "sendFcmNotificationUsingUrlRequest: " + value);
-                        sendNotification(body);
+                      //  sendNotification("Match Notification","We find match for you ! ");
                     }
 
                 });
@@ -143,7 +155,7 @@ public class NotificationManager {
         }
     }
 
-    public static void sendNotification(String messageBody) {
+    public static void sendNotification(String title,String body) {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(MyApplication.getContext(), "notify_001");
@@ -151,8 +163,8 @@ public class NotificationManager {
         PendingIntent pendingIntent = PendingIntent.getActivity(MyApplication.getContext(), 0, ii, 0);
 
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
-        bigText.bigText("We found match for you");
-        bigText.setBigContentTitle("Match");
+        bigText.bigText(body);
+        bigText.setBigContentTitle(title);
 
         mBuilder.setContentIntent(pendingIntent);
         mBuilder.setSmallIcon(R.drawable.temp_logo);
@@ -172,7 +184,8 @@ public class NotificationManager {
             mNotificationManager.createNotificationChannel(channel);
         }
 
-        mNotificationManager.notify(0, mBuilder.build());
+        mNotificationManager.notify(noti_id, mBuilder.build());
+        noti_id++;
     }
 
 }

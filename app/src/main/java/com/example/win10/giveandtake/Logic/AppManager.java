@@ -63,8 +63,9 @@ public class AppManager {
                             firebaseManager.addServiceInDB(currentUser.getId(), newService);
                             //send notifictaion for service users
                             //TODO
-                            NotificationManager notificationManager = new NotificationManager();
+                            NotificationManager notificationManager =  NotificationManager.getInstance();
                             notificationManager.sendNotificationToTheUser(giveRequest.getUid(),"Match Notification","We find match for you ! ");
+                            notificationManager.sendNotification("Match Notification","We find match for you ! ");
                             break;
                         }
                     }
@@ -91,8 +92,9 @@ public class AppManager {
                             firebaseManager.addServiceInDB(currentUser.getId(), newService);
                             //send notifictaion for service users
                             //TODO
-                            NotificationManager notificationManager = new NotificationManager();
+                            NotificationManager notificationManager = NotificationManager.getInstance();
                             notificationManager.sendNotificationToTheUser(takeRequest.getUid(),"Match Notification","We find match for you ! ");
+                            NotificationManager.sendNotification("Match Notification","We find match for you ! ");
                             break;
                         }
                     }
@@ -194,7 +196,7 @@ public class AppManager {
 
 
     public void removeService(Service theService) {
-        currentUser.getMyServices().remove(theService.getSid());
+        currentUser.getMyServices().remove(theService);
         firebaseManager.removeService(theService);
     }
 }
