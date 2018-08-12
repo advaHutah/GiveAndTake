@@ -119,7 +119,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUI(FirebaseUser user) {
         if (user != null) {
-          ProgressDialog.show(this, "login", "loading profile");
+     //     ProgressDialog.show(this, "login", "loading profile");
             FirebaseManager.getInstance().getUserDetailFromDB(auth.getCurrentUser().getUid(), new FirebaseManager.FirebaseCallback<User>() {
                 @Override
                 public void onDataArrived(User value) {

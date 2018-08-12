@@ -3,16 +3,20 @@ package com.example.win10.giveandtake.Logic;
 
 import android.app.AlarmManager;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.util.Log;
 
 import com.example.win10.giveandtake.DBLogic.FirebaseManager;
 import com.example.win10.giveandtake.MyApplication;
+import com.example.win10.giveandtake.R;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.gson.Gson;
 import com.squareup.okhttp.MediaType;
@@ -31,7 +35,7 @@ public class NotificationManager {
     private static final String TAG = "Notification";
     private FirebaseManager firebaseManager = FirebaseManager.getInstance();
 
-    public void sendNotificationToTheUser(String uid, String title, String body) {
+    public void sendNotificationToTheUser(String uid, String title, final String body) {
 
         firebaseManager.getToken(uid, new FirebaseManager.FirebaseCallback<String>() {
             @Override
@@ -43,7 +47,7 @@ public class NotificationManager {
                     @Override
                     public void onDataArrived(Response value) {
                         Log.d(TAG, "sendFcmNotificationUsingUrlRequest: " + value);
-
+                        sendNotification(body);
                     }
 
                 });
@@ -137,6 +141,38 @@ public class NotificationManager {
             if (callbacksHandler != null)
                 callbacksHandler.onDataArrived(null);
         }
+    }
+
+    public static void sendNotification(String messageBody) {
+
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(MyApplication.getContext(), "notify_001");
+        Intent ii = new Intent(MyApplication.getContext(), MyApplication.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(MyApplication.getContext(), 0, ii, 0);
+
+        NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+        bigText.bigText("We found match for you");
+        bigText.setBigContentTitle("Match");
+
+        mBuilder.setContentIntent(pendingIntent);
+        mBuilder.setSmallIcon(R.drawable.temp_logo);
+        mBuilder.setContentTitle("Your Title");
+        mBuilder.setContentText("Your text");
+        mBuilder.setPriority(Notification.PRIORITY_MAX);
+        mBuilder.setStyle(bigText);
+
+        android.app.NotificationManager mNotificationManager =
+                (android.app.NotificationManager) MyApplication.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel("notify_001",
+                    "Channel human readable title",
+                    android.app.NotificationManager.IMPORTANCE_DEFAULT);
+            mNotificationManager.createNotificationChannel(channel);
+        }
+
+        mNotificationManager.notify(0, mBuilder.build());
     }
 
 }
