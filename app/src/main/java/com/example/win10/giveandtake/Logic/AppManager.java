@@ -64,7 +64,7 @@ public class AppManager {
                             //send notifictaion for service users
                             //TODO
                             NotificationManager notificationManager =  NotificationManager.getInstance();
-                            notificationManager.sendNotificationToTheUser(giveRequest.getUid(),"Match Notification","We find match for you ! ");
+                            notificationManager.sendNotificationToTheUser(giveRequest.getUid(),"Match Notification","We find match for you ! ",newService);
                             notificationManager.sendNotification("Match Notification","We find match for you ! ");
                             break;
                         }
@@ -93,7 +93,7 @@ public class AppManager {
                             //send notifictaion for service users
                             //TODO
                             NotificationManager notificationManager = NotificationManager.getInstance();
-                            notificationManager.sendNotificationToTheUser(takeRequest.getUid(),"Match Notification","We find match for you ! ");
+                            notificationManager.sendNotificationToTheUser(takeRequest.getUid(),"Match Notification","We find match for you ! ",newService);
                             NotificationManager.sendNotification("Match Notification","We find match for you ! ");
                             break;
                         }

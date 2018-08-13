@@ -17,6 +17,7 @@ import android.util.Log;
 import com.example.win10.giveandtake.DBLogic.FirebaseManager;
 import com.example.win10.giveandtake.MyApplication;
 import com.example.win10.giveandtake.R;
+import com.example.win10.giveandtake.UI.MyServicesActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.gson.Gson;
 import com.squareup.okhttp.MediaType;
@@ -37,6 +38,7 @@ public class NotificationManager {
     private static final String TAG = "Notification";
     private static int noti_id=0;
     private FirebaseManager firebaseManager = FirebaseManager.getInstance();
+    private AppManager appManager = AppManager.getInstance();
 
     private NotificationManager() {
     }
@@ -47,7 +49,7 @@ public class NotificationManager {
         return singletonNotificationManager;
     }
 
-    public void sendNotificationToTheUser(String uid, String title, final String body) {
+    public void sendNotificationToTheUser(String uid, String title, final String body, final Service service) {
 
         firebaseManager.getToken(uid, new FirebaseManager.FirebaseCallback<String>() {
             @Override
@@ -55,11 +57,12 @@ public class NotificationManager {
                 String fcmToken = value;
                 HashMap<String, String> data = new HashMap<>();
                 data.put("more data", "some ID");
-                sendFcmNotificationUsingUrlRequest(generateNotificationPayload("Test", "From Android"), data, new String[]{fcmToken}, new FirebaseManager.FirebaseCallback<Response>() {
+                sendFcmNotificationUsingUrlRequest(generateNotificationPayload("Test", "From Android"), service, new String[]{fcmToken}, new FirebaseManager.FirebaseCallback<Response>() {
                     @Override
                     public void onDataArrived(Response value) {
                         Log.d(TAG, "sendFcmNotificationUsingUrlRequest: " + value);
-                      //  sendNotification("Match Notification","We find match for you ! ");
+                        sendNotification("Match Notification","We find match for you ! ");
+                        Log.d("stam",value.body().toString());
                     }
 
                 });
@@ -95,17 +98,17 @@ public class NotificationManager {
 //    }
 
     //notificationDictionary: [String:String], dataDictionary: [String:String], toRegistrationIds registrationIds: [String], completion: @escaping (Bool) -> ()
-    private void sendFcmNotificationUsingUrlRequest(HashMap<String, String> notificationDictionary, HashMap<String, String> dataDictionary, String[] registrationIds, final FirebaseManager.FirebaseCallback<Response> callbacksHandler) {
-        HashMap<String, Object> jsonDictionary = new HashMap<>();
-        jsonDictionary.put("registration_ids", registrationIds); // or use 'to' for ony one registration ID (without using an array)
-        jsonDictionary.put("notification", notificationDictionary);
-        jsonDictionary.put("data", dataDictionary);
+    private void sendFcmNotificationUsingUrlRequest(HashMap<String, String> notificationDictionary, Service service, String[] registrationIds, final FirebaseManager.FirebaseCallback<Response> callbacksHandler) {
+//        HashMap<String, Object> jsonDictionary = new HashMap<>();
+//        jsonDictionary.put("registration_ids", registrationIds); // or use 'to' for ony one registration ID (without using an array)
+//        jsonDictionary.put("notification", notificationDictionary);
+//        jsonDictionary.put("data", dataDictionary);
 
         HashMap<String, String> httpHeaders = new HashMap<>();
         String secretKey = "AIzaSyChmQwpD8juXnZ0nGmuWqz7aBSOsFh-aFI";
         httpHeaders.put("Authorization", "key= " + secretKey);
 
-        makePostRequest(new Gson().toJson(jsonDictionary), "https://fcm.googleapis.com/fcm/send", httpHeaders, callbacksHandler);
+        makePostRequest(new Gson().toJson(service), "https://fcm.googleapis.com/fcm/send", httpHeaders, callbacksHandler);
     }
 
 
@@ -159,7 +162,7 @@ public class NotificationManager {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(MyApplication.getContext(), "notify_001");
-        Intent ii = new Intent(MyApplication.getContext(), MyApplication.class);
+        Intent ii = new Intent(MyApplication.getContext(), MyServicesActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(MyApplication.getContext(), 0, ii, 0);
 
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
