@@ -116,7 +116,7 @@ public class FirebaseManager {
     }
 
     public void getAllGiveRequestFromDB(final FirebaseCallback<ArrayList<GiveRequest>> callback) {
-        db.child(Keys.GIVE_REQUEST).addValueEventListener(new ValueEventListener() {
+        db.child(Keys.GIVE_REQUEST).orderByChild("tags").addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

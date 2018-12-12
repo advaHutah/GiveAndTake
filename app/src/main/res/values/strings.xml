@@ -72,6 +72,9 @@
     <string name="finish_service">סיים שירות</string>
     <string name="cancel_service">בטל שירות</string>
     <string name="edit_user_info_btn">בצע</string>
+    <string name="handshakeActivity_handshakeTitle">לחיצת יד</string>
+    <string name="handshakeActivity_serviceTitle">השירות:</string>
+    <string name="handshakeProcessFragment_title">Service in progress...</string>
 
 
 </resources>

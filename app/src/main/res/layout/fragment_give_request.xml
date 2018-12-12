@@ -16,7 +16,7 @@
             android:id="@+id/give_request_input_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/button_shape"
+            android:background="@drawable/button_shape_old"
             android:hint="@string/give_request_input_text"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:background="@drawable/button_shape"
+        android:background="@drawable/button_shape_old"
         android:text="@string/take_request_find_text_btn"
         android:textColor="@android:color/black"
         android:textStyle="bold" />
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:background="@drawable/button_shape"
+        android:background="@drawable/button_shape_old"
         android:text="@string/request_btn"
         android:textColor="@android:color/black"
         android:textStyle="bold" />

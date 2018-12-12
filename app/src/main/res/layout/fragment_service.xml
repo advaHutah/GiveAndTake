@@ -14,7 +14,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
-        android:background="@drawable/button_shape"
+        android:background="@drawable/button_shape_old"
         android:orientation="vertical">
 
         <TextView
@@ -104,7 +104,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:background="@drawable/button_shape"
+        android:background="@drawable/button_shape_old"
         android:text="@string/start_service"
         android:textSize="25dp" />
     <Button
@@ -113,7 +113,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:background="@drawable/button_shape"
+        android:background="@drawable/button_shape_old"
         android:text="@string/finish_service"
         android:textSize="25dp" />
     <Button
@@ -122,7 +122,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="30dp"
-        android:background="@drawable/button_shape"
+        android:background="@drawable/button_shape_old"
         android:text="@string/cancel_service"
         android:textSize="25dp" />
 

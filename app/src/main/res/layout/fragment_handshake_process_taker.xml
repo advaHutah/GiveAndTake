@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_handshake_process_taker"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/banthink"
+        android:text="@string/handshakeProcessFragment_title"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textAlignment="center"
+            android:text="Service: " />
+
+        <TextView
+            android:id="@+id/handshakeProcessFragment_serviceInput"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="the service"
+            android:textAlignment="center"
+            android:textStyle="italic"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginTop="20dp"
+        android:text="Taking from:" />
+
+    <ImageView
+        android:id="@+id/handshakeProcessFragment_giverImage"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/handshakeProcessFragment_giverName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:layout_marginTop="10dp"
+        android:text="giver name"
+        />
+
+    <Button
+        android:id="@+id/handshakeProcessFragment_stopBtn"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/stop"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Made time: " />
+
+        <TextView
+            android:id="@+id/handshakeProcessFragment_stopper"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="00:00"
+            android:textColor="@android:color/holo_red_dark" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/handshakeProcessFragment_balance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your balance : 00:00"
+        android:layout_marginTop="10dp"/>
+
+
+</LinearLayout>

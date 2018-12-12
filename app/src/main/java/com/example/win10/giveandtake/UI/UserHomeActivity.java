@@ -117,7 +117,7 @@ public class UserHomeActivity extends AppCompatActivity {
                             }
                             case R.id.nav_my_services: {
                                 if(appManager.getCurrentUser().getMyServices()!=null) {
-                                    startActivity(new Intent(UserHomeActivity.this, MyServicesActivity.class));
+                                    startActivity(new Intent(UserHomeActivity.this, HandshakeActivity.class));
                                 }else
                                     Toast.makeText(UserHomeActivity.this, "You dont have service",
                                             Toast.LENGTH_SHORT).show();
