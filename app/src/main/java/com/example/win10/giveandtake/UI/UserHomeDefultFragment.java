@@ -10,16 +10,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.win10.giveandtake.DBLogic.FirebaseManager;
 import com.example.win10.giveandtake.Logic.AppManager;
-import com.example.win10.giveandtake.Logic.User;
 import com.example.win10.giveandtake.R;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.example.win10.giveandtake.UI.userHashtags.GiveRequestFragment;
+import com.example.win10.giveandtake.UI.userHashtags.TakeRequestFragment;
 
 
 public class UserHomeDefultFragment extends Fragment {
@@ -59,20 +53,20 @@ public class UserHomeDefultFragment extends Fragment {
         btnTake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                takeRequestFragment = new TakeRequestFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, takeRequestFragment)
-                        .commit();
+//                takeRequestFragment = new TakeRequestFragment();
+//                fragmentManager.beginTransaction()
+//                        .replace(R.id.content_frame, takeRequestFragment)
+//                        .commit();
             }
         });
 
         btnGive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                giveRequestFragment = new GiveRequestFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.content_frame, giveRequestFragment)
-                        .commit();
+//                giveRequestFragment = new GiveRequestFragment();
+//                fragmentManager.beginTransaction()
+//                        .replace(R.id.content_frame, giveRequestFragment)
+//                        .commit();
             }
         });
 

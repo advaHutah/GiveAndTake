@@ -21,10 +21,11 @@
         </activity>
         <activity android:name=".UI.SignupActivity" />
         <activity android:name=".UI.ResetPasswordActivity" />
-        <activity android:name=".UI.UserHomeActivity" />
+        <activity android:name=".UI.userProfile.UserProfileActivity" />
         <activity android:name=".UI.MyServicesActivity" />
         <activity android:name=".UI.SetMeetingActivity" />
         <activity android:name=".UI.ExploreActivity" />
+        <activity android:name=".UI.HandshakeActivity" />
 
         <service android:name=".MyFirebaseInstanceIDService">
             <intent-filter>
@@ -40,7 +41,7 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".UI.HandshakeActivity"></activity>
+        <activity android:name=".UI.userHashtags.HashtagsManagementActivity"></activity>
     </application>
 
 </manifest>

@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.example.win10.giveandtake.UI.userProfile.UserProfileActivity">
+
+        <TextView
+            android:id="@+id/my_profile_title"
+            android:layout_width="match_parent"
+            android:layout_height="25dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/banthink"
+            android:text="My Profile"
+            android:textAlignment="center"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/my_profile_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/my_profile_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text=""
+            android:textSize="30dp" />
+
+        <TextView
+            android:id="@+id/my_profile_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text=""
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:text="Balance:"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/my_profile_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text=""
+            android:textSize="20dp" />
+
+        <Button
+            android:id="@+id/btn_my_profile_hashtags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_shape_green"
+            android:text="My Hashtags"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/btn_my_profile_match"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/button_shape_green"
+            android:text="My Match"
+            android:textSize="15dp" />
+
+        <Button
+            android:id="@+id/btn_my_profile_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/white"
+            android:text="12345679"
+            android:textSize="15dp" />
+
+        <TextView
+            android:id="@+id/my_profile_phone_msg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="* your phone number must be true so others will be able to communicate for services"
+            android:textSize="20dp" />
+
+
+</LinearLayout>

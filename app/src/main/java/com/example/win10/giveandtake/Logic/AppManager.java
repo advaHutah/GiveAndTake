@@ -8,7 +8,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import com.example.win10.giveandtake.Logic.Service;
+import com.google.firebase.auth.FirebaseUser;
 
 //Handles all app actions and DB read/write
 public class AppManager {
@@ -16,7 +18,7 @@ public class AppManager {
     private static AppManager singletonAppManager = null;
     private FirebaseManager firebaseManager;
     private User currentUser;
-    private FirebaseAuth auth;
+    private FirebaseAuth mAuth;
     private Service selectedService;
 
     private Map<Integer, List<String>> conjunctions = new HashMap<Integer, List<String>>() {
@@ -33,7 +35,7 @@ public class AppManager {
 
     private AppManager() {
         firebaseManager = FirebaseManager.getInstance();
-        auth = FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
 
     }
 
@@ -44,8 +46,10 @@ public class AppManager {
     }
 
 
-    public void createNewUser(String uid, String email, String firstName, String lastName, String phoneNumber, String gender) {
-        firebaseManager.addUserInfoToDB(uid, email, firstName, lastName, phoneNumber, gender, User.INIT_BALANCE);
+    public void createNewUser(String uid, String email, String fullName, String phoneNumber, String gender) {
+        User user = new User(uid, email, fullName, phoneNumber, gender, User.INIT_BALANCE);
+        setCurrentUser(user);
+        firebaseManager.addUserInfoToDB(user);
     }
 
     public void findMatch(final TakeRequest newTakeRequest) {
@@ -63,9 +67,9 @@ public class AppManager {
                             firebaseManager.addServiceInDB(currentUser.getId(), newService);
                             //send notifictaion for service users
                             //TODO
-                            NotificationManager notificationManager =  NotificationManager.getInstance();
-                            notificationManager.sendNotificationToTheUser(giveRequest.getUid(),"Match Notification","We find match for you ! ",newService);
-                            notificationManager.sendNotification("Match Notification","We find match for you ! ");
+                            NotificationManager notificationManager = NotificationManager.getInstance();
+                            notificationManager.sendNotificationToTheUser(giveRequest.getUid(), "Match Notification", "We find match for you ! ", newService);
+                            notificationManager.sendNotification("Match Notification", "We find match for you ! ");
                             break;
                         }
                     }
@@ -93,8 +97,8 @@ public class AppManager {
                             //send notifictaion for service users
                             //TODO
                             NotificationManager notificationManager = NotificationManager.getInstance();
-                            notificationManager.sendNotificationToTheUser(takeRequest.getUid(),"Match Notification","We find match for you ! ",newService);
-                            NotificationManager.sendNotification("Match Notification","We find match for you ! ");
+                            notificationManager.sendNotificationToTheUser(takeRequest.getUid(), "Match Notification", "We find match for you ! ", newService);
+                            NotificationManager.sendNotification("Match Notification", "We find match for you ! ");
                             break;
                         }
                     }
@@ -105,7 +109,7 @@ public class AppManager {
         });
     }
 
-    public void getTokenFromFCM(){
+    public void getTokenFromFCM() {
         //todo
 
     }
@@ -118,21 +122,31 @@ public class AppManager {
         return currentUser;
     }
 
+    public FirebaseUser checkIfUserIsLogin() {
+        FirebaseUser account = mAuth.getCurrentUser();
+        if (account != null) {
+            User user =  new User(account.getUid(), account.getEmail(), account.getDisplayName(), account.getPhoneNumber(), "male");
+            setCurrentUser(user);
+            return account;
+        } else
+            return null;
+    }
+
     public void setCurrentUser(User user) {
         currentUser = user;
     }
 
     public void addTakeRequest(String text, ArrayList<String> selectedTags) {
         //create new take request
-        TakeRequest newTakeRequest = new TakeRequest(text, currentUser.getId(), currentUser.getFullName(), selectedTags, null);
+        Request newTakeRequest = new Request(text, currentUser.getId(), currentUser.getFullName(), selectedTags, null , Request.RequestType.TAKE);
         // add this request to the user
-        currentUser.addTakeRequest(newTakeRequest);
+        currentUser.addRequest(newTakeRequest);
         //add the request to firebase
-        firebaseManager.addTakeRequestToDB(newTakeRequest);
+        //firebaseManager.addTakeRequestToDB(newTakeRequest);
         //add selected tags to the tags collection
-        firebaseManager.addTagsToDB(selectedTags);
+        //firebaseManager.addTagsToDB(selectedTags);
         //find match
-        findMatch(newTakeRequest);
+        //findMatch(newTakeRequest);
 
 
     }
@@ -140,15 +154,15 @@ public class AppManager {
 
     public void addGiveRequest(String text, ArrayList<String> selectedTags) {
         //create new give request
-        GiveRequest newGiveRequest = new GiveRequest(text, currentUser.getId(), currentUser.getFullName(), selectedTags, null);
+        Request newGiveRequest = new Request(text, currentUser.getId(), currentUser.getFullName(), selectedTags, null,Request.RequestType.GIVE);
         // add this request to the user
-        currentUser.addGiveRequest(newGiveRequest);
+        currentUser.addRequest(newGiveRequest);
         //add the request to firebase
-        firebaseManager.addGiveRequestToDB(newGiveRequest);
+       // firebaseManager.addGiveRequestToDB(newGiveRequest);
         //add selected tags to the tags collection
-        firebaseManager.addTagsToDB(selectedTags);
+       // firebaseManager.addTagsToDB(selectedTags);
         //find match
-        findMatch(newGiveRequest);
+       // findMatch(newGiveRequest);
 
 
     }
@@ -179,8 +193,7 @@ public class AppManager {
         return selectedService;
     }
 
-    public void serviceEnd(Service service , int minuts)
-    {
+    public void serviceEnd(Service service, int minuts) {
         //send notification to other user
         //todo
         //update service minuts
@@ -190,13 +203,17 @@ public class AppManager {
         //update service in db
         firebaseManager.updateServiceInDB(service);
         //update users info in db
-        firebaseManager.updateUserServcieInDB(service.getTakeRequest().getUid(),service);
-        firebaseManager.updateUserServcieInDB(service.getGiveRequest().getUid(),service);
+        firebaseManager.updateUserServcieInDB(service.getTakeRequest().getUid(), service);
+        firebaseManager.updateUserServcieInDB(service.getGiveRequest().getUid(), service);
     }
 
 
     public void removeService(Service theService) {
         currentUser.getMyServices().remove(theService);
         firebaseManager.removeService(theService);
+    }
+
+    public void signOut() {
+        firebaseManager.signOut();
     }
 }

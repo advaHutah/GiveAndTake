@@ -12,7 +12,7 @@
         android:layout_height="25dp"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/banthink"
-        android:text="Hello name"
+        android:text=""
         android:textAlignment="center"
         android:textSize="30dp"
         android:textStyle="bold" />
@@ -39,14 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:background="@drawable/give_btn"
-        android:layout_gravity="center_horizontal" />
-
-    <Button
-        android:id="@+id/main_screen_fragment_take_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/take_btn"
+        android:background="@drawable/give_take_btn"
         android:layout_gravity="center_horizontal" />
 
     <Button
@@ -55,8 +48,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:background="@drawable/ic_search_black_24dp"
-        android:layout_gravity="center"
- />
+        android:layout_gravity="center" />
     <Button
         android:id="@+id/btn_fragment_logout"
         android:layout_width="match_parent"

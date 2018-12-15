@@ -55,12 +55,13 @@
         android:textStyle="bold" />
 
     <Button
-        android:id="@+id/btn_back_to_login_screen"
+        android:id="@+id/btn_start_login_screen"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:background="@drawable/button_shape_green"
-        android:text="Back to login"
+        android:text="Let’s start giving!"
         android:textSize="15dp" />
+
 
 </LinearLayout>

@@ -16,10 +16,10 @@ public class SplashScreenFragment extends Fragment {
 
     private View view;
     private FragmentManager fragmentManager;
-    private LoginFragment loginFragment;
+    private TermsOfUseFragment termsOfUseFragment;
 
 
-    private Button btnStartLogin;
+    private Button btnTermsOfUse;
 
 
     @Nullable
@@ -29,15 +29,15 @@ public class SplashScreenFragment extends Fragment {
 
 
         fragmentManager = getFragmentManager();
-        btnStartLogin = (Button) view.findViewById(R.id.btn_start_login_screen);
+        btnTermsOfUse = (Button) view.findViewById(R.id.btn_fragment_terms);
 
         //buttonActions
-        btnStartLogin.setOnClickListener(new View.OnClickListener() {
+        btnTermsOfUse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginFragment = new LoginFragment();
+                termsOfUseFragment = new TermsOfUseFragment();
                 fragmentManager.beginTransaction()
-                        .replace(R.id.loginActivity_frame_container, loginFragment)
+                        .replace(R.id.loginActivity_frame_container, termsOfUseFragment)
                         .commit();
             }
         });

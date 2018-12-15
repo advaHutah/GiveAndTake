@@ -17,7 +17,7 @@ public class TermsOfUseFragment extends Fragment {
     private View view;
     private FragmentManager fragmentManager;
     private LoginFragment loginFragment;
-    private Button btnBackToLogin;
+    private Button btnStartLogin;
 
 
     @Nullable
@@ -25,11 +25,11 @@ public class TermsOfUseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_terms_of_use, container, false);
 
-        btnBackToLogin = (Button) view.findViewById(R.id.btn_back_to_login_screen);
+        btnStartLogin = (Button) view.findViewById(R.id.btn_start_login_screen);
 
         fragmentManager = getFragmentManager();
         //buttonActions
-        btnBackToLogin.setOnClickListener(new View.OnClickListener() {
+        btnStartLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 loginFragment = new LoginFragment();

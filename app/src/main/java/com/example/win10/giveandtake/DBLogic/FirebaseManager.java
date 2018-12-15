@@ -52,9 +52,8 @@ public class FirebaseManager {
     }
 
 
-    public void addUserInfoToDB(String uid, String email, String firstName, String lastName, String phoneNumber, String gender, int balance) {
-        User user = new User(uid, email, firstName, lastName, phoneNumber, gender, balance);
-        db.child(Keys.USERS).child(uid).setValue(user);
+    public void addUserInfoToDB(User user) {
+        db.child(Keys.USERS).child(user.getId()).setValue(user);
     }
 
     //    public void matchListener(final Context context){
@@ -237,7 +236,9 @@ public class FirebaseManager {
         //remoce service from taker my services
         db.child(Keys.USERS).child(theService.getTakeRequest().getUid()).child(Keys.MY_SERVICES).child(theService.getSid()).removeValue();
     }
-
+    public void signOut (){
+        FirebaseAuth.getInstance().signOut();
+    }
 
     private class Keys {
         public static final String USERS = "users";

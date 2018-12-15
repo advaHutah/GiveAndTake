@@ -47,9 +47,9 @@ public class EditUserInfoFragment extends Fragment {
                     firebaseManager.updateUserInfoInDB(appManager.getCurrentUser().getId(), inputFirstName.getText().toString(), inputLastName.getText().toString(), inputPhoneNumber.getText().toString());
                     //change fragment to defult
                     UserHomeDefultFragment userHomeDefultFragment = new UserHomeDefultFragment();
-                    getFragmentManager().beginTransaction()
-                            .replace(R.id.content_frame, userHomeDefultFragment)
-                            .commit();
+//                    getFragmentManager().beginTransaction()
+//                            .replace(R.id.content_frame, userHomeDefultFragment)
+//                            .commit();
                 }
             }
         });

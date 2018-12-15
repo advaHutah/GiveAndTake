@@ -137,7 +137,7 @@ public class SignupActivity extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
                                 } else {
 
-                                    appManager.createNewUser(auth.getCurrentUser().getUid(), email, firstName, lastName, phone, gender);
+                                    appManager.createNewUser(auth.getCurrentUser().getUid(), email, firstName, phone, gender);
                                     //TODO open current user profile
                                     startActivity(new Intent(SignupActivity.this, LoginActivity.class));
                                     finish();

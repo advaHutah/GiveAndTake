@@ -1,17 +1,14 @@
 package com.example.win10.giveandtake.Logic;
 
 import com.example.win10.giveandtake.DBLogic.FirebaseManager;
-import com.example.win10.giveandtake.R;
-import com.example.win10.giveandtake.UI.GiveRequestFragment;
-import com.example.win10.giveandtake.UI.TakeRequestFragment;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class User implements Serializable {
 
-    final static int INIT_BALANCE = 8*60;
+    final static int INIT_BALANCE = 8 * 60;
+
 
     public enum Gender {
         MALE,
@@ -21,17 +18,15 @@ public class User implements Serializable {
     ;
     private String id;
     private String email;
-    //private String password; //TODO checke if o need to save the password
-    private String firstName;
-    private String lastName;
+    private String fullName;
     private String phoneNumber;
     private Gender gender;
     private int balance;
-    //TODO add birthdate
+    private int image;
     //TODO add image resource
 
-    private HashMap<String, TakeRequest> myTakeRequest;
-    private HashMap<String, GiveRequest> myGiveRequests;
+    private HashMap<String, Request> myTakeRequest;
+    private HashMap<String, Request> myGiveRequests;
     private HashMap<String, Service> myServices;
 
     private FirebaseManager userService = FirebaseManager.getInstance();
@@ -39,26 +34,25 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String id, String email, String firstName, String lastName, String phoneNumber, String gender) {
+    public User(String id, String email, String fullName, String phoneNumber, String gender) {
         this.id = id;
         this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber != null ? phoneNumber : "null";
         this.gender = gender.equals("נקבה") ? Gender.FEMALE : Gender.MALE;
         this.balance = INIT_BALANCE;
-        myTakeRequest = new HashMap<String, TakeRequest>();
-        myGiveRequests = new HashMap<String, GiveRequest>();
+        myTakeRequest = new HashMap<String, Request>();
+        myGiveRequests = new HashMap<String, Request>();
         myServices = new HashMap<String, Service>();
     }
 
-    public User(String id, String email, String firstName, String lastName, String phoneNumber, String gender, int balance) {
-        this(id, email, firstName, lastName, phoneNumber, gender);
+    public User(String id, String email, String fullName, String phoneNumber, String gender, int balance) {
+        this(id, email, fullName, phoneNumber, gender);
         this.balance = balance;
     }
 
-    public User(String id, String email, String firstName, String lastName, String phoneNumber, String gender, int balance, HashMap<String, TakeRequest> myTakeRequest, HashMap<String, GiveRequest> myGiveRequests, HashMap<String, Service> myServices) {
-        this(id, email, firstName, lastName, phoneNumber, gender, balance);
+    public User(String id, String email, String fullName, String phoneNumber, String gender, int balance, HashMap<String, Request> myTakeRequest, HashMap<String, GiveRequest> Request, HashMap<String, Service> myServices) {
+        this(id, email, fullName, phoneNumber, gender, balance);
         this.myTakeRequest = myTakeRequest;
         this.myGiveRequests = myGiveRequests;
         this.myServices = myServices;
@@ -70,14 +64,6 @@ public class User implements Serializable {
 
     public String getEmail() {
         return email;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
     }
 
     public String getPhoneNumber() {
@@ -93,15 +79,15 @@ public class User implements Serializable {
     }
 
     public String getFullName() {
-        return firstName + " " + lastName;
+        return fullName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public int getImage() {
+        return image;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
     public void setPhoneNumber(String phoneNumber) {
@@ -123,21 +109,23 @@ public class User implements Serializable {
 
     @Override
     public String toString() {
-        return "User details : email : " + email + ", full name : " + firstName + " " + lastName + ", phone : " + phoneNumber + ", gender : " + gender;
+        return "User details : email : " + email + ", full name : " + fullName + ", phone : " + phoneNumber + ", gender : " + gender;
     }
 
 
-    public void addTakeRequest(TakeRequest newTakeRequest) {
-        if (myTakeRequest == null)
-            myTakeRequest = new HashMap<String, TakeRequest>();
-        myTakeRequest.put(newTakeRequest.getRid(), newTakeRequest);
+    public void addRequest(Request newRequest) {
+        if (newRequest.requestType == Request.RequestType.TAKE) {
+            if (myTakeRequest == null)
+                myTakeRequest = new HashMap<String, Request>();
+            myTakeRequest.put(newRequest.getRid(), newRequest);
+        } else {
+            if (myGiveRequests == null)
+                myGiveRequests = new HashMap<String, Request>();
+            myGiveRequests.put(newRequest.getRid(), newRequest);
+        }
     }
 
-    public void addGiveRequest(GiveRequest newGiveRequest) {
-        if (myGiveRequests == null)
-            myGiveRequests = new HashMap<String, GiveRequest>();
-        myGiveRequests.put(newGiveRequest.getRid(), newGiveRequest);
-    }
+
 
     public void addService(Service service) {
         if (myServices == null) {
@@ -146,7 +134,7 @@ public class User implements Serializable {
         myServices.put(service.getSid(), service);
     }
 
-    public HashMap<String, GiveRequest> getMyGiveRequests() {
+    public HashMap<String, Request> getMyGiveRequests() {
         return myGiveRequests;
     }
 
@@ -154,11 +142,11 @@ public class User implements Serializable {
         return myServices;
     }
 
-    public HashMap<String, TakeRequest> getMyTakeRequest() {
+    public HashMap<String, Request> getMyTakeRequest() {
         return myTakeRequest;
     }
 
-    public void setMyGiveRequests(HashMap<String, GiveRequest> myGiveRequests) {
+    public void setMyGiveRequests(HashMap<String, Request> myGiveRequests) {
         this.myGiveRequests = myGiveRequests;
     }
 
@@ -166,7 +154,7 @@ public class User implements Serializable {
         this.myServices = myServices;
     }
 
-    public void setMyTakeRequest(HashMap<String, TakeRequest> myTakeRequest) {
+    public void setMyTakeRequest(HashMap<String, Request> myTakeRequest) {
         this.myTakeRequest = myTakeRequest;
     }
 }

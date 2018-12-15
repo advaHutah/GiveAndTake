@@ -4,31 +4,49 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.win10.giveandtake.Logic.AppManager;
+import com.example.win10.giveandtake.Logic.User;
 import com.example.win10.giveandtake.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 
 public class LoginFragment extends Fragment {
+
+    private static final String TAG = "LoginFragment";
 
     private View view;
     private TermsOfUseFragment termsOfUseFragment;
     private MainScreenFragment mainScreenFragment;
     private FragmentManager fragmentManager;
-
-
     private Button btnTermsOfUse;
     private Button btnSignInWithGoogle;
+
     private static final int RC_SIGN_IN = 9001;
+    private FirebaseAuth mAuth;
+
+
+    private AppManager appManager;
+
 
     @Nullable
     @Override
@@ -36,18 +54,18 @@ public class LoginFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_login, container, false);
 
         fragmentManager = getFragmentManager();
+        mAuth = FirebaseAuth.getInstance();
+        appManager = AppManager.getInstance();
+
+
         btnTermsOfUse = (Button) view.findViewById(R.id.btn_fragment_terms);
         btnSignInWithGoogle = (Button) view.findViewById(R.id.btn_fragment_login_google);
-
 
         //buttonActions
         btnTermsOfUse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                termsOfUseFragment = new TermsOfUseFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.loginActivity_frame_container, termsOfUseFragment)
-                        .commit();
+                ((LoginActivity)getActivity()).changeToTermsOfUseFragment();
             }
         });
         btnSignInWithGoogle.setOnClickListener(new View.OnClickListener() {
@@ -66,7 +84,7 @@ public class LoginFragment extends Fragment {
     }
 
     private void signIn() {
-        Intent signInIntent = ((LoginActivity) getActivity()).getmGoogleSignInClient().getSignInIntent();
+        Intent signInIntent = ((LoginActivity)getActivity()).getmGoogleSignInClient().getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
@@ -87,7 +105,7 @@ public class LoginFragment extends Fragment {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
             // Signed in successfully, show authenticated UI.
-            updateUI(account);
+            firebaseAuthWithGoogle(account);
         } catch (ApiException e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
@@ -96,18 +114,41 @@ public class LoginFragment extends Fragment {
         }
     }
 
-    private void updateUI(GoogleSignInAccount account) {
+
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
+        Log.d(TAG, "firebaseAuthWithGoogle:" + acct.getId());
+
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            Snackbar.make(getActivity().findViewById(R.id.fragment_login), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
+                            updateUI(null);
+                        }
+                    }
+                });
+    }
+
+    private void updateUI(FirebaseUser account) {
         if (account != null) {
             //save user info in DB
-
+            appManager.createNewUser(account.getUid(),account.getEmail(),account.getDisplayName(),account.getPhoneNumber(), "male");
             //change to user fragment
-            fragmentManager = getFragmentManager();
-            mainScreenFragment = new MainScreenFragment();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.loginActivity_frame_container, mainScreenFragment)
-                    .commit();
+            ((LoginActivity)getActivity()).changeToMainScreenFragment();
+
         } else {
             //TODO display error message that signIn faild
         }
     }
+
+
 }
