@@ -52,6 +52,7 @@ public class AppManager {
         firebaseManager.addUserInfoToDB(user);
     }
 
+    
     public void findMatch(final TakeRequest newTakeRequest) {
         FirebaseManager.getInstance().getAllGiveRequestFromDB(new FirebaseManager.FirebaseCallback<ArrayList<GiveRequest>>() {
             @Override
@@ -136,31 +137,22 @@ public class AppManager {
         currentUser = user;
     }
 
-    public void addTakeRequest(String text, ArrayList<String> selectedTags) {
-        //create new take request
-        Request newTakeRequest = new Request(text, currentUser.getId(), currentUser.getFullName(), selectedTags, null , Request.RequestType.TAKE);
+    public void addRequest(String text, ArrayList<String> selectedTags,Request.RequestType requestType) {
+        Request newRequest;
+        if(requestType == Request.RequestType.GIVE) {
+            //create new give request
+             newRequest = new Request(text, currentUser.getId(), currentUser.getFullName(), selectedTags, null, requestType);
+        } else
+        {
+            //create new take request
+             newRequest = new Request(text, currentUser.getId(), currentUser.getFullName(), selectedTags, null ,requestType);
+        }
         // add this request to the user
-        currentUser.addRequest(newTakeRequest);
+        currentUser.addRequest(newRequest);
         //add the request to firebase
-        //firebaseManager.addTakeRequestToDB(newTakeRequest);
+        firebaseManager.addRequestToDB(newRequest);
         //add selected tags to the tags collection
-        //firebaseManager.addTagsToDB(selectedTags);
-        //find match
-        //findMatch(newTakeRequest);
-
-
-    }
-
-
-    public void addGiveRequest(String text, ArrayList<String> selectedTags) {
-        //create new give request
-        Request newGiveRequest = new Request(text, currentUser.getId(), currentUser.getFullName(), selectedTags, null,Request.RequestType.GIVE);
-        // add this request to the user
-        currentUser.addRequest(newGiveRequest);
-        //add the request to firebase
-       // firebaseManager.addGiveRequestToDB(newGiveRequest);
-        //add selected tags to the tags collection
-       // firebaseManager.addTagsToDB(selectedTags);
+        firebaseManager.addTagsToDB(selectedTags,currentUser.getId(),requestType);
         //find match
        // findMatch(newGiveRequest);
 

@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.R;
-import com.example.win10.giveandtake.UI.userHashtags.GiveRequestFragment;
-import com.example.win10.giveandtake.UI.userHashtags.TakeRequestFragment;
 
 
 public class UserHomeDefultFragment extends Fragment {

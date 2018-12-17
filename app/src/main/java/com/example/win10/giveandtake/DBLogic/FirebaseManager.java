@@ -5,6 +5,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.example.win10.giveandtake.Logic.GiveRequest;
+import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.Logic.Service;
 import com.example.win10.giveandtake.Logic.TakeRequest;
 import com.example.win10.giveandtake.Logic.User;
@@ -93,9 +94,9 @@ public class FirebaseManager {
 
     }
 
-    public void addTagsToDB(ArrayList<String> selectedTags) {
+    public void addTagsToDB(ArrayList<String> selectedTags, String uid, Request.RequestType requestType) {
         for (String tag : selectedTags) {
-            db.child(Keys.TAGS).child(tag).setValue(tag);
+            db.child(Keys.TAGS).child(tag).child(uid).setValue(requestType);
         }
     }
 
@@ -178,19 +179,17 @@ public class FirebaseManager {
     }
 
 
-    public void addGiveRequestToDB(GiveRequest newGiveRequest) {
-
-        String rid = db.child(Keys.GIVE_REQUEST).push().getKey();
-        newGiveRequest.setRid(rid);
-        db.child(Keys.GIVE_REQUEST).child(rid).setValue(newGiveRequest);
-
-    }
-
-    public void addTakeRequestToDB(TakeRequest takeRequest) {
-        String rid = db.child(Keys.TAKE_REQUEST).push().getKey();
-        takeRequest.setRid(rid);
-        db.child(Keys.TAKE_REQUEST).child(rid).setValue(takeRequest);
-
+    public void addRequestToDB(Request newRequest) {
+        if(newRequest.getRequestType()==Request.RequestType.GIVE) {
+            String rid = db.child(Keys.GIVE_REQUEST).push().getKey();
+            newRequest.setRid(rid);
+            db.child(Keys.GIVE_REQUEST).child(rid).setValue(newRequest);
+        }
+        else{
+            String rid = db.child(Keys.TAKE_REQUEST).push().getKey();
+            newRequest.setRid(rid);
+            db.child(Keys.TAKE_REQUEST).child(rid).setValue(newRequest);
+        }
     }
 
     public void addServiceInDB(String uid, Service newService) {

@@ -20,6 +20,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.example.win10.giveandtake.Logic.AppManager;
+import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.UI.UserHomeDefultFragment;
 import com.example.win10.giveandtake.UI.login.LoginActivity;
@@ -50,6 +51,7 @@ public class MyHashtagsFragment extends Fragment {
     private AppManager appManager;
     private ArrayList<String> tags;
     private Set<String> selectedTags;
+    private Request.RequestType requestType;
 
     public static MyHashtagsFragment newInstance(boolean isTakeRequst) {
         MyHashtagsFragment myHashtagsFragment = new MyHashtagsFragment();
@@ -64,13 +66,15 @@ public class MyHashtagsFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_my_hashtags, container, false);
         requestTitle = (TextView) view.findViewById(R.id.my_hashtags_fragment_title_request_type);
-        appManager=AppManager.getInstance();
+        appManager = AppManager.getInstance();
 
         if (this.getArguments().getBoolean("isTakeRequst")) {
+             requestType = Request.RequestType.TAKE;
             requestTitle.setText("What will you take?");
-        } else
+        } else {
             requestTitle.setText("What will you give?");
-
+             requestType = Request.RequestType.GIVE;
+        }
         inputText = (EditText) view.findViewById(R.id.request_input_text);
         requestBtn = (Button) view.findViewById(R.id.make_request_btn);
         findTextBtn = (Button) view.findViewById(R.id.request_find_text_btn);
@@ -80,7 +84,7 @@ public class MyHashtagsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 text = inputText.getText().toString().trim();
-                if (!text.equals("") ) {
+                if (!text.equals("")) {
                     tags = appManager.findTags(text);
                     selectedTags = new HashSet<String>();
                     showTags(tags);
@@ -91,13 +95,14 @@ public class MyHashtagsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (!text.equals("") && !selectedTags.isEmpty())
-                    appManager.addGiveRequest(text, new ArrayList<String>(selectedTags));
+                    appManager.addRequest(text, new ArrayList<String>(selectedTags),requestType);
 
                 //TODO notify the user that the request has been submitted or change the view
             }
         });
         return view;
     }
+
     public void showTags(final ArrayList<String> tags) {
         ArrayAdapter arrayadapter = new ArrayAdapter<String>(view.getContext(), R.layout.item, tags);
         tagsGrid.setAdapter(arrayadapter);
