@@ -24,8 +24,8 @@ public class UserHomeDefultFragment extends Fragment {
     private String uid;
 
     private FragmentManager fragmentManager;
-    private TakeRequestFragment takeRequestFragment;
-    private GiveRequestFragment giveRequestFragment;
+    //private TakeRequestFragment takeRequestFragment;
+ //   private GiveRequestFragment giveRequestFragment;
 
 
     @Nullable

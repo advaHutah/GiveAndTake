@@ -9,13 +9,11 @@ public class User implements Serializable {
 
     final static int INIT_BALANCE = 8 * 60;
 
-
     public enum Gender {
         MALE,
         FEMALE
     }
 
-    ;
     private String id;
     private String email;
     private String fullName;
@@ -25,8 +23,8 @@ public class User implements Serializable {
     private int image;
     //TODO add image resource
 
-    private HashMap<String, Request> myTakeRequest;
-    private HashMap<String, Request> myGiveRequests;
+    private Request myTakeRequest;
+    private Request myGiveRequest;
     private HashMap<String, Service> myServices;
 
     private FirebaseManager userService = FirebaseManager.getInstance();
@@ -41,8 +39,8 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber != null ? phoneNumber : "null";
         this.gender = gender.equals("נקבה") ? Gender.FEMALE : Gender.MALE;
         this.balance = INIT_BALANCE;
-        myTakeRequest = new HashMap<String, Request>();
-        myGiveRequests = new HashMap<String, Request>();
+        myTakeRequest = new Request();
+        myGiveRequest = new Request();
         myServices = new HashMap<String, Service>();
     }
 
@@ -51,10 +49,10 @@ public class User implements Serializable {
         this.balance = balance;
     }
 
-    public User(String id, String email, String fullName, String phoneNumber, String gender, int balance, HashMap<String, Request> myTakeRequest, HashMap<String, GiveRequest> Request, HashMap<String, Service> myServices) {
+    public User(String id, String email, String fullName, String phoneNumber, String gender, int balance, Request myTakeRequest, Request myGiveRequest, HashMap<String, Service> myServices) {
         this(id, email, fullName, phoneNumber, gender, balance);
         this.myTakeRequest = myTakeRequest;
-        this.myGiveRequests = myGiveRequests;
+        this.myGiveRequest = myGiveRequest;
         this.myServices = myServices;
     }
 
@@ -106,26 +104,18 @@ public class User implements Serializable {
         this.gender = gender.equals("נקבה") ? Gender.FEMALE : Gender.MALE;
     }
 
-
     @Override
     public String toString() {
         return "User details : email : " + email + ", full name : " + fullName + ", phone : " + phoneNumber + ", gender : " + gender;
     }
 
-
     public void addRequest(Request newRequest) {
         if (newRequest.requestType == Request.RequestType.TAKE) {
-            if (myTakeRequest == null)
-                myTakeRequest = new HashMap<String, Request>();
-            myTakeRequest.put(newRequest.getRid(), newRequest);
+                myTakeRequest = newRequest;
         } else {
-            if (myGiveRequests == null)
-                myGiveRequests = new HashMap<String, Request>();
-            myGiveRequests.put(newRequest.getRid(), newRequest);
+                myGiveRequest = newRequest;
         }
     }
-
-
 
     public void addService(Service service) {
         if (myServices == null) {
@@ -134,27 +124,27 @@ public class User implements Serializable {
         myServices.put(service.getSid(), service);
     }
 
-    public HashMap<String, Request> getMyGiveRequests() {
-        return myGiveRequests;
+    public Request getMyGiveRequest() {
+        return myGiveRequest;
     }
 
     public HashMap<String, Service> getMyServices() {
         return myServices;
     }
 
-    public HashMap<String, Request> getMyTakeRequest() {
+    public Request getMyTakeRequest() {
         return myTakeRequest;
     }
 
-    public void setMyGiveRequests(HashMap<String, Request> myGiveRequests) {
-        this.myGiveRequests = myGiveRequests;
+    public void setMyGiveRequests(Request myGiveRequest) {
+        this.myGiveRequest = myGiveRequest;
     }
 
     public void setMyServices(HashMap<String, Service> myServices) {
         this.myServices = myServices;
     }
 
-    public void setMyTakeRequest(HashMap<String, Request> myTakeRequest) {
+    public void setMyTakeRequest(Request myTakeRequest) {
         this.myTakeRequest = myTakeRequest;
     }
 }

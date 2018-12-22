@@ -85,7 +85,8 @@ public class MyHashtagsFragment extends Fragment {
             public void onClick(View view) {
                 text = inputText.getText().toString().trim();
                 if (!text.equals("")) {
-                    tags = appManager.findTags(text);
+                    appManager.addRequest(text, new ArrayList<String>(),requestType);
+                    tags = appManager.getRequestTags(requestType);
                     selectedTags = new HashSet<String>();
                     showTags(tags);
                 }
@@ -94,8 +95,9 @@ public class MyHashtagsFragment extends Fragment {
         requestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!text.equals("") && !selectedTags.isEmpty())
-                    appManager.addRequest(text, new ArrayList<String>(selectedTags),requestType);
+               // if (!text.equals("") && !selectedTags.isEmpty())
+//                    appManager.updateRequestTagsUserValidated(selectedTags);
+//                    appManager.addRequest(text, new ArrayList<String>(selectedTags),requestType);
 
                 //TODO notify the user that the request has been submitted or change the view
             }

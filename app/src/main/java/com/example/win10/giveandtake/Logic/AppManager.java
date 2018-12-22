@@ -52,63 +52,33 @@ public class AppManager {
         firebaseManager.addUserInfoToDB(user);
     }
 
-    
-    public void findMatch(final TakeRequest newTakeRequest) {
-        FirebaseManager.getInstance().getAllGiveRequestFromDB(new FirebaseManager.FirebaseCallback<ArrayList<GiveRequest>>() {
+    public void findMatch(final Request newRequest) {
+
+        final Map<String, ArrayList<TagUserInfo>> match = new HashMap<>();//key = tag, value = arraylist of uid
+        // for each tag in the new request tags find the  all users that match the tags..
+        FirebaseManager.getInstance().getAllTagsFromDB(new FirebaseManager.FirebaseCallback<Map<String, ArrayList<TagUserInfo>>>() {
             @Override
-            public void onDataArrived(ArrayList<GiveRequest> value) {
-                Service newService = null;
-                for (GiveRequest giveRequest : value) {
-                    for (String takeR_tag : newTakeRequest.getTags()) {
-                        if (giveRequest.getTags().contains(takeR_tag)) {
-                            //create new Service
-                            newService = new Service(newTakeRequest, giveRequest, takeR_tag);
-                            currentUser.addService(newService);
-                            //save service in DB
-                            firebaseManager.addServiceInDB(currentUser.getId(), newService);
-                            //send notifictaion for service users
-                            //TODO
-                            NotificationManager notificationManager = NotificationManager.getInstance();
-                            notificationManager.sendNotificationToTheUser(giveRequest.getUid(), "Match Notification", "We find match for you ! ", newService);
-                            notificationManager.sendNotification("Match Notification", "We find match for you ! ");
-                            break;
+            public void onDataArrived(Map<String, ArrayList<TagUserInfo>> value) {
+                //value is a map: key = tag, value = another map (key = uid , value = request type)
+                for (String tag : newRequest.getTags()) {
+                    if (value.keySet().contains(tag)) {
+                        ArrayList<TagUserInfo> filterdTagsUser = new ArrayList<>();
+//                        HashMap<String,TagUserInfo> tagChildren = value.get(tag);
+//                        get from map all the user with different type then newRequset type and save it in tagsUser
+                        for (TagUserInfo tagUserInfo : value.get(tag)) {
+                            if (!tagUserInfo.getUid().equals(newRequest.getUid()) && tagUserInfo.getRequestType() != newRequest.requestType) {
+                                filterdTagsUser.add(tagUserInfo);
+                            }
                         }
+                        match.put(tag, filterdTagsUser);
                     }
-                    if (newService != null)
-                        break;
                 }
+
             }
         });
-
+        newRequest.setMatch(match);
     }
 
-    public void findMatch(final GiveRequest newGiveRequest) {
-        FirebaseManager.getInstance().getAllTakeRequestFromDB(new FirebaseManager.FirebaseCallback<ArrayList<TakeRequest>>() {
-            @Override
-            public void onDataArrived(ArrayList<TakeRequest> value) {
-                Service newService = null;
-                for (TakeRequest takeRequest : value) {
-                    for (String giveR_tag : newGiveRequest.getTags()) {
-                        if (takeRequest.getTags().contains(giveR_tag)) {
-                            //create new Service
-                            newService = new Service(takeRequest, newGiveRequest, giveR_tag);
-                            currentUser.addService(newService);
-                            //save service in DB
-                            firebaseManager.addServiceInDB(currentUser.getId(), newService);
-                            //send notifictaion for service users
-                            //TODO
-                            NotificationManager notificationManager = NotificationManager.getInstance();
-                            notificationManager.sendNotificationToTheUser(takeRequest.getUid(), "Match Notification", "We find match for you ! ", newService);
-                            NotificationManager.sendNotification("Match Notification", "We find match for you ! ");
-                            break;
-                        }
-                    }
-                    if (newService != null)
-                        break;
-                }
-            }
-        });
-    }
 
     public void getTokenFromFCM() {
         //todo
@@ -126,7 +96,7 @@ public class AppManager {
     public FirebaseUser checkIfUserIsLogin() {
         FirebaseUser account = mAuth.getCurrentUser();
         if (account != null) {
-            User user =  new User(account.getUid(), account.getEmail(), account.getDisplayName(), account.getPhoneNumber(), "male");
+            User user = new User(account.getUid(), account.getEmail(), account.getDisplayName(), account.getPhoneNumber(), "male");
             setCurrentUser(user);
             return account;
         } else
@@ -137,26 +107,29 @@ public class AppManager {
         currentUser = user;
     }
 
-    public void addRequest(String text, ArrayList<String> selectedTags,Request.RequestType requestType) {
+    public void addRequest(String text, ArrayList<String> selectedTags, Request.RequestType requestType) {
         Request newRequest;
-        if(requestType == Request.RequestType.GIVE) {
-            //create new give request
-             newRequest = new Request(text, currentUser.getId(), currentUser.getFullName(), selectedTags, null, requestType);
-        } else
-        {
-            //create new take request
-             newRequest = new Request(text, currentUser.getId(), currentUser.getFullName(), selectedTags, null ,requestType);
-        }
+        //create new request with the relevant type
+        newRequest = new Request(text, currentUser.getId(), currentUser.getFullName(), selectedTags, null, requestType);
         // add this request to the user
         currentUser.addRequest(newRequest);
         //add the request to firebase
         firebaseManager.addRequestToDB(newRequest);
         //add selected tags to the tags collection
-        firebaseManager.addTagsToDB(selectedTags,currentUser.getId(),requestType);
+        firebaseManager.addTagsToDB(selectedTags, new TagUserInfo(currentUser.getId(), currentUser.getFullName(), requestType));
         //find match
-       // findMatch(newGiveRequest);
+       // findMatch(newRequest);
+    }
 
-
+    public ArrayList<String> getRequestTags(Request.RequestType requestType){
+        final ArrayList<String> tags = new ArrayList<>();
+        firebaseManager.getTagsFromRequest(currentUser.getId(), requestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
+            @Override
+            public void onDataArrived(ArrayList<String> value) {
+                tags.addAll(value);
+            }
+        });
+        return tags;
     }
 
     public ArrayList<String> findTags(String text) {
@@ -198,7 +171,6 @@ public class AppManager {
         firebaseManager.updateUserServcieInDB(service.getTakeRequest().getUid(), service);
         firebaseManager.updateUserServcieInDB(service.getGiveRequest().getUid(), service);
     }
-
 
     public void removeService(Service theService) {
         currentUser.getMyServices().remove(theService);

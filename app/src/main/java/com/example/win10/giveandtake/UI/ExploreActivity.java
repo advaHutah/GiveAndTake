@@ -27,16 +27,16 @@ public class ExploreActivity extends AppCompatActivity {
         firebaseManager = FirebaseManager.getInstance();
         tagsGrid = (GridView) findViewById(R.id.explore_tags_result);
 
-        FirebaseManager.getInstance().getAllTagsFromDB(new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
-            @Override
-            public void onDataArrived(ArrayList<String> value) {
-                //todo
-                //set all tags in grid layout
-                showTags(value);
-
-
-            }
-        });
+//        FirebaseManager.getInstance().getAllTagsFromDB(new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
+//            @Override
+//            public void onDataArrived(ArrayList<String> value) {
+//                //todo
+//                //set all tags in grid layout
+//                showTags(value);
+//
+//
+//            }
+//        });
 
     }
 
