@@ -1,23 +1,16 @@
 package com.example.win10.giveandtake.DBLogic;
 
-import android.content.Context;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.example.win10.giveandtake.Logic.GiveRequest;
 import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.Logic.Service;
-import com.example.win10.giveandtake.Logic.Tag;
 import com.example.win10.giveandtake.Logic.TagUserInfo;
-import com.example.win10.giveandtake.Logic.TakeRequest;
 import com.example.win10.giveandtake.Logic.User;
-import com.example.win10.giveandtake.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -117,26 +110,6 @@ public class FirebaseManager {
         });
     }
 
-    public void getAllGiveRequestFromDB(final FirebaseCallback<ArrayList<GiveRequest>> callback) {
-        db.child(Keys.GIVE_REQUEST).orderByChild("tags").addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                List<GiveRequest> list = new ArrayList<GiveRequest>();
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    list.add(child.getValue(GiveRequest.class));
-                }                // get the values from map.values();
-                callback.onDataArrived((ArrayList<GiveRequest>) list);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "onCancelled: ");
-                callback.onDataArrived(null);
-            }
-        });
-    }
 
     public void getAllRequestFromDB(Request.RequestType requestType, final FirebaseCallback<ArrayList<Request>> callback) {
         //get all requests according to Request.RequestType
@@ -189,29 +162,25 @@ public class FirebaseManager {
 
     public void addRequestToDB(Request newRequest) {
         if (newRequest.getRequestType() == Request.RequestType.GIVE) {
-            //String rid = db.child(Keys.GIVE_REQUEST).push().getKey();
-            //newRequest.setRid(rid);
             db.child(Keys.GIVE_REQUEST).child(newRequest.getUid()).setValue(newRequest);
         } else {
-//            String rid = db.child(Keys.TAKE_REQUEST).push().getKey();
-//            newRequest.setRid(rid);
             db.child(Keys.TAKE_REQUEST).child(newRequest.getUid()).setValue(newRequest);
         }
     }
 
     public void addServiceInDB(String uid, Service newService) {
-        String sKey = db.child(Keys.SERVICES).push().getKey();
-        newService.setSid(sKey);
-        db.child(Keys.SERVICES).child(sKey).setValue(newService);
-        db.child(Keys.USERS).child(uid).child(Keys.MY_SERVICES).child(sKey).setValue(newService);
+//        String sKey = db.child(Keys.SERVICES).push().getKey();
+//        newService.setSid(sKey);
+//        db.child(Keys.SERVICES).child(sKey).setValue(newService);
+//        db.child(Keys.USERS).child(uid).child(Keys.MY_SERVICES).child(sKey).setValue(newService);
     }
 
     public void updateUserServcieInDB(String uid, Service service) {
-        db.child(Keys.USERS).child(uid).child(Keys.MY_SERVICES).child(service.getSid()).setValue(service);
+       // db.child(Keys.USERS).child(uid).child(Keys.MY_SERVICES).child(service.getSid()).setValue(service);
     }
 
     public void updateServiceInDB(Service service) {
-        db.child(Keys.SERVICES).child(service.getSid()).setValue(service);
+      //  db.child(Keys.SERVICES).child(service.getSid()).setValue(service);
     }
 
     public void updateToken(String uid, String token) {
@@ -233,15 +202,20 @@ public class FirebaseManager {
         });
     }
 
-    public void getTagsFromRequest(String uid, Request.RequestType requestType,final FirebaseCallback<ArrayList<String>> callback) {
 
-        String sKey = requestType == Request.RequestType.TAKE? Keys.TAKE_REQUEST : Keys.GIVE_REQUEST;
+    public void getTagsFromRequest(String uid, Request.RequestType requestType, final FirebaseCallback<ArrayList<String>> callback) {
 
-        db.child(sKey).child(uid).child(Keys.GIVE_TAGS).addValueEventListener(new ValueEventListener() {
+        String sKey = requestType == Request.RequestType.TAKE ? Keys.TAKE_REQUEST : Keys.GIVE_REQUEST;
+
+        db.child(sKey).child(uid).child(Keys.TAGS).addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                callback.onDataArrived(dataSnapshot.getValue(ArrayList.class));
+                List<String> list = new ArrayList<String>();
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    list.add(child.getValue(String.class));
+                }                // get the values from map.values();
+                callback.onDataArrived((ArrayList<String>) list);
             }
 
             @Override
@@ -252,13 +226,15 @@ public class FirebaseManager {
         });
     }
 
+
+
     public void removeService(Service theService) {
-        //remove service
-        db.child(Keys.SERVICES).child(theService.getSid()).removeValue();
-        //remoce service from giver my services
-        db.child(Keys.USERS).child(theService.getGiveRequest().getUid()).child(Keys.MY_SERVICES).child(theService.getSid()).removeValue();
-        //remoce service from taker my services
-        db.child(Keys.USERS).child(theService.getTakeRequest().getUid()).child(Keys.MY_SERVICES).child(theService.getSid()).removeValue();
+//        //remove service
+//        db.child(Keys.SERVICES).child(theService.getSid()).removeValue();
+//        //remoce service from giver my services
+//        db.child(Keys.USERS).child(theService.getGiveRequest().getUid()).child(Keys.MY_SERVICES).child(theService.getSid()).removeValue();
+//        //remoce service from taker my services
+//        db.child(Keys.USERS).child(theService.getTakeRequest().getUid()).child(Keys.MY_SERVICES).child(theService.getSid()).removeValue();
     }
 
     public void signOut() {
@@ -281,6 +257,7 @@ public class FirebaseManager {
         public static final String FULL_NAME = "fullName";
         public static final String GIVE_TAGS = "giveTags";
         public static final String TAKE_TAGS = "takeTags";
+        public static final String IS_FINAL = "isFinal";
     }
 
 

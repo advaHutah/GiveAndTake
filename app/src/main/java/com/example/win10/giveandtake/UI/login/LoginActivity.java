@@ -31,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         fragmentManager = getFragmentManager();
-        appManager=AppManager.getInstance();
+        appManager = AppManager.getInstance();
         createGoogleClient();
 
         //set view content
@@ -64,17 +64,6 @@ public class LoginActivity extends AppCompatActivity {
             changeToSplashFragment();
         } else {
             // Check if user is signed in (non-null) and update UI accordingly.
-            FirebaseUser account = appManager.checkIfUserIsLogin();
-            updateUI(account);
-        }
-    }
-
-    private void updateUI(FirebaseUser account) {
-        //if the user already sign in display main screen
-        if (account != null) {
-            changeToMainScreenFragment();
-        } else {
-            //if the user signOut display login screen
             changeToLoginFragment();
         }
     }
@@ -97,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void changeToLoginFragment() {
         fragmentManager = getFragmentManager();
-       LoginFragment loginFragment = new LoginFragment();
+        LoginFragment loginFragment = new LoginFragment();
         fragmentManager.beginTransaction()
                 .replace(R.id.loginActivity_frame_container, loginFragment)
                 .commit();

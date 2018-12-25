@@ -121,7 +121,7 @@ public class User implements Serializable {
         if (myServices == null) {
             myServices = new HashMap<String, Service>();
         }
-        myServices.put(service.getSid(), service);
+      //  myServices.put(service.getSid(), service);
     }
 
     public Request getMyGiveRequest() {

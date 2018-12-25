@@ -2,6 +2,7 @@ package com.example.win10.giveandtake.UI.login;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,14 +13,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.win10.giveandtake.Logic.AppManager;
-import com.example.win10.giveandtake.Logic.User;
 import com.example.win10.giveandtake.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -40,6 +40,8 @@ public class LoginFragment extends Fragment {
     private FragmentManager fragmentManager;
     private Button btnTermsOfUse;
     private Button btnSignInWithGoogle;
+    private ProgressBar spinner;
+
 
     private static final int RC_SIGN_IN = 9001;
     private FirebaseAuth mAuth;
@@ -57,6 +59,7 @@ public class LoginFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
         appManager = AppManager.getInstance();
 
+        spinner = (ProgressBar) view.findViewById(R.id.progressBar1);
 
         btnTermsOfUse = (Button) view.findViewById(R.id.btn_fragment_terms);
         btnSignInWithGoogle = (Button) view.findViewById(R.id.btn_fragment_login_google);
@@ -65,7 +68,7 @@ public class LoginFragment extends Fragment {
         btnTermsOfUse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((LoginActivity)getActivity()).changeToTermsOfUseFragment();
+                ((LoginActivity) getActivity()).changeToTermsOfUseFragment();
             }
         });
         btnSignInWithGoogle.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +77,6 @@ public class LoginFragment extends Fragment {
                 signIn();
             }
         });
-
         return view;
     }
 
@@ -83,8 +85,14 @@ public class LoginFragment extends Fragment {
         super.onPause();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateUI(mAuth.getCurrentUser());
+    }
+
     private void signIn() {
-        Intent signInIntent = ((LoginActivity)getActivity()).getmGoogleSignInClient().getSignInIntent();
+        Intent signInIntent = ((LoginActivity) getActivity()).getmGoogleSignInClient().getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
 
@@ -104,6 +112,7 @@ public class LoginFragment extends Fragment {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+            spinner.setVisibility(View.VISIBLE);
             // Signed in successfully, show authenticated UI.
             firebaseAuthWithGoogle(account);
         } catch (ApiException e) {
@@ -139,16 +148,26 @@ public class LoginFragment extends Fragment {
     }
 
     private void updateUI(FirebaseUser account) {
+        final Fragment that = this;
         if (account != null) {
-            //save user info in DB
-            appManager.createNewUser(account.getUid(),account.getEmail(),account.getDisplayName(),account.getPhoneNumber(), "male");
-            //change to user fragment
-            ((LoginActivity)getActivity()).changeToMainScreenFragment();
+            // get user info from DB
+            spinner.setVisibility(View.VISIBLE);
+            appManager.userLogedIn(account, new AppManager.AppManagerCallback<Boolean>() {
+                @Override
+                public void onDataArrived(Boolean value) {
+                    //change to user fragment
+                    spinner.setVisibility(View.GONE);
+                    ((LoginActivity) that.getActivity()).changeToMainScreenFragment();
+                }
+            });
 
-        } else {
-            //TODO display error message that signIn faild
         }
     }
 
+    public void addToast(String text, int duration) {
+        Context context = getActivity().getApplicationContext();
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
 
 }

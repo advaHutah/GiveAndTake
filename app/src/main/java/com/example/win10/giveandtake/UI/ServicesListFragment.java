@@ -34,13 +34,13 @@ public class ServicesListFragment extends Fragment {
 
         @Override
         public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-            if(myServices.get(position).getStatus()!= Service.Status.COMPLETED) {
+          //  if(myServices.get(position).getStatus()!= Service.Status.COMPLETED) {
                 serviceInfoFragment = new ServiceInfoFragment();
                 appManager.setSelectedService(myServices.get(position));
                 fragmentManager.beginTransaction()
                         .replace(R.id.match_activity_frame, serviceInfoFragment)
                         .commit();
-            }
+           // }
         }
     };
 
@@ -83,30 +83,30 @@ public class ServicesListFragment extends Fragment {
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            view = getLayoutInflater().inflate(R.layout.service_layout, null);
-            //initial entry components
-            ImageView icon_req = (ImageView) view.findViewById(R.id.imageView_req_type);
-            TextView other_user_name = (TextView) view.findViewById(R.id.textView_other_user_name);
-            TextView description = (TextView) view.findViewById(R.id.description);
-            TextView status = (TextView) view.findViewById(R.id.status);
-            //if current user is giver
-            if (myServices.get(i).getGiveRequest().getUid().equals(appManager.getCurrentUser().getId())) {
-                //change icon
-                icon_req.setImageResource(R.drawable.out_icon);
-                //change other user name
-                other_user_name.setText(myServices.get(i).getGiveRequest().getUserName());
-                //set description
-                description.setText(myServices.get(i).getGiveRequest().getTags().toString());
-                //set status
-                status.setText(myServices.get(i).getStatus().toString());
-            } else {
-                //change other user name
-                other_user_name.setText(myServices.get(i).getTakeRequest().getUserName());
-                //set description
-                description.setText(myServices.get(i).getTakeRequest().getTags().toString());
-                //set status
-                status.setText(myServices.get(i).getStatus().toString());
-            }
+//            view = getLayoutInflater().inflate(R.layout.service_layout, null);
+//            //initial entry components
+//            ImageView icon_req = (ImageView) view.findViewById(R.id.imageView_req_type);
+//            TextView other_user_name = (TextView) view.findViewById(R.id.textView_other_user_name);
+//            TextView description = (TextView) view.findViewById(R.id.description);
+//            TextView status = (TextView) view.findViewById(R.id.status);
+//            //if current user is giver
+//         //   if (myServices.get(i).getGiveRequest().getUid().equals(appManager.getCurrentUser().getId())) {
+//                //change icon
+//                icon_req.setImageResource(R.drawable.out_icon);
+//                //change other user name
+//                other_user_name.setText(myServices.get(i).getGiveRequest().getUserName());
+//                //set description
+//                description.setText(myServices.get(i).getGiveRequest().getTags().toString());
+//                //set status
+//                status.setText(myServices.get(i).getStatus().toString());
+//           // } else {
+//                //change other user name
+//                other_user_name.setText(myServices.get(i).getTakeRequest().getUserName());
+//                //set description
+//                description.setText(myServices.get(i).getTakeRequest().getTags().toString());
+//                //set status
+//                status.setText(myServices.get(i).getStatus().toString());
+//            }
             return view;
         }
     }

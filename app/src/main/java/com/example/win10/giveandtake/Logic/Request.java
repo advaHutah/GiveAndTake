@@ -14,9 +14,8 @@ public class Request {
 
     protected String userInputText;
     protected String uid;
-    protected String rid;
     protected String userName;
-    protected int isFinal= 1;
+    protected int isFinal;
     protected RequestType requestType;
     protected ArrayList<String> tags;
     private Map<String,ArrayList<TagUserInfo>> match ;
@@ -30,13 +29,12 @@ public class Request {
         this.requestType = requestType;
         this.tags = new ArrayList<>();
         this.match = new HashMap<>();
-        this.isFinal=1;
+        this.isFinal=0;
     }
 
-    public Request(String userInputText, String uid, String userName, ArrayList<String> tags, String rid,RequestType requestType) {
+    public Request(String userInputText, String uid, String userName, ArrayList<String> tags,RequestType requestType) {
         this(userInputText, uid,userName,requestType);
         this.tags = tags;
-        this.rid = rid;
     }
 
     public void setTags(ArrayList<String> tags) {
@@ -69,14 +67,6 @@ public class Request {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public void setRid(String rid) {
-        this.rid = rid;
-    }
-
-    public String getRid() {
-        return rid;
     }
 
     public RequestType getRequestType() {

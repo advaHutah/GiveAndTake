@@ -59,7 +59,6 @@ public class GiveOrTakeFragment extends Fragment {
     }
 
     private void changeToHashtagsFragment(boolean isTakeRequst) {
-        appManager.signOut();
         MyHashtagsFragment myHashtagsFragment = MyHashtagsFragment.newInstance(isTakeRequst);
         fragmentManager.beginTransaction()
                 .replace(R.id.hashtagsManagementActivity_frame_container, myHashtagsFragment)

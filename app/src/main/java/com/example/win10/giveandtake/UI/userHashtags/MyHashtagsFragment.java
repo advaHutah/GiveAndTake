@@ -2,6 +2,7 @@ package com.example.win10.giveandtake.UI.userHashtags;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.Request;
@@ -43,7 +45,7 @@ public class MyHashtagsFragment extends Fragment {
 
     private TextView requestTitle;
     private EditText inputText;
-    private String text;
+    private String text = "";
     private GridView tagsGrid;
     private Button requestBtn;
     private Button findTextBtn;
@@ -68,26 +70,42 @@ public class MyHashtagsFragment extends Fragment {
         requestTitle = (TextView) view.findViewById(R.id.my_hashtags_fragment_title_request_type);
         appManager = AppManager.getInstance();
 
-        if (this.getArguments().getBoolean("isTakeRequst")) {
-             requestType = Request.RequestType.TAKE;
-            requestTitle.setText("What will you take?");
-        } else {
-            requestTitle.setText("What will you give?");
-             requestType = Request.RequestType.GIVE;
-        }
         inputText = (EditText) view.findViewById(R.id.request_input_text);
         requestBtn = (Button) view.findViewById(R.id.make_request_btn);
         findTextBtn = (Button) view.findViewById(R.id.request_find_text_btn);
         tagsGrid = (GridView) view.findViewById(R.id.request_tags_result);
+
+        if (this.getArguments().getBoolean("isTakeRequst")) {
+            requestType = Request.RequestType.TAKE;
+            requestTitle.setText("What will you take?");
+            text = appManager.getCurrentUser().getMyTakeRequest().getUserInputText();
+
+        } else {
+            requestTitle.setText("What will you give?");
+            requestType = Request.RequestType.GIVE;
+            text = appManager.getCurrentUser().getMyGiveRequest().getUserInputText();
+
+        }
+        //in case request is already exist
+        if (text != null && !text.equals("")) {
+            inputText.setText(text);
+            appManager.getRequestTags(requestType, new AppManager.AppManagerCallback<ArrayList<String>>() {
+                @Override
+                public void onDataArrived(ArrayList<String> value) {
+                    tags = value;
+                    selectedTags = new HashSet<String>(tags);
+                    showTags(tags);
+                }
+            });
+
+        }
 
         findTextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 text = inputText.getText().toString().trim();
                 if (!text.equals("")) {
-                    appManager.addRequest(text, new ArrayList<String>(),requestType);
-                    tags = appManager.getRequestTags(requestType);
-                    selectedTags = new HashSet<String>();
+                    appManager.addRequestNotFinal(text, requestType);
                     showTags(tags);
                 }
             }
@@ -95,14 +113,22 @@ public class MyHashtagsFragment extends Fragment {
         requestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // if (!text.equals("") && !selectedTags.isEmpty())
-//                    appManager.updateRequestTagsUserValidated(selectedTags);
-//                    appManager.addRequest(text, new ArrayList<String>(selectedTags),requestType);
+                if (!text.equals("") && !selectedTags.isEmpty()) {
+                    appManager.addRequestFinal(selectedTags , requestType);
+                   // appManager.updateRequestTagsUserValidated(selectedTags, requestType);
+                    //notify the user that the request has been submitted or change the view
+                    addToast("The request was submitted", Toast.LENGTH_SHORT);
 
-                //TODO notify the user that the request has been submitted or change the view
+                }
             }
         });
         return view;
+    }
+
+    public void addToast(String text, int duration) {
+        Context context = getActivity().getApplicationContext();
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 
     public void showTags(final ArrayList<String> tags) {

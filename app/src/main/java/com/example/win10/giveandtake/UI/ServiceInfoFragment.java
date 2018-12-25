@@ -52,9 +52,9 @@ public class ServiceInfoFragment extends Fragment {
         cancelServiceBtn = (Button) view.findViewById(R.id.cancel_service_btn);
 
         //set service info in view
-        giverName.setText(theService.getGiveRequest().getUserName());
-        takerName.setText(theService.getTakeRequest().getUserName());
-        description.setText(theService.getDescription());
+//        giverName.setText(theService.getGiveRequest().getUserName());
+//        takerName.setText(theService.getTakeRequest().getUserName());
+//        description.setText(theService.getDescription());
 
         //start service
         startServiceBtn.setOnClickListener(new View.OnClickListener() {

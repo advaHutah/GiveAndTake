@@ -67,10 +67,8 @@ public class MainScreenFragment extends Fragment {
             }
         });
 
-
         return view;
     }
-
 
 
     @Override
@@ -84,17 +82,11 @@ public class MainScreenFragment extends Fragment {
     }
 
     private void signOut() {
-
-        ((LoginActivity) getActivity()).getmGoogleSignInClient().signOut()
-                .addOnCompleteListener(getActivity(), new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        appManager.signOut();
-                        loginFragment = new LoginFragment();
-                        fragmentManager.beginTransaction()
-                                .replace(R.id.loginActivity_frame_container, loginFragment)
-                                .commit();
-                    }
-                });
+        appManager.signOut(new AppManager.AppManagerCallback<Object>() {
+            @Override
+            public void onDataArrived(Object value) {
+                ((LoginActivity) getActivity()).changeToLoginFragment();
+            }
+        });
     }
 }
