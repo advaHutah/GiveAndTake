@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.win10.giveandtake.UI.login.LoginActivity">
+    tools:context="com.example.win10.giveandtake.UI.userProfile.MyMatchActivity">
 
 
     <FrameLayout
-        android:id="@+id/loginActivity_frame_container"
+        android:id="@+id/myMatchActivity_frame_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
+
 </LinearLayout>

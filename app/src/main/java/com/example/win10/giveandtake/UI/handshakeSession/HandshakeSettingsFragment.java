@@ -1,4 +1,4 @@
-package com.example.win10.giveandtake.UI;
+package com.example.win10.giveandtake.UI.handshakeSession;
 
 import android.app.Fragment;
 import android.app.FragmentManager;

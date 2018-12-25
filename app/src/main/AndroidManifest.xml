@@ -25,7 +25,7 @@
         <activity android:name=".UI.MyServicesActivity" />
         <activity android:name=".UI.SetMeetingActivity" />
         <activity android:name=".UI.ExploreActivity" />
-        <activity android:name=".UI.HandshakeActivity" />
+        <activity android:name=".UI.handshakeSession.HandshakeActivity" />
 
         <service android:name=".MyFirebaseInstanceIDService">
             <intent-filter>
@@ -41,7 +41,8 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".UI.userHashtags.HashtagsManagementActivity"></activity>
+        <activity android:name=".UI.userHashtags.HashtagsManagementActivity" />
+        <activity android:name=".UI.userProfile.MyMatchActivity"></activity>
     </application>
 
 </manifest>

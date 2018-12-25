@@ -9,7 +9,7 @@
     android:layout_marginRight="10dp"
     android:layout_marginTop="10dp"
     android:orientation="vertical"
-    tools:context="com.example.win10.giveandtake.UI.HandshakeActivity">
+    tools:context="com.example.win10.giveandtake.UI.handshakeSession.HandshakeActivity">
 
 
     <FrameLayout
