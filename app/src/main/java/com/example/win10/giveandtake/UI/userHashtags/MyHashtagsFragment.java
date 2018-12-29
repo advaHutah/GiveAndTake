@@ -35,6 +35,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.xml.datatype.Duration;
+
 //fragment that display user profile info and function like give and take request
 
 public class MyHashtagsFragment extends Fragment {
@@ -89,7 +91,7 @@ public class MyHashtagsFragment extends Fragment {
         //in case request is already exist
         if (text != null && !text.equals("")) {
             inputText.setText(text);
-            appManager.getRequestTags(requestType, new AppManager.AppManagerCallback<ArrayList<String>>() {
+            appManager.getMyRequestTags(requestType, new AppManager.AppManagerCallback<ArrayList<String>>() {
                 @Override
                 public void onDataArrived(ArrayList<String> value) {
                     tags = value;
@@ -114,11 +116,10 @@ public class MyHashtagsFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if (!text.equals("") && !selectedTags.isEmpty()) {
-                    appManager.addRequestFinal(selectedTags , requestType);
-                   // appManager.updateRequestTagsUserValidated(selectedTags, requestType);
+                    appManager.addRequestFinal(selectedTags, requestType);
+                    // appManager.updateRequestTagsUserValidated(selectedTags, requestType);
                     //notify the user that the request has been submitted or change the view
                     addToast("The request was submitted", Toast.LENGTH_SHORT);
-
                 }
             }
         });
@@ -132,14 +133,17 @@ public class MyHashtagsFragment extends Fragment {
     }
 
     public void showTags(final ArrayList<String> tags) {
-        ArrayAdapter arrayadapter = new ArrayAdapter<String>(view.getContext(), R.layout.item, tags);
-        tagsGrid.setAdapter(arrayadapter);
-        tagsGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            public void onItemClick(AdapterView<?> parent, View v,
-                                    int position, long id) {
-                selectedTags.add(tags.get(position));
-            }
-        });
+        if (tags != null) {
+            ArrayAdapter arrayadapter = new ArrayAdapter<String>(view.getContext(), R.layout.item, tags);
+            tagsGrid.setAdapter(arrayadapter);
+            tagsGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View v,
+                                        int position, long id) {
+                    selectedTags.add(tags.get(position));
+                }
+            });
+        } else
+            addToast("no tags were founds", Toast.LENGTH_SHORT);
     }
 
 }

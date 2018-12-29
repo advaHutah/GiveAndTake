@@ -19,4 +19,14 @@
         android:textStyle="bold" />
 
 
+    <GridView
+        android:id="@+id/my_tags"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:numColumns="3"></GridView>
+
+
+
 </LinearLayout>

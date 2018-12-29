@@ -12,7 +12,7 @@ import android.util.Log;
 import com.example.win10.giveandtake.UI.userProfile.UserProfileActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-
+//liran
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
     private static final String TAG ="MyFirebaseMessagingServ" ;
 

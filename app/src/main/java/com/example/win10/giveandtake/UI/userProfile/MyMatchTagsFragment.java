@@ -32,9 +32,16 @@ public class MyMatchTagsFragment extends Fragment {
     private View view;
     private FragmentManager fragmentManager;
 
+    private GridView tagsGrid;
+    private ArrayList<String> myTags;
+    private Request.RequestType requestType;
+    boolean isTakeRequest ;
 
+    private String selectedTag;
 
     private AppManager appManager;
+
+    private MyMatchActivity parentActivity ;
 
 
     public static MyMatchTagsFragment newInstance(boolean isTakeRequst) {
@@ -51,15 +58,41 @@ public class MyMatchTagsFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_my_match_tags, container, false);
 
         appManager = AppManager.getInstance();
+        parentActivity = (MyMatchActivity) getActivity();
 
-
-        if (this.getArguments().getBoolean("isTakeRequst")) {
-            //do something
-
+        tagsGrid = (GridView) view.findViewById(R.id.my_tags);
+        myTags = new ArrayList<String>();
+        isTakeRequest=this.getArguments().getBoolean("isTakeRequst");
+        if (isTakeRequest) {
+            requestType = Request.RequestType.TAKE;
         } else {
-
+            requestType = Request.RequestType.GIVE;
         }
+
+        appManager.getTags(requestType, new AppManager.AppManagerCallback<ArrayList<String>>() {
+            @Override
+            public void onDataArrived(ArrayList<String> value) {
+                myTags = value;
+                showTags(myTags);
+            }
+        });
         return view;
+    }
+
+    public void showTags(final ArrayList<String> tags) {
+        if (tags != null) {
+            ArrayAdapter arrayadapter = new ArrayAdapter<String>(view.getContext(), R.layout.item, tags);
+            tagsGrid.setAdapter(arrayadapter);
+            tagsGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View v,
+                                        int position, long id) {
+                    selectedTag = tags.get(position);
+                    parentActivity.changeToUsersFragment(selectedTag,isTakeRequest);
+
+                }
+            });
+        } else
+            parentActivity.addToast("no tags were founds", Toast.LENGTH_SHORT);
     }
 
 }

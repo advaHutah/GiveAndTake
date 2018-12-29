@@ -22,6 +22,8 @@ public class AppManager {
     private static AppManager singletonAppManager = null;
     private FirebaseManager firebaseManager;
     private User currentUser;
+    private User otherUser;
+
     private FirebaseAuth mAuth;
     private Service selectedService;
 
@@ -106,8 +108,26 @@ public class AppManager {
         //TODO find match
     }
 
-    public void getRequestTags(Request.RequestType requestType, final AppManagerCallback<ArrayList<String>>callback) {
+    public void getMyRequestTags(Request.RequestType requestType, final AppManagerCallback<ArrayList<String>>callback) {
         this.firebaseManager.getTagsFromRequest(currentUser.getId(), requestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
+            @Override
+            public void onDataArrived(ArrayList<String> value) {
+                callback.onDataArrived(value);
+            }
+        });
+    }
+
+    public void getMatchUsers(String tag, Request.RequestType requestType, final AppManagerCallback<ArrayList<TagUserInfo>>callback){
+        this.firebaseManager.getMatchUsers(currentUser.getId(),tag, requestType, new FirebaseManager.FirebaseCallback<ArrayList<TagUserInfo>>() {
+            @Override
+            public void onDataArrived(ArrayList<TagUserInfo> value) {
+                callback.onDataArrived(value);
+            }
+        });
+    }
+
+    public void getTags( Request.RequestType requestType, final AppManagerCallback<ArrayList<String>>callback){
+        this.firebaseManager.getTags(requestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
             @Override
             public void onDataArrived(ArrayList<String> value) {
                 callback.onDataArrived(value);
@@ -179,4 +199,34 @@ public class AppManager {
             }
         });
     }
+
+    public void setOtherUser(String uid, final AppManager.AppManagerCallback<Boolean> callback) {
+        firebaseManager.getUserDetailFromDB(uid, new FirebaseManager.FirebaseCallback<User>() {
+            @Override
+            public void onDataArrived(User value) {
+                if (value != null) {
+                    otherUser = value;
+                    firebaseManager.getGiveRequestFromDB(otherUser.getId(), new FirebaseManager.FirebaseCallback<Request>() {
+                        @Override
+                        public void onDataArrived(Request value) {
+                            otherUser.setMyGiveRequests(value);
+                        }
+                    });
+                    firebaseManager.getTakeRequestFromDB(otherUser.getId(), new FirebaseManager.FirebaseCallback<Request>() {
+                        @Override
+                        public void onDataArrived(Request value) {
+                            otherUser.setMyTakeRequest(value);
+                        }
+                    });
+
+                }
+                callback.onDataArrived(true);
+            }
+        });
+    }
+
+    public User getOtherUser() {
+        return otherUser;
+    }
+
 }

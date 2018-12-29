@@ -24,6 +24,8 @@ public class GiveOrTakeFragment extends Fragment {
 
     private Button btnGive;
     private Button btnTake;
+    private MyMatchActivity parentActivity;
+
 
     @Nullable
     @Override
@@ -32,29 +34,24 @@ public class GiveOrTakeFragment extends Fragment {
 
         appManager = AppManager.getInstance();
         fragmentManager = getFragmentManager();
+        parentActivity = (MyMatchActivity) getActivity();
 
         btnGive = (Button) view.findViewById(R.id.give_or_take_fragment_give_btn);
         btnTake = (Button) view.findViewById(R.id.give_or_take_fragment_take_btn);
         btnGive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeToTagsFragment(false);
+                parentActivity.changeToTagsFragment(false);
             }
         });
         btnTake.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                changeToTagsFragment(true);
+                parentActivity.changeToTagsFragment(true);
             }
         });
 
         return view;
     }
 
-    private void changeToTagsFragment(boolean isTakeRequst) {
-        MyMatchTagsFragment myMatchTagsFragment = MyMatchTagsFragment.newInstance(isTakeRequst);
-        fragmentManager.beginTransaction()
-                .replace(R.id.myMatchActivity_frame_container, myMatchTagsFragment)
-                .commit();
-    }
 }

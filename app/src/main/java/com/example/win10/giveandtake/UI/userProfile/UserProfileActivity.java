@@ -59,13 +59,12 @@ public class UserProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 createHashtagsActivity();
-                //TODO create new activity of hashtags
             }
         });
         btnMyMatch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO create new activity of match
+                createMyMatchActivity();
             }
         });
         btnMyPhone.setOnClickListener(new View.OnClickListener() {
@@ -77,14 +76,18 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
         userImage = (ImageView) this.findViewById(R.id.my_profile_image);
-       // userImage.setImageResource(appManager.getCurrentUser().getImage());
-
+        // userImage.setImageResource(appManager.getCurrentUser().getImage());
 
 
     }
 
     private void createHashtagsActivity() {
         Intent intent = new Intent(this, HashtagsManagementActivity.class);
+        startActivity(intent);
+    }
+
+    private void createMyMatchActivity() {
+        Intent intent = new Intent(this, MyMatchActivity.class);
         startActivity(intent);
     }
 
