@@ -168,6 +168,34 @@ public class FirebaseManager {
         }
     }
 
+    public void getGiveRequestFromDB(String uid, final FirebaseCallback<Request> callback) {
+        db.child(Keys.GIVE_REQUEST).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                callback.onDataArrived(dataSnapshot.getValue(Request.class));
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: ");
+                callback.onDataArrived(null);
+            }
+        });
+    }
+
+    public void getTakeRequestFromDB(String uid, final FirebaseCallback<Request> callback) {
+        db.child(Keys.TAKE_REQUEST).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                callback.onDataArrived(dataSnapshot.getValue(Request.class));
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: ");
+                callback.onDataArrived(null);
+            }
+        });
+    }
+
     public void addServiceInDB(String uid, Service newService) {
 //        String sKey = db.child(Keys.SERVICES).push().getKey();
 //        newService.setSid(sKey);
@@ -184,7 +212,8 @@ public class FirebaseManager {
     }
 
     public void updateToken(String uid, String token) {
-        db.child(Keys.NOTIFICATIONS).child(Keys.USERS_TOKENS).child(uid).child(Keys.FSM_TOKEN).setValue(token);
+        //db.child(Keys.NOTIFICATIONS).child(Keys.USERS_TOKENS).child(uid).child(Keys.FSM_TOKEN).setValue(token);
+        db.child(Keys.USERS).child(uid).child("instanceId").setValue(token);
     }
 
     public void getToken(String uid, final FirebaseCallback<String> callback) {

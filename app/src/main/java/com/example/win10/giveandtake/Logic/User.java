@@ -21,6 +21,8 @@ public class User implements Serializable {
     private Gender gender;
     private int balance;
     private int image;
+    private int instanceId;
+
     //TODO add image resource
 
     private Request myTakeRequest;

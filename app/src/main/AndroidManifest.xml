@@ -26,7 +26,7 @@
         <activity android:name=".UI.SetMeetingActivity" />
         <activity android:name=".UI.ExploreActivity" />
         <activity android:name=".UI.handshakeSession.HandshakeActivity" />
-
+        <activity android:name=".UI.OtherUserActvity" />
         <service android:name=".MyFirebaseInstanceIDService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
@@ -43,6 +43,8 @@
 
         <activity android:name=".UI.userHashtags.HashtagsManagementActivity" />
         <activity android:name=".UI.userProfile.MyMatchActivity"></activity>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
     </application>
-
 </manifest>

@@ -17,6 +17,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.win10.giveandtake.Logic.AppManager;
+import com.example.win10.giveandtake.MyFirebaseInstanceIDService;
+import com.example.win10.giveandtake.MyFirebaseMessagingService;
 import com.example.win10.giveandtake.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -28,6 +30,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.messaging.FirebaseMessagingService;
 
 
 public class LoginFragment extends Fragment {
@@ -137,7 +140,9 @@ public class LoginFragment extends Fragment {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                        } else {
+                            MyFirebaseInstanceIDService service = new MyFirebaseInstanceIDService();
+                            service.onTokenRefresh();
+                            } else {
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Snackbar.make(getActivity().findViewById(R.id.fragment_login), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();

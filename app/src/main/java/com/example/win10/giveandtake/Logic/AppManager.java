@@ -13,7 +13,6 @@ import java.util.Set;
 public class AppManager {
 
 
-
     public interface AppManagerCallback<T> {
         void onDataArrived(T value);
     }
@@ -22,6 +21,7 @@ public class AppManager {
     private static AppManager singletonAppManager = null;
     private FirebaseManager firebaseManager;
     private User currentUser;
+    private User otherUser;
     private FirebaseAuth mAuth;
     private Service selectedService;
 
@@ -106,7 +106,7 @@ public class AppManager {
         //TODO find match
     }
 
-    public void getRequestTags(Request.RequestType requestType, final AppManagerCallback<ArrayList<String>>callback) {
+    public void getRequestTags(Request.RequestType requestType, final AppManagerCallback<ArrayList<String>> callback) {
         this.firebaseManager.getTagsFromRequest(currentUser.getId(), requestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
             @Override
             public void onDataArrived(ArrayList<String> value) {
@@ -127,9 +127,9 @@ public class AppManager {
         //send notification to other user
         //todo
         //update service minuts
-       // service.setMinuts(minuts);
+        // service.setMinuts(minuts);
         //update service status
-       // service.setStatus(Service.Status.COMPLETED);
+        // service.setStatus(Service.Status.COMPLETED);
         //update service in db
         firebaseManager.updateServiceInDB(service);
         //update users info in db
@@ -142,7 +142,7 @@ public class AppManager {
         firebaseManager.removeService(theService);
     }
 
-    public void signOut(AppManagerCallback<Object>callback) {
+    public void signOut(AppManagerCallback<Object> callback) {
         firebaseManager.signOut();
         callback.onDataArrived(null);
     }
@@ -178,5 +178,34 @@ public class AppManager {
                 callback.onDataArrived(true);
             }
         });
+    }
+
+    public void setOtherUser(String uid, final AppManager.AppManagerCallback<Boolean> callback) {
+        firebaseManager.getUserDetailFromDB(uid, new FirebaseManager.FirebaseCallback<User>() {
+            @Override
+            public void onDataArrived(User value) {
+                if (value != null) {
+                    otherUser = value;
+                    firebaseManager.getGiveRequestFromDB(otherUser.getId(), new FirebaseManager.FirebaseCallback<Request>() {
+                        @Override
+                        public void onDataArrived(Request value) {
+                              otherUser.setMyGiveRequests(value);
+                        }
+                    });
+                    firebaseManager.getTakeRequestFromDB(otherUser.getId(), new FirebaseManager.FirebaseCallback<Request>() {
+                        @Override
+                        public void onDataArrived(Request value) {
+                            otherUser.setMyTakeRequest(value);
+                        }
+                    });
+
+                }
+                callback.onDataArrived(true);
+            }
+        });
+    }
+
+    public User getOtherUser() {
+        return otherUser;
     }
 }
