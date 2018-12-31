@@ -265,6 +265,7 @@ public class FirebaseManager {
                 for (DataSnapshot user : dataSnapshot.getChildren()) {
                     if (!user.getKey().equals(uid)) {
                         Map<String, String> nameEntry = (Map<String, String>) user.getValue();
+                        //todo sometimes falls can be replaced to just -> user.getValue().toString()
                         String name = nameEntry.get("name");
                         TagUserInfo tagUserInfo = new TagUserInfo(user.getKey(), name, requestType);
                         list.add(tagUserInfo);

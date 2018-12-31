@@ -42,5 +42,10 @@ public class TagUserInfo {
         this.userName = userName;
         this.requestType = requestType;
     }
+
+    @Override
+    public String toString() {
+        return userName;
+    }
 }
 

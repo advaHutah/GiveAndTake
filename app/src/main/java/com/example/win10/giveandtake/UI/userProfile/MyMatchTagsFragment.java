@@ -87,7 +87,7 @@ public class MyMatchTagsFragment extends Fragment {
                 public void onItemClick(AdapterView<?> parent, View v,
                                         int position, long id) {
                     selectedTag = tags.get(position);
-                    parentActivity.changeToUsersFragment(selectedTag,isTakeRequest);
+                    parentActivity.changeToUsersFragment(selectedTag,isTakeRequest,false);
 
                 }
             });

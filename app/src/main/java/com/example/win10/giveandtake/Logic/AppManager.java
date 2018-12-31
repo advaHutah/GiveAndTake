@@ -6,6 +6,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,7 +24,7 @@ public class AppManager {
     private FirebaseManager firebaseManager;
     private User currentUser;
     private User otherUser;
-
+    private ArrayList<TagUserInfo> notificationUsers;
     private FirebaseAuth mAuth;
     private Service selectedService;
 
@@ -118,12 +119,14 @@ public class AppManager {
     }
 
     public void getMatchUsers(String tag, Request.RequestType requestType, final AppManagerCallback<ArrayList<TagUserInfo>>callback){
-        this.firebaseManager.getMatchUsers(currentUser.getId(),tag, requestType, new FirebaseManager.FirebaseCallback<ArrayList<TagUserInfo>>() {
-            @Override
-            public void onDataArrived(ArrayList<TagUserInfo> value) {
-                callback.onDataArrived(value);
-            }
-        });
+        if(currentUser!=null) {
+            this.firebaseManager.getMatchUsers(currentUser.getId(), tag, requestType, new FirebaseManager.FirebaseCallback<ArrayList<TagUserInfo>>() {
+                @Override
+                public void onDataArrived(ArrayList<TagUserInfo> value) {
+                    callback.onDataArrived(value);
+                }
+            });
+        }
     }
 
     public void getTags( Request.RequestType requestType, final AppManagerCallback<ArrayList<String>>callback){
@@ -229,4 +232,11 @@ public class AppManager {
         return otherUser;
     }
 
+    public ArrayList<TagUserInfo> getNotificationUsers() {
+        return notificationUsers;
+    }
+
+    public void setNotificationUsers(ArrayList<TagUserInfo> notificationUsers) {
+        this.notificationUsers = notificationUsers;
+    }
 }
