@@ -12,13 +12,11 @@ import android.util.Log;
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.Logic.TagUserInfo;
-import com.example.win10.giveandtake.UI.userProfile.MyMatchActivity;
-import com.example.win10.giveandtake.UI.userProfile.UserProfileActivity;
+import com.example.win10.giveandtake.UI.userMatch.MyMatchActivity;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.ArrayList;
-import java.util.List;
 
 //liran
 public class MyFirebaseMessagingService extends FirebaseMessagingService {

@@ -1,8 +1,7 @@
-package com.example.win10.giveandtake.UI.userProfile;
+package com.example.win10.giveandtake.UI.userMatch;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,23 +10,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.Request;
-import com.example.win10.giveandtake.Logic.Tag;
 import com.example.win10.giveandtake.Logic.TagUserInfo;
 import com.example.win10.giveandtake.R;
-import com.example.win10.giveandtake.UI.OtherUserActivity;
+import com.example.win10.giveandtake.UI.userProfile.OtherUserActivity;
 
 import java.util.ArrayList;
-import java.util.List;
 
 //fragment that display user profile info and function like give and take request
 

@@ -1,0 +1,2457 @@
+Index: app/src/main/res/layout/activity_my_match.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/activity_my_match.xml	(revision )
++++ app/src/main/res/layout/activity_my_match.xml	(revision )
+@@ -7,7 +7,6 @@
+     tools:context="com.example.win10.giveandtake.UI.userProfile.MyMatchActivity">
+ 
+ 
+-
+     <FrameLayout
+         android:id="@+id/myMatchActivity_frame_container"
+         android:layout_width="match_parent"
+Index: app/src/main/res/layout/other_user_activity.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/other_user_activity.xml	(revision )
++++ app/src/main/res/layout/other_user_activity.xml	(revision )
+@@ -0,0 +1,90 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:layout_margin="10dp"
++    android:fitsSystemWindows="true"
++    android:orientation="vertical"
++    tools:context="com.example.win10.giveandtake.UI.OtherUserActvity">
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:orientation="horizontal">
++
++        <TextView
++            android:id="@+id/user_name_text"
++            android:layout_width="121dp"
++            android:layout_height="25dp"
++            android:fontFamily="@font/banthink"
++            android:gravity="left"
++            android:text=""
++            android:textAlignment="center"
++            android:textSize="30dp"
++            android:textStyle="bold" />
++
++        <ImageView
++            android:id="@+id/my_profile_image"
++            android:layout_width="100dp"
++            android:layout_height="76dp"
++            android:layout_gravity="left" />
++
++
++        <LinearLayout
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:orientation="vertical">
++
++            <TextView
++                android:id="@+id/my_profile_balance"
++                android:layout_width="80dp"
++                android:layout_height="37dp"
++                android:layout_gravity="right"
++                android:layout_marginTop="10dp"
++                android:text="Balance:"
++                android:textSize="20dp" />
++
++            <TextView
++                android:id="@+id/user_balance_text"
++                android:layout_width="80dp"
++                android:layout_height="37dp"
++                android:layout_gravity="right"
++                android:layout_marginTop="10dp"
++                android:text=""
++                android:textSize="20dp" />
++
++        </LinearLayout>
++    </LinearLayout>
++    <TextView
++        android:id="@+id/giveText"
++        android:layout_width="match_parent"
++        android:layout_height="100dp"
++        android:layout_gravity="right"
++        android:layout_marginTop="10dp"
++        android:text=""
++        android:textSize="20dp" />
++    <GridView
++        android:id="@+id/giveTags"
++        android:layout_width="match_parent"
++        android:layout_height="50dp"
++        android:layout_centerHorizontal="true"
++        android:layout_marginTop="10dp"
++        android:numColumns="3"></GridView>
++    <TextView
++        android:id="@+id/takeText"
++        android:layout_width="match_parent"
++        android:layout_height="100dp"
++        android:layout_gravity="right"
++        android:layout_marginTop="10dp"
++        android:text=""
++        android:textSize="20dp" />
++    <GridView
++        android:id="@+id/takeTags"
++        android:layout_width="match_parent"
++        android:layout_height="50dp"
++        android:layout_centerHorizontal="true"
++        android:layout_marginTop="10dp"
++        android:numColumns="3"></GridView>
++</LinearLayout>
+Index: app/src/main/res/layout/fragment_my_match_tags.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/res/layout/fragment_my_match_tags.xml	(revision )
++++ app/src/main/res/layout/fragment_my_match_tags.xml	(revision )
+@@ -19,14 +19,4 @@
+         android:textStyle="bold" />
+ 
+ 
+-    <GridView
+-        android:id="@+id/my_tags"
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:layout_centerHorizontal="true"
+-        android:layout_marginTop="10dp"
+-        android:numColumns="3"></GridView>
+-
+-
+-
+ </LinearLayout>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_other_user.xml
+===================================================================
+--- app/src/main/res/layout/activity_other_user.xml	(revision )
++++ app/src/main/res/layout/activity_other_user.xml	(revision )
+@@ -1,90 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
+-    xmlns:tools="http://schemas.android.com/tools"
+-    android:layout_width="match_parent"
+-    android:layout_height="match_parent"
+-    android:layout_margin="10dp"
+-    android:fitsSystemWindows="true"
+-    android:orientation="vertical"
+-    tools:context="com.example.win10.giveandtake.UI.OtherUserActivity">
+-
+-    <LinearLayout
+-        android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:orientation="horizontal">
+-
+-        <TextView
+-            android:id="@+id/user_name_text"
+-            android:layout_width="121dp"
+-            android:layout_height="25dp"
+-            android:fontFamily="@font/banthink"
+-            android:gravity="left"
+-            android:text=""
+-            android:textAlignment="center"
+-            android:textSize="30dp"
+-            android:textStyle="bold" />
+-
+-        <ImageView
+-            android:id="@+id/my_profile_image"
+-            android:layout_width="100dp"
+-            android:layout_height="76dp"
+-            android:layout_gravity="left" />
+-
+-
+-        <LinearLayout
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
+-            android:orientation="vertical">
+-
+-            <TextView
+-                android:id="@+id/my_profile_balance"
+-                android:layout_width="80dp"
+-                android:layout_height="37dp"
+-                android:layout_gravity="right"
+-                android:layout_marginTop="10dp"
+-                android:text="Balance:"
+-                android:textSize="20dp" />
+-
+-            <TextView
+-                android:id="@+id/user_balance_text"
+-                android:layout_width="80dp"
+-                android:layout_height="37dp"
+-                android:layout_gravity="right"
+-                android:layout_marginTop="10dp"
+-                android:text=""
+-                android:textSize="20dp" />
+-
+-        </LinearLayout>
+-    </LinearLayout>
+-    <TextView
+-        android:id="@+id/giveText"
+-        android:layout_width="match_parent"
+-        android:layout_height="100dp"
+-        android:layout_gravity="right"
+-        android:layout_marginTop="10dp"
+-        android:text=""
+-        android:textSize="20dp" />
+-    <GridView
+-        android:id="@+id/giveTags"
+-        android:layout_width="match_parent"
+-        android:layout_height="50dp"
+-        android:layout_centerHorizontal="true"
+-        android:layout_marginTop="10dp"
+-        android:numColumns="3"></GridView>
+-    <TextView
+-        android:id="@+id/takeText"
+-        android:layout_width="match_parent"
+-        android:layout_height="100dp"
+-        android:layout_gravity="right"
+-        android:layout_marginTop="10dp"
+-        android:text=""
+-        android:textSize="20dp" />
+-    <GridView
+-        android:id="@+id/takeTags"
+-        android:layout_width="match_parent"
+-        android:layout_height="50dp"
+-        android:layout_centerHorizontal="true"
+-        android:layout_marginTop="10dp"
+-        android:numColumns="3"></GridView>
+-</LinearLayout>
+Index: app/src/main/java/com/example/win10/giveandtake/UI/login/LoginFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/win10/giveandtake/UI/login/LoginFragment.java	(revision )
++++ app/src/main/java/com/example/win10/giveandtake/UI/login/LoginFragment.java	(revision )
+@@ -17,7 +17,6 @@
+ import android.widget.Toast;
+ 
+ import com.example.win10.giveandtake.Logic.AppManager;
+-import com.example.win10.giveandtake.MyFirebaseInstanceIDService;
+ import com.example.win10.giveandtake.R;
+ import com.google.android.gms.auth.api.signin.GoogleSignIn;
+ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+@@ -139,8 +138,6 @@
+                             FirebaseUser user = mAuth.getCurrentUser();
+                             updateUI(user);
+                         } else {
+-                            MyFirebaseInstanceIDService service = new MyFirebaseInstanceIDService();
+-                            service.onTokenRefresh();
+                             // If sign in fails, display a message to the user.
+                             Log.w(TAG, "signInWithCredential:failure", task.getException());
+                             Snackbar.make(getActivity().findViewById(R.id.fragment_login), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
+Index: app/src/main/java/com/example/win10/giveandtake/UI/userProfile/MyMatchActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/win10/giveandtake/UI/userProfile/MyMatchActivity.java	(revision )
++++ app/src/main/java/com/example/win10/giveandtake/UI/userProfile/MyMatchActivity.java	(revision )
+@@ -1,68 +1,15 @@
+ package com.example.win10.giveandtake.UI.userProfile;
+ 
+-import android.app.FragmentManager;
+-import android.content.Context;
+ import android.support.v7.app.AppCompatActivity;
+ import android.os.Bundle;
+-import android.view.View;
+-import android.widget.AdapterView;
+-import android.widget.ArrayAdapter;
+-import android.widget.GridView;
+-import android.widget.Toast;
+ 
+-import com.example.win10.giveandtake.Logic.AppManager;
+ import com.example.win10.giveandtake.R;
+-import com.example.win10.giveandtake.UI.userHashtags.*;
+-
+-import java.util.ArrayList;
+ 
+ public class MyMatchActivity extends AppCompatActivity {
+ 
+-    private AppManager appManager;
+-
+-
+     @Override
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+         setContentView(R.layout.activity_my_match);
+-
+-    }
+-
+-    @Override
+-    protected void onStart() {
+-        super.onStart();
+-        changeToGiveOrTakeFragment();
+-
+-    }
+-
+-
+-    public void addToast(String text, int duration) {
+-        Context context = this.getApplicationContext();
+-        Toast toast = Toast.makeText(context, text, duration);
+-        toast.show();
+-    }
+-
+-    public void changeToGiveOrTakeFragment() {
+-        FragmentManager fragmentManager = getFragmentManager();
+-        com.example.win10.giveandtake.UI.userProfile.GiveOrTakeFragment giveOrTakeFragment = new com.example.win10.giveandtake.UI.userProfile.GiveOrTakeFragment();
+-        fragmentManager.beginTransaction()
+-                .replace(R.id.myMatchActivity_frame_container, giveOrTakeFragment)
+-                .commit();
+-    }
+-
+-    public void changeToUsersFragment(String tag,boolean isTakeRequst) {
+-        FragmentManager fragmentManager = getFragmentManager();
+-        MyMatchUsersFragment myMatchUsersFragment = MyMatchUsersFragment.newInstance(tag,isTakeRequst);
+-        fragmentManager.beginTransaction()
+-                .replace(R.id.myMatchActivity_frame_container, myMatchUsersFragment)
+-                .commit();
+-    }
+-
+-    public void changeToTagsFragment(boolean isTakeRequst) {
+-        FragmentManager fragmentManager = getFragmentManager();
+-        MyMatchTagsFragment myMatchTagsFragment = MyMatchTagsFragment.newInstance(isTakeRequst);
+-        fragmentManager.beginTransaction()
+-                .replace(R.id.myMatchActivity_frame_container, myMatchTagsFragment)
+-                .commit();
+     }
+ }
+Index: app/src/main/java/com/example/win10/giveandtake/UI/userProfile/GiveOrTakeFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/win10/giveandtake/UI/userProfile/GiveOrTakeFragment.java	(revision )
++++ app/src/main/java/com/example/win10/giveandtake/UI/userProfile/GiveOrTakeFragment.java	(revision )
+@@ -24,8 +24,6 @@
+ 
+     private Button btnGive;
+     private Button btnTake;
+-    private MyMatchActivity parentActivity;
+-
+ 
+     @Nullable
+     @Override
+@@ -34,24 +32,29 @@
+ 
+         appManager = AppManager.getInstance();
+         fragmentManager = getFragmentManager();
+-        parentActivity = (MyMatchActivity) getActivity();
+ 
+         btnGive = (Button) view.findViewById(R.id.give_or_take_fragment_give_btn);
+         btnTake = (Button) view.findViewById(R.id.give_or_take_fragment_take_btn);
+         btnGive.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+-                parentActivity.changeToTagsFragment(false);
++                changeToTagsFragment(false);
+             }
+         });
+         btnTake.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+-                parentActivity.changeToTagsFragment(true);
++                changeToTagsFragment(true);
+             }
+         });
+ 
+         return view;
+     }
+ 
++    private void changeToTagsFragment(boolean isTakeRequst) {
++        MyMatchTagsFragment myMatchTagsFragment = MyMatchTagsFragment.newInstance(isTakeRequst);
++        fragmentManager.beginTransaction()
++                .replace(R.id.myMatchActivity_frame_container, myMatchTagsFragment)
++                .commit();
++    }
+ }
+Index: app/src/main/java/com/example/win10/giveandtake/UI/userProfile/MyMatchTagsFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/win10/giveandtake/UI/userProfile/MyMatchTagsFragment.java	(revision )
++++ app/src/main/java/com/example/win10/giveandtake/UI/userProfile/MyMatchTagsFragment.java	(revision )
+@@ -32,17 +32,10 @@
+     private View view;
+     private FragmentManager fragmentManager;
+ 
+-    private GridView tagsGrid;
+-    private ArrayList<String> myTags;
+-    private Request.RequestType requestType;
+-    boolean isTakeRequest ;
+ 
+-    private String selectedTag;
+ 
+     private AppManager appManager;
+ 
+-    private MyMatchActivity parentActivity ;
+-
+ 
+     public static MyMatchTagsFragment newInstance(boolean isTakeRequst) {
+         MyMatchTagsFragment myMatchTagsFragment = new MyMatchTagsFragment();
+@@ -58,41 +51,15 @@
+         view = inflater.inflate(R.layout.fragment_my_match_tags, container, false);
+ 
+         appManager = AppManager.getInstance();
+-        parentActivity = (MyMatchActivity) getActivity();
+ 
+-        tagsGrid = (GridView) view.findViewById(R.id.my_tags);
+-        myTags = new ArrayList<String>();
+-        isTakeRequest=this.getArguments().getBoolean("isTakeRequst");
+-        if (isTakeRequest) {
+-            requestType = Request.RequestType.TAKE;
++
++        if (this.getArguments().getBoolean("isTakeRequst")) {
++            //do something
++
+         } else {
+-            requestType = Request.RequestType.GIVE;
+-        }
+ 
+-        appManager.getTags(requestType, new AppManager.AppManagerCallback<ArrayList<String>>() {
+-            @Override
+-            public void onDataArrived(ArrayList<String> value) {
+-                myTags = value;
+-                showTags(myTags);
+-            }
+-        });
++        }
+         return view;
+     }
+ 
+-    public void showTags(final ArrayList<String> tags) {
+-        if (tags != null) {
+-            ArrayAdapter arrayadapter = new ArrayAdapter<String>(view.getContext(), R.layout.item, tags);
+-            tagsGrid.setAdapter(arrayadapter);
+-            tagsGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+-                public void onItemClick(AdapterView<?> parent, View v,
+-                                        int position, long id) {
+-                    selectedTag = tags.get(position);
+-                    parentActivity.changeToUsersFragment(selectedTag,isTakeRequest);
+-
+-                }
+-            });
+-        } else
+-            parentActivity.addToast("no tags were founds", Toast.LENGTH_SHORT);
+-    }
+-
+ }
+Index: app/src/main/java/com/example/win10/giveandtake/UI/userProfile/UserProfileActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/win10/giveandtake/UI/userProfile/UserProfileActivity.java	(revision )
++++ app/src/main/java/com/example/win10/giveandtake/UI/userProfile/UserProfileActivity.java	(revision )
+@@ -59,12 +59,13 @@
+             @Override
+             public void onClick(View view) {
+                 createHashtagsActivity();
++                //TODO create new activity of hashtags
+             }
+         });
+         btnMyMatch.setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+-                createMyMatchActivity();
++                //TODO create new activity of match
+             }
+         });
+         btnMyPhone.setOnClickListener(new View.OnClickListener() {
+@@ -76,19 +77,15 @@
+ 
+ 
+         userImage = (ImageView) this.findViewById(R.id.my_profile_image);
+-        // userImage.setImageResource(appManager.getCurrentUser().getImage());
++       // userImage.setImageResource(appManager.getCurrentUser().getImage());
+ 
+ 
++
+     }
+ 
+     private void createHashtagsActivity() {
+         Intent intent = new Intent(this, HashtagsManagementActivity.class);
+         startActivity(intent);
+     }
+-
+-    private void createMyMatchActivity() {
+-        Intent intent = new Intent(this, MyMatchActivity.class);
+-        startActivity(intent);
+-    }
+ 
+ }
+Index: app/src/main/java/com/example/win10/giveandtake/UI/userProfile/MyMatchUsersFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/win10/giveandtake/UI/userProfile/MyMatchUsersFragment.java	(revision )
++++ app/src/main/java/com/example/win10/giveandtake/UI/userProfile/MyMatchUsersFragment.java	(revision )
+@@ -9,12 +9,8 @@
+ import android.view.ViewGroup;
+ 
+ import com.example.win10.giveandtake.Logic.AppManager;
+-import com.example.win10.giveandtake.Logic.Request;
+-import com.example.win10.giveandtake.Logic.TagUserInfo;
+ import com.example.win10.giveandtake.R;
+ 
+-import java.util.ArrayList;
+-
+ //fragment that display user profile info and function like give and take request
+ 
+ public class MyMatchUsersFragment extends Fragment {
+@@ -22,17 +18,15 @@
+ 
+     private View view;
+     private FragmentManager fragmentManager;
+-    private ArrayList<TagUserInfo> usersInfoList ;
+ 
+ 
+     private AppManager appManager;
+ 
+ 
+-    public static MyMatchUsersFragment newInstance(String tag,boolean isTakeRequest) {
++    public static MyMatchUsersFragment newInstance(String tag) {
+         MyMatchUsersFragment myMatchUsersFragment = new MyMatchUsersFragment();
+         Bundle args = new Bundle();
+         args.putString("tag", tag);
+-        args.putBoolean("isTakeRequest",isTakeRequest);
+         myMatchUsersFragment.setArguments(args);
+         return myMatchUsersFragment;
+     }
+@@ -44,19 +38,8 @@
+ 
+         appManager = AppManager.getInstance();
+ 
+-        String selectedTag = this.getArguments().getString("tag");
+-        boolean isTakeRequest= this.getArguments().getBoolean("isTakeRequest");
+-        Request.RequestType otherRequestType = isTakeRequest? Request.RequestType.GIVE: Request.RequestType.TAKE;
+-        // get all user that match the tag except current user
+-        appManager.getMatchUsers(selectedTag, otherRequestType, new AppManager.AppManagerCallback<ArrayList<TagUserInfo>>() {
+-            @Override
+-            public void onDataArrived(ArrayList<TagUserInfo> value) {
+-                usersInfoList=value;
+-            //todo display users match
+-            }
+-        });
+-
+-        // todo : if the user choose name, change to otherUserActivity
++        String tag = this.getArguments().getString("tag");
++        //do something
+         return view;
+     }
+ 
+Index: app/src/main/java/com/example/win10/giveandtake/UI/userHashtags/MyHashtagsFragment.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/win10/giveandtake/UI/userHashtags/MyHashtagsFragment.java	(revision )
++++ app/src/main/java/com/example/win10/giveandtake/UI/userHashtags/MyHashtagsFragment.java	(revision )
+@@ -35,8 +35,6 @@
+ import java.util.HashSet;
+ import java.util.Set;
+ 
+-import javax.xml.datatype.Duration;
+-
+ //fragment that display user profile info and function like give and take request
+ 
+ public class MyHashtagsFragment extends Fragment {
+@@ -91,7 +89,7 @@
+         //in case request is already exist
+         if (text != null && !text.equals("")) {
+             inputText.setText(text);
+-            appManager.getMyRequestTags(requestType, new AppManager.AppManagerCallback<ArrayList<String>>() {
++            appManager.getRequestTags(requestType, new AppManager.AppManagerCallback<ArrayList<String>>() {
+                 @Override
+                 public void onDataArrived(ArrayList<String> value) {
+                     tags = value;
+@@ -116,10 +114,11 @@
+             @Override
+             public void onClick(View view) {
+                 if (!text.equals("") && !selectedTags.isEmpty()) {
+-                    appManager.addRequestFinal(selectedTags, requestType);
+-                    // appManager.updateRequestTagsUserValidated(selectedTags, requestType);
++                    appManager.addRequestFinal(selectedTags , requestType);
++                   // appManager.updateRequestTagsUserValidated(selectedTags, requestType);
+                     //notify the user that the request has been submitted or change the view
+                     addToast("The request was submitted", Toast.LENGTH_SHORT);
++
+                 }
+             }
+         });
+@@ -133,17 +132,14 @@
+     }
+ 
+     public void showTags(final ArrayList<String> tags) {
+-        if (tags != null) {
+-            ArrayAdapter arrayadapter = new ArrayAdapter<String>(view.getContext(), R.layout.item, tags);
+-            tagsGrid.setAdapter(arrayadapter);
+-            tagsGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+-                public void onItemClick(AdapterView<?> parent, View v,
+-                                        int position, long id) {
+-                    selectedTags.add(tags.get(position));
+-                }
+-            });
+-        } else
+-            addToast("no tags were founds", Toast.LENGTH_SHORT);
++        ArrayAdapter arrayadapter = new ArrayAdapter<String>(view.getContext(), R.layout.item, tags);
++        tagsGrid.setAdapter(arrayadapter);
++        tagsGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
++            public void onItemClick(AdapterView<?> parent, View v,
++                                    int position, long id) {
++                selectedTags.add(tags.get(position));
++            }
++        });
+     }
+ 
+ }
+Index: app/src/main/java/com/example/win10/giveandtake/UI/OtherUserActivity.java
+===================================================================
+--- app/src/main/java/com/example/win10/giveandtake/UI/OtherUserActivity.java	(revision )
++++ app/src/main/java/com/example/win10/giveandtake/UI/OtherUserActivity.java	(revision )
+@@ -1,50 +0,0 @@
+-package com.example.win10.giveandtake.UI;
+-
+-import android.support.v7.app.AppCompatActivity;
+-import android.os.Bundle;
+-import android.widget.ArrayAdapter;
+-import android.widget.GridView;
+-import android.widget.TextView;
+-
+-import com.example.win10.giveandtake.Logic.AppManager;
+-import com.example.win10.giveandtake.Logic.User;
+-import com.example.win10.giveandtake.R;
+-
+-public class OtherUserActivity extends AppCompatActivity {
+-
+-    private TextView nameText, balanceText, giveText, takeText;
+-    private GridView giveTags,takeTags;
+-    private AppManager appManager = AppManager.getInstance();
+-    private User otherUser;
+-
+-    @Override
+-    protected void onCreate(Bundle savedInstanceState) {
+-        super.onCreate(savedInstanceState);
+-        setContentView(R.layout.activity_other_user);
+-
+-        nameText = (TextView) this.findViewById(R.id.user_name_text);
+-        balanceText = (TextView) this.findViewById(R.id.user_balance_text);
+-        giveText = (TextView) this.findViewById(R.id.giveText);
+-        takeText = (TextView) this.findViewById(R.id.takeText);
+-        giveTags = (GridView) this.findViewById(R.id.giveTags);
+-        takeTags = (GridView) this.findViewById(R.id.takeTags);
+-
+-        otherUser = appManager.getOtherUser();
+-
+-        nameText.setText(otherUser.getFullName());
+-        balanceText.setText(otherUser.getBalance()+"");
+-
+-        giveText.setText(otherUser.getMyGiveRequest().getUserInputText());
+-        takeText.setText(otherUser.getMyTakeRequest().getUserInputText());
+-
+-        giveTags.setAdapter(new ArrayAdapter<>(this,R.layout.item,otherUser.getMyGiveRequest().getTags()));
+-        takeTags.setAdapter(new ArrayAdapter<String>(this,R.layout.item,otherUser.getMyTakeRequest().getTags()));
+-
+-    }
+-
+-
+-    @Override
+-    public void onPause() {
+-        super.onPause();
+-    }
+-}
+Index: app/src/main/java/com/example/win10/giveandtake/Logic/User.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/win10/giveandtake/Logic/User.java	(revision )
++++ app/src/main/java/com/example/win10/giveandtake/Logic/User.java	(revision )
+@@ -21,8 +21,6 @@
+     private Gender gender;
+     private int balance;
+     private int image;
+-    private int instanceId;
+-
+     //TODO add image resource
+ 
+     private Request myTakeRequest;
+Index: app/src/main/java/com/example/win10/giveandtake/Logic/AppManager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/win10/giveandtake/Logic/AppManager.java	(revision )
++++ app/src/main/java/com/example/win10/giveandtake/Logic/AppManager.java	(revision )
+@@ -22,8 +22,6 @@
+     private static AppManager singletonAppManager = null;
+     private FirebaseManager firebaseManager;
+     private User currentUser;
+-    private User otherUser;
+-
+     private FirebaseAuth mAuth;
+     private Service selectedService;
+ 
+@@ -108,7 +106,7 @@
+         //TODO find match
+     }
+ 
+-    public void getMyRequestTags(Request.RequestType requestType, final AppManagerCallback<ArrayList<String>>callback) {
++    public void getRequestTags(Request.RequestType requestType, final AppManagerCallback<ArrayList<String>>callback) {
+         this.firebaseManager.getTagsFromRequest(currentUser.getId(), requestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
+             @Override
+             public void onDataArrived(ArrayList<String> value) {
+@@ -117,24 +115,6 @@
+         });
+     }
+ 
+-    public void getMatchUsers(String tag, Request.RequestType requestType, final AppManagerCallback<ArrayList<TagUserInfo>>callback){
+-        this.firebaseManager.getMatchUsers(currentUser.getId(),tag, requestType, new FirebaseManager.FirebaseCallback<ArrayList<TagUserInfo>>() {
+-            @Override
+-            public void onDataArrived(ArrayList<TagUserInfo> value) {
+-                callback.onDataArrived(value);
+-            }
+-        });
+-    }
+-
+-    public void getTags( Request.RequestType requestType, final AppManagerCallback<ArrayList<String>>callback){
+-        this.firebaseManager.getTags(requestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
+-            @Override
+-            public void onDataArrived(ArrayList<String> value) {
+-                callback.onDataArrived(value);
+-            }
+-        });
+-    }
+-
+     public void setSelectedService(Service selectedService) {
+         this.selectedService = selectedService;
+     }
+@@ -199,34 +179,4 @@
+             }
+         });
+     }
+-
+-    public void setOtherUser(String uid, final AppManager.AppManagerCallback<Boolean> callback) {
+-        firebaseManager.getUserDetailFromDB(uid, new FirebaseManager.FirebaseCallback<User>() {
+-            @Override
+-            public void onDataArrived(User value) {
+-                if (value != null) {
+-                    otherUser = value;
+-                    firebaseManager.getGiveRequestFromDB(otherUser.getId(), new FirebaseManager.FirebaseCallback<Request>() {
+-                        @Override
+-                        public void onDataArrived(Request value) {
+-                            otherUser.setMyGiveRequests(value);
+-                        }
+-                    });
+-                    firebaseManager.getTakeRequestFromDB(otherUser.getId(), new FirebaseManager.FirebaseCallback<Request>() {
+-                        @Override
+-                        public void onDataArrived(Request value) {
+-                            otherUser.setMyTakeRequest(value);
+-                        }
+-                    });
+-
+-                }
+-                callback.onDataArrived(true);
+-            }
+-        });
+-    }
+-
+-    public User getOtherUser() {
+-        return otherUser;
+-    }
+-
+ }
+Index: app/src/main/java/com/example/win10/giveandtake/DBLogic/FirebaseManager.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/win10/giveandtake/DBLogic/FirebaseManager.java	(revision )
++++ app/src/main/java/com/example/win10/giveandtake/DBLogic/FirebaseManager.java	(revision )
+@@ -176,17 +176,15 @@
+     }
+ 
+     public void updateUserServcieInDB(String uid, Service service) {
+-        // db.child(Keys.USERS).child(uid).child(Keys.MY_SERVICES).child(service.getSid()).setValue(service);
++       // db.child(Keys.USERS).child(uid).child(Keys.MY_SERVICES).child(service.getSid()).setValue(service);
+     }
+ 
+     public void updateServiceInDB(Service service) {
+-        //  db.child(Keys.SERVICES).child(service.getSid()).setValue(service);
++      //  db.child(Keys.SERVICES).child(service.getSid()).setValue(service);
+     }
+ 
+     public void updateToken(String uid, String token) {
+-        // db.child(Keys.NOTIFICATIONS).child(Keys.USERS_TOKENS).child(uid).child(Keys.FSM_TOKEN).setValue(token);
+-        //db.child(Keys.NOTIFICATIONS).child(Keys.USERS_TOKENS).child(uid).child(Keys.FSM_TOKEN).setValue(token);
+-        db.child(Keys.USERS).child(uid).child("instanceId").setValue(token);
++        db.child(Keys.NOTIFICATIONS).child(Keys.USERS_TOKENS).child(uid).child(Keys.FSM_TOKEN).setValue(token);
+     }
+ 
+     public void getToken(String uid, final FirebaseCallback<String> callback) {
+@@ -220,90 +218,6 @@
+                 callback.onDataArrived((ArrayList<String>) list);
+             }
+ 
+-            @Override
+-            public void onCancelled(DatabaseError databaseError) {
+-                Log.e(TAG, "onCancelled: ");
+-                callback.onDataArrived(null);
+-            }
+-        });
+-    }
+-
+-    public void getTags(Request.RequestType requestType, final FirebaseCallback<ArrayList<String>> callback) {
+-
+-        String sKey = requestType == Request.RequestType.TAKE ? Keys.TAKE_TAGS : Keys.GIVE_TAGS;
+-
+-        db.child(sKey).addValueEventListener(new ValueEventListener() {
+-
+-            @Override
+-            public void onDataChange(DataSnapshot dataSnapshot) {
+-                List<String> list = new ArrayList<String>();
+-                for (DataSnapshot child : dataSnapshot.getChildren()) {
+-                    list.add(child.getKey());
+-                }
+-                // get the values from map.values();
+-                callback.onDataArrived((ArrayList<String>) list);
+-            }
+-
+-            @Override
+-            public void onCancelled(DatabaseError databaseError) {
+-                Log.e(TAG, "onCancelled: ");
+-                callback.onDataArrived(null);
+-            }
+-        });
+-
+-    }
+-
+-    public void getMatchUsers(final String uid, final String tag, final Request.RequestType requestType, final FirebaseCallback<ArrayList<TagUserInfo>> callback) {
+-
+-        String sKey = requestType == Request.RequestType.TAKE ? Keys.TAKE_TAGS : Keys.GIVE_TAGS;
+-
+-        db.child(sKey).child(tag).addValueEventListener(new ValueEventListener() {
+-
+-            @Override
+-            public void onDataChange(DataSnapshot dataSnapshot) {
+-                List<TagUserInfo> list = new ArrayList<TagUserInfo>();
+-                for (DataSnapshot user : dataSnapshot.getChildren()) {
+-                    if (!user.getKey().equals(uid)) {
+-                        Map<String, String> nameEntry = (Map<String, String>) user.getValue();
+-                        String name = nameEntry.get("name");
+-                        TagUserInfo tagUserInfo = new TagUserInfo(user.getKey(), name, requestType);
+-                        list.add(tagUserInfo);
+-                    }
+-                }                // get the values from map.values();
+-                callback.onDataArrived((ArrayList<TagUserInfo>) list);
+-            }
+-
+-            @Override
+-            public void onCancelled(DatabaseError databaseError) {
+-                Log.e(TAG, "onCancelled: ");
+-                callback.onDataArrived(null);
+-            }
+-        });
+-
+-    }
+-
+-    public void getGiveRequestFromDB(String uid, final FirebaseCallback<Request> callback) {
+-        db.child(Keys.GIVE_REQUEST).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+-            @Override
+-            public void onDataChange(DataSnapshot dataSnapshot) {
+-                callback.onDataArrived(dataSnapshot.getValue(Request.class));
+-            }
+-
+-            @Override
+-            public void onCancelled(DatabaseError databaseError) {
+-                Log.e(TAG, "onCancelled: ");
+-                callback.onDataArrived(null);
+-            }
+-        });
+-    }
+-
+-    public void getTakeRequestFromDB(String uid, final FirebaseCallback<Request> callback) {
+-        db.child(Keys.TAKE_REQUEST).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+-            @Override
+-            public void onDataChange(DataSnapshot dataSnapshot) {
+-                callback.onDataArrived(dataSnapshot.getValue(Request.class));
+-            }
+-
+             @Override
+             public void onCancelled(DatabaseError databaseError) {
+                 Log.e(TAG, "onCancelled: ");
+@@ -313,6 +227,7 @@
+     }
+ 
+ 
++
+     public void removeService(Service theService) {
+ //        //remove service
+ //        db.child(Keys.SERVICES).child(theService.getSid()).removeValue();
+Index: app/src/main/java/com/example/win10/giveandtake/MyFirebaseMessagingService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/win10/giveandtake/MyFirebaseMessagingService.java	(revision )
++++ app/src/main/java/com/example/win10/giveandtake/MyFirebaseMessagingService.java	(revision )
+@@ -12,7 +12,7 @@
+ import com.example.win10.giveandtake.UI.userProfile.UserProfileActivity;
+ import com.google.firebase.messaging.FirebaseMessagingService;
+ import com.google.firebase.messaging.RemoteMessage;
+-//liran
++
+ public class MyFirebaseMessagingService extends FirebaseMessagingService {
+     private static final String TAG ="MyFirebaseMessagingServ" ;
+ 
+Index: app/src/main/java/com/example/win10/giveandtake/MyFirebaseInstanceIDService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/java/com/example/win10/giveandtake/MyFirebaseInstanceIDService.java	(revision )
++++ app/src/main/java/com/example/win10/giveandtake/MyFirebaseInstanceIDService.java	(revision )
+@@ -23,9 +23,9 @@
+         // If you want to send messages to this application instance or
+         // manage this apps subscriptions on the server side, send the
+         // Instance ID token to your app server.
+-        //       if(AppManager.getInstance().getCurrentUser().getId()!=null)
++ //       if(AppManager.getInstance().getCurrentUser().getId()!=null)
+ //        FirebaseManager.getInstance().updateToken(AppManager.getInstance().getCurrentUser().getId()
+ //                ,refreshedToken);
+-        //todo remove comments
++            //todo remove comments
+     }
+ }
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/src/main/AndroidManifest.xml	(revision )
++++ app/src/main/AndroidManifest.xml	(revision )
+@@ -42,13 +42,7 @@
+         </service>
+ 
+         <activity android:name=".UI.userHashtags.HashtagsManagementActivity" />
+-        <activity android:name=".UI.userProfile.MyMatchActivity" />
+-
+-        <meta-data
+-            android:name="com.google.android.gms.version"
+-            android:value="@integer/google_play_services_version" />
+-
+-        <activity android:name=".UI.OtherUserActivity"></activity>
++        <activity android:name=".UI.userProfile.MyMatchActivity"></activity>
+     </application>
+ 
+ </manifest>
+\ No newline at end of file
+Index: app/build/generated/source/r/debug/com/google/android/gms/R.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build/generated/source/r/debug/com/google/android/gms/R.java	(revision )
++++ app/build/generated/source/r/debug/com/google/android/gms/R.java	(revision )
+@@ -60,15 +60,15 @@
+         public static final int email = 0x7f090053;
+         public static final int icon_only = 0x7f090094;
+         public static final int light = 0x7f0900a1;
+-        public static final int none = 0x7f0900ce;
+-        public static final int normal = 0x7f0900cf;
+-        public static final int progressBar = 0x7f0900dd;
+-        public static final int radio = 0x7f0900e1;
+-        public static final int standard = 0x7f090117;
+-        public static final int text = 0x7f090128;
+-        public static final int text2 = 0x7f090129;
+-        public static final int wide = 0x7f090151;
+-        public static final int wrap_content = 0x7f090154;
++        public static final int none = 0x7f0900cd;
++        public static final int normal = 0x7f0900ce;
++        public static final int progressBar = 0x7f0900dc;
++        public static final int radio = 0x7f0900e0;
++        public static final int standard = 0x7f090116;
++        public static final int text = 0x7f090127;
++        public static final int text2 = 0x7f090128;
++        public static final int wide = 0x7f090150;
++        public static final int wrap_content = 0x7f090153;
+     }
+     public static final class integer {
+         public static final int google_play_services_version = 0x7f0a0007;
+Index: app/build/generated/source/r/debug/com/example/win10/giveandtake/R.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build/generated/source/r/debug/com/example/win10/giveandtake/R.java	(revision )
++++ app/build/generated/source/r/debug/com/example/win10/giveandtake/R.java	(revision )
+@@ -3929,153 +3929,152 @@
+     public static final int my_profile_name=0x7f0900bf;
+     public static final int my_profile_phone_msg=0x7f0900c0;
+     public static final int my_profile_title=0x7f0900c1;
+-    public static final int my_tags=0x7f0900c2;
+-    public static final int nav_connect=0x7f0900c3;
+-    public static final int nav_edit_user_info=0x7f0900c4;
+-    public static final int nav_explore=0x7f0900c5;
+-    public static final int nav_full_account_info=0x7f0900c6;
+-    public static final int nav_give_request=0x7f0900c7;
+-    public static final int nav_history=0x7f0900c8;
+-    public static final int nav_logout=0x7f0900c9;
+-    public static final int nav_my_services=0x7f0900ca;
+-    public static final int nav_take_request=0x7f0900cb;
+-    public static final int navigation_header_container=0x7f0900cc;
+-    public static final int never=0x7f0900cd;
+-    public static final int none=0x7f0900ce;
+-    public static final int normal=0x7f0900cf;
+-    public static final int notification_background=0x7f0900d0;
+-    public static final int notification_main_column=0x7f0900d1;
+-    public static final int notification_main_column_container=0x7f0900d2;
+-    public static final int packed=0x7f0900d3;
+-    public static final int parallax=0x7f0900d4;
+-    public static final int parent=0x7f0900d5;
+-    public static final int parentPanel=0x7f0900d6;
+-    public static final int parent_matrix=0x7f0900d7;
+-    public static final int password=0x7f0900d8;
+-    public static final int percent=0x7f0900d9;
+-    public static final int phone_text=0x7f0900da;
+-    public static final int phone_text_edit=0x7f0900db;
+-    public static final int pin=0x7f0900dc;
+-    public static final int progressBar=0x7f0900dd;
+-    public static final int progressBar1=0x7f0900de;
+-    public static final int progress_circular=0x7f0900df;
+-    public static final int progress_horizontal=0x7f0900e0;
+-    public static final int radio=0x7f0900e1;
+-    public static final int radio_female=0x7f0900e2;
+-    public static final int radio_male=0x7f0900e3;
+-    public static final int request_find_text_btn=0x7f0900e4;
+-    public static final int request_input_text=0x7f0900e5;
+-    public static final int request_layout=0x7f0900e6;
+-    public static final int request_tags_result=0x7f0900e7;
+-    public static final int request_title=0x7f0900e8;
+-    public static final int right=0x7f0900e9;
+-    public static final int right_icon=0x7f0900ea;
+-    public static final int right_side=0x7f0900eb;
+-    public static final int save_image_matrix=0x7f0900ec;
+-    public static final int save_non_transition_alpha=0x7f0900ed;
+-    public static final int save_scale_type=0x7f0900ee;
+-    public static final int screen=0x7f0900ef;
+-    public static final int scroll=0x7f0900f0;
+-    public static final int scrollIndicatorDown=0x7f0900f1;
+-    public static final int scrollIndicatorUp=0x7f0900f2;
+-    public static final int scrollView=0x7f0900f3;
+-    public static final int scrollable=0x7f0900f4;
+-    public static final int search_badge=0x7f0900f5;
+-    public static final int search_bar=0x7f0900f6;
+-    public static final int search_button=0x7f0900f7;
+-    public static final int search_close_btn=0x7f0900f8;
+-    public static final int search_edit_frame=0x7f0900f9;
+-    public static final int search_go_btn=0x7f0900fa;
+-    public static final int search_mag_icon=0x7f0900fb;
+-    public static final int search_plate=0x7f0900fc;
+-    public static final int search_src_text=0x7f0900fd;
+-    public static final int search_text=0x7f0900fe;
+-    public static final int search_voice_btn=0x7f0900ff;
+-    public static final int select_dialog_listview=0x7f090100;
+-    public static final int select_gender_radio=0x7f090101;
+-    public static final int service_description_layout=0x7f090102;
+-    public static final int service_description_text=0x7f090103;
+-    public static final int service_description_title=0x7f090104;
+-    public static final int service_list_view=0x7f090105;
+-    public static final int shortcut=0x7f090106;
+-    public static final int showCustom=0x7f090107;
+-    public static final int showHome=0x7f090108;
+-    public static final int showTitle=0x7f090109;
+-    public static final int sign_in_button=0x7f09010a;
+-    public static final int sign_up_button=0x7f09010b;
+-    public static final int smallLabel=0x7f09010c;
+-    public static final int snackbar_action=0x7f09010d;
+-    public static final int snackbar_text=0x7f09010e;
+-    public static final int snap=0x7f09010f;
+-    public static final int spacer=0x7f090110;
+-    public static final int split_action_bar=0x7f090111;
+-    public static final int spread=0x7f090112;
+-    public static final int spread_inside=0x7f090113;
+-    public static final int src_atop=0x7f090114;
+-    public static final int src_in=0x7f090115;
+-    public static final int src_over=0x7f090116;
+-    public static final int standard=0x7f090117;
+-    public static final int start=0x7f090118;
+-    public static final int start_service_btn=0x7f090119;
+-    public static final int status=0x7f09011a;
+-    public static final int status_bar_latest_event_content=0x7f09011b;
+-    public static final int submenuarrow=0x7f09011c;
+-    public static final int submit_area=0x7f09011d;
+-    public static final int tabMode=0x7f09011e;
+-    public static final int takeTags=0x7f09011f;
+-    public static final int takeText=0x7f090120;
+-    public static final int take_request_btn=0x7f090121;
+-    public static final int take_request_find_text_btn=0x7f090122;
+-    public static final int take_request_input_text=0x7f090123;
+-    public static final int take_request_tags_result=0x7f090124;
+-    public static final int taker_user_name_layout=0x7f090125;
+-    public static final int taker_user_name_text=0x7f090126;
+-    public static final int taker_user_name_title=0x7f090127;
+-    public static final int text=0x7f090128;
+-    public static final int text2=0x7f090129;
+-    public static final int textSpacerNoButtons=0x7f09012a;
+-    public static final int textSpacerNoTitle=0x7f09012b;
+-    public static final int textView_other_user_name=0x7f09012c;
+-    public static final int text_input_password_toggle=0x7f09012d;
+-    public static final int textinput_counter=0x7f09012e;
+-    public static final int textinput_error=0x7f09012f;
+-    public static final int time=0x7f090130;
+-    public static final int title=0x7f090131;
+-    public static final int titleDividerNoCustom=0x7f090132;
+-    public static final int title_template=0x7f090133;
+-    public static final int top=0x7f090134;
+-    public static final int topPanel=0x7f090135;
+-    public static final int touch_outside=0x7f090136;
+-    public static final int transition_current_scene=0x7f090137;
+-    public static final int transition_layout_save=0x7f090138;
+-    public static final int transition_position=0x7f090139;
+-    public static final int transition_scene_layoutid_cache=0x7f09013a;
+-    public static final int transition_transform=0x7f09013b;
+-    public static final int uniform=0x7f09013c;
+-    public static final int up=0x7f09013d;
+-    public static final int useLogo=0x7f09013e;
+-    public static final int user_balance_layout=0x7f09013f;
+-    public static final int user_balance_text=0x7f090140;
+-    public static final int user_balance_title=0x7f090141;
+-    public static final int user_email_layout=0x7f090142;
+-    public static final int user_email_text=0x7f090143;
+-    public static final int user_email_title=0x7f090144;
+-    public static final int user_gender_layout=0x7f090145;
+-    public static final int user_gender_text=0x7f090146;
+-    public static final int user_gender_title=0x7f090147;
+-    public static final int user_image=0x7f090148;
+-    public static final int user_name_layout=0x7f090149;
+-    public static final int user_name_text=0x7f09014a;
+-    public static final int user_name_title=0x7f09014b;
+-    public static final int user_phone_layout=0x7f09014c;
+-    public static final int user_phone_text=0x7f09014d;
+-    public static final int user_phone_title=0x7f09014e;
+-    public static final int view_offset_helper=0x7f09014f;
+-    public static final int visible=0x7f090150;
+-    public static final int wide=0x7f090151;
+-    public static final int withText=0x7f090152;
+-    public static final int wrap=0x7f090153;
+-    public static final int wrap_content=0x7f090154;
++    public static final int nav_connect=0x7f0900c2;
++    public static final int nav_edit_user_info=0x7f0900c3;
++    public static final int nav_explore=0x7f0900c4;
++    public static final int nav_full_account_info=0x7f0900c5;
++    public static final int nav_give_request=0x7f0900c6;
++    public static final int nav_history=0x7f0900c7;
++    public static final int nav_logout=0x7f0900c8;
++    public static final int nav_my_services=0x7f0900c9;
++    public static final int nav_take_request=0x7f0900ca;
++    public static final int navigation_header_container=0x7f0900cb;
++    public static final int never=0x7f0900cc;
++    public static final int none=0x7f0900cd;
++    public static final int normal=0x7f0900ce;
++    public static final int notification_background=0x7f0900cf;
++    public static final int notification_main_column=0x7f0900d0;
++    public static final int notification_main_column_container=0x7f0900d1;
++    public static final int packed=0x7f0900d2;
++    public static final int parallax=0x7f0900d3;
++    public static final int parent=0x7f0900d4;
++    public static final int parentPanel=0x7f0900d5;
++    public static final int parent_matrix=0x7f0900d6;
++    public static final int password=0x7f0900d7;
++    public static final int percent=0x7f0900d8;
++    public static final int phone_text=0x7f0900d9;
++    public static final int phone_text_edit=0x7f0900da;
++    public static final int pin=0x7f0900db;
++    public static final int progressBar=0x7f0900dc;
++    public static final int progressBar1=0x7f0900dd;
++    public static final int progress_circular=0x7f0900de;
++    public static final int progress_horizontal=0x7f0900df;
++    public static final int radio=0x7f0900e0;
++    public static final int radio_female=0x7f0900e1;
++    public static final int radio_male=0x7f0900e2;
++    public static final int request_find_text_btn=0x7f0900e3;
++    public static final int request_input_text=0x7f0900e4;
++    public static final int request_layout=0x7f0900e5;
++    public static final int request_tags_result=0x7f0900e6;
++    public static final int request_title=0x7f0900e7;
++    public static final int right=0x7f0900e8;
++    public static final int right_icon=0x7f0900e9;
++    public static final int right_side=0x7f0900ea;
++    public static final int save_image_matrix=0x7f0900eb;
++    public static final int save_non_transition_alpha=0x7f0900ec;
++    public static final int save_scale_type=0x7f0900ed;
++    public static final int screen=0x7f0900ee;
++    public static final int scroll=0x7f0900ef;
++    public static final int scrollIndicatorDown=0x7f0900f0;
++    public static final int scrollIndicatorUp=0x7f0900f1;
++    public static final int scrollView=0x7f0900f2;
++    public static final int scrollable=0x7f0900f3;
++    public static final int search_badge=0x7f0900f4;
++    public static final int search_bar=0x7f0900f5;
++    public static final int search_button=0x7f0900f6;
++    public static final int search_close_btn=0x7f0900f7;
++    public static final int search_edit_frame=0x7f0900f8;
++    public static final int search_go_btn=0x7f0900f9;
++    public static final int search_mag_icon=0x7f0900fa;
++    public static final int search_plate=0x7f0900fb;
++    public static final int search_src_text=0x7f0900fc;
++    public static final int search_text=0x7f0900fd;
++    public static final int search_voice_btn=0x7f0900fe;
++    public static final int select_dialog_listview=0x7f0900ff;
++    public static final int select_gender_radio=0x7f090100;
++    public static final int service_description_layout=0x7f090101;
++    public static final int service_description_text=0x7f090102;
++    public static final int service_description_title=0x7f090103;
++    public static final int service_list_view=0x7f090104;
++    public static final int shortcut=0x7f090105;
++    public static final int showCustom=0x7f090106;
++    public static final int showHome=0x7f090107;
++    public static final int showTitle=0x7f090108;
++    public static final int sign_in_button=0x7f090109;
++    public static final int sign_up_button=0x7f09010a;
++    public static final int smallLabel=0x7f09010b;
++    public static final int snackbar_action=0x7f09010c;
++    public static final int snackbar_text=0x7f09010d;
++    public static final int snap=0x7f09010e;
++    public static final int spacer=0x7f09010f;
++    public static final int split_action_bar=0x7f090110;
++    public static final int spread=0x7f090111;
++    public static final int spread_inside=0x7f090112;
++    public static final int src_atop=0x7f090113;
++    public static final int src_in=0x7f090114;
++    public static final int src_over=0x7f090115;
++    public static final int standard=0x7f090116;
++    public static final int start=0x7f090117;
++    public static final int start_service_btn=0x7f090118;
++    public static final int status=0x7f090119;
++    public static final int status_bar_latest_event_content=0x7f09011a;
++    public static final int submenuarrow=0x7f09011b;
++    public static final int submit_area=0x7f09011c;
++    public static final int tabMode=0x7f09011d;
++    public static final int takeTags=0x7f09011e;
++    public static final int takeText=0x7f09011f;
++    public static final int take_request_btn=0x7f090120;
++    public static final int take_request_find_text_btn=0x7f090121;
++    public static final int take_request_input_text=0x7f090122;
++    public static final int take_request_tags_result=0x7f090123;
++    public static final int taker_user_name_layout=0x7f090124;
++    public static final int taker_user_name_text=0x7f090125;
++    public static final int taker_user_name_title=0x7f090126;
++    public static final int text=0x7f090127;
++    public static final int text2=0x7f090128;
++    public static final int textSpacerNoButtons=0x7f090129;
++    public static final int textSpacerNoTitle=0x7f09012a;
++    public static final int textView_other_user_name=0x7f09012b;
++    public static final int text_input_password_toggle=0x7f09012c;
++    public static final int textinput_counter=0x7f09012d;
++    public static final int textinput_error=0x7f09012e;
++    public static final int time=0x7f09012f;
++    public static final int title=0x7f090130;
++    public static final int titleDividerNoCustom=0x7f090131;
++    public static final int title_template=0x7f090132;
++    public static final int top=0x7f090133;
++    public static final int topPanel=0x7f090134;
++    public static final int touch_outside=0x7f090135;
++    public static final int transition_current_scene=0x7f090136;
++    public static final int transition_layout_save=0x7f090137;
++    public static final int transition_position=0x7f090138;
++    public static final int transition_scene_layoutid_cache=0x7f090139;
++    public static final int transition_transform=0x7f09013a;
++    public static final int uniform=0x7f09013b;
++    public static final int up=0x7f09013c;
++    public static final int useLogo=0x7f09013d;
++    public static final int user_balance_layout=0x7f09013e;
++    public static final int user_balance_text=0x7f09013f;
++    public static final int user_balance_title=0x7f090140;
++    public static final int user_email_layout=0x7f090141;
++    public static final int user_email_text=0x7f090142;
++    public static final int user_email_title=0x7f090143;
++    public static final int user_gender_layout=0x7f090144;
++    public static final int user_gender_text=0x7f090145;
++    public static final int user_gender_title=0x7f090146;
++    public static final int user_image=0x7f090147;
++    public static final int user_name_layout=0x7f090148;
++    public static final int user_name_text=0x7f090149;
++    public static final int user_name_title=0x7f09014a;
++    public static final int user_phone_layout=0x7f09014b;
++    public static final int user_phone_text=0x7f09014c;
++    public static final int user_phone_title=0x7f09014d;
++    public static final int view_offset_helper=0x7f09014e;
++    public static final int visible=0x7f09014f;
++    public static final int wide=0x7f090150;
++    public static final int withText=0x7f090151;
++    public static final int wrap=0x7f090152;
++    public static final int wrap_content=0x7f090153;
+   }
+   public static final class integer {
+     public static final int abc_config_activityDefaultDur=0x7f0a0000;
+@@ -4124,61 +4123,61 @@
+     public static final int activity_login=0x7f0b001e;
+     public static final int activity_my_match=0x7f0b001f;
+     public static final int activity_my_services=0x7f0b0020;
+-    public static final int activity_other_user=0x7f0b0021;
+-    public static final int activity_reset_password=0x7f0b0022;
+-    public static final int activity_set_meeting=0x7f0b0023;
+-    public static final int activity_signup=0x7f0b0024;
+-    public static final int activity_user_profile=0x7f0b0025;
+-    public static final int design_bottom_navigation_item=0x7f0b0026;
+-    public static final int design_bottom_sheet_dialog=0x7f0b0027;
+-    public static final int design_layout_snackbar=0x7f0b0028;
+-    public static final int design_layout_snackbar_include=0x7f0b0029;
+-    public static final int design_layout_tab_icon=0x7f0b002a;
+-    public static final int design_layout_tab_text=0x7f0b002b;
+-    public static final int design_menu_item_action_area=0x7f0b002c;
+-    public static final int design_navigation_item=0x7f0b002d;
+-    public static final int design_navigation_item_header=0x7f0b002e;
+-    public static final int design_navigation_item_separator=0x7f0b002f;
+-    public static final int design_navigation_item_subheader=0x7f0b0030;
+-    public static final int design_navigation_menu=0x7f0b0031;
+-    public static final int design_navigation_menu_item=0x7f0b0032;
+-    public static final int design_text_input_password_icon=0x7f0b0033;
+-    public static final int fragment_edit_user_info=0x7f0b0034;
+-    public static final int fragment_full_user_info=0x7f0b0035;
+-    public static final int fragment_give_or_take=0x7f0b0036;
+-    public static final int fragment_give_request=0x7f0b0037;
+-    public static final int fragment_handshake_process_giver=0x7f0b0038;
+-    public static final int fragment_handshake_process_taker=0x7f0b0039;
+-    public static final int fragment_handshake_settings=0x7f0b003a;
+-    public static final int fragment_login=0x7f0b003b;
+-    public static final int fragment_main_screen=0x7f0b003c;
+-    public static final int fragment_my_hashtags=0x7f0b003d;
+-    public static final int fragment_my_match_tags=0x7f0b003e;
+-    public static final int fragment_my_match_users=0x7f0b003f;
+-    public static final int fragment_service=0x7f0b0040;
+-    public static final int fragment_splash_screen=0x7f0b0041;
+-    public static final int fragment_take_request=0x7f0b0042;
+-    public static final int fragment_terms_of_use=0x7f0b0043;
+-    public static final int fragment_user_home_defult=0x7f0b0044;
+-    public static final int frament_services_list=0x7f0b0045;
+-    public static final int item=0x7f0b0046;
+-    public static final int menu_header=0x7f0b0047;
+-    public static final int mini_user_info=0x7f0b0048;
+-    public static final int notification_action=0x7f0b0049;
+-    public static final int notification_action_tombstone=0x7f0b004a;
+-    public static final int notification_media_action=0x7f0b004b;
+-    public static final int notification_media_cancel_action=0x7f0b004c;
+-    public static final int notification_template_big_media=0x7f0b004d;
+-    public static final int notification_template_big_media_custom=0x7f0b004e;
+-    public static final int notification_template_big_media_narrow=0x7f0b004f;
+-    public static final int notification_template_big_media_narrow_custom=0x7f0b0050;
+-    public static final int notification_template_custom_big=0x7f0b0051;
+-    public static final int notification_template_icon_group=0x7f0b0052;
+-    public static final int notification_template_lines_media=0x7f0b0053;
+-    public static final int notification_template_media=0x7f0b0054;
+-    public static final int notification_template_media_custom=0x7f0b0055;
+-    public static final int notification_template_part_chronometer=0x7f0b0056;
+-    public static final int notification_template_part_time=0x7f0b0057;
++    public static final int activity_reset_password=0x7f0b0021;
++    public static final int activity_set_meeting=0x7f0b0022;
++    public static final int activity_signup=0x7f0b0023;
++    public static final int activity_user_profile=0x7f0b0024;
++    public static final int design_bottom_navigation_item=0x7f0b0025;
++    public static final int design_bottom_sheet_dialog=0x7f0b0026;
++    public static final int design_layout_snackbar=0x7f0b0027;
++    public static final int design_layout_snackbar_include=0x7f0b0028;
++    public static final int design_layout_tab_icon=0x7f0b0029;
++    public static final int design_layout_tab_text=0x7f0b002a;
++    public static final int design_menu_item_action_area=0x7f0b002b;
++    public static final int design_navigation_item=0x7f0b002c;
++    public static final int design_navigation_item_header=0x7f0b002d;
++    public static final int design_navigation_item_separator=0x7f0b002e;
++    public static final int design_navigation_item_subheader=0x7f0b002f;
++    public static final int design_navigation_menu=0x7f0b0030;
++    public static final int design_navigation_menu_item=0x7f0b0031;
++    public static final int design_text_input_password_icon=0x7f0b0032;
++    public static final int fragment_edit_user_info=0x7f0b0033;
++    public static final int fragment_full_user_info=0x7f0b0034;
++    public static final int fragment_give_or_take=0x7f0b0035;
++    public static final int fragment_give_request=0x7f0b0036;
++    public static final int fragment_handshake_process_giver=0x7f0b0037;
++    public static final int fragment_handshake_process_taker=0x7f0b0038;
++    public static final int fragment_handshake_settings=0x7f0b0039;
++    public static final int fragment_login=0x7f0b003a;
++    public static final int fragment_main_screen=0x7f0b003b;
++    public static final int fragment_my_hashtags=0x7f0b003c;
++    public static final int fragment_my_match_tags=0x7f0b003d;
++    public static final int fragment_my_match_users=0x7f0b003e;
++    public static final int fragment_service=0x7f0b003f;
++    public static final int fragment_splash_screen=0x7f0b0040;
++    public static final int fragment_take_request=0x7f0b0041;
++    public static final int fragment_terms_of_use=0x7f0b0042;
++    public static final int fragment_user_home_defult=0x7f0b0043;
++    public static final int frament_services_list=0x7f0b0044;
++    public static final int item=0x7f0b0045;
++    public static final int menu_header=0x7f0b0046;
++    public static final int mini_user_info=0x7f0b0047;
++    public static final int notification_action=0x7f0b0048;
++    public static final int notification_action_tombstone=0x7f0b0049;
++    public static final int notification_media_action=0x7f0b004a;
++    public static final int notification_media_cancel_action=0x7f0b004b;
++    public static final int notification_template_big_media=0x7f0b004c;
++    public static final int notification_template_big_media_custom=0x7f0b004d;
++    public static final int notification_template_big_media_narrow=0x7f0b004e;
++    public static final int notification_template_big_media_narrow_custom=0x7f0b004f;
++    public static final int notification_template_custom_big=0x7f0b0050;
++    public static final int notification_template_icon_group=0x7f0b0051;
++    public static final int notification_template_lines_media=0x7f0b0052;
++    public static final int notification_template_media=0x7f0b0053;
++    public static final int notification_template_media_custom=0x7f0b0054;
++    public static final int notification_template_part_chronometer=0x7f0b0055;
++    public static final int notification_template_part_time=0x7f0b0056;
++    public static final int other_user_activity=0x7f0b0057;
+     public static final int select_dialog_item_material=0x7f0b0058;
+     public static final int select_dialog_multichoice_material=0x7f0b0059;
+     public static final int select_dialog_singlechoice_material=0x7f0b005a;
+Index: app/build/generated/source/r/debug/com/example/win10/giveandtake/Manifest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build/generated/source/r/debug/com/example/win10/giveandtake/Manifest.java	(revision )
++++ app/build/generated/source/r/debug/com/example/win10/giveandtake/Manifest.java	(revision )
+@@ -0,0 +1,15 @@
++/* AUTO-GENERATED FILE. DO NOT MODIFY.
++ *
++ * This class was automatically generated by the
++ * aapt tool from the resource data it found. It
++ * should not be modified by hand.
++ */
++
++package com.example.win10.giveandtake;
++
++public final class Manifest {
++  public static final class permission {
++    public static final String C2D_MESSAGE="com.example.win10.giveandtake.permission.C2D_MESSAGE";
++  }
++
++}
+\ No newline at end of file
+Index: app/build/generated/source/r/debug/android/support/v4/R.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build/generated/source/r/debug/android/support/v4/R.java	(revision )
++++ app/build/generated/source/r/debug/android/support/v4/R.java	(revision )
+@@ -86,38 +86,38 @@
+         public static final int line1 = 0x7f0900a2;
+         public static final int line3 = 0x7f0900a3;
+         public static final int media_actions = 0x7f0900b1;
+-        public static final int normal = 0x7f0900cf;
+-        public static final int notification_background = 0x7f0900d0;
+-        public static final int notification_main_column = 0x7f0900d1;
+-        public static final int notification_main_column_container = 0x7f0900d2;
+-        public static final int right_icon = 0x7f0900ea;
+-        public static final int right_side = 0x7f0900eb;
+-        public static final int status_bar_latest_event_content = 0x7f09011b;
+-        public static final int text = 0x7f090128;
+-        public static final int text2 = 0x7f090129;
+-        public static final int time = 0x7f090130;
+-        public static final int title = 0x7f090131;
++        public static final int normal = 0x7f0900ce;
++        public static final int notification_background = 0x7f0900cf;
++        public static final int notification_main_column = 0x7f0900d0;
++        public static final int notification_main_column_container = 0x7f0900d1;
++        public static final int right_icon = 0x7f0900e9;
++        public static final int right_side = 0x7f0900ea;
++        public static final int status_bar_latest_event_content = 0x7f09011a;
++        public static final int text = 0x7f090127;
++        public static final int text2 = 0x7f090128;
++        public static final int time = 0x7f09012f;
++        public static final int title = 0x7f090130;
+     }
+     public static final class integer {
+         public static final int cancel_button_image_alpha = 0x7f0a0004;
+         public static final int status_bar_notification_info_maxnum = 0x7f0a000a;
+     }
+     public static final class layout {
+-        public static final int notification_action = 0x7f0b0049;
+-        public static final int notification_action_tombstone = 0x7f0b004a;
+-        public static final int notification_media_action = 0x7f0b004b;
+-        public static final int notification_media_cancel_action = 0x7f0b004c;
+-        public static final int notification_template_big_media = 0x7f0b004d;
+-        public static final int notification_template_big_media_custom = 0x7f0b004e;
+-        public static final int notification_template_big_media_narrow = 0x7f0b004f;
+-        public static final int notification_template_big_media_narrow_custom = 0x7f0b0050;
+-        public static final int notification_template_custom_big = 0x7f0b0051;
+-        public static final int notification_template_icon_group = 0x7f0b0052;
+-        public static final int notification_template_lines_media = 0x7f0b0053;
+-        public static final int notification_template_media = 0x7f0b0054;
+-        public static final int notification_template_media_custom = 0x7f0b0055;
+-        public static final int notification_template_part_chronometer = 0x7f0b0056;
+-        public static final int notification_template_part_time = 0x7f0b0057;
++        public static final int notification_action = 0x7f0b0048;
++        public static final int notification_action_tombstone = 0x7f0b0049;
++        public static final int notification_media_action = 0x7f0b004a;
++        public static final int notification_media_cancel_action = 0x7f0b004b;
++        public static final int notification_template_big_media = 0x7f0b004c;
++        public static final int notification_template_big_media_custom = 0x7f0b004d;
++        public static final int notification_template_big_media_narrow = 0x7f0b004e;
++        public static final int notification_template_big_media_narrow_custom = 0x7f0b004f;
++        public static final int notification_template_custom_big = 0x7f0b0050;
++        public static final int notification_template_icon_group = 0x7f0b0051;
++        public static final int notification_template_lines_media = 0x7f0b0052;
++        public static final int notification_template_media = 0x7f0b0053;
++        public static final int notification_template_media_custom = 0x7f0b0054;
++        public static final int notification_template_part_chronometer = 0x7f0b0055;
++        public static final int notification_template_part_time = 0x7f0b0056;
+     }
+     public static final class string {
+         public static final int status_bar_notification_info_overflow = 0x7f0e0083;
+Index: app/build/generated/source/r/debug/android/support/v7/appcompat/R.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build/generated/source/r/debug/android/support/v7/appcompat/R.java	(revision )
++++ app/build/generated/source/r/debug/android/support/v7/appcompat/R.java	(revision )
+@@ -635,54 +635,54 @@
+         public static final int media_actions = 0x7f0900b1;
+         public static final int message = 0x7f0900b2;
+         public static final int multiply = 0x7f0900b6;
+-        public static final int none = 0x7f0900ce;
+-        public static final int normal = 0x7f0900cf;
+-        public static final int notification_background = 0x7f0900d0;
+-        public static final int notification_main_column = 0x7f0900d1;
+-        public static final int notification_main_column_container = 0x7f0900d2;
+-        public static final int parentPanel = 0x7f0900d6;
+-        public static final int progress_circular = 0x7f0900df;
+-        public static final int progress_horizontal = 0x7f0900e0;
+-        public static final int radio = 0x7f0900e1;
+-        public static final int right_icon = 0x7f0900ea;
+-        public static final int right_side = 0x7f0900eb;
+-        public static final int screen = 0x7f0900ef;
+-        public static final int scrollIndicatorDown = 0x7f0900f1;
+-        public static final int scrollIndicatorUp = 0x7f0900f2;
+-        public static final int scrollView = 0x7f0900f3;
+-        public static final int search_badge = 0x7f0900f5;
+-        public static final int search_bar = 0x7f0900f6;
+-        public static final int search_button = 0x7f0900f7;
+-        public static final int search_close_btn = 0x7f0900f8;
+-        public static final int search_edit_frame = 0x7f0900f9;
+-        public static final int search_go_btn = 0x7f0900fa;
+-        public static final int search_mag_icon = 0x7f0900fb;
+-        public static final int search_plate = 0x7f0900fc;
+-        public static final int search_src_text = 0x7f0900fd;
+-        public static final int search_voice_btn = 0x7f0900ff;
+-        public static final int select_dialog_listview = 0x7f090100;
+-        public static final int shortcut = 0x7f090106;
+-        public static final int spacer = 0x7f090110;
+-        public static final int split_action_bar = 0x7f090111;
+-        public static final int src_atop = 0x7f090114;
+-        public static final int src_in = 0x7f090115;
+-        public static final int src_over = 0x7f090116;
+-        public static final int status_bar_latest_event_content = 0x7f09011b;
+-        public static final int submenuarrow = 0x7f09011c;
+-        public static final int submit_area = 0x7f09011d;
+-        public static final int tabMode = 0x7f09011e;
+-        public static final int text = 0x7f090128;
+-        public static final int text2 = 0x7f090129;
+-        public static final int textSpacerNoButtons = 0x7f09012a;
+-        public static final int textSpacerNoTitle = 0x7f09012b;
+-        public static final int time = 0x7f090130;
+-        public static final int title = 0x7f090131;
+-        public static final int titleDividerNoCustom = 0x7f090132;
+-        public static final int title_template = 0x7f090133;
+-        public static final int topPanel = 0x7f090135;
+-        public static final int uniform = 0x7f09013c;
+-        public static final int up = 0x7f09013d;
+-        public static final int wrap_content = 0x7f090154;
++        public static final int none = 0x7f0900cd;
++        public static final int normal = 0x7f0900ce;
++        public static final int notification_background = 0x7f0900cf;
++        public static final int notification_main_column = 0x7f0900d0;
++        public static final int notification_main_column_container = 0x7f0900d1;
++        public static final int parentPanel = 0x7f0900d5;
++        public static final int progress_circular = 0x7f0900de;
++        public static final int progress_horizontal = 0x7f0900df;
++        public static final int radio = 0x7f0900e0;
++        public static final int right_icon = 0x7f0900e9;
++        public static final int right_side = 0x7f0900ea;
++        public static final int screen = 0x7f0900ee;
++        public static final int scrollIndicatorDown = 0x7f0900f0;
++        public static final int scrollIndicatorUp = 0x7f0900f1;
++        public static final int scrollView = 0x7f0900f2;
++        public static final int search_badge = 0x7f0900f4;
++        public static final int search_bar = 0x7f0900f5;
++        public static final int search_button = 0x7f0900f6;
++        public static final int search_close_btn = 0x7f0900f7;
++        public static final int search_edit_frame = 0x7f0900f8;
++        public static final int search_go_btn = 0x7f0900f9;
++        public static final int search_mag_icon = 0x7f0900fa;
++        public static final int search_plate = 0x7f0900fb;
++        public static final int search_src_text = 0x7f0900fc;
++        public static final int search_voice_btn = 0x7f0900fe;
++        public static final int select_dialog_listview = 0x7f0900ff;
++        public static final int shortcut = 0x7f090105;
++        public static final int spacer = 0x7f09010f;
++        public static final int split_action_bar = 0x7f090110;
++        public static final int src_atop = 0x7f090113;
++        public static final int src_in = 0x7f090114;
++        public static final int src_over = 0x7f090115;
++        public static final int status_bar_latest_event_content = 0x7f09011a;
++        public static final int submenuarrow = 0x7f09011b;
++        public static final int submit_area = 0x7f09011c;
++        public static final int tabMode = 0x7f09011d;
++        public static final int text = 0x7f090127;
++        public static final int text2 = 0x7f090128;
++        public static final int textSpacerNoButtons = 0x7f090129;
++        public static final int textSpacerNoTitle = 0x7f09012a;
++        public static final int time = 0x7f09012f;
++        public static final int title = 0x7f090130;
++        public static final int titleDividerNoCustom = 0x7f090131;
++        public static final int title_template = 0x7f090132;
++        public static final int topPanel = 0x7f090134;
++        public static final int uniform = 0x7f09013b;
++        public static final int up = 0x7f09013c;
++        public static final int wrap_content = 0x7f090153;
+     }
+     public static final class integer {
+         public static final int abc_config_activityDefaultDur = 0x7f0a0000;
+@@ -719,21 +719,21 @@
+         public static final int abc_search_dropdown_item_icons_2line = 0x7f0b0018;
+         public static final int abc_search_view = 0x7f0b0019;
+         public static final int abc_select_dialog_material = 0x7f0b001a;
+-        public static final int notification_action = 0x7f0b0049;
+-        public static final int notification_action_tombstone = 0x7f0b004a;
+-        public static final int notification_media_action = 0x7f0b004b;
+-        public static final int notification_media_cancel_action = 0x7f0b004c;
+-        public static final int notification_template_big_media = 0x7f0b004d;
+-        public static final int notification_template_big_media_custom = 0x7f0b004e;
+-        public static final int notification_template_big_media_narrow = 0x7f0b004f;
+-        public static final int notification_template_big_media_narrow_custom = 0x7f0b0050;
+-        public static final int notification_template_custom_big = 0x7f0b0051;
+-        public static final int notification_template_icon_group = 0x7f0b0052;
+-        public static final int notification_template_lines_media = 0x7f0b0053;
+-        public static final int notification_template_media = 0x7f0b0054;
+-        public static final int notification_template_media_custom = 0x7f0b0055;
+-        public static final int notification_template_part_chronometer = 0x7f0b0056;
+-        public static final int notification_template_part_time = 0x7f0b0057;
++        public static final int notification_action = 0x7f0b0048;
++        public static final int notification_action_tombstone = 0x7f0b0049;
++        public static final int notification_media_action = 0x7f0b004a;
++        public static final int notification_media_cancel_action = 0x7f0b004b;
++        public static final int notification_template_big_media = 0x7f0b004c;
++        public static final int notification_template_big_media_custom = 0x7f0b004d;
++        public static final int notification_template_big_media_narrow = 0x7f0b004e;
++        public static final int notification_template_big_media_narrow_custom = 0x7f0b004f;
++        public static final int notification_template_custom_big = 0x7f0b0050;
++        public static final int notification_template_icon_group = 0x7f0b0051;
++        public static final int notification_template_lines_media = 0x7f0b0052;
++        public static final int notification_template_media = 0x7f0b0053;
++        public static final int notification_template_media_custom = 0x7f0b0054;
++        public static final int notification_template_part_chronometer = 0x7f0b0055;
++        public static final int notification_template_part_time = 0x7f0b0056;
+         public static final int select_dialog_item_material = 0x7f0b0058;
+         public static final int select_dialog_multichoice_material = 0x7f0b0059;
+         public static final int select_dialog_singlechoice_material = 0x7f0b005a;
+Index: app/build/generated/source/r/debug/android/support/v7/recyclerview/R.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build/generated/source/r/debug/android/support/v7/recyclerview/R.java	(revision )
++++ app/build/generated/source/r/debug/android/support/v7/recyclerview/R.java	(revision )
+@@ -95,27 +95,27 @@
+         public static final int item_touch_helper_previous_elevation = 0x7f09009c;
+         public static final int line1 = 0x7f0900a2;
+         public static final int line3 = 0x7f0900a3;
+-        public static final int normal = 0x7f0900cf;
+-        public static final int notification_background = 0x7f0900d0;
+-        public static final int notification_main_column = 0x7f0900d1;
+-        public static final int notification_main_column_container = 0x7f0900d2;
+-        public static final int right_icon = 0x7f0900ea;
+-        public static final int right_side = 0x7f0900eb;
+-        public static final int text = 0x7f090128;
+-        public static final int text2 = 0x7f090129;
+-        public static final int time = 0x7f090130;
+-        public static final int title = 0x7f090131;
++        public static final int normal = 0x7f0900ce;
++        public static final int notification_background = 0x7f0900cf;
++        public static final int notification_main_column = 0x7f0900d0;
++        public static final int notification_main_column_container = 0x7f0900d1;
++        public static final int right_icon = 0x7f0900e9;
++        public static final int right_side = 0x7f0900ea;
++        public static final int text = 0x7f090127;
++        public static final int text2 = 0x7f090128;
++        public static final int time = 0x7f09012f;
++        public static final int title = 0x7f090130;
+     }
+     public static final class integer {
+         public static final int status_bar_notification_info_maxnum = 0x7f0a000a;
+     }
+     public static final class layout {
+-        public static final int notification_action = 0x7f0b0049;
+-        public static final int notification_action_tombstone = 0x7f0b004a;
+-        public static final int notification_template_custom_big = 0x7f0b0051;
+-        public static final int notification_template_icon_group = 0x7f0b0052;
+-        public static final int notification_template_part_chronometer = 0x7f0b0056;
+-        public static final int notification_template_part_time = 0x7f0b0057;
++        public static final int notification_action = 0x7f0b0048;
++        public static final int notification_action_tombstone = 0x7f0b0049;
++        public static final int notification_template_custom_big = 0x7f0b0050;
++        public static final int notification_template_icon_group = 0x7f0b0051;
++        public static final int notification_template_part_chronometer = 0x7f0b0055;
++        public static final int notification_template_part_time = 0x7f0b0056;
+     }
+     public static final class string {
+         public static final int status_bar_notification_info_overflow = 0x7f0e0083;
+Index: app/build/generated/source/r/debug/android/support/compat/R.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build/generated/source/r/debug/android/support/compat/R.java	(revision )
++++ app/build/generated/source/r/debug/android/support/compat/R.java	(revision )
+@@ -79,27 +79,27 @@
+         public static final int italic = 0x7f09009b;
+         public static final int line1 = 0x7f0900a2;
+         public static final int line3 = 0x7f0900a3;
+-        public static final int normal = 0x7f0900cf;
+-        public static final int notification_background = 0x7f0900d0;
+-        public static final int notification_main_column = 0x7f0900d1;
+-        public static final int notification_main_column_container = 0x7f0900d2;
+-        public static final int right_icon = 0x7f0900ea;
+-        public static final int right_side = 0x7f0900eb;
+-        public static final int text = 0x7f090128;
+-        public static final int text2 = 0x7f090129;
+-        public static final int time = 0x7f090130;
+-        public static final int title = 0x7f090131;
++        public static final int normal = 0x7f0900ce;
++        public static final int notification_background = 0x7f0900cf;
++        public static final int notification_main_column = 0x7f0900d0;
++        public static final int notification_main_column_container = 0x7f0900d1;
++        public static final int right_icon = 0x7f0900e9;
++        public static final int right_side = 0x7f0900ea;
++        public static final int text = 0x7f090127;
++        public static final int text2 = 0x7f090128;
++        public static final int time = 0x7f09012f;
++        public static final int title = 0x7f090130;
+     }
+     public static final class integer {
+         public static final int status_bar_notification_info_maxnum = 0x7f0a000a;
+     }
+     public static final class layout {
+-        public static final int notification_action = 0x7f0b0049;
+-        public static final int notification_action_tombstone = 0x7f0b004a;
+-        public static final int notification_template_custom_big = 0x7f0b0051;
+-        public static final int notification_template_icon_group = 0x7f0b0052;
+-        public static final int notification_template_part_chronometer = 0x7f0b0056;
+-        public static final int notification_template_part_time = 0x7f0b0057;
++        public static final int notification_action = 0x7f0b0048;
++        public static final int notification_action_tombstone = 0x7f0b0049;
++        public static final int notification_template_custom_big = 0x7f0b0050;
++        public static final int notification_template_icon_group = 0x7f0b0051;
++        public static final int notification_template_part_chronometer = 0x7f0b0055;
++        public static final int notification_template_part_time = 0x7f0b0056;
+     }
+     public static final class string {
+         public static final int status_bar_notification_info_overflow = 0x7f0e0083;
+Index: app/build/generated/source/r/debug/android/support/coreui/R.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build/generated/source/r/debug/android/support/coreui/R.java	(revision )
++++ app/build/generated/source/r/debug/android/support/coreui/R.java	(revision )
+@@ -79,27 +79,27 @@
+         public static final int italic = 0x7f09009b;
+         public static final int line1 = 0x7f0900a2;
+         public static final int line3 = 0x7f0900a3;
+-        public static final int normal = 0x7f0900cf;
+-        public static final int notification_background = 0x7f0900d0;
+-        public static final int notification_main_column = 0x7f0900d1;
+-        public static final int notification_main_column_container = 0x7f0900d2;
+-        public static final int right_icon = 0x7f0900ea;
+-        public static final int right_side = 0x7f0900eb;
+-        public static final int text = 0x7f090128;
+-        public static final int text2 = 0x7f090129;
+-        public static final int time = 0x7f090130;
+-        public static final int title = 0x7f090131;
++        public static final int normal = 0x7f0900ce;
++        public static final int notification_background = 0x7f0900cf;
++        public static final int notification_main_column = 0x7f0900d0;
++        public static final int notification_main_column_container = 0x7f0900d1;
++        public static final int right_icon = 0x7f0900e9;
++        public static final int right_side = 0x7f0900ea;
++        public static final int text = 0x7f090127;
++        public static final int text2 = 0x7f090128;
++        public static final int time = 0x7f09012f;
++        public static final int title = 0x7f090130;
+     }
+     public static final class integer {
+         public static final int status_bar_notification_info_maxnum = 0x7f0a000a;
+     }
+     public static final class layout {
+-        public static final int notification_action = 0x7f0b0049;
+-        public static final int notification_action_tombstone = 0x7f0b004a;
+-        public static final int notification_template_custom_big = 0x7f0b0051;
+-        public static final int notification_template_icon_group = 0x7f0b0052;
+-        public static final int notification_template_part_chronometer = 0x7f0b0056;
+-        public static final int notification_template_part_time = 0x7f0b0057;
++        public static final int notification_action = 0x7f0b0048;
++        public static final int notification_action_tombstone = 0x7f0b0049;
++        public static final int notification_template_custom_big = 0x7f0b0050;
++        public static final int notification_template_icon_group = 0x7f0b0051;
++        public static final int notification_template_part_chronometer = 0x7f0b0055;
++        public static final int notification_template_part_time = 0x7f0b0056;
+     }
+     public static final class string {
+         public static final int status_bar_notification_info_overflow = 0x7f0e0083;
+Index: app/build/generated/source/r/debug/android/support/design/R.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build/generated/source/r/debug/android/support/design/R.java	(revision )
++++ app/build/generated/source/r/debug/android/support/design/R.java	(revision )
+@@ -816,79 +816,79 @@
+         public static final int message = 0x7f0900b2;
+         public static final int mini = 0x7f0900b4;
+         public static final int multiply = 0x7f0900b6;
+-        public static final int navigation_header_container = 0x7f0900cc;
+-        public static final int none = 0x7f0900ce;
+-        public static final int normal = 0x7f0900cf;
+-        public static final int notification_background = 0x7f0900d0;
+-        public static final int notification_main_column = 0x7f0900d1;
+-        public static final int notification_main_column_container = 0x7f0900d2;
+-        public static final int parallax = 0x7f0900d4;
+-        public static final int parentPanel = 0x7f0900d6;
+-        public static final int parent_matrix = 0x7f0900d7;
+-        public static final int pin = 0x7f0900dc;
+-        public static final int progress_circular = 0x7f0900df;
+-        public static final int progress_horizontal = 0x7f0900e0;
+-        public static final int radio = 0x7f0900e1;
+-        public static final int right = 0x7f0900e9;
+-        public static final int right_icon = 0x7f0900ea;
+-        public static final int right_side = 0x7f0900eb;
+-        public static final int save_image_matrix = 0x7f0900ec;
+-        public static final int save_non_transition_alpha = 0x7f0900ed;
+-        public static final int save_scale_type = 0x7f0900ee;
+-        public static final int screen = 0x7f0900ef;
+-        public static final int scrollIndicatorDown = 0x7f0900f1;
+-        public static final int scrollIndicatorUp = 0x7f0900f2;
+-        public static final int scrollView = 0x7f0900f3;
+-        public static final int scrollable = 0x7f0900f4;
+-        public static final int search_badge = 0x7f0900f5;
+-        public static final int search_bar = 0x7f0900f6;
+-        public static final int search_button = 0x7f0900f7;
+-        public static final int search_close_btn = 0x7f0900f8;
+-        public static final int search_edit_frame = 0x7f0900f9;
+-        public static final int search_go_btn = 0x7f0900fa;
+-        public static final int search_mag_icon = 0x7f0900fb;
+-        public static final int search_plate = 0x7f0900fc;
+-        public static final int search_src_text = 0x7f0900fd;
+-        public static final int search_voice_btn = 0x7f0900ff;
+-        public static final int select_dialog_listview = 0x7f090100;
+-        public static final int shortcut = 0x7f090106;
+-        public static final int smallLabel = 0x7f09010c;
+-        public static final int snackbar_action = 0x7f09010d;
+-        public static final int snackbar_text = 0x7f09010e;
+-        public static final int spacer = 0x7f090110;
+-        public static final int split_action_bar = 0x7f090111;
+-        public static final int src_atop = 0x7f090114;
+-        public static final int src_in = 0x7f090115;
+-        public static final int src_over = 0x7f090116;
+-        public static final int start = 0x7f090118;
+-        public static final int status_bar_latest_event_content = 0x7f09011b;
+-        public static final int submenuarrow = 0x7f09011c;
+-        public static final int submit_area = 0x7f09011d;
+-        public static final int tabMode = 0x7f09011e;
+-        public static final int text = 0x7f090128;
+-        public static final int text2 = 0x7f090129;
+-        public static final int textSpacerNoButtons = 0x7f09012a;
+-        public static final int textSpacerNoTitle = 0x7f09012b;
+-        public static final int text_input_password_toggle = 0x7f09012d;
+-        public static final int textinput_counter = 0x7f09012e;
+-        public static final int textinput_error = 0x7f09012f;
+-        public static final int time = 0x7f090130;
+-        public static final int title = 0x7f090131;
+-        public static final int titleDividerNoCustom = 0x7f090132;
+-        public static final int title_template = 0x7f090133;
+-        public static final int top = 0x7f090134;
+-        public static final int topPanel = 0x7f090135;
+-        public static final int touch_outside = 0x7f090136;
+-        public static final int transition_current_scene = 0x7f090137;
+-        public static final int transition_layout_save = 0x7f090138;
+-        public static final int transition_position = 0x7f090139;
+-        public static final int transition_scene_layoutid_cache = 0x7f09013a;
+-        public static final int transition_transform = 0x7f09013b;
+-        public static final int uniform = 0x7f09013c;
+-        public static final int up = 0x7f09013d;
+-        public static final int view_offset_helper = 0x7f09014f;
+-        public static final int visible = 0x7f090150;
+-        public static final int wrap_content = 0x7f090154;
++        public static final int navigation_header_container = 0x7f0900cb;
++        public static final int none = 0x7f0900cd;
++        public static final int normal = 0x7f0900ce;
++        public static final int notification_background = 0x7f0900cf;
++        public static final int notification_main_column = 0x7f0900d0;
++        public static final int notification_main_column_container = 0x7f0900d1;
++        public static final int parallax = 0x7f0900d3;
++        public static final int parentPanel = 0x7f0900d5;
++        public static final int parent_matrix = 0x7f0900d6;
++        public static final int pin = 0x7f0900db;
++        public static final int progress_circular = 0x7f0900de;
++        public static final int progress_horizontal = 0x7f0900df;
++        public static final int radio = 0x7f0900e0;
++        public static final int right = 0x7f0900e8;
++        public static final int right_icon = 0x7f0900e9;
++        public static final int right_side = 0x7f0900ea;
++        public static final int save_image_matrix = 0x7f0900eb;
++        public static final int save_non_transition_alpha = 0x7f0900ec;
++        public static final int save_scale_type = 0x7f0900ed;
++        public static final int screen = 0x7f0900ee;
++        public static final int scrollIndicatorDown = 0x7f0900f0;
++        public static final int scrollIndicatorUp = 0x7f0900f1;
++        public static final int scrollView = 0x7f0900f2;
++        public static final int scrollable = 0x7f0900f3;
++        public static final int search_badge = 0x7f0900f4;
++        public static final int search_bar = 0x7f0900f5;
++        public static final int search_button = 0x7f0900f6;
++        public static final int search_close_btn = 0x7f0900f7;
++        public static final int search_edit_frame = 0x7f0900f8;
++        public static final int search_go_btn = 0x7f0900f9;
++        public static final int search_mag_icon = 0x7f0900fa;
++        public static final int search_plate = 0x7f0900fb;
++        public static final int search_src_text = 0x7f0900fc;
++        public static final int search_voice_btn = 0x7f0900fe;
++        public static final int select_dialog_listview = 0x7f0900ff;
++        public static final int shortcut = 0x7f090105;
++        public static final int smallLabel = 0x7f09010b;
++        public static final int snackbar_action = 0x7f09010c;
++        public static final int snackbar_text = 0x7f09010d;
++        public static final int spacer = 0x7f09010f;
++        public static final int split_action_bar = 0x7f090110;
++        public static final int src_atop = 0x7f090113;
++        public static final int src_in = 0x7f090114;
++        public static final int src_over = 0x7f090115;
++        public static final int start = 0x7f090117;
++        public static final int status_bar_latest_event_content = 0x7f09011a;
++        public static final int submenuarrow = 0x7f09011b;
++        public static final int submit_area = 0x7f09011c;
++        public static final int tabMode = 0x7f09011d;
++        public static final int text = 0x7f090127;
++        public static final int text2 = 0x7f090128;
++        public static final int textSpacerNoButtons = 0x7f090129;
++        public static final int textSpacerNoTitle = 0x7f09012a;
++        public static final int text_input_password_toggle = 0x7f09012c;
++        public static final int textinput_counter = 0x7f09012d;
++        public static final int textinput_error = 0x7f09012e;
++        public static final int time = 0x7f09012f;
++        public static final int title = 0x7f090130;
++        public static final int titleDividerNoCustom = 0x7f090131;
++        public static final int title_template = 0x7f090132;
++        public static final int top = 0x7f090133;
++        public static final int topPanel = 0x7f090134;
++        public static final int touch_outside = 0x7f090135;
++        public static final int transition_current_scene = 0x7f090136;
++        public static final int transition_layout_save = 0x7f090137;
++        public static final int transition_position = 0x7f090138;
++        public static final int transition_scene_layoutid_cache = 0x7f090139;
++        public static final int transition_transform = 0x7f09013a;
++        public static final int uniform = 0x7f09013b;
++        public static final int up = 0x7f09013c;
++        public static final int view_offset_helper = 0x7f09014e;
++        public static final int visible = 0x7f09014f;
++        public static final int wrap_content = 0x7f090153;
+     }
+     public static final class integer {
+         public static final int abc_config_activityDefaultDur = 0x7f0a0000;
+@@ -930,35 +930,35 @@
+         public static final int abc_search_dropdown_item_icons_2line = 0x7f0b0018;
+         public static final int abc_search_view = 0x7f0b0019;
+         public static final int abc_select_dialog_material = 0x7f0b001a;
+-        public static final int design_bottom_navigation_item = 0x7f0b0026;
+-        public static final int design_bottom_sheet_dialog = 0x7f0b0027;
+-        public static final int design_layout_snackbar = 0x7f0b0028;
+-        public static final int design_layout_snackbar_include = 0x7f0b0029;
+-        public static final int design_layout_tab_icon = 0x7f0b002a;
+-        public static final int design_layout_tab_text = 0x7f0b002b;
+-        public static final int design_menu_item_action_area = 0x7f0b002c;
+-        public static final int design_navigation_item = 0x7f0b002d;
+-        public static final int design_navigation_item_header = 0x7f0b002e;
+-        public static final int design_navigation_item_separator = 0x7f0b002f;
+-        public static final int design_navigation_item_subheader = 0x7f0b0030;
+-        public static final int design_navigation_menu = 0x7f0b0031;
+-        public static final int design_navigation_menu_item = 0x7f0b0032;
+-        public static final int design_text_input_password_icon = 0x7f0b0033;
+-        public static final int notification_action = 0x7f0b0049;
+-        public static final int notification_action_tombstone = 0x7f0b004a;
+-        public static final int notification_media_action = 0x7f0b004b;
+-        public static final int notification_media_cancel_action = 0x7f0b004c;
+-        public static final int notification_template_big_media = 0x7f0b004d;
+-        public static final int notification_template_big_media_custom = 0x7f0b004e;
+-        public static final int notification_template_big_media_narrow = 0x7f0b004f;
+-        public static final int notification_template_big_media_narrow_custom = 0x7f0b0050;
+-        public static final int notification_template_custom_big = 0x7f0b0051;
+-        public static final int notification_template_icon_group = 0x7f0b0052;
+-        public static final int notification_template_lines_media = 0x7f0b0053;
+-        public static final int notification_template_media = 0x7f0b0054;
+-        public static final int notification_template_media_custom = 0x7f0b0055;
+-        public static final int notification_template_part_chronometer = 0x7f0b0056;
+-        public static final int notification_template_part_time = 0x7f0b0057;
++        public static final int design_bottom_navigation_item = 0x7f0b0025;
++        public static final int design_bottom_sheet_dialog = 0x7f0b0026;
++        public static final int design_layout_snackbar = 0x7f0b0027;
++        public static final int design_layout_snackbar_include = 0x7f0b0028;
++        public static final int design_layout_tab_icon = 0x7f0b0029;
++        public static final int design_layout_tab_text = 0x7f0b002a;
++        public static final int design_menu_item_action_area = 0x7f0b002b;
++        public static final int design_navigation_item = 0x7f0b002c;
++        public static final int design_navigation_item_header = 0x7f0b002d;
++        public static final int design_navigation_item_separator = 0x7f0b002e;
++        public static final int design_navigation_item_subheader = 0x7f0b002f;
++        public static final int design_navigation_menu = 0x7f0b0030;
++        public static final int design_navigation_menu_item = 0x7f0b0031;
++        public static final int design_text_input_password_icon = 0x7f0b0032;
++        public static final int notification_action = 0x7f0b0048;
++        public static final int notification_action_tombstone = 0x7f0b0049;
++        public static final int notification_media_action = 0x7f0b004a;
++        public static final int notification_media_cancel_action = 0x7f0b004b;
++        public static final int notification_template_big_media = 0x7f0b004c;
++        public static final int notification_template_big_media_custom = 0x7f0b004d;
++        public static final int notification_template_big_media_narrow = 0x7f0b004e;
++        public static final int notification_template_big_media_narrow_custom = 0x7f0b004f;
++        public static final int notification_template_custom_big = 0x7f0b0050;
++        public static final int notification_template_icon_group = 0x7f0b0051;
++        public static final int notification_template_lines_media = 0x7f0b0052;
++        public static final int notification_template_media = 0x7f0b0053;
++        public static final int notification_template_media_custom = 0x7f0b0054;
++        public static final int notification_template_part_chronometer = 0x7f0b0055;
++        public static final int notification_template_part_time = 0x7f0b0056;
+         public static final int select_dialog_item_material = 0x7f0b0058;
+         public static final int select_dialog_multichoice_material = 0x7f0b0059;
+         public static final int select_dialog_singlechoice_material = 0x7f0b005a;
+Index: app/build/generated/source/r/debug/android/support/fragment/R.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build/generated/source/r/debug/android/support/fragment/R.java	(revision )
++++ app/build/generated/source/r/debug/android/support/fragment/R.java	(revision )
+@@ -79,27 +79,27 @@
+         public static final int italic = 0x7f09009b;
+         public static final int line1 = 0x7f0900a2;
+         public static final int line3 = 0x7f0900a3;
+-        public static final int normal = 0x7f0900cf;
+-        public static final int notification_background = 0x7f0900d0;
+-        public static final int notification_main_column = 0x7f0900d1;
+-        public static final int notification_main_column_container = 0x7f0900d2;
+-        public static final int right_icon = 0x7f0900ea;
+-        public static final int right_side = 0x7f0900eb;
+-        public static final int text = 0x7f090128;
+-        public static final int text2 = 0x7f090129;
+-        public static final int time = 0x7f090130;
+-        public static final int title = 0x7f090131;
++        public static final int normal = 0x7f0900ce;
++        public static final int notification_background = 0x7f0900cf;
++        public static final int notification_main_column = 0x7f0900d0;
++        public static final int notification_main_column_container = 0x7f0900d1;
++        public static final int right_icon = 0x7f0900e9;
++        public static final int right_side = 0x7f0900ea;
++        public static final int text = 0x7f090127;
++        public static final int text2 = 0x7f090128;
++        public static final int time = 0x7f09012f;
++        public static final int title = 0x7f090130;
+     }
+     public static final class integer {
+         public static final int status_bar_notification_info_maxnum = 0x7f0a000a;
+     }
+     public static final class layout {
+-        public static final int notification_action = 0x7f0b0049;
+-        public static final int notification_action_tombstone = 0x7f0b004a;
+-        public static final int notification_template_custom_big = 0x7f0b0051;
+-        public static final int notification_template_icon_group = 0x7f0b0052;
+-        public static final int notification_template_part_chronometer = 0x7f0b0056;
+-        public static final int notification_template_part_time = 0x7f0b0057;
++        public static final int notification_action = 0x7f0b0048;
++        public static final int notification_action_tombstone = 0x7f0b0049;
++        public static final int notification_template_custom_big = 0x7f0b0050;
++        public static final int notification_template_icon_group = 0x7f0b0051;
++        public static final int notification_template_part_chronometer = 0x7f0b0055;
++        public static final int notification_template_part_time = 0x7f0b0056;
+     }
+     public static final class string {
+         public static final int status_bar_notification_info_overflow = 0x7f0e0083;
+Index: app/build/generated/source/r/debug/android/support/graphics/drawable/R.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build/generated/source/r/debug/android/support/graphics/drawable/R.java	(revision )
++++ app/build/generated/source/r/debug/android/support/graphics/drawable/R.java	(revision )
+@@ -79,27 +79,27 @@
+         public static final int italic = 0x7f09009b;
+         public static final int line1 = 0x7f0900a2;
+         public static final int line3 = 0x7f0900a3;
+-        public static final int normal = 0x7f0900cf;
+-        public static final int notification_background = 0x7f0900d0;
+-        public static final int notification_main_column = 0x7f0900d1;
+-        public static final int notification_main_column_container = 0x7f0900d2;
+-        public static final int right_icon = 0x7f0900ea;
+-        public static final int right_side = 0x7f0900eb;
+-        public static final int text = 0x7f090128;
+-        public static final int text2 = 0x7f090129;
+-        public static final int time = 0x7f090130;
+-        public static final int title = 0x7f090131;
++        public static final int normal = 0x7f0900ce;
++        public static final int notification_background = 0x7f0900cf;
++        public static final int notification_main_column = 0x7f0900d0;
++        public static final int notification_main_column_container = 0x7f0900d1;
++        public static final int right_icon = 0x7f0900e9;
++        public static final int right_side = 0x7f0900ea;
++        public static final int text = 0x7f090127;
++        public static final int text2 = 0x7f090128;
++        public static final int time = 0x7f09012f;
++        public static final int title = 0x7f090130;
+     }
+     public static final class integer {
+         public static final int status_bar_notification_info_maxnum = 0x7f0a000a;
+     }
+     public static final class layout {
+-        public static final int notification_action = 0x7f0b0049;
+-        public static final int notification_action_tombstone = 0x7f0b004a;
+-        public static final int notification_template_custom_big = 0x7f0b0051;
+-        public static final int notification_template_icon_group = 0x7f0b0052;
+-        public static final int notification_template_part_chronometer = 0x7f0b0056;
+-        public static final int notification_template_part_time = 0x7f0b0057;
++        public static final int notification_action = 0x7f0b0048;
++        public static final int notification_action_tombstone = 0x7f0b0049;
++        public static final int notification_template_custom_big = 0x7f0b0050;
++        public static final int notification_template_icon_group = 0x7f0b0051;
++        public static final int notification_template_part_chronometer = 0x7f0b0055;
++        public static final int notification_template_part_time = 0x7f0b0056;
+     }
+     public static final class string {
+         public static final int status_bar_notification_info_overflow = 0x7f0e0083;
+Index: app/build/generated/source/r/debug/android/support/graphics/drawable/animated/R.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build/generated/source/r/debug/android/support/graphics/drawable/animated/R.java	(revision )
++++ app/build/generated/source/r/debug/android/support/graphics/drawable/animated/R.java	(revision )
+@@ -79,27 +79,27 @@
+         public static final int italic = 0x7f09009b;
+         public static final int line1 = 0x7f0900a2;
+         public static final int line3 = 0x7f0900a3;
+-        public static final int normal = 0x7f0900cf;
+-        public static final int notification_background = 0x7f0900d0;
+-        public static final int notification_main_column = 0x7f0900d1;
+-        public static final int notification_main_column_container = 0x7f0900d2;
+-        public static final int right_icon = 0x7f0900ea;
+-        public static final int right_side = 0x7f0900eb;
+-        public static final int text = 0x7f090128;
+-        public static final int text2 = 0x7f090129;
+-        public static final int time = 0x7f090130;
+-        public static final int title = 0x7f090131;
++        public static final int normal = 0x7f0900ce;
++        public static final int notification_background = 0x7f0900cf;
++        public static final int notification_main_column = 0x7f0900d0;
++        public static final int notification_main_column_container = 0x7f0900d1;
++        public static final int right_icon = 0x7f0900e9;
++        public static final int right_side = 0x7f0900ea;
++        public static final int text = 0x7f090127;
++        public static final int text2 = 0x7f090128;
++        public static final int time = 0x7f09012f;
++        public static final int title = 0x7f090130;
+     }
+     public static final class integer {
+         public static final int status_bar_notification_info_maxnum = 0x7f0a000a;
+     }
+     public static final class layout {
+-        public static final int notification_action = 0x7f0b0049;
+-        public static final int notification_action_tombstone = 0x7f0b004a;
+-        public static final int notification_template_custom_big = 0x7f0b0051;
+-        public static final int notification_template_icon_group = 0x7f0b0052;
+-        public static final int notification_template_part_chronometer = 0x7f0b0056;
+-        public static final int notification_template_part_time = 0x7f0b0057;
++        public static final int notification_action = 0x7f0b0048;
++        public static final int notification_action_tombstone = 0x7f0b0049;
++        public static final int notification_template_custom_big = 0x7f0b0050;
++        public static final int notification_template_icon_group = 0x7f0b0051;
++        public static final int notification_template_part_chronometer = 0x7f0b0055;
++        public static final int notification_template_part_time = 0x7f0b0056;
+     }
+     public static final class string {
+         public static final int status_bar_notification_info_overflow = 0x7f0e0083;
+Index: app/build/generated/source/r/debug/android/support/coreutils/R.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build/generated/source/r/debug/android/support/coreutils/R.java	(revision )
++++ app/build/generated/source/r/debug/android/support/coreutils/R.java	(revision )
+@@ -79,27 +79,27 @@
+         public static final int italic = 0x7f09009b;
+         public static final int line1 = 0x7f0900a2;
+         public static final int line3 = 0x7f0900a3;
+-        public static final int normal = 0x7f0900cf;
+-        public static final int notification_background = 0x7f0900d0;
+-        public static final int notification_main_column = 0x7f0900d1;
+-        public static final int notification_main_column_container = 0x7f0900d2;
+-        public static final int right_icon = 0x7f0900ea;
+-        public static final int right_side = 0x7f0900eb;
+-        public static final int text = 0x7f090128;
+-        public static final int text2 = 0x7f090129;
+-        public static final int time = 0x7f090130;
+-        public static final int title = 0x7f090131;
++        public static final int normal = 0x7f0900ce;
++        public static final int notification_background = 0x7f0900cf;
++        public static final int notification_main_column = 0x7f0900d0;
++        public static final int notification_main_column_container = 0x7f0900d1;
++        public static final int right_icon = 0x7f0900e9;
++        public static final int right_side = 0x7f0900ea;
++        public static final int text = 0x7f090127;
++        public static final int text2 = 0x7f090128;
++        public static final int time = 0x7f09012f;
++        public static final int title = 0x7f090130;
+     }
+     public static final class integer {
+         public static final int status_bar_notification_info_maxnum = 0x7f0a000a;
+     }
+     public static final class layout {
+-        public static final int notification_action = 0x7f0b0049;
+-        public static final int notification_action_tombstone = 0x7f0b004a;
+-        public static final int notification_template_custom_big = 0x7f0b0051;
+-        public static final int notification_template_icon_group = 0x7f0b0052;
+-        public static final int notification_template_part_chronometer = 0x7f0b0056;
+-        public static final int notification_template_part_time = 0x7f0b0057;
++        public static final int notification_action = 0x7f0b0048;
++        public static final int notification_action_tombstone = 0x7f0b0049;
++        public static final int notification_template_custom_big = 0x7f0b0050;
++        public static final int notification_template_icon_group = 0x7f0b0051;
++        public static final int notification_template_part_chronometer = 0x7f0b0055;
++        public static final int notification_template_part_time = 0x7f0b0056;
+     }
+     public static final class string {
+         public static final int status_bar_notification_info_overflow = 0x7f0e0083;
+Index: app/build/generated/source/r/debug/android/support/constraint/R.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build/generated/source/r/debug/android/support/constraint/R.java	(revision )
++++ app/build/generated/source/r/debug/android/support/constraint/R.java	(revision )
+@@ -76,17 +76,17 @@
+         public static final int gone = 0x7f090081;
+         public static final int invisible = 0x7f09009a;
+         public static final int left = 0x7f0900a0;
+-        public static final int none = 0x7f0900ce;
+-        public static final int packed = 0x7f0900d3;
+-        public static final int parent = 0x7f0900d5;
+-        public static final int percent = 0x7f0900d9;
+-        public static final int right = 0x7f0900e9;
+-        public static final int spread = 0x7f090112;
+-        public static final int spread_inside = 0x7f090113;
+-        public static final int standard = 0x7f090117;
+-        public static final int start = 0x7f090118;
+-        public static final int top = 0x7f090134;
+-        public static final int wrap = 0x7f090153;
++        public static final int none = 0x7f0900cd;
++        public static final int packed = 0x7f0900d2;
++        public static final int parent = 0x7f0900d4;
++        public static final int percent = 0x7f0900d8;
++        public static final int right = 0x7f0900e8;
++        public static final int spread = 0x7f090111;
++        public static final int spread_inside = 0x7f090112;
++        public static final int standard = 0x7f090116;
++        public static final int start = 0x7f090117;
++        public static final int top = 0x7f090133;
++        public static final int wrap = 0x7f090152;
+     }
+     public static final class styleable {
+         public static final int[] ConstraintLayout_Layout = { 0x010100c4, 0x0101011f, 0x01010120, 0x0101013f, 0x01010140, 0x7f030037, 0x7f030038, 0x7f03004e, 0x7f030065, 0x7f030066, 0x7f0300c5, 0x7f0300c6, 0x7f0300c7, 0x7f0300c8, 0x7f0300c9, 0x7f0300ca, 0x7f0300cb, 0x7f0300cc, 0x7f0300cd, 0x7f0300ce, 0x7f0300cf, 0x7f0300d0, 0x7f0300d1, 0x7f0300d2, 0x7f0300d3, 0x7f0300d4, 0x7f0300d5, 0x7f0300d6, 0x7f0300d7, 0x7f0300d8, 0x7f0300d9, 0x7f0300da, 0x7f0300db, 0x7f0300dc, 0x7f0300dd, 0x7f0300de, 0x7f0300df, 0x7f0300e0, 0x7f0300e1, 0x7f0300e2, 0x7f0300e3, 0x7f0300e4, 0x7f0300e5, 0x7f0300e6, 0x7f0300e7, 0x7f0300e8, 0x7f0300e9, 0x7f0300ea, 0x7f0300eb, 0x7f0300ec, 0x7f0300ed, 0x7f0300ef, 0x7f0300f0, 0x7f0300f1, 0x7f0300f2, 0x7f0300f3, 0x7f0300f4, 0x7f0300f5, 0x7f0300f6, 0x7f0300f9 };
+Index: app/build/generated/source/r/debug/android/support/transition/R.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build/generated/source/r/debug/android/support/transition/R.java	(revision )
++++ app/build/generated/source/r/debug/android/support/transition/R.java	(revision )
+@@ -87,47 +87,47 @@
+         public static final int line1 = 0x7f0900a2;
+         public static final int line3 = 0x7f0900a3;
+         public static final int media_actions = 0x7f0900b1;
+-        public static final int normal = 0x7f0900cf;
+-        public static final int notification_background = 0x7f0900d0;
+-        public static final int notification_main_column = 0x7f0900d1;
+-        public static final int notification_main_column_container = 0x7f0900d2;
+-        public static final int parent_matrix = 0x7f0900d7;
+-        public static final int right_icon = 0x7f0900ea;
+-        public static final int right_side = 0x7f0900eb;
+-        public static final int save_image_matrix = 0x7f0900ec;
+-        public static final int save_non_transition_alpha = 0x7f0900ed;
+-        public static final int save_scale_type = 0x7f0900ee;
+-        public static final int status_bar_latest_event_content = 0x7f09011b;
+-        public static final int text = 0x7f090128;
+-        public static final int text2 = 0x7f090129;
+-        public static final int time = 0x7f090130;
+-        public static final int title = 0x7f090131;
+-        public static final int transition_current_scene = 0x7f090137;
+-        public static final int transition_layout_save = 0x7f090138;
+-        public static final int transition_position = 0x7f090139;
+-        public static final int transition_scene_layoutid_cache = 0x7f09013a;
+-        public static final int transition_transform = 0x7f09013b;
++        public static final int normal = 0x7f0900ce;
++        public static final int notification_background = 0x7f0900cf;
++        public static final int notification_main_column = 0x7f0900d0;
++        public static final int notification_main_column_container = 0x7f0900d1;
++        public static final int parent_matrix = 0x7f0900d6;
++        public static final int right_icon = 0x7f0900e9;
++        public static final int right_side = 0x7f0900ea;
++        public static final int save_image_matrix = 0x7f0900eb;
++        public static final int save_non_transition_alpha = 0x7f0900ec;
++        public static final int save_scale_type = 0x7f0900ed;
++        public static final int status_bar_latest_event_content = 0x7f09011a;
++        public static final int text = 0x7f090127;
++        public static final int text2 = 0x7f090128;
++        public static final int time = 0x7f09012f;
++        public static final int title = 0x7f090130;
++        public static final int transition_current_scene = 0x7f090136;
++        public static final int transition_layout_save = 0x7f090137;
++        public static final int transition_position = 0x7f090138;
++        public static final int transition_scene_layoutid_cache = 0x7f090139;
++        public static final int transition_transform = 0x7f09013a;
+     }
+     public static final class integer {
+         public static final int cancel_button_image_alpha = 0x7f0a0004;
+         public static final int status_bar_notification_info_maxnum = 0x7f0a000a;
+     }
+     public static final class layout {
+-        public static final int notification_action = 0x7f0b0049;
+-        public static final int notification_action_tombstone = 0x7f0b004a;
+-        public static final int notification_media_action = 0x7f0b004b;
+-        public static final int notification_media_cancel_action = 0x7f0b004c;
+-        public static final int notification_template_big_media = 0x7f0b004d;
+-        public static final int notification_template_big_media_custom = 0x7f0b004e;
+-        public static final int notification_template_big_media_narrow = 0x7f0b004f;
+-        public static final int notification_template_big_media_narrow_custom = 0x7f0b0050;
+-        public static final int notification_template_custom_big = 0x7f0b0051;
+-        public static final int notification_template_icon_group = 0x7f0b0052;
+-        public static final int notification_template_lines_media = 0x7f0b0053;
+-        public static final int notification_template_media = 0x7f0b0054;
+-        public static final int notification_template_media_custom = 0x7f0b0055;
+-        public static final int notification_template_part_chronometer = 0x7f0b0056;
+-        public static final int notification_template_part_time = 0x7f0b0057;
++        public static final int notification_action = 0x7f0b0048;
++        public static final int notification_action_tombstone = 0x7f0b0049;
++        public static final int notification_media_action = 0x7f0b004a;
++        public static final int notification_media_cancel_action = 0x7f0b004b;
++        public static final int notification_template_big_media = 0x7f0b004c;
++        public static final int notification_template_big_media_custom = 0x7f0b004d;
++        public static final int notification_template_big_media_narrow = 0x7f0b004e;
++        public static final int notification_template_big_media_narrow_custom = 0x7f0b004f;
++        public static final int notification_template_custom_big = 0x7f0b0050;
++        public static final int notification_template_icon_group = 0x7f0b0051;
++        public static final int notification_template_lines_media = 0x7f0b0052;
++        public static final int notification_template_media = 0x7f0b0053;
++        public static final int notification_template_media_custom = 0x7f0b0054;
++        public static final int notification_template_part_chronometer = 0x7f0b0055;
++        public static final int notification_template_part_time = 0x7f0b0056;
+     }
+     public static final class string {
+         public static final int status_bar_notification_info_overflow = 0x7f0e0083;
+Index: app/build/generated/source/r/debug/android/support/mediacompat/R.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build/generated/source/r/debug/android/support/mediacompat/R.java	(revision )
++++ app/build/generated/source/r/debug/android/support/mediacompat/R.java	(revision )
+@@ -86,38 +86,38 @@
+         public static final int line1 = 0x7f0900a2;
+         public static final int line3 = 0x7f0900a3;
+         public static final int media_actions = 0x7f0900b1;
+-        public static final int normal = 0x7f0900cf;
+-        public static final int notification_background = 0x7f0900d0;
+-        public static final int notification_main_column = 0x7f0900d1;
+-        public static final int notification_main_column_container = 0x7f0900d2;
+-        public static final int right_icon = 0x7f0900ea;
+-        public static final int right_side = 0x7f0900eb;
+-        public static final int status_bar_latest_event_content = 0x7f09011b;
+-        public static final int text = 0x7f090128;
+-        public static final int text2 = 0x7f090129;
+-        public static final int time = 0x7f090130;
+-        public static final int title = 0x7f090131;
++        public static final int normal = 0x7f0900ce;
++        public static final int notification_background = 0x7f0900cf;
++        public static final int notification_main_column = 0x7f0900d0;
++        public static final int notification_main_column_container = 0x7f0900d1;
++        public static final int right_icon = 0x7f0900e9;
++        public static final int right_side = 0x7f0900ea;
++        public static final int status_bar_latest_event_content = 0x7f09011a;
++        public static final int text = 0x7f090127;
++        public static final int text2 = 0x7f090128;
++        public static final int time = 0x7f09012f;
++        public static final int title = 0x7f090130;
+     }
+     public static final class integer {
+         public static final int cancel_button_image_alpha = 0x7f0a0004;
+         public static final int status_bar_notification_info_maxnum = 0x7f0a000a;
+     }
+     public static final class layout {
+-        public static final int notification_action = 0x7f0b0049;
+-        public static final int notification_action_tombstone = 0x7f0b004a;
+-        public static final int notification_media_action = 0x7f0b004b;
+-        public static final int notification_media_cancel_action = 0x7f0b004c;
+-        public static final int notification_template_big_media = 0x7f0b004d;
+-        public static final int notification_template_big_media_custom = 0x7f0b004e;
+-        public static final int notification_template_big_media_narrow = 0x7f0b004f;
+-        public static final int notification_template_big_media_narrow_custom = 0x7f0b0050;
+-        public static final int notification_template_custom_big = 0x7f0b0051;
+-        public static final int notification_template_icon_group = 0x7f0b0052;
+-        public static final int notification_template_lines_media = 0x7f0b0053;
+-        public static final int notification_template_media = 0x7f0b0054;
+-        public static final int notification_template_media_custom = 0x7f0b0055;
+-        public static final int notification_template_part_chronometer = 0x7f0b0056;
+-        public static final int notification_template_part_time = 0x7f0b0057;
++        public static final int notification_action = 0x7f0b0048;
++        public static final int notification_action_tombstone = 0x7f0b0049;
++        public static final int notification_media_action = 0x7f0b004a;
++        public static final int notification_media_cancel_action = 0x7f0b004b;
++        public static final int notification_template_big_media = 0x7f0b004c;
++        public static final int notification_template_big_media_custom = 0x7f0b004d;
++        public static final int notification_template_big_media_narrow = 0x7f0b004e;
++        public static final int notification_template_big_media_narrow_custom = 0x7f0b004f;
++        public static final int notification_template_custom_big = 0x7f0b0050;
++        public static final int notification_template_icon_group = 0x7f0b0051;
++        public static final int notification_template_lines_media = 0x7f0b0052;
++        public static final int notification_template_media = 0x7f0b0053;
++        public static final int notification_template_media_custom = 0x7f0b0054;
++        public static final int notification_template_part_chronometer = 0x7f0b0055;
++        public static final int notification_template_part_time = 0x7f0b0056;
+     }
+     public static final class string {
+         public static final int status_bar_notification_info_overflow = 0x7f0e0083;
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- app/build.gradle	(revision )
++++ app/build.gradle	(revision )
+@@ -46,6 +46,4 @@
+ 
+ 
+ 
+-
+-
+ apply plugin: 'com.google.gms.google-services'
+\ No newline at end of file

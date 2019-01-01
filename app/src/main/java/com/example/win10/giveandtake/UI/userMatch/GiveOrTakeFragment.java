@@ -1,4 +1,4 @@
-package com.example.win10.giveandtake.UI.userProfile;
+package com.example.win10.giveandtake.UI.userMatch;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
@@ -11,7 +11,6 @@ import android.widget.Button;
 
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.R;
-import com.example.win10.giveandtake.UI.userHashtags.MyHashtagsFragment;
 
 //fragment that display user profile info and function like give and take request
 

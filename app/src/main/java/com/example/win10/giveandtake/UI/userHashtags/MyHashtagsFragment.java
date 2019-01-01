@@ -91,15 +91,7 @@ public class MyHashtagsFragment extends Fragment {
         //in case request is already exist
         if (text != null && !text.equals("")) {
             inputText.setText(text);
-            appManager.getMyRequestTags(requestType, new AppManager.AppManagerCallback<ArrayList<String>>() {
-                @Override
-                public void onDataArrived(ArrayList<String> value) {
-                    tags = value;
-                    selectedTags = new HashSet<String>(tags);
-                    showTags(tags);
-                }
-            });
-
+            getTags();
         }
 
         findTextBtn.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +100,7 @@ public class MyHashtagsFragment extends Fragment {
                 text = inputText.getText().toString().trim();
                 if (!text.equals("")) {
                     appManager.addRequestNotFinal(text, requestType);
-                    showTags(tags);
+                    getTags();
                 }
             }
         });
@@ -130,6 +122,17 @@ public class MyHashtagsFragment extends Fragment {
         Context context = getActivity().getApplicationContext();
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+    }
+
+    private void getTags() {
+        appManager.getMyRequestTags(requestType, new AppManager.AppManagerCallback<ArrayList<String>>() {
+            @Override
+            public void onDataArrived(ArrayList<String> value) {
+                tags = value;
+                selectedTags = new HashSet<String>(tags);
+                showTags(tags);
+            }
+        });
     }
 
     public void showTags(final ArrayList<String> tags) {

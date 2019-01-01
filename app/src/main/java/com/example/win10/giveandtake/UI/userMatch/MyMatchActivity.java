@@ -1,21 +1,14 @@
-package com.example.win10.giveandtake.UI.userProfile;
+package com.example.win10.giveandtake.UI.userMatch;
 
 import android.app.FragmentManager;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
 import android.widget.Toast;
 
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.R;
-import com.example.win10.giveandtake.UI.userHashtags.*;
-
-import java.util.ArrayList;
 
 public class MyMatchActivity extends AppCompatActivity {
 
@@ -26,28 +19,28 @@ public class MyMatchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_match);
-        String type = getIntent().getStringExtra("type");
-        String tag = getIntent().getStringExtra("tag");
-        //todo not working from notification
-        //got here from notification
-        if(type!=null){
-            if(type.equalsIgnoreCase("give"))
-                changeToUsersFragment(tag,false,true);
-            else
-                changeToUsersFragment(tag,true,true);
-        }
-        setContentView(R.layout.activity_my_match);
-
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        changeToGiveOrTakeFragment();
-
+        //todo not working from notification
+        String type = getIntent().getStringExtra("type");
+        String tag = getIntent().getStringExtra("tag");
+        boolean isTakeRequest;
+        if (type != null) {
+            //got here from notification
+            if (type.equalsIgnoreCase("give"))
+                isTakeRequest = false;
+            else
+                isTakeRequest = true;
+            changeToUsersFragment(tag, isTakeRequest, true);
+        }
+        else{
+            // got here from 'my match' button
+            changeToGiveOrTakeFragment();
+        }
     }
-
 
     public void addToast(String text, int duration) {
         Context context = this.getApplicationContext();
@@ -57,15 +50,15 @@ public class MyMatchActivity extends AppCompatActivity {
 
     public void changeToGiveOrTakeFragment() {
         FragmentManager fragmentManager = getFragmentManager();
-        com.example.win10.giveandtake.UI.userProfile.GiveOrTakeFragment giveOrTakeFragment = new com.example.win10.giveandtake.UI.userProfile.GiveOrTakeFragment();
+        GiveOrTakeFragment giveOrTakeFragment = new GiveOrTakeFragment();
         fragmentManager.beginTransaction()
                 .replace(R.id.myMatchActivity_frame_container, giveOrTakeFragment)
                 .commit();
     }
 
-    public void changeToUsersFragment(String tag,boolean isTakeRequest,boolean fromNotification) {
+    public void changeToUsersFragment(String tag, boolean isTakeRequest, boolean fromNotification) {
         FragmentManager fragmentManager = getFragmentManager();
-        MyMatchUsersFragment myMatchUsersFragment = MyMatchUsersFragment.newInstance(tag,isTakeRequest,fromNotification);
+        MyMatchUsersFragment myMatchUsersFragment = MyMatchUsersFragment.newInstance(tag, isTakeRequest, fromNotification);
         fragmentManager.beginTransaction()
                 .replace(R.id.myMatchActivity_frame_container, myMatchUsersFragment)
                 .commit();

@@ -10,10 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.R;
+import com.example.win10.giveandtake.UI.userProfile.TimeConvert;
 import com.example.win10.giveandtake.UI.userProfile.UserProfileActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,10 +30,8 @@ public class MainScreenFragment extends Fragment {
 
     private AppManager appManager;
 
-    private Button btnLogout;
-    private Button btnGiveTake;
-    private TextView userNameText;
-    private TextView userBalanceText;
+    private Button btnLogout, btnGiveTake;
+    private TextView userNameText, userBalanceText;
 
     @Nullable
     @Override
@@ -47,7 +47,7 @@ public class MainScreenFragment extends Fragment {
 
         if (appManager.getCurrentUser() != null) {
             userNameText.setText("Hello " + appManager.getCurrentUser().getFullName());
-            userBalanceText.setText(appManager.getCurrentUser().getBalance() + "");
+            setUserBalance(appManager.getCurrentUser().getBalance());
             //todo change balance from int to hours and minuts
         }
 
@@ -80,13 +80,21 @@ public class MainScreenFragment extends Fragment {
         Intent intent = new Intent(getActivity(), UserProfileActivity.class);
         startActivity(intent);
     }
+    private void setUserBalance(int balance) {
+        String time = TimeConvert.secondToFullTime(balance);
+        userBalanceText.setText(time);
+    }
 
     private void signOut() {
-        appManager.signOut(new AppManager.AppManagerCallback<Object>() {
-            @Override
-            public void onDataArrived(Object value) {
-                ((LoginActivity) getActivity()).changeToLoginFragment();
-            }
-        });
+        final LoginActivity parentActivity= (LoginActivity) getActivity();
+        appManager.signOut();
+
+        parentActivity.getmGoogleSignInClient().signOut()
+                .addOnCompleteListener(parentActivity, new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        parentActivity.changeToLoginFragment();
+                    }
+                });
     }
 }

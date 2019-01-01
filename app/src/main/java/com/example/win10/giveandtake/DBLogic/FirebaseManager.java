@@ -167,6 +167,9 @@ public class FirebaseManager {
             db.child(Keys.TAKE_REQUEST).child(newRequest.getUid()).setValue(newRequest);
         }
     }
+    public void updateUserPhoneNumber(String uid,String phoneNumber) {
+        db.child(Keys.USERS).child(uid).child(Keys.USER_PHONE).setValue(phoneNumber);
+    }
 
     public void addServiceInDB(String uid, Service newService) {
 //        String sKey = db.child(Keys.SERVICES).push().getKey();
@@ -283,8 +286,10 @@ public class FirebaseManager {
 
     }
 
-    public void getGiveRequestFromDB(String uid, final FirebaseCallback<Request> callback) {
-        db.child(Keys.GIVE_REQUEST).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+    public void getRequestFromDB(String uid, Request.RequestType requestType, final FirebaseCallback<Request> callback) {
+        String sKey = requestType == Request.RequestType.TAKE ? Keys.TAKE_REQUEST : Keys.GIVE_REQUEST;
+
+        db.child(sKey).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 callback.onDataArrived(dataSnapshot.getValue(Request.class));
@@ -298,20 +303,6 @@ public class FirebaseManager {
         });
     }
 
-    public void getTakeRequestFromDB(String uid, final FirebaseCallback<Request> callback) {
-        db.child(Keys.TAKE_REQUEST).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                callback.onDataArrived(dataSnapshot.getValue(Request.class));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "onCancelled: ");
-                callback.onDataArrived(null);
-            }
-        });
-    }
 
 
     public void removeService(Service theService) {
@@ -343,6 +334,7 @@ public class FirebaseManager {
         public static final String FULL_NAME = "fullName";
         public static final String GIVE_TAGS = "giveTags";
         public static final String TAKE_TAGS = "takeTags";
+        public static final String USER_PHONE = "phoneNumber";
         public static final String IS_FINAL = "isFinal";
     }
 

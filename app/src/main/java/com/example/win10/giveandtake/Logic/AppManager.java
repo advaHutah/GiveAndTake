@@ -41,49 +41,16 @@ public class AppManager {
     }
 
 
-    public void createNewUser(String uid, String email, String fullName, String phoneNumber, String gender) {
-        User user = new User(uid, email, fullName, phoneNumber, gender, User.INIT_BALANCE);
+    public void createNewUser(String uid, String email, String fullName, String phoneNumber,String photoURL) {
+        User user = new User(uid, email, fullName, phoneNumber, User.INIT_BALANCE,photoURL);
         setCurrentUser(user);
         this.firebaseManager.addUserInfoToDB(user);
     }
 
-    public void findMatch(final Request newRequest) {
-
-        final Map<String, ArrayList<TagUserInfo>> match = new HashMap<>();//key = tag, value = arraylist of uid
-        // for each tag in the new request tags find the  all users that match the tags..
-        FirebaseManager.getInstance().getAllTagsFromDB(new FirebaseManager.FirebaseCallback<Map<String, ArrayList<TagUserInfo>>>() {
-            @Override
-            public void onDataArrived(Map<String, ArrayList<TagUserInfo>> value) {
-                //value is a map: key = tag, value = another map (key = uid , value = request type)
-                for (String tag : newRequest.getTags()) {
-                    if (value.keySet().contains(tag)) {
-                        ArrayList<TagUserInfo> filterdTagsUser = new ArrayList<>();
-//                        HashMap<String,TagUserInfo> tagChildren = value.get(tag);
-//                        get from map all the user with different type then newRequset type and save it in tagsUser
-                        for (TagUserInfo tagUserInfo : value.get(tag)) {
-                            if (!tagUserInfo.getUid().equals(newRequest.getUid()) && tagUserInfo.getRequestType() != newRequest.requestType) {
-                                filterdTagsUser.add(tagUserInfo);
-                            }
-                        }
-                        match.put(tag, filterdTagsUser);
-                    }
-                }
-
-            }
-        });
-        newRequest.setMatch(match);
+    public void updateUserPhoneNumer(String phoneNumber) {
+        currentUser.setPhoneNumber(phoneNumber);
+        firebaseManager.updateUserPhoneNumber(currentUser.getId(),phoneNumber);
     }
-
-
-    public void getTokenFromFCM() {
-        //todo
-
-    }
-
-    public void getCurrentUserServices(User currentUser) {
-        //TODO
-    }
-
     public User getCurrentUser() {
         return currentUser;
     }
@@ -105,8 +72,6 @@ public class AppManager {
 
     public void addRequestFinal(Set<String> selectedTags, Request.RequestType requestType) {
         this.updateRequestTagsUserValidated(selectedTags, requestType);
-        //find match
-        //TODO find match
     }
 
     public void getMyRequestTags(Request.RequestType requestType, final AppManagerCallback<ArrayList<String>>callback) {
@@ -165,9 +130,12 @@ public class AppManager {
         firebaseManager.removeService(theService);
     }
 
-    public void signOut(AppManagerCallback<Object>callback) {
-        firebaseManager.signOut();
-        callback.onDataArrived(null);
+//    public void signOut(AppManagerCallback<Object>callback) {
+//        firebaseManager.signOut();
+//        callback.onDataArrived(null);
+//    }
+    public void signOut() {
+           firebaseManager.signOut();
     }
 
     public void updateRequestTagsUserValidated(Set<String> selectedTags, Request.RequestType requestType) {
@@ -196,7 +164,7 @@ public class AppManager {
                 if (value != null)
                     AppManager.getInstance().setCurrentUser(value);
                 else
-                    createNewUser(theAccount.getUid(), theAccount.getEmail(), theAccount.getDisplayName(), theAccount.getPhoneNumber(), "male");
+                    createNewUser(theAccount.getUid(), theAccount.getEmail(), theAccount.getDisplayName(), theAccount.getPhoneNumber(), theAccount.getPhotoUrl().toString());
 
                 callback.onDataArrived(true);
             }
@@ -209,13 +177,13 @@ public class AppManager {
             public void onDataArrived(User value) {
                 if (value != null) {
                     otherUser = value;
-                    firebaseManager.getGiveRequestFromDB(otherUser.getId(), new FirebaseManager.FirebaseCallback<Request>() {
+                    firebaseManager.getRequestFromDB(otherUser.getId(), Request.RequestType.GIVE, new FirebaseManager.FirebaseCallback<Request>() {
                         @Override
                         public void onDataArrived(Request value) {
                             otherUser.setMyGiveRequests(value);
                         }
                     });
-                    firebaseManager.getTakeRequestFromDB(otherUser.getId(), new FirebaseManager.FirebaseCallback<Request>() {
+                    firebaseManager.getRequestFromDB(otherUser.getId(), Request.RequestType.TAKE, new FirebaseManager.FirebaseCallback<Request>() {
                         @Override
                         public void onDataArrived(Request value) {
                             otherUser.setMyTakeRequest(value);

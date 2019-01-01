@@ -1,19 +1,24 @@
-package com.example.win10.giveandtake.UI;
+package com.example.win10.giveandtake.UI.userProfile;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
 
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.User;
 import com.example.win10.giveandtake.R;
+import com.example.win10.giveandtake.UI.handshakeSession.HandshakeActivity;
 
 public class OtherUserActivity extends AppCompatActivity {
 
     private TextView nameText, balanceText, giveText, takeText;
     private GridView giveTags,takeTags;
+    private Button btnPhoneNumber, btnStartService;
     private AppManager appManager = AppManager.getInstance();
     private User otherUser;
 
@@ -28,6 +33,8 @@ public class OtherUserActivity extends AppCompatActivity {
         takeText = (TextView) this.findViewById(R.id.takeText);
         giveTags = (GridView) this.findViewById(R.id.giveTags);
         takeTags = (GridView) this.findViewById(R.id.takeTags);
+        btnPhoneNumber = (Button)this.findViewById(R.id.btn_otherUserPhone);
+        btnStartService = (Button)this.findViewById(R.id.btn_give_service);
 
         otherUser = appManager.getOtherUser();
 
@@ -40,6 +47,25 @@ public class OtherUserActivity extends AppCompatActivity {
         giveTags.setAdapter(new ArrayAdapter<>(this,R.layout.item,otherUser.getMyGiveRequest().getTags()));
         takeTags.setAdapter(new ArrayAdapter<String>(this,R.layout.item,otherUser.getMyTakeRequest().getTags()));
 
+
+        btnPhoneNumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //todo get phone number
+            }
+        });
+        btnStartService.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create handshake activity
+                createHandshakeActivity();
+            }
+        });
+    }
+
+    private void createHandshakeActivity() {
+        Intent handShake = new Intent(this, HandshakeActivity.class);
+        startActivity(handShake);
     }
 
 

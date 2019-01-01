@@ -20,10 +20,7 @@ public class User implements Serializable {
     private String phoneNumber;
     private Gender gender;
     private int balance;
-    private int image;
-    private int instanceId;
-
-    //TODO add image resource
+    private String photoUrl;
 
     private Request myTakeRequest;
     private Request myGiveRequest;
@@ -34,28 +31,29 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String id, String email, String fullName, String phoneNumber, String gender) {
+    public User(String id, String email, String fullName, String phoneNumber,String photoUrl) {
         this.id = id;
         this.email = email;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber != null ? phoneNumber : "null";
-        this.gender = gender.equals("נקבה") ? Gender.FEMALE : Gender.MALE;
+        //this.gender = gender.equals("נקבה") ? Gender.FEMALE : Gender.MALE;
+        this.photoUrl=photoUrl;
         this.balance = INIT_BALANCE;
         myTakeRequest = new Request();
         myGiveRequest = new Request();
         myServices = new HashMap<String, Service>();
     }
 
-    public User(String id, String email, String fullName, String phoneNumber, String gender, int balance) {
-        this(id, email, fullName, phoneNumber, gender);
+    public User(String id, String email, String fullName, String phoneNumber, int balance,String photoUrl) {
+        this(id, email, fullName, phoneNumber,photoUrl);
         this.balance = balance;
     }
 
-    public User(String id, String email, String fullName, String phoneNumber, String gender, int balance, Request myTakeRequest, Request myGiveRequest, HashMap<String, Service> myServices) {
-        this(id, email, fullName, phoneNumber, gender, balance);
+    public User(String id, String email, String fullName, String phoneNumber, int balance, Request myTakeRequest, Request myGiveRequest ,String photoUrl) {
+        this(id, email, fullName, phoneNumber, balance,photoUrl);
         this.myTakeRequest = myTakeRequest;
         this.myGiveRequest = myGiveRequest;
-        this.myServices = myServices;
+        //this.myServices = myServices;
     }
 
     public String getId() {
@@ -82,8 +80,12 @@ public class User implements Serializable {
         return fullName;
     }
 
-    public int getImage() {
-        return image;
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
     }
 
     public void setFullName(String fullName) {
