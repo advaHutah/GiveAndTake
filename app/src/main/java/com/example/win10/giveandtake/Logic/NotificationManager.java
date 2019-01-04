@@ -1,14 +1,12 @@
 package com.example.win10.giveandtake.Logic;
 
 
-import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
@@ -18,7 +16,6 @@ import com.example.win10.giveandtake.DBLogic.FirebaseManager;
 import com.example.win10.giveandtake.MyApplication;
 import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.UI.MyServicesActivity;
-import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.gson.Gson;
 import com.squareup.okhttp.MediaType;
 import com.squareup.okhttp.OkHttpClient;
@@ -49,7 +46,7 @@ public class NotificationManager {
         return singletonNotificationManager;
     }
 
-    public void sendNotificationToTheUser(String uid, String title, final String body, final Service service) {
+    public void sendNotificationToTheUser(String uid, String title, final String body, final Session session) {
 
         firebaseManager.getToken(uid, new FirebaseManager.FirebaseCallback<String>() {
             @Override
@@ -57,7 +54,7 @@ public class NotificationManager {
                 String fcmToken = value;
                 HashMap<String, String> data = new HashMap<>();
                 data.put("more data", "some ID");
-                sendFcmNotificationUsingUrlRequest(generateNotificationPayload("Test", "From Android"), service, new String[]{fcmToken}, new FirebaseManager.FirebaseCallback<Response>() {
+                sendFcmNotificationUsingUrlRequest(generateNotificationPayload("Test", "From Android"), session, new String[]{fcmToken}, new FirebaseManager.FirebaseCallback<Response>() {
                     @Override
                     public void onDataArrived(Response value) {
                         Log.d(TAG, "sendFcmNotificationUsingUrlRequest: " + value);
@@ -98,7 +95,7 @@ public class NotificationManager {
 //    }
 
     //notificationDictionary: [String:String], dataDictionary: [String:String], toRegistrationIds registrationIds: [String], completion: @escaping (Bool) -> ()
-    private void sendFcmNotificationUsingUrlRequest(HashMap<String, String> notificationDictionary, Service service, String[] registrationIds, final FirebaseManager.FirebaseCallback<Response> callbacksHandler) {
+    private void sendFcmNotificationUsingUrlRequest(HashMap<String, String> notificationDictionary, Session session, String[] registrationIds, final FirebaseManager.FirebaseCallback<Response> callbacksHandler) {
 //        HashMap<String, Object> jsonDictionary = new HashMap<>();
 //        jsonDictionary.put("registration_ids", registrationIds); // or use 'to' for ony one registration ID (without using an array)
 //        jsonDictionary.put("notification", notificationDictionary);
@@ -108,7 +105,7 @@ public class NotificationManager {
         String secretKey = "AIzaSyChmQwpD8juXnZ0nGmuWqz7aBSOsFh-aFI";
         httpHeaders.put("Authorization", "key= " + secretKey);
 
-        makePostRequest(new Gson().toJson(service), "https://fcm.googleapis.com/fcm/send", httpHeaders, callbacksHandler);
+        makePostRequest(new Gson().toJson(session), "https://fcm.googleapis.com/fcm/send", httpHeaders, callbacksHandler);
     }
 
 

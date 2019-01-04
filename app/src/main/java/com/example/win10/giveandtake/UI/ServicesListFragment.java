@@ -10,12 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.example.win10.giveandtake.Logic.AppManager;
-import com.example.win10.giveandtake.Logic.Service;
+import com.example.win10.giveandtake.Logic.Session;
 import com.example.win10.giveandtake.R;
 
 import java.util.ArrayList;
@@ -24,7 +22,7 @@ public class ServicesListFragment extends Fragment {
 
     private View view;
     private AppManager appManager;
-    protected ArrayList<Service> myServices;
+    protected ArrayList<Session> mySessions;
     protected ListView servicesListView;
     private FragmentManager fragmentManager;
     private ServiceInfoFragment serviceInfoFragment;
@@ -34,9 +32,9 @@ public class ServicesListFragment extends Fragment {
 
         @Override
         public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-          //  if(myServices.get(position).getStatus()!= Service.Status.COMPLETED) {
+          //  if(mySessions.get(position).getStatus()!= Session.Status.COMPLETED) {
                 serviceInfoFragment = new ServiceInfoFragment();
-                appManager.setSelectedService(myServices.get(position));
+                appManager.setSelectedSession(mySessions.get(position));
                 fragmentManager.beginTransaction()
                         .replace(R.id.match_activity_frame, serviceInfoFragment)
                         .commit();
@@ -51,7 +49,7 @@ public class ServicesListFragment extends Fragment {
 
         appManager = AppManager.getInstance();
         fragmentManager= getFragmentManager();
-            myServices = new ArrayList<Service>(appManager.getCurrentUser().getMyServices().values());
+            mySessions = new ArrayList<Session>(appManager.getCurrentUser().getMyServices().values());
             servicesListView = (ListView) view.findViewById(R.id.service_list_view);
             serviceAdapter = new ServicesListFragment.ServiceAdapter();
             servicesListView.setAdapter(serviceAdapter);
@@ -68,12 +66,12 @@ public class ServicesListFragment extends Fragment {
 
         @Override
         public int getCount() {
-            return myServices.size();
+            return mySessions.size();
         }
 
         @Override
         public Object getItem(int i) {
-            return myServices.get(i);
+            return mySessions.get(i);
         }
 
         @Override
@@ -90,22 +88,22 @@ public class ServicesListFragment extends Fragment {
 //            TextView description = (TextView) view.findViewById(R.id.description);
 //            TextView status = (TextView) view.findViewById(R.id.status);
 //            //if current user is giver
-//         //   if (myServices.get(i).getGiveRequest().getUid().equals(appManager.getCurrentUser().getId())) {
+//         //   if (mySessions.get(i).getGiveRequest().getUid().equals(appManager.getCurrentUser().getId())) {
 //                //change icon
 //                icon_req.setImageResource(R.drawable.out_icon);
 //                //change other user name
-//                other_user_name.setText(myServices.get(i).getGiveRequest().getUserName());
+//                other_user_name.setText(mySessions.get(i).getGiveRequest().getUserName());
 //                //set description
-//                description.setText(myServices.get(i).getGiveRequest().getTags().toString());
+//                description.setText(mySessions.get(i).getGiveRequest().getTags().toString());
 //                //set status
-//                status.setText(myServices.get(i).getStatus().toString());
+//                status.setText(mySessions.get(i).getStatus().toString());
 //           // } else {
 //                //change other user name
-//                other_user_name.setText(myServices.get(i).getTakeRequest().getUserName());
+//                other_user_name.setText(mySessions.get(i).getTakeRequest().getUserName());
 //                //set description
-//                description.setText(myServices.get(i).getTakeRequest().getTags().toString());
+//                description.setText(mySessions.get(i).getTakeRequest().getTags().toString());
 //                //set status
-//                status.setText(myServices.get(i).getStatus().toString());
+//                status.setText(mySessions.get(i).getStatus().toString());
 //            }
             return view;
         }

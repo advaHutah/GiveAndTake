@@ -3,17 +3,15 @@ package com.example.win10.giveandtake.UI;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.win10.giveandtake.Logic.Service;
+import com.example.win10.giveandtake.Logic.Session;
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.R;
 
@@ -21,7 +19,7 @@ public class ServiceInfoFragment extends Fragment {
 
     private View view;
     private AppManager appManager;
-    private Service theService;
+    private Session theSession;
 
     private TextView giverName;
     private TextView takerName;
@@ -41,7 +39,7 @@ public class ServiceInfoFragment extends Fragment {
 
         appManager = AppManager.getInstance();
         fragmentManager = getFragmentManager();
-        theService = appManager.getSelectedService();
+        theSession = appManager.getSelectedSession();
 
         //initial view
         giverName = (TextView) view.findViewById(R.id.giver_user_name_text);
@@ -52,9 +50,9 @@ public class ServiceInfoFragment extends Fragment {
         cancelServiceBtn = (Button) view.findViewById(R.id.cancel_service_btn);
 
         //set service info in view
-//        giverName.setText(theService.getGiveRequest().getUserName());
-//        takerName.setText(theService.getTakeRequest().getUserName());
-//        description.setText(theService.getDescription());
+//        giverName.setText(theSession.getGiveRequest().getUserName());
+//        takerName.setText(theSession.getTakeRequest().getUserName());
+//        description.setText(theSession.getDescription());
 
         //start service
         startServiceBtn.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +72,7 @@ public class ServiceInfoFragment extends Fragment {
                 //todo
                 int minuts = 0;
                 //update manager that service end
-                appManager.serviceEnd(theService, minuts);
+                appManager.serviceEnd(theSession, minuts);
                 //change status in the list
                 servicesListFragment = new ServicesListFragment();
                 //go to service list
@@ -91,7 +89,7 @@ public class ServiceInfoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //app manager remove this service
-                appManager.removeService(theService);
+                appManager.removeService(theSession);
                 //change to list
                 servicesListFragment = new ServicesListFragment();
                 //go to service list

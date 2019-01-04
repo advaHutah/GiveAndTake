@@ -5,13 +5,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 //Handles all app actions and DB read/write
 public class AppManager {
+
 
 
 
@@ -26,7 +24,7 @@ public class AppManager {
     private User otherUser;
     private ArrayList<TagUserInfo> notificationUsers;
     private FirebaseAuth mAuth;
-    private Service selectedService;
+    private Session selectedSession;
 
     private AppManager() {
         firebaseManager = FirebaseManager.getInstance();
@@ -103,31 +101,58 @@ public class AppManager {
         });
     }
 
-    public void setSelectedService(Service selectedService) {
-        this.selectedService = selectedService;
+    public void setSelectedSession(Session selectedSession) {
+        this.selectedSession = selectedSession;
     }
 
-    public Service getSelectedService() {
-        return selectedService;
+    public void setSelectedSessionByID(String sessionId) {
+        this.firebaseManager.getSessionFromDB(sessionId,new FirebaseManager.FirebaseCallback<Session>() {
+            @Override
+            public void onDataArrived(Session value) {
+                if (value != null) {
+                    selectedSession = value;
+                    if(selectedSession.getInitiator().equals(Session.SessionInitiator.GIVER)){
+                        firebaseManager.getUserDetailFromDB(selectedSession.getGiveRequest().getUid(), new FirebaseManager.FirebaseCallback<User>() {
+                            @Override
+                            public void onDataArrived(User value) {
+                                otherUser = value;
+                            }
+                        });
+
+                    }
+                    else{
+                        firebaseManager.getUserDetailFromDB(selectedSession.getTakeRequest().getUid(), new FirebaseManager.FirebaseCallback<User>() {
+                            @Override
+                            public void onDataArrived(User value) {
+                                otherUser = value;
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    }
+    public Session getSelectedSession() {
+        return selectedSession;
     }
 
-    public void serviceEnd(Service service, int minuts) {
+    public void serviceEnd(Session session, int minuts) {
         //send notification to other user
         //todo
-        //update service minuts
-       // service.setMinuts(minuts);
-        //update service status
-       // service.setStatus(Service.Status.COMPLETED);
-        //update service in db
-        firebaseManager.updateServiceInDB(service);
+        //update session minuts
+       // session.setMinuts(minuts);
+        //update session status
+       // session.setStatus(Session.Status.COMPLETED);
+        //update session in db
+        firebaseManager.updateServiceInDB(session);
         //update users info in db
-        //firebaseManager.updateUserServcieInDB(service.getTakeRequest().getUid(), service);
-        //firebaseManager.updateUserServcieInDB(service.getGiveRequest().getUid(), service);
+        //firebaseManager.updateUserServcieInDB(session.getTakeRequest().getUid(), session);
+        //firebaseManager.updateUserServcieInDB(session.getGiveRequest().getUid(), session);
     }
 
-    public void removeService(Service theService) {
-        currentUser.getMyServices().remove(theService);
-        firebaseManager.removeService(theService);
+    public void removeService(Session theSession) {
+        currentUser.getMyServices().remove(theSession);
+        firebaseManager.removeService(theSession);
     }
 
 //    public void signOut(AppManagerCallback<Object>callback) {

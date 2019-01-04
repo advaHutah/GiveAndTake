@@ -41,7 +41,7 @@ public class FullUserInfoFragment extends Fragment {
         balanceText.setText(currentUser.getBalance()+"");
         emailText.setText(currentUser.getEmail());
         phoneText.setText(currentUser.getPhoneNumber());
-        genderText.setText(currentUser.getGender().toString());
+       // genderText.setText(currentUser.getGender().toString());
         return view;
     }
 

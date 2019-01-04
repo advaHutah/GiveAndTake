@@ -33,7 +33,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="center"
-                android:hint="what is the service?"
+                android:hint="what is the session?"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:textColor="@android:color/black" />
@@ -125,7 +125,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="10dp"
-                android:text="Press 'Begin service' and the timer will start running for both of you…"
+                android:text="Press 'Begin session' and the timer will start running for both of you…"
                 android:textSize="20dp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -140,7 +140,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/button_shape_green"
             android:enabled="false"
-            android:text="Begin service"
+            android:text="Begin session"
             android:textSize="15dp" />
 
 

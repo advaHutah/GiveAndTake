@@ -170,7 +170,7 @@ public class UserProfileActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
+//            bmImage.setImageBitmap(result);
         }
     }
 }

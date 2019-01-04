@@ -138,6 +138,8 @@ public class LoginFragment extends Fragment {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
+                            MyFirebaseInstanceIDService service = new MyFirebaseInstanceIDService();
+                            service.onTokenRefresh();
                         } else {
                             MyFirebaseInstanceIDService service = new MyFirebaseInstanceIDService();
                             service.onTokenRefresh();

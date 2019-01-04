@@ -88,21 +88,33 @@
         android:layout_marginTop="10dp"
         android:numColumns="3"></GridView>
 
-    <Button
-        android:id="@+id/btn_otherUserPhone"
+    <!--<Button-->
+        <!--android:id="@+id/btn_otherUserPhone"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="60dp"-->
+        <!--android:text="Ask to get number..."-->
+        <!--android:textSize="15dp" />-->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:background="@color/common_google_signin_btn_text_light"
-        android:text="Ask to get number..."
-        android:textSize="15dp" />
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_give_session"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/button_shape_green"
+            android:text="Give"
+            android:textSize="15dp" />
+        <Button
+            android:id="@+id/btn_take_session"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/button_shape_blue"
+            android:text="Take"
+            android:textSize="15dp" />
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_give_service"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/button_shape_green"
-        android:text="Give service!"
-        android:textSize="15dp" />
 </LinearLayout>

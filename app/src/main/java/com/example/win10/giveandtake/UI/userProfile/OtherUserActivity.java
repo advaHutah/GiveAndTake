@@ -10,6 +10,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 
 import com.example.win10.giveandtake.Logic.AppManager;
+import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.Logic.User;
 import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.UI.handshakeSession.HandshakeActivity;
@@ -18,7 +19,7 @@ public class OtherUserActivity extends AppCompatActivity {
 
     private TextView nameText, balanceText, giveText, takeText;
     private GridView giveTags,takeTags;
-    private Button btnPhoneNumber, btnStartService;
+    private Button btnPhoneNumber, btnGiveSession,btnTakeSession;
     private AppManager appManager = AppManager.getInstance();
     private User otherUser;
 
@@ -33,9 +34,9 @@ public class OtherUserActivity extends AppCompatActivity {
         takeText = (TextView) this.findViewById(R.id.takeText);
         giveTags = (GridView) this.findViewById(R.id.giveTags);
         takeTags = (GridView) this.findViewById(R.id.takeTags);
-        btnPhoneNumber = (Button)this.findViewById(R.id.btn_otherUserPhone);
-        btnStartService = (Button)this.findViewById(R.id.btn_give_service);
-
+//        btnPhoneNumber = (Button)this.findViewById(R.id.btn_otherUserPhone);
+        btnGiveSession = (Button)this.findViewById(R.id.btn_give_session);
+        btnTakeSession = (Button)this.findViewById(R.id.btn_take_session);
         otherUser = appManager.getOtherUser();
 
         nameText.setText(otherUser.getFullName());
@@ -48,23 +49,31 @@ public class OtherUserActivity extends AppCompatActivity {
         takeTags.setAdapter(new ArrayAdapter<String>(this,R.layout.item,otherUser.getMyTakeRequest().getTags()));
 
 
-        btnPhoneNumber.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //todo get phone number
-            }
-        });
-        btnStartService.setOnClickListener(new View.OnClickListener() {
+//        btnPhoneNumber.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //todo get phone number
+//            }
+//        });
+        btnGiveSession.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //create handshake activity
-                createHandshakeActivity();
+                createHandshakeActivity(Request.RequestType.GIVE);
+            }
+        });
+        btnTakeSession.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //create handshake activity
+                createHandshakeActivity(Request.RequestType.TAKE);
             }
         });
     }
 
-    private void createHandshakeActivity() {
+    private void createHandshakeActivity(Request.RequestType type) {
         Intent handShake = new Intent(this, HandshakeActivity.class);
+        handShake.putExtra("type",type.toString());
         startActivity(handShake);
     }
 

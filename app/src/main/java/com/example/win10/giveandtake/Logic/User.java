@@ -18,13 +18,13 @@ public class User implements Serializable {
     private String email;
     private String fullName;
     private String phoneNumber;
-    private Gender gender;
+//    private Gender gender;
     private int balance;
     private String photoUrl;
 
     private Request myTakeRequest;
     private Request myGiveRequest;
-    private HashMap<String, Service> myServices;
+    private HashMap<String, Session> myServices;
 
     private FirebaseManager userService = FirebaseManager.getInstance();
 
@@ -41,7 +41,7 @@ public class User implements Serializable {
         this.balance = INIT_BALANCE;
         myTakeRequest = new Request();
         myGiveRequest = new Request();
-        myServices = new HashMap<String, Service>();
+        myServices = new HashMap<String, Session>();
     }
 
     public User(String id, String email, String fullName, String phoneNumber, int balance,String photoUrl) {
@@ -53,7 +53,7 @@ public class User implements Serializable {
         this(id, email, fullName, phoneNumber, balance,photoUrl);
         this.myTakeRequest = myTakeRequest;
         this.myGiveRequest = myGiveRequest;
-        //this.myServices = myServices;
+        //this.mySessions = mySessions;
     }
 
     public String getId() {
@@ -68,9 +68,9 @@ public class User implements Serializable {
         return phoneNumber;
     }
 
-    public String getGender() {
-        return gender.name();
-    }
+//    public String getGender() {
+//        return gender.name();
+//    }
 
     public int getBalance() {
         return balance;
@@ -104,13 +104,15 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender.equals("נקבה") ? Gender.FEMALE : Gender.MALE;
-    }
+//    public void setGender(String gender) {
+//        this.gender = gender.equals("נקבה") ? Gender.FEMALE : Gender.MALE;
+//    }
 
     @Override
     public String toString() {
-        return "User details : email : " + email + ", full name : " + fullName + ", phone : " + phoneNumber + ", gender : " + gender;
+        return "User details : email : " + email + ", full name : " + fullName + ", phone : " + phoneNumber;
+     //   return "User details : email : " + email + ", full name : " + fullName + ", phone : " + phoneNumber + ", gender : " + gender;
+
     }
 
     public void addRequest(Request newRequest) {
@@ -121,18 +123,18 @@ public class User implements Serializable {
         }
     }
 
-    public void addService(Service service) {
+    public void addService(Session session) {
         if (myServices == null) {
-            myServices = new HashMap<String, Service>();
+            myServices = new HashMap<String, Session>();
         }
-      //  myServices.put(service.getSid(), service);
+      //  mySessions.put(session.getSid(), session);
     }
 
     public Request getMyGiveRequest() {
         return myGiveRequest;
     }
 
-    public HashMap<String, Service> getMyServices() {
+    public HashMap<String, Session> getMyServices() {
         return myServices;
     }
 
@@ -144,7 +146,7 @@ public class User implements Serializable {
         this.myGiveRequest = myGiveRequest;
     }
 
-    public void setMyServices(HashMap<String, Service> myServices) {
+    public void setMyServices(HashMap<String, Session> myServices) {
         this.myServices = myServices;
     }
 

@@ -49,6 +49,8 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".UI.userProfile.OtherUserActivity"></activity>
+        <activity android:name=".UI.userProfile.OtherUserSessionRequestActivity"></activity>
+
     </application>
 
 </manifest>

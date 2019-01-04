@@ -3,7 +3,7 @@ package com.example.win10.giveandtake.DBLogic;
 import android.util.Log;
 
 import com.example.win10.giveandtake.Logic.Request;
-import com.example.win10.giveandtake.Logic.Service;
+import com.example.win10.giveandtake.Logic.Session;
 import com.example.win10.giveandtake.Logic.TagUserInfo;
 import com.example.win10.giveandtake.Logic.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -59,7 +59,7 @@ public class FirebaseManager {
 //                    //TODO
 //                    //send notification
 //                    for (DataSnapshot child: dataSnapshot.getChildren()){
-//                        if(((child.getValue(Service.class)).getGiveRequest().getUid())
+//                        if(((child.getValue(Session.class)).getGiveRequest().getUid())
 //
 //                    }
 //                    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
@@ -171,19 +171,19 @@ public class FirebaseManager {
         db.child(Keys.USERS).child(uid).child(Keys.USER_PHONE).setValue(phoneNumber);
     }
 
-    public void addServiceInDB(String uid, Service newService) {
+    public void addServiceInDB(String uid, Session newSession) {
 //        String sKey = db.child(Keys.SERVICES).push().getKey();
-//        newService.setSid(sKey);
-//        db.child(Keys.SERVICES).child(sKey).setValue(newService);
-//        db.child(Keys.USERS).child(uid).child(Keys.MY_SERVICES).child(sKey).setValue(newService);
+//        newSession.setSid(sKey);
+//        db.child(Keys.SERVICES).child(sKey).setValue(newSession);
+//        db.child(Keys.USERS).child(uid).child(Keys.MY_SERVICES).child(sKey).setValue(newSession);
     }
 
-    public void updateUserServcieInDB(String uid, Service service) {
-        // db.child(Keys.USERS).child(uid).child(Keys.MY_SERVICES).child(service.getSid()).setValue(service);
+    public void updateUserServcieInDB(String uid, Session session) {
+        // db.child(Keys.USERS).child(uid).child(Keys.MY_SERVICES).child(session.getSid()).setValue(session);
     }
 
-    public void updateServiceInDB(Service service) {
-        //  db.child(Keys.SERVICES).child(service.getSid()).setValue(service);
+    public void updateServiceInDB(Session session) {
+        //  db.child(Keys.SERVICES).child(session.getSid()).setValue(session);
     }
 
     public void updateToken(String uid, String token) {
@@ -302,16 +302,34 @@ public class FirebaseManager {
             }
         });
     }
+    public void saveSession(Session session) {
+        db.child(Keys.SESSIONS).child(session.getId()).setValue(session);
 
+    }
 
+    public void getSessionFromDB(String sessionId, final FirebaseCallback<Session> callback) {
 
-    public void removeService(Service theService) {
+        db.child(Keys.SESSIONS).child(sessionId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                callback.onDataArrived(dataSnapshot.getValue(Session.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: ");
+                callback.onDataArrived(null);
+            }
+        });
+    }
+
+    public void removeService(Session theSession) {
 //        //remove service
-//        db.child(Keys.SERVICES).child(theService.getSid()).removeValue();
+//        db.child(Keys.SERVICES).child(theSession.getSid()).removeValue();
 //        //remoce service from giver my services
-//        db.child(Keys.USERS).child(theService.getGiveRequest().getUid()).child(Keys.MY_SERVICES).child(theService.getSid()).removeValue();
+//        db.child(Keys.USERS).child(theSession.getGiveRequest().getUid()).child(Keys.MY_SERVICES).child(theSession.getSid()).removeValue();
 //        //remoce service from taker my services
-//        db.child(Keys.USERS).child(theService.getTakeRequest().getUid()).child(Keys.MY_SERVICES).child(theService.getSid()).removeValue();
+//        db.child(Keys.USERS).child(theSession.getTakeRequest().getUid()).child(Keys.MY_SERVICES).child(theSession.getSid()).removeValue();
     }
 
     public void signOut() {
@@ -324,7 +342,7 @@ public class FirebaseManager {
         public static final String GIVE_REQUEST = "giveRequest";
         public static final String TAKE_REQUEST = "takeRequest";
         public static final String SERVICES = "services";
-        public static final String MY_SERVICES = "myServices";
+        public static final String MY_SERVICES = "mySessions";
         public static final String NOTIFICATIONS = "notifications";
         public static final String USERS_TOKENS = "usersTokens";
         public static final String FSM_TOKEN = "fcmToken";
@@ -336,6 +354,8 @@ public class FirebaseManager {
         public static final String TAKE_TAGS = "takeTags";
         public static final String USER_PHONE = "phoneNumber";
         public static final String IS_FINAL = "isFinal";
+        public static final String SESSIONS = "sessions";
+
     }
 
 

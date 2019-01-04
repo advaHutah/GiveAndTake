@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.GridView;
 
 import com.example.win10.giveandtake.DBLogic.FirebaseManager;
-import com.example.win10.giveandtake.Logic.Service;
 import com.example.win10.giveandtake.R;
 
 import java.util.ArrayList;
