@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.win10.giveandtake.Logic.Request;
-import com.example.win10.giveandtake.Logic.Service;
+import com.example.win10.giveandtake.Logic.Session;
 import com.example.win10.giveandtake.Logic.TagUserInfo;
 import com.example.win10.giveandtake.Logic.User;
 import com.google.firebase.auth.FirebaseAuth;
@@ -23,11 +23,6 @@ import java.util.Map;
 public class FirebaseManager {
 
     private static final String TAG = FirebaseManager.class.getSimpleName();
-
-    public boolean isUserLoggedIn() {
-        return isLoggedIn;
-    }
-
 
     public interface FirebaseCallback<T> {
         void onDataArrived(T value);
@@ -53,7 +48,6 @@ public class FirebaseManager {
         database = FirebaseDatabase.getInstance();
         db = database.getReference();
         db.keepSynced(true);
-
     }
 
     public static FirebaseManager getInstance() {
@@ -63,52 +57,15 @@ public class FirebaseManager {
         return singletonUserService;
     }
 
-
     public void addUserInfoToDB(User user) {
         db.child(Keys.USERS).child(user.getId()).setValue(user);
     }
 
-    //    public void matchListener(final Context context){
-//        db.child(Keys.SERVICES).addValueEventListener(new ValueEventListener() {
-//                @Override
-//                public void onDataChange(DataSnapshot dataSnapshot) {
-//                    //TODO
-//                    //send notification
-//                    for (DataSnapshot child: dataSnapshot.getChildren()){
-//                        if(((child.getValue(Service.class)).getGiveRequest().getUid())
-//
-//                    }
-//                    NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-//                            .setSmallIcon(R.drawable.temp_logo)
-//                            .setContentTitle("Match")
-//                            .setContentText("we found a match for you")
-//                            .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//                    //send notification to sender
-//                    //add service to giver
-//                    //add service to taker
-//                    //add action when tapping on notification
-//                }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//
-//    }
     public void updateUserInfoInDB(String uid, String firstName, String lastName, String phoneNumber) {
         db.child(Keys.USERS).child(uid).child(Keys.FIRTS_NAME).setValue(firstName);
         db.child(Keys.USERS).child(uid).child(Keys.LAST_NAME).setValue(lastName);
         db.child(Keys.USERS).child(uid).child(Keys.PHONE).setValue(phoneNumber);
         db.child(Keys.USERS).child(uid).child(Keys.FULL_NAME).setValue(firstName + " " + lastName);
-
-
-    }
-
-    public void addTagsToDB(ArrayList<String> selectedTags, TagUserInfo tagUserInfo) {
-        for (String tag : selectedTags) {
-            db.child(Keys.TAGS).child(tag).child(tagUserInfo.getUid()).setValue(tagUserInfo);
-        }
     }
 
     public void getUserDetailFromDB(String uid, final FirebaseCallback<User> callback) {
@@ -164,33 +121,6 @@ public class FirebaseManager {
         });
     }
 
-    public void getAllTagsFromDB(final FirebaseCallback<Map<String, ArrayList<TagUserInfo>>> callback) {
-        db.child(Keys.TAGS).addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                Map<String, ArrayList<TagUserInfo>> tags = new HashMap<>();
-                for (DataSnapshot tag : dataSnapshot.getChildren()) {
-                    ArrayList<TagUserInfo> aTagUserInfo = new ArrayList<>();
-                    for (DataSnapshot tagUserInfo : tag.getChildren()) {
-                        aTagUserInfo.add(tagUserInfo.getValue(TagUserInfo.class));
-                    }
-                    tags.put(tag.getKey(), aTagUserInfo);
-                }
-                // get the values from map.values();
-                callback.onDataArrived(tags);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "onCancelled: ");
-                callback.onDataArrived(null);
-            }
-        });
-    }
-
-
     public void addRequestToDB(Request newRequest) {
         if (newRequest.getRequestType() == Request.RequestType.GIVE) {
             db.child(Keys.GIVE_REQUEST).child(newRequest.getUid()).setValue(newRequest);
@@ -198,28 +128,12 @@ public class FirebaseManager {
             db.child(Keys.TAKE_REQUEST).child(newRequest.getUid()).setValue(newRequest);
         }
     }
+
     public void updateUserPhoneNumber(String uid,String phoneNumber) {
         db.child(Keys.USERS).child(uid).child(Keys.USER_PHONE).setValue(phoneNumber);
     }
 
-    public void addServiceInDB(String uid, Service newService) {
-//        String sKey = db.child(Keys.SERVICES).push().getKey();
-//        newService.setSid(sKey);
-//        db.child(Keys.SERVICES).child(sKey).setValue(newService);
-//        db.child(Keys.USERS).child(uid).child(Keys.MY_SERVICES).child(sKey).setValue(newService);
-    }
-
-    public void updateUserServcieInDB(String uid, Service service) {
-        // db.child(Keys.USERS).child(uid).child(Keys.MY_SERVICES).child(service.getSid()).setValue(service);
-    }
-
-    public void updateServiceInDB(Service service) {
-        //  db.child(Keys.SERVICES).child(service.getSid()).setValue(service);
-    }
-
     public void updateToken(String uid, String token) {
-        // db.child(Keys.NOTIFICATIONS).child(Keys.USERS_TOKENS).child(uid).child(Keys.FSM_TOKEN).setValue(token);
-        //db.child(Keys.NOTIFICATIONS).child(Keys.USERS_TOKENS).child(uid).child(Keys.FSM_TOKEN).setValue(token);
         db.child(Keys.USERS).child(uid).child("instanceId").setValue(token);
     }
 
@@ -237,7 +151,6 @@ public class FirebaseManager {
             }
         });
     }
-
 
     public void getTagsFromRequest(String uid, Request.RequestType requestType, final FirebaseCallback<ArrayList<String>> callback) {
 
@@ -284,7 +197,6 @@ public class FirebaseManager {
                 callback.onDataArrived(null);
             }
         });
-
     }
 
     public void getMatchUsers(final String uid, final String tag, final Request.RequestType requestType, final FirebaseCallback<ArrayList<TagUserInfo>> callback) {
@@ -304,7 +216,7 @@ public class FirebaseManager {
                         TagUserInfo tagUserInfo = new TagUserInfo(user.getKey(), name, requestType);
                         list.add(tagUserInfo);
                     }
-                }                // get the values from map.values();
+                } // get the values from map.values();
                 callback.onDataArrived((ArrayList<TagUserInfo>) list);
             }
 
@@ -333,17 +245,53 @@ public class FirebaseManager {
             }
         });
     }
-
-
-
-    public void removeService(Service theService) {
-//        //remove service
-//        db.child(Keys.SERVICES).child(theService.getSid()).removeValue();
-//        //remoce service from giver my services
-//        db.child(Keys.USERS).child(theService.getGiveRequest().getUid()).child(Keys.MY_SERVICES).child(theService.getSid()).removeValue();
-//        //remoce service from taker my services
-//        db.child(Keys.USERS).child(theService.getTakeRequest().getUid()).child(Keys.MY_SERVICES).child(theService.getSid()).removeValue();
+    public void saveSession(Session session) {
+        db.child(Keys.SESSIONS).child(session.getId()).setValue(session);
     }
+
+    public void updateSessionStatus(String sessionId,Session.Status sessionStatus) {
+        db.child(Keys.SESSIONS).child(sessionId).child(Keys.SESSION_STATUS).setValue(sessionStatus);
+    }
+
+    public void updateSessionMillisPassed(String sessionId,long millisPassed) {
+        db.child(Keys.SESSIONS).child(sessionId).child(Keys.SESSION_MILLIS_PASSED).setValue(millisPassed);
+    }
+
+    public void getSessionFromDB(String sessionId, final FirebaseCallback<Session> callback) {
+
+        db.child(Keys.SESSIONS).child(sessionId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                callback.onDataArrived(dataSnapshot.getValue(Session.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: ");
+                callback.onDataArrived(null);
+            }
+        });
+    }
+
+    public void sessionStatusChanged (String sessionId,final FirebaseCallback<Session.Status> callback)
+    {
+        db.child(Keys.SESSIONS).child(sessionId).child(Keys.SESSION_STATUS).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Session.Status status = dataSnapshot.getValue(Session.Status.class);
+                callback.onDataArrived(status);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+    public boolean isUserLoggedIn() {
+        return isLoggedIn;
+    }
+
 
     public void signOut() {
         FirebaseAuth.getInstance().signOut();
@@ -354,8 +302,6 @@ public class FirebaseManager {
         public static final String TAGS = "tags";
         public static final String GIVE_REQUEST = "giveRequest";
         public static final String TAKE_REQUEST = "takeRequest";
-        public static final String SERVICES = "services";
-        public static final String MY_SERVICES = "myServices";
         public static final String NOTIFICATIONS = "notifications";
         public static final String USERS_TOKENS = "usersTokens";
         public static final String FSM_TOKEN = "fcmToken";
@@ -366,7 +312,10 @@ public class FirebaseManager {
         public static final String GIVE_TAGS = "giveTags";
         public static final String TAKE_TAGS = "takeTags";
         public static final String USER_PHONE = "phoneNumber";
-        public static final String IS_FINAL = "isFinal";
+        public static final String SESSIONS = "sessions";
+        public static final String SESSION_STATUS ="status";
+        public static final String SESSION_MILLIS_PASSED ="millisPassed";
+
     }
 
 

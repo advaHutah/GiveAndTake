@@ -4,10 +4,11 @@ import com.example.win10.giveandtake.DBLogic.FirebaseManager;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class User implements Serializable {
 
-    final static int INIT_BALANCE = 8 * 60;
+    final static long INIT_BALANCE = TimeUnit.HOURS.toMillis(2);
 
     public enum Gender {
         MALE,
@@ -18,13 +19,12 @@ public class User implements Serializable {
     private String email;
     private String fullName;
     private String phoneNumber;
-    private Gender gender;
-    private int balance;
+//    private Gender gender;
+    private long balance;// milisec
     private String photoUrl;
 
     private Request myTakeRequest;
     private Request myGiveRequest;
-    private HashMap<String, Service> myServices;
 
     private FirebaseManager userService = FirebaseManager.getInstance();
 
@@ -41,19 +41,18 @@ public class User implements Serializable {
         this.balance = INIT_BALANCE;
         myTakeRequest = new Request();
         myGiveRequest = new Request();
-        myServices = new HashMap<String, Service>();
     }
 
-    public User(String id, String email, String fullName, String phoneNumber, int balance,String photoUrl) {
+    public User(String id, String email, String fullName, String phoneNumber, long balance,String photoUrl) {
         this(id, email, fullName, phoneNumber,photoUrl);
         this.balance = balance;
     }
 
-    public User(String id, String email, String fullName, String phoneNumber, int balance, Request myTakeRequest, Request myGiveRequest ,String photoUrl) {
+    public User(String id, String email, String fullName, String phoneNumber, long balance, Request myTakeRequest, Request myGiveRequest ,String photoUrl) {
         this(id, email, fullName, phoneNumber, balance,photoUrl);
         this.myTakeRequest = myTakeRequest;
         this.myGiveRequest = myGiveRequest;
-        //this.myServices = myServices;
+        //this.mySessions = mySessions;
     }
 
     public String getId() {
@@ -68,11 +67,11 @@ public class User implements Serializable {
         return phoneNumber;
     }
 
-    public String getGender() {
-        return gender.name();
-    }
+//    public String getGender() {
+//        return gender.name();
+//    }
 
-    public int getBalance() {
+    public long getBalance() {
         return balance;
     }
 
@@ -96,7 +95,7 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(long balance) {
         this.balance = balance;
     }
 
@@ -104,13 +103,15 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender.equals("נקבה") ? Gender.FEMALE : Gender.MALE;
-    }
+//    public void setGender(String gender) {
+//        this.gender = gender.equals("נקבה") ? Gender.FEMALE : Gender.MALE;
+//    }
 
     @Override
     public String toString() {
-        return "User details : email : " + email + ", full name : " + fullName + ", phone : " + phoneNumber + ", gender : " + gender;
+        return "User details : email : " + email + ", full name : " + fullName + ", phone : " + phoneNumber;
+     //   return "User details : email : " + email + ", full name : " + fullName + ", phone : " + phoneNumber + ", gender : " + gender;
+
     }
 
     public void addRequest(Request newRequest) {
@@ -121,19 +122,9 @@ public class User implements Serializable {
         }
     }
 
-    public void addService(Service service) {
-        if (myServices == null) {
-            myServices = new HashMap<String, Service>();
-        }
-      //  myServices.put(service.getSid(), service);
-    }
 
     public Request getMyGiveRequest() {
         return myGiveRequest;
-    }
-
-    public HashMap<String, Service> getMyServices() {
-        return myServices;
     }
 
     public Request getMyTakeRequest() {
@@ -142,10 +133,6 @@ public class User implements Serializable {
 
     public void setMyGiveRequests(Request myGiveRequest) {
         this.myGiveRequest = myGiveRequest;
-    }
-
-    public void setMyServices(HashMap<String, Service> myServices) {
-        this.myServices = myServices;
     }
 
     public void setMyTakeRequest(Request myTakeRequest) {

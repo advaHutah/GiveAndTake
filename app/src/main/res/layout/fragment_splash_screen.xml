@@ -35,7 +35,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Do you want to gain time? You are welcome to suggest any service that consumes time (except sleeping of course). The service you’ll give will increase your time balance."
+        android:text="Do you want to gain time? You are welcome to suggest any session that consumes time (except sleeping of course). The session you’ll give will increase your time balance."
         android:textSize="20dp" />
 
     <TextView

@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="No trolling: You must be a real person who wants a real service."
+        android:text="No trolling: You must be a real person who wants a real session."
         android:textSize="20dp" />
 
     <TextView

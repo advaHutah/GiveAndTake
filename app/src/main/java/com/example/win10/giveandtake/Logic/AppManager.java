@@ -6,19 +6,11 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 //Handles all app actions and DB read/write
 public class AppManager {
 
-
-    public boolean isUserLoggedIn() {
-        return FirebaseManager.getInstance().isUserLoggedIn();
-        //return FirebaseAuth.getInstance().getCurrentUser() != null && FirebaseInstanceId.getInstance().getToken() != null;
-    }
 
     public interface AppManagerCallback<T> {
         void onDataArrived(T value);
@@ -31,7 +23,7 @@ public class AppManager {
     private User otherUser;
     private ArrayList<TagUserInfo> notificationUsers;
     private FirebaseAuth mAuth;
-    private Service selectedService;
+    private Session selectedSession;
 
     private AppManager() {
         firebaseManager = FirebaseManager.getInstance();
@@ -45,17 +37,17 @@ public class AppManager {
         return singletonAppManager;
     }
 
-
-    public void createNewUser(String uid, String email, String fullName, String phoneNumber,String photoURL) {
-        User user = new User(uid, email, fullName, phoneNumber, User.INIT_BALANCE,photoURL);
+    public void createNewUser(String uid, String email, String fullName, String phoneNumber, String photoURL) {
+        User user = new User(uid, email, fullName, phoneNumber, User.INIT_BALANCE, photoURL);
         setCurrentUser(user);
         this.firebaseManager.addUserInfoToDB(user);
     }
 
     public void updateUserPhoneNumer(String phoneNumber) {
         currentUser.setPhoneNumber(phoneNumber);
-        firebaseManager.updateUserPhoneNumber(currentUser.getId(),phoneNumber);
+        firebaseManager.updateUserPhoneNumber(currentUser.getId(), phoneNumber);
     }
+
     public User getCurrentUser() {
         return currentUser;
     }
@@ -71,15 +63,14 @@ public class AppManager {
         this.currentUser.addRequest(newRequest);
         //add the request to firebase
         this.firebaseManager.addRequestToDB(newRequest);
-        //find match
-        // findMatch(newRequest);
+        //cloud function generates tags in DB
     }
 
     public void addRequestFinal(Set<String> selectedTags, Request.RequestType requestType) {
         this.updateRequestTagsUserValidated(selectedTags, requestType);
     }
 
-    public void getMyRequestTags(Request.RequestType requestType, final AppManagerCallback<ArrayList<String>>callback) {
+    public void getMyRequestTags(Request.RequestType requestType, final AppManagerCallback<ArrayList<String>> callback) {
         this.firebaseManager.getTagsFromRequest(currentUser.getId(), requestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
             @Override
             public void onDataArrived(ArrayList<String> value) {
@@ -88,8 +79,8 @@ public class AppManager {
         });
     }
 
-    public void getMatchUsers(String tag, Request.RequestType requestType, final AppManagerCallback<ArrayList<TagUserInfo>>callback){
-        if(currentUser!=null) {
+    public void getMatchUsers(String tag, Request.RequestType requestType, final AppManagerCallback<ArrayList<TagUserInfo>> callback) {
+        if (currentUser != null) {
             this.firebaseManager.getMatchUsers(currentUser.getId(), tag, requestType, new FirebaseManager.FirebaseCallback<ArrayList<TagUserInfo>>() {
                 @Override
                 public void onDataArrived(ArrayList<TagUserInfo> value) {
@@ -99,7 +90,7 @@ public class AppManager {
         }
     }
 
-    public void getTags( Request.RequestType requestType, final AppManagerCallback<ArrayList<String>>callback){
+    public void getTags(Request.RequestType requestType, final AppManagerCallback<ArrayList<String>> callback) {
         this.firebaseManager.getTags(requestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
             @Override
             public void onDataArrived(ArrayList<String> value) {
@@ -108,39 +99,43 @@ public class AppManager {
         });
     }
 
-    public void setSelectedService(Service selectedService) {
-        this.selectedService = selectedService;
+    public void setSelectedSession(Session selectedSession) {
+        this.selectedSession = selectedSession;
     }
 
-    public Service getSelectedService() {
-        return selectedService;
+    public void setSelectedSessionByID(String sessionId) {
+        this.firebaseManager.getSessionFromDB(sessionId, new FirebaseManager.FirebaseCallback<Session>() {
+            @Override
+            public void onDataArrived(Session value) {
+                if (value != null) {
+                    selectedSession = value;
+                    if (selectedSession.getInitiator().equals(Session.SessionInitiator.GIVER)) {
+                        firebaseManager.getUserDetailFromDB(selectedSession.getGiveRequest().getUid(), new FirebaseManager.FirebaseCallback<User>() {
+                            @Override
+                            public void onDataArrived(User value) {
+                                otherUser = value;
+                            }
+                        });
+
+                    } else {
+                        firebaseManager.getUserDetailFromDB(selectedSession.getTakeRequest().getUid(), new FirebaseManager.FirebaseCallback<User>() {
+                            @Override
+                            public void onDataArrived(User value) {
+                                otherUser = value;
+                            }
+                        });
+                    }
+                }
+            }
+        });
     }
 
-    public void serviceEnd(Service service, int minuts) {
-        //send notification to other user
-        //todo
-        //update service minuts
-       // service.setMinuts(minuts);
-        //update service status
-       // service.setStatus(Service.Status.COMPLETED);
-        //update service in db
-        firebaseManager.updateServiceInDB(service);
-        //update users info in db
-        //firebaseManager.updateUserServcieInDB(service.getTakeRequest().getUid(), service);
-        //firebaseManager.updateUserServcieInDB(service.getGiveRequest().getUid(), service);
+    public Session getSelectedSession() {
+        return selectedSession;
     }
 
-    public void removeService(Service theService) {
-        currentUser.getMyServices().remove(theService);
-        firebaseManager.removeService(theService);
-    }
-
-//    public void signOut(AppManagerCallback<Object>callback) {
-//        firebaseManager.signOut();
-//        callback.onDataArrived(null);
-//    }
     public void signOut() {
-           firebaseManager.signOut();
+        firebaseManager.signOut();
     }
 
     public void updateRequestTagsUserValidated(Set<String> selectedTags, Request.RequestType requestType) {
@@ -157,7 +152,6 @@ public class AppManager {
         //update firebase
         firebaseManager.addRequestToDB(myRequest);
         firebaseManager.addUserInfoToDB(currentUser);
-
     }
 
     public void userLogedIn(FirebaseUser account, final AppManager.AppManagerCallback<Boolean> callback) {
@@ -212,4 +206,46 @@ public class AppManager {
     public void setNotificationUsers(ArrayList<TagUserInfo> notificationUsers) {
         this.notificationUsers = notificationUsers;
     }
+
+    public void saveSession() {
+        firebaseManager.saveSession(selectedSession);
+    }
+
+    public void updateSessionStatus(Session.Status status) {
+        selectedSession.setStatus(status);
+        firebaseManager.updateSessionStatus(selectedSession.getId(), status);
+    }
+
+    public void sessionStatusChanged(final AppManagerCallback<Session.Status> callback) {
+        firebaseManager.sessionStatusChanged(selectedSession.getId(), new FirebaseManager.FirebaseCallback<Session.Status>() {
+            @Override
+            public void onDataArrived(Session.Status value) {
+                callback.onDataArrived(value);
+            }
+        });
+    }
+
+
+    public void finishSession(long millisPassed) {
+        updateSessionStatus(Session.Status.terminated);
+        updateSessionMillisPassed(millisPassed);
+
+    }
+
+    private void updateSessionMillisPassed(long millisPassed) {
+        selectedSession.setMillisPassed(millisPassed);
+        firebaseManager.updateSessionMillisPassed(selectedSession.getId(),millisPassed);
+    }
+
+    public void resetOtherUserAndSession() {
+        otherUser = null;
+        selectedSession = null;
+    }
+
+
+    public boolean isUserLoggedIn() {
+        return FirebaseManager.getInstance().isUserLoggedIn();
+        //return FirebaseAuth.getInstance().getCurrentUser() != null && FirebaseInstanceId.getInstance().getToken() != null;
+    }
+
 }

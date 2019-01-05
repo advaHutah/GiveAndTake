@@ -3,13 +3,8 @@ package com.example.win10.giveandtake.UI.userHashtags;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
-import android.content.Intent;
-import android.nfc.Tag;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,18 +19,10 @@ import android.widget.Toast;
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.R;
-import com.example.win10.giveandtake.UI.UserHomeDefultFragment;
-import com.example.win10.giveandtake.UI.login.LoginActivity;
-import com.example.win10.giveandtake.UI.login.LoginFragment;
-import com.example.win10.giveandtake.UI.userProfile.UserProfileActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.xml.datatype.Duration;
 
 //fragment that display user profile info and function like give and take request
 
@@ -109,7 +96,6 @@ public class MyHashtagsFragment extends Fragment {
             public void onClick(View view) {
                 if (!text.equals("") && !selectedTags.isEmpty()) {
                     appManager.addRequestFinal(selectedTags, requestType);
-                    // appManager.updateRequestTagsUserValidated(selectedTags, requestType);
                     //notify the user that the request has been submitted or change the view
                     addToast("The request was submitted", Toast.LENGTH_SHORT);
                 }
