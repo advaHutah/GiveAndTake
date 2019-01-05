@@ -11,8 +11,6 @@ import java.util.Set;
 public class AppManager {
 
 
-
-
     public interface AppManagerCallback<T> {
         void onDataArrived(T value);
     }
@@ -38,17 +36,17 @@ public class AppManager {
         return singletonAppManager;
     }
 
-
-    public void createNewUser(String uid, String email, String fullName, String phoneNumber,String photoURL) {
-        User user = new User(uid, email, fullName, phoneNumber, User.INIT_BALANCE,photoURL);
+    public void createNewUser(String uid, String email, String fullName, String phoneNumber, String photoURL) {
+        User user = new User(uid, email, fullName, phoneNumber, User.INIT_BALANCE, photoURL);
         setCurrentUser(user);
         this.firebaseManager.addUserInfoToDB(user);
     }
 
     public void updateUserPhoneNumer(String phoneNumber) {
         currentUser.setPhoneNumber(phoneNumber);
-        firebaseManager.updateUserPhoneNumber(currentUser.getId(),phoneNumber);
+        firebaseManager.updateUserPhoneNumber(currentUser.getId(), phoneNumber);
     }
+
     public User getCurrentUser() {
         return currentUser;
     }
@@ -64,15 +62,14 @@ public class AppManager {
         this.currentUser.addRequest(newRequest);
         //add the request to firebase
         this.firebaseManager.addRequestToDB(newRequest);
-        //find match
-        // findMatch(newRequest);
+        //cloud function generates tags in DB
     }
 
     public void addRequestFinal(Set<String> selectedTags, Request.RequestType requestType) {
         this.updateRequestTagsUserValidated(selectedTags, requestType);
     }
 
-    public void getMyRequestTags(Request.RequestType requestType, final AppManagerCallback<ArrayList<String>>callback) {
+    public void getMyRequestTags(Request.RequestType requestType, final AppManagerCallback<ArrayList<String>> callback) {
         this.firebaseManager.getTagsFromRequest(currentUser.getId(), requestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
             @Override
             public void onDataArrived(ArrayList<String> value) {
@@ -81,8 +78,8 @@ public class AppManager {
         });
     }
 
-    public void getMatchUsers(String tag, Request.RequestType requestType, final AppManagerCallback<ArrayList<TagUserInfo>>callback){
-        if(currentUser!=null) {
+    public void getMatchUsers(String tag, Request.RequestType requestType, final AppManagerCallback<ArrayList<TagUserInfo>> callback) {
+        if (currentUser != null) {
             this.firebaseManager.getMatchUsers(currentUser.getId(), tag, requestType, new FirebaseManager.FirebaseCallback<ArrayList<TagUserInfo>>() {
                 @Override
                 public void onDataArrived(ArrayList<TagUserInfo> value) {
@@ -92,7 +89,7 @@ public class AppManager {
         }
     }
 
-    public void getTags( Request.RequestType requestType, final AppManagerCallback<ArrayList<String>>callback){
+    public void getTags(Request.RequestType requestType, final AppManagerCallback<ArrayList<String>> callback) {
         this.firebaseManager.getTags(requestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
             @Override
             public void onDataArrived(ArrayList<String> value) {
@@ -106,12 +103,12 @@ public class AppManager {
     }
 
     public void setSelectedSessionByID(String sessionId) {
-        this.firebaseManager.getSessionFromDB(sessionId,new FirebaseManager.FirebaseCallback<Session>() {
+        this.firebaseManager.getSessionFromDB(sessionId, new FirebaseManager.FirebaseCallback<Session>() {
             @Override
             public void onDataArrived(Session value) {
                 if (value != null) {
                     selectedSession = value;
-                    if(selectedSession.getInitiator().equals(Session.SessionInitiator.GIVER)){
+                    if (selectedSession.getInitiator().equals(Session.SessionInitiator.GIVER)) {
                         firebaseManager.getUserDetailFromDB(selectedSession.getGiveRequest().getUid(), new FirebaseManager.FirebaseCallback<User>() {
                             @Override
                             public void onDataArrived(User value) {
@@ -119,8 +116,7 @@ public class AppManager {
                             }
                         });
 
-                    }
-                    else{
+                    } else {
                         firebaseManager.getUserDetailFromDB(selectedSession.getTakeRequest().getUid(), new FirebaseManager.FirebaseCallback<User>() {
                             @Override
                             public void onDataArrived(User value) {
@@ -132,35 +128,13 @@ public class AppManager {
             }
         });
     }
+
     public Session getSelectedSession() {
         return selectedSession;
     }
 
-    public void serviceEnd(Session session, int minuts) {
-        //send notification to other user
-        //todo
-        //update session minuts
-       // session.setMinuts(minuts);
-        //update session status
-       // session.setStatus(Session.Status.COMPLETED);
-        //update session in db
-        firebaseManager.updateServiceInDB(session);
-        //update users info in db
-        //firebaseManager.updateUserServcieInDB(session.getTakeRequest().getUid(), session);
-        //firebaseManager.updateUserServcieInDB(session.getGiveRequest().getUid(), session);
-    }
-
-    public void removeService(Session theSession) {
-        currentUser.getMyServices().remove(theSession);
-        firebaseManager.removeService(theSession);
-    }
-
-//    public void signOut(AppManagerCallback<Object>callback) {
-//        firebaseManager.signOut();
-//        callback.onDataArrived(null);
-//    }
     public void signOut() {
-           firebaseManager.signOut();
+        firebaseManager.signOut();
     }
 
     public void updateRequestTagsUserValidated(Set<String> selectedTags, Request.RequestType requestType) {
@@ -177,7 +151,6 @@ public class AppManager {
         //update firebase
         firebaseManager.addRequestToDB(myRequest);
         firebaseManager.addUserInfoToDB(currentUser);
-
     }
 
     public void userLogedIn(FirebaseUser account, final AppManager.AppManagerCallback<Boolean> callback) {
@@ -232,4 +205,40 @@ public class AppManager {
     public void setNotificationUsers(ArrayList<TagUserInfo> notificationUsers) {
         this.notificationUsers = notificationUsers;
     }
+
+    public void saveSession() {
+        firebaseManager.saveSession(selectedSession);
+    }
+
+    public void updateSessionStatus(Session.Status status) {
+        selectedSession.setStatus(status);
+        firebaseManager.updateSessionStatus(selectedSession.getId(), status);
+    }
+
+    public void sessionStatusChanged(final AppManagerCallback<Session.Status> callback) {
+        firebaseManager.sessionStatusChanged(selectedSession.getId(), new FirebaseManager.FirebaseCallback<Session.Status>() {
+            @Override
+            public void onDataArrived(Session.Status value) {
+                callback.onDataArrived(value);
+            }
+        });
+    }
+
+
+    public void finishSession(long millisPassed) {
+        updateSessionStatus(Session.Status.terminated);
+        updateSessionMillisPassed(millisPassed);
+
+    }
+
+    private void updateSessionMillisPassed(long millisPassed) {
+        selectedSession.setMillisPassed(millisPassed);
+        firebaseManager.updateSessionMillisPassed(selectedSession.getId(),millisPassed);
+    }
+
+    public void resetOtherUserAndSession() {
+        otherUser = null;
+        selectedSession = null;
+    }
+
 }

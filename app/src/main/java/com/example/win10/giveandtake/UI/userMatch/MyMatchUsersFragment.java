@@ -42,7 +42,6 @@ public class MyMatchUsersFragment extends Fragment {
         args.putString("tag", tag);
         args.putBoolean("isTakeRequest",isTakeRequest);
         args.putBoolean("fromNotification",fromNotification);
-
         myMatchUsersFragment.setArguments(args);
         return myMatchUsersFragment;
     }

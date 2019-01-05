@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.example.win10.giveandtake.UI.handshakeSession.OtherUserSessionRequestActivity">
+    <TextView
+        android:id="@+id/other_user_session_req_headline"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/banthink"
+        android:gravity="left"
+        android:text="Session Request From:"
+        android:textAlignment="center"
+        android:textSize="30dp"
+        android:textStyle="bold" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/user_name_text"
+            android:layout_width="122dp"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/banthink"
+            android:gravity="left"
+            android:text=""
+            android:textAlignment="center"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/my_profile_image"
+            android:layout_width="100dp"
+            android:layout_height="76dp"
+            android:layout_gravity="left" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/my_profile_balance"
+                android:layout_width="80dp"
+                android:layout_height="37dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:text="Balance:"
+                android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/user_balance_text"
+                android:layout_width="80dp"
+                android:layout_height="37dp"
+                android:layout_gravity="right"
+                android:layout_marginTop="10dp"
+                android:text=""
+                android:textSize="20dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/sessionDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text=""/>
+    <TextView
+        android:id="@+id/sessionTimeSet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text=""/>
+    <TextView
+        android:id="@+id/giveText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:textSize="20dp" />
+    <GridView
+        android:id="@+id/giveTags"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:numColumns="3"></GridView>
+    <TextView
+        android:id="@+id/takeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_marginTop="10dp"
+        android:text=""
+        android:textSize="20dp" />
+    <GridView
+        android:id="@+id/takeTags"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:numColumns="3"></GridView>
+
+    <!--<Button-->
+        <!--android:id="@+id/btn_otherUserPhone"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_marginTop="60dp"-->
+        <!--android:text="Ask to get number..."-->
+        <!--android:textSize="15dp" />-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btn_accept_session"
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/button_shape_green"
+            android:text="Accept"
+            android:textSize="15dp" />
+        <Button
+            android:id="@+id/btn_reject_session"
+            android:layout_width="180dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="60dp"
+            android:background="@drawable/button_shape_red"
+            android:text="Reject"
+            android:textSize="15dp" />
+    </LinearLayout>
+
+</LinearLayout>

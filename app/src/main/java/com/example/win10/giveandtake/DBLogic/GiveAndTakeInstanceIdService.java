@@ -1,4 +1,4 @@
-package com.example.win10.giveandtake;
+package com.example.win10.giveandtake.DBLogic;
 
 import android.app.Service;
 import android.util.Log;
@@ -9,7 +9,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 
 
-public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
+public class GiveAndTakeInstanceIdService extends FirebaseInstanceIdService {
 
     private static final String TAG ="MyFirebaseInstanceIDSer" ;
 

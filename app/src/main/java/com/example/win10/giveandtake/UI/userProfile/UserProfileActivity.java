@@ -20,9 +20,9 @@ import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.UI.userHashtags.HashtagsManagementActivity;
 import com.example.win10.giveandtake.UI.userMatch.MyMatchActivity;
+import com.example.win10.giveandtake.util.TimeConvertUtil;
 
 import java.io.InputStream;
-import java.util.concurrent.TimeUnit;
 
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -110,12 +110,10 @@ public class UserProfileActivity extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
-    private void setUserBalance(int balance) {
-        String time = TimeConvert.secondToFullTime(balance);
+    private void setUserBalance(long balance) {
+        String time = TimeConvertUtil.convertTime(balance);
         userBalanceText.setText(time);
     }
 

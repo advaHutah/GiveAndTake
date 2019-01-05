@@ -17,7 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.win10.giveandtake.Logic.AppManager;
-import com.example.win10.giveandtake.MyFirebaseInstanceIDService;
+import com.example.win10.giveandtake.DBLogic.GiveAndTakeInstanceIdService;
 import com.example.win10.giveandtake.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -138,10 +138,10 @@ public class LoginFragment extends Fragment {
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
                             updateUI(user);
-                            MyFirebaseInstanceIDService service = new MyFirebaseInstanceIDService();
+                            GiveAndTakeInstanceIdService service = new GiveAndTakeInstanceIdService();
                             service.onTokenRefresh();
                         } else {
-                            MyFirebaseInstanceIDService service = new MyFirebaseInstanceIDService();
+                            GiveAndTakeInstanceIdService service = new GiveAndTakeInstanceIdService();
                             service.onTokenRefresh();
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());

@@ -6,9 +6,11 @@ public class Session {
 
     public static enum Status {
         pending,
+        accepted,
         active,
         paused,
-        terminated
+        terminated,
+        rejected
     }
 
     public static enum SessionInitiator {
@@ -21,19 +23,24 @@ public class Session {
     private Request takeRequest;
     private Request giveRequest;
     private String id;
-    private int minutes;
+    private long millisPassed;
+    private long millisSet;
+    private String description;
+
 
     public Session() {
 
     }
 
-    public Session(Status status, Request takeRequest, Request giveRequest, String id, int minutes,SessionInitiator initiator) {
+    public Session(Status status, Request takeRequest, Request giveRequest, String id,String description, long millisSet,SessionInitiator initiator) {
         this.status = status;
         this.takeRequest = takeRequest;
         this.giveRequest = giveRequest;
         this.id = id;
-        this.minutes = minutes;
+        this.millisPassed = 0;
+        this.millisSet = millisSet;
         this.initiator = initiator;
+        this.description = description;
     }
 
     public Status getStatus() {
@@ -56,8 +63,16 @@ public class Session {
         return id;
     }
 
-    public int getMinutes() {
-        return minutes;
+    public long getMillisPassed() {
+        return millisPassed;
+    }
+
+    public long getMillisSet() {
+        return millisSet;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public SessionInitiator getInitiator() {
@@ -76,8 +91,16 @@ public class Session {
         this.id = id;
     }
 
-    public void setMinutes(int minutes) {
-        this.minutes = minutes;
+    public void setMillisPassed(long millisPassed) {
+        this.millisPassed = millisPassed;
+    }
+
+    public void setMillisSet(long millisSet) {
+        this.millisSet = millisSet;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setInitiator(SessionInitiator initiator) {

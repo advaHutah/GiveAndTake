@@ -27,27 +27,38 @@
             android:layout_marginTop="30dp">
 
             <EditText
-                android:id="@+id/handshakeActivity_handshakeServiceInput"
+                android:id="@+id/sessionDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:gravity="center"
-                android:hint="what is the session?"
-                android:inputType="textEmailAddress"
+                android:hint="Session Description"
                 android:maxLines="1"
                 android:textColor="@android:color/black" />
         </android.support.design.widget.TextInputLayout>
 
-        <ImageView
+        <EditText
+            android:id="@+id/sessionTimeSet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:gravity="center"
+            android:hint="Session Time"
+            android:inputType="number"
+            android:maxLines="1"
+            android:textColor="@android:color/black" />
+
+        <Button
+            android:id="@+id/btn_handshake_sendSession"
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:layout_gravity="center"
             android:layout_marginTop="20dp"
-            android:src="@drawable/handshake" />
+            android:background="@drawable/handshake" />
 
         <TextView
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -67,7 +78,9 @@
                 android:layout_marginTop="10dp"
                 android:text="1."
                 android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="#111"
+                />
 
             <TextView
                 android:id="@+id/handshakeActivity_step1"
@@ -77,7 +90,9 @@
                 android:layout_marginTop="10dp"
                 android:text="Sending start request..."
                 android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="#111"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -91,6 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="2."
+                android:textColor="#111"
                 android:textSize="20dp"
                 android:textStyle="bold" />
 
@@ -102,7 +118,9 @@
                 android:layout_marginTop="10dp"
                 android:text="Waiting for other person to accept..."
                 android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="#111"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -117,7 +135,9 @@
                 android:layout_marginTop="10dp"
                 android:text="3."
                 android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="#111"
+                />
 
             <TextView
                 android:id="@+id/handshakeActivity_step3"
@@ -127,17 +147,19 @@
                 android:layout_marginTop="10dp"
                 android:text="Press 'Begin session' and the timer will start running for both of you…"
                 android:textSize="20dp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:textColor="#111"
+                />
         </LinearLayout>
 
         <Button
             android:id="@+id/btn_handshake_start_process"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_marginTop="30dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
             android:background="@drawable/button_shape_green"
             android:enabled="false"
             android:text="Begin session"

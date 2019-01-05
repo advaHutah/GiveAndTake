@@ -14,6 +14,7 @@ import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.Logic.User;
 import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.UI.handshakeSession.HandshakeActivity;
+import com.example.win10.giveandtake.util.TimeConvertUtil;
 
 public class OtherUserActivity extends AppCompatActivity {
 
@@ -40,7 +41,7 @@ public class OtherUserActivity extends AppCompatActivity {
         otherUser = appManager.getOtherUser();
 
         nameText.setText(otherUser.getFullName());
-        balanceText.setText(otherUser.getBalance()+"");
+        balanceText.setText(TimeConvertUtil.convertTime(otherUser.getBalance()));
 
         giveText.setText(otherUser.getMyGiveRequest().getUserInputText());
         takeText.setText(otherUser.getMyTakeRequest().getUserInputText());

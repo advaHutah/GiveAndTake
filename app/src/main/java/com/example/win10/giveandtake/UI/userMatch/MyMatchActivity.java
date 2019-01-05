@@ -24,7 +24,6 @@ public class MyMatchActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        //todo not working from notification
         String type = getIntent().getStringExtra("type");
         String tag = getIntent().getStringExtra("tag");
         boolean isTakeRequest;

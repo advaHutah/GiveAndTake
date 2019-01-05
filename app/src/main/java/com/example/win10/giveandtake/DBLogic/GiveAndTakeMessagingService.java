@@ -1,4 +1,4 @@
-package com.example.win10.giveandtake;
+package com.example.win10.giveandtake.DBLogic;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -12,26 +12,23 @@ import android.util.Log;
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.Logic.TagUserInfo;
-import com.example.win10.giveandtake.Logic.User;
-import com.example.win10.giveandtake.UI.handshakeSession.HandshakeActivity;
+import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.UI.userMatch.MyMatchActivity;
-import com.example.win10.giveandtake.UI.userProfile.OtherUserSessionRequestActivity;
-import com.google.firebase.messaging.FirebaseMessagingService;
+import com.example.win10.giveandtake.UI.handshakeSession.OtherUserSessionRequestActivity;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.ArrayList;
 
-//liran
-public class MyFirebaseMessagingService extends FirebaseMessagingService {
+
+public class GiveAndTakeMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
     private static final String TAG ="MyFirebaseMessagingServ" ;
 
-    public MyFirebaseMessagingService() {
+    public GiveAndTakeMessagingService() {
     }
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         // ...
 
-        // TODO(developer): Handle FCM messages here.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 

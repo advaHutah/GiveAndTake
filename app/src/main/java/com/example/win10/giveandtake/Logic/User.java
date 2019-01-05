@@ -4,10 +4,11 @@ import com.example.win10.giveandtake.DBLogic.FirebaseManager;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 public class User implements Serializable {
 
-    final static int INIT_BALANCE = 8 * 60;
+    final static long INIT_BALANCE = TimeUnit.HOURS.toMillis(2);
 
     public enum Gender {
         MALE,
@@ -19,12 +20,11 @@ public class User implements Serializable {
     private String fullName;
     private String phoneNumber;
 //    private Gender gender;
-    private int balance;
+    private long balance;// milisec
     private String photoUrl;
 
     private Request myTakeRequest;
     private Request myGiveRequest;
-    private HashMap<String, Session> myServices;
 
     private FirebaseManager userService = FirebaseManager.getInstance();
 
@@ -41,15 +41,14 @@ public class User implements Serializable {
         this.balance = INIT_BALANCE;
         myTakeRequest = new Request();
         myGiveRequest = new Request();
-        myServices = new HashMap<String, Session>();
     }
 
-    public User(String id, String email, String fullName, String phoneNumber, int balance,String photoUrl) {
+    public User(String id, String email, String fullName, String phoneNumber, long balance,String photoUrl) {
         this(id, email, fullName, phoneNumber,photoUrl);
         this.balance = balance;
     }
 
-    public User(String id, String email, String fullName, String phoneNumber, int balance, Request myTakeRequest, Request myGiveRequest ,String photoUrl) {
+    public User(String id, String email, String fullName, String phoneNumber, long balance, Request myTakeRequest, Request myGiveRequest ,String photoUrl) {
         this(id, email, fullName, phoneNumber, balance,photoUrl);
         this.myTakeRequest = myTakeRequest;
         this.myGiveRequest = myGiveRequest;
@@ -72,7 +71,7 @@ public class User implements Serializable {
 //        return gender.name();
 //    }
 
-    public int getBalance() {
+    public long getBalance() {
         return balance;
     }
 
@@ -96,7 +95,7 @@ public class User implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public void setBalance(int balance) {
+    public void setBalance(long balance) {
         this.balance = balance;
     }
 
@@ -123,19 +122,9 @@ public class User implements Serializable {
         }
     }
 
-    public void addService(Session session) {
-        if (myServices == null) {
-            myServices = new HashMap<String, Session>();
-        }
-      //  mySessions.put(session.getSid(), session);
-    }
 
     public Request getMyGiveRequest() {
         return myGiveRequest;
-    }
-
-    public HashMap<String, Session> getMyServices() {
-        return myServices;
     }
 
     public Request getMyTakeRequest() {
@@ -144,10 +133,6 @@ public class User implements Serializable {
 
     public void setMyGiveRequests(Request myGiveRequest) {
         this.myGiveRequest = myGiveRequest;
-    }
-
-    public void setMyServices(HashMap<String, Session> myServices) {
-        this.myServices = myServices;
     }
 
     public void setMyTakeRequest(Request myTakeRequest) {

@@ -10,12 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.R;
-import com.example.win10.giveandtake.UI.userProfile.TimeConvert;
+import com.example.win10.giveandtake.util.TimeConvertUtil;
 import com.example.win10.giveandtake.UI.userProfile.UserProfileActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -80,8 +79,8 @@ public class MainScreenFragment extends Fragment {
         Intent intent = new Intent(getActivity(), UserProfileActivity.class);
         startActivity(intent);
     }
-    private void setUserBalance(int balance) {
-        String time = TimeConvert.secondToFullTime(balance);
+    private void setUserBalance(long balance) {
+        String time = TimeConvertUtil.convertTime(balance);
         userBalanceText.setText(time);
     }
 
