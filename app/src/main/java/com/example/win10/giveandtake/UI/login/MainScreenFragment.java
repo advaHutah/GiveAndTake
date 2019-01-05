@@ -51,7 +51,6 @@ public class MainScreenFragment extends Fragment {
             //todo change balance from int to hours and minuts
         }
 
-
         btnLogout = (Button) view.findViewById(R.id.btn_fragment_logout);
         btnGiveTake = (Button) view.findViewById(R.id.main_screen_fragment_give_btn);
         btnLogout.setOnClickListener(new View.OnClickListener() {

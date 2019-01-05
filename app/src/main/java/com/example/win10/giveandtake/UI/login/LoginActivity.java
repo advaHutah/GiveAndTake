@@ -60,7 +60,7 @@ public class LoginActivity extends AppCompatActivity {
         if (sharedPreferences.getBoolean("firstRun", true)) {
             editor = sharedPreferences.edit();
             editor.putBoolean("firstRun", false);
-            editor.commit();
+            editor.apply();
             changeToSplashFragment();
         } else {
             // Check if user is signed in (non-null) and update UI accordingly.

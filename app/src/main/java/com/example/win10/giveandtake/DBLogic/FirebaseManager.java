@@ -1,5 +1,6 @@
 package com.example.win10.giveandtake.DBLogic;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.example.win10.giveandtake.Logic.Request;
@@ -7,6 +8,7 @@ import com.example.win10.giveandtake.Logic.Service;
 import com.example.win10.giveandtake.Logic.TagUserInfo;
 import com.example.win10.giveandtake.Logic.User;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -22,6 +24,10 @@ public class FirebaseManager {
 
     private static final String TAG = FirebaseManager.class.getSimpleName();
 
+    public boolean isUserLoggedIn() {
+        return isLoggedIn;
+    }
+
 
     public interface FirebaseCallback<T> {
         void onDataArrived(T value);
@@ -29,11 +35,21 @@ public class FirebaseManager {
 
     private static FirebaseManager singletonUserService = null;
     private FirebaseDatabase database;
+    private boolean isLoggedIn;
     private DatabaseReference db;
     private FirebaseAuth auth;
 
     private FirebaseManager() {
         //init db connection
+        isLoggedIn = FirebaseAuth.getInstance().getCurrentUser() != null;
+        FirebaseAuth.getInstance().addAuthStateListener(new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                boolean isLoggedIn = firebaseAuth.getCurrentUser() != null;
+                Log.d(TAG, "onAuthStateChanged: " + isLoggedIn);
+                FirebaseManager.this.isLoggedIn = isLoggedIn;
+            }
+        });
         database = FirebaseDatabase.getInstance();
         db = database.getReference();
         db.keepSynced(true);
@@ -96,10 +112,25 @@ public class FirebaseManager {
     }
 
     public void getUserDetailFromDB(String uid, final FirebaseCallback<User> callback) {
-        db.child(Keys.USERS).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+        db.child(Keys.USERS).child(uid).addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 callback.onDataArrived(dataSnapshot.getValue(User.class));
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
             }
 
             @Override

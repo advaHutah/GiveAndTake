@@ -3,6 +3,7 @@ package com.example.win10.giveandtake.Logic;
 import com.example.win10.giveandtake.DBLogic.FirebaseManager;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +15,10 @@ import java.util.Set;
 public class AppManager {
 
 
+    public boolean isUserLoggedIn() {
+        return FirebaseManager.getInstance().isUserLoggedIn();
+        //return FirebaseAuth.getInstance().getCurrentUser() != null && FirebaseInstanceId.getInstance().getToken() != null;
+    }
 
     public interface AppManagerCallback<T> {
         void onDataArrived(T value);

@@ -89,7 +89,7 @@ public class LoginFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        updateUI(mAuth.getCurrentUser());
+        updateUI(AppManager.getInstance().isUserLoggedIn());
     }
 
     private void signIn() {
@@ -120,7 +120,7 @@ public class LoginFragment extends Fragment {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.w("signIn", "signInResult:failed code=" + e.getStatusCode());
-            updateUI(null);
+            updateUI(false);
         }
     }
 
@@ -137,25 +137,25 @@ public class LoginFragment extends Fragment {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithCredential:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            updateUI(user);
+                            updateUI(user!=null);
                         } else {
                             MyFirebaseInstanceIDService service = new MyFirebaseInstanceIDService();
                             service.onTokenRefresh();
                             // If sign in fails, display a message to the user.
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                             Snackbar.make(getActivity().findViewById(R.id.fragment_login), "Authentication Failed.", Snackbar.LENGTH_SHORT).show();
-                            updateUI(null);
+                            updateUI(false);
                         }
                     }
                 });
     }
 
-    private void updateUI(FirebaseUser account) {
+    private void updateUI(boolean isLoggedIn) {
         final Fragment that = this;
-        if (account != null) {
+        if (isLoggedIn) {
             // get user info from DB
             spinner.setVisibility(View.VISIBLE);
-            appManager.userLogedIn(account, new AppManager.AppManagerCallback<Boolean>() {
+            appManager.userLogedIn(mAuth.getCurrentUser(), new AppManager.AppManagerCallback<Boolean>() {
                 @Override
                 public void onDataArrived(Boolean value) {
                     //change to user fragment
