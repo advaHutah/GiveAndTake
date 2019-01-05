@@ -47,7 +47,6 @@ public class MainScreenFragment extends Fragment {
         if (appManager.getCurrentUser() != null) {
             userNameText.setText("Hello " + appManager.getCurrentUser().getFullName());
             setUserBalance(appManager.getCurrentUser().getBalance());
-            //todo change balance from int to hours and minuts
         }
 
         btnLogout = (Button) view.findViewById(R.id.btn_fragment_logout);
@@ -87,7 +86,7 @@ public class MainScreenFragment extends Fragment {
         final LoginActivity parentActivity= (LoginActivity) getActivity();
         appManager.signOut();
 
-        parentActivity.getmGoogleSignInClient().signOut()
+        appManager.getGoogleSignInClient().signOut()
                 .addOnCompleteListener(parentActivity, new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {

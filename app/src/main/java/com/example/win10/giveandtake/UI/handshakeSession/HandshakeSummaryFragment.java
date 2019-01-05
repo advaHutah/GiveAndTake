@@ -29,7 +29,6 @@ import java.util.concurrent.TimeUnit;
 public class HandshakeSummaryFragment extends Fragment {
 
     private View view;
-    private FragmentManager fragmentManager;
     private HandshakeActivity parentActivity;
     private AppManager appManager;
     private TextView timerValue, actionText, balanceValue;
@@ -41,7 +40,6 @@ public class HandshakeSummaryFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_handshake_summary, container, false);
         parentActivity = (HandshakeActivity) getActivity();
         appManager = AppManager.getInstance();
-        fragmentManager = getFragmentManager();
 
         timerValue = (TextView) view.findViewById(R.id.handshakeSummaryFragment_timerValue);
         balanceValue = (TextView) view.findViewById(R.id.handshakeSummaryFragment_balanceValue);

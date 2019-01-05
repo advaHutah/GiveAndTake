@@ -41,7 +41,9 @@ public class UserProfileActivity extends AppCompatActivity {
 
     private boolean bPhoneNumber = false;
     private String phoneNumber;
+
     final Activity UActivity = this;
+
 
 
     @Override
@@ -87,29 +89,17 @@ public class UserProfileActivity extends AppCompatActivity {
         btnMyPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-                if (bPhoneNumber) {
-                    Intent intent =new Intent(Intent.ACTION_DIAL);
-                    intent.setData(Uri.parse("tel:"+phoneNumber));
-                    startActivity(intent);
-
-                } else {
-                    new InputSenderDialog(UActivity, new InputSenderDialog.InputSenderDialogListener() {
-                        @Override
-                        public void onOK(final String number) {
-                            phoneNumber = number;
-                            setUserPhone(phoneNumber);
-                            appManager.updateUserPhoneNumer(phoneNumber);
-                            Log.d(TAG, "The user tapped OK, number is "+number);
-                        }
-
-                        @Override
-                        public void onCancel(String number) {
-                            Log.d(TAG, "The user tapped Cancel, number is "+number);
-                        }
-                    }).setNumber(phoneNumber).show();
+                createPhoneNumberDialog();
                 }
-            }
+
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(!bPhoneNumber){
+        createPhoneNumberDialog();}
     }
 
     private void setUserBalance(long balance) {
@@ -118,11 +108,10 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
 
-
     private void setUserPhone(String phoneNumber) {
-        if (!phoneNumber.equals("null")) {
+        if (phoneNumber!=null) {
             btnMyPhone.setText(phoneNumber);
-            this.phoneNumber = phoneNumber;
+//            this.phoneNumber = phoneNumber;
             bPhoneNumber = true;
         } else {
             btnMyPhone.setText("Press to add phone number");
@@ -142,9 +131,26 @@ public class UserProfileActivity extends AppCompatActivity {
 
     public void setUserImage(String imageUrl) {
         if (imageUrl != null) {
-            new DownloadImageTask((ImageView) findViewById(R.id.image)).execute(imageUrl);
+            new DownloadImageTask(userImage).execute(imageUrl);
         } else
             userImage.setImageResource(R.drawable.default_user);
+    }
+
+    private void createPhoneNumberDialog(){
+        new InputSenderDialog(UActivity, new InputSenderDialog.InputSenderDialogListener() {
+            @Override
+            public void onOK(final String number) {
+                phoneNumber = number;
+                setUserPhone(phoneNumber);
+                appManager.updateUserPhoneNumer(phoneNumber);
+                Log.d(TAG, "The user tapped OK, number is " + number);
+            }
+
+            @Override
+            public void onCancel(String number) {
+                Log.d(TAG, "The user tapped Cancel, number is " + number);
+            }
+        }).setNumber(phoneNumber).show();
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
@@ -168,7 +174,7 @@ public class UserProfileActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(Bitmap result) {
-//            bmImage.setImageBitmap(result);
+            bmImage.setImageBitmap(result);
         }
     }
 }

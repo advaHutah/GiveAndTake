@@ -69,31 +69,18 @@ public class FirebaseManager {
     }
 
     public void getUserDetailFromDB(String uid, final FirebaseCallback<User> callback) {
-        db.child(Keys.USERS).child(uid).addChildEventListener(new ChildEventListener() {
+        db.child(Keys.USERS).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 callback.onDataArrived(dataSnapshot.getValue(User.class));
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
 
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.e(TAG, "onCancelled: ");
                 callback.onDataArrived(null);
+
             }
         });
     }
@@ -129,7 +116,7 @@ public class FirebaseManager {
         }
     }
 
-    public void updateUserPhoneNumber(String uid,String phoneNumber) {
+    public void updateUserPhoneNumber(String uid, String phoneNumber) {
         db.child(Keys.USERS).child(uid).child(Keys.USER_PHONE).setValue(phoneNumber);
     }
 
@@ -211,7 +198,6 @@ public class FirebaseManager {
                 for (DataSnapshot user : dataSnapshot.getChildren()) {
                     if (!user.getKey().equals(uid)) {
                         Map<String, String> nameEntry = (Map<String, String>) user.getValue();
-                        //todo sometimes falls can be replaced to just -> user.getValue().toString()
                         String name = nameEntry.get("name");
                         TagUserInfo tagUserInfo = new TagUserInfo(user.getKey(), name, requestType);
                         list.add(tagUserInfo);
@@ -245,15 +231,16 @@ public class FirebaseManager {
             }
         });
     }
+
     public void saveSession(Session session) {
         db.child(Keys.SESSIONS).child(session.getId()).setValue(session);
     }
 
-    public void updateSessionStatus(String sessionId,Session.Status sessionStatus) {
+    public void updateSessionStatus(String sessionId, Session.Status sessionStatus) {
         db.child(Keys.SESSIONS).child(sessionId).child(Keys.SESSION_STATUS).setValue(sessionStatus);
     }
 
-    public void updateSessionMillisPassed(String sessionId,long millisPassed) {
+    public void updateSessionMillisPassed(String sessionId, long millisPassed) {
         db.child(Keys.SESSIONS).child(sessionId).child(Keys.SESSION_MILLIS_PASSED).setValue(millisPassed);
     }
 
@@ -273,8 +260,7 @@ public class FirebaseManager {
         });
     }
 
-    public void sessionStatusChanged (String sessionId,final FirebaseCallback<Session.Status> callback)
-    {
+    public void sessionStatusChanged(String sessionId, final FirebaseCallback<Session.Status> callback) {
         db.child(Keys.SESSIONS).child(sessionId).child(Keys.SESSION_STATUS).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -288,6 +274,7 @@ public class FirebaseManager {
             }
         });
     }
+
     public boolean isUserLoggedIn() {
         return isLoggedIn;
     }
@@ -313,8 +300,8 @@ public class FirebaseManager {
         public static final String TAKE_TAGS = "takeTags";
         public static final String USER_PHONE = "phoneNumber";
         public static final String SESSIONS = "sessions";
-        public static final String SESSION_STATUS ="status";
-        public static final String SESSION_MILLIS_PASSED ="millisPassed";
+        public static final String SESSION_STATUS = "status";
+        public static final String SESSION_MILLIS_PASSED = "millisPassed";
 
     }
 

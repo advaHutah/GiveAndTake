@@ -57,6 +57,7 @@
 
         </LinearLayout>
     </LinearLayout>
+
     <TextView
         android:id="@+id/giveText"
         android:layout_width="match_parent"
@@ -65,6 +66,7 @@
         android:layout_marginTop="10dp"
         android:text=""
         android:textSize="20dp" />
+
     <GridView
         android:id="@+id/giveTags"
         android:layout_width="match_parent"
@@ -72,6 +74,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:numColumns="3"></GridView>
+
     <TextView
         android:id="@+id/takeText"
         android:layout_width="match_parent"
@@ -80,6 +83,7 @@
         android:layout_marginTop="10dp"
         android:text=""
         android:textSize="20dp" />
+
     <GridView
         android:id="@+id/takeTags"
         android:layout_width="match_parent"
@@ -88,17 +92,19 @@
         android:layout_marginTop="10dp"
         android:numColumns="3"></GridView>
 
-    <!--<Button-->
-        <!--android:id="@+id/btn_otherUserPhone"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginTop="60dp"-->
-        <!--android:text="Ask to get number..."-->
-        <!--android:textSize="15dp" />-->
+    <Button
+        android:id="@+id/btn_otherUserPhone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:textSize="15dp"
+        android:enabled="false"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
         <Button
             android:id="@+id/btn_give_session"
             android:layout_width="180dp"
@@ -107,6 +113,7 @@
             android:background="@drawable/button_shape_green"
             android:text="Give"
             android:textSize="15dp" />
+
         <Button
             android:id="@+id/btn_take_session"
             android:layout_width="180dp"

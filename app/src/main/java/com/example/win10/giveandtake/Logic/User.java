@@ -1,6 +1,7 @@
 package com.example.win10.giveandtake.Logic;
 
 import com.example.win10.giveandtake.DBLogic.FirebaseManager;
+import com.example.win10.giveandtake.R;
 
 import java.io.Serializable;
 import java.util.HashMap;

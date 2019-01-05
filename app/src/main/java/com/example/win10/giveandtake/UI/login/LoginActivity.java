@@ -19,7 +19,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
     private AppManager appManager;
-    private GoogleSignInClient mGoogleSignInClient;
 
     private FragmentManager fragmentManager;
 
@@ -32,7 +31,6 @@ public class LoginActivity extends AppCompatActivity {
 
         fragmentManager = getFragmentManager();
         appManager = AppManager.getInstance();
-        createGoogleClient();
 
         //set view content
         super.onCreate(savedInstanceState);
@@ -41,16 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("com.example.win10.giveandtake", MODE_PRIVATE);
     }
 
-    private void createGoogleClient() {
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
-                .requestEmail()
-                .build();
-        // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, googleSignInOptions);
-    }
+
 
 
     @Override
@@ -98,10 +87,6 @@ public class LoginActivity extends AppCompatActivity {
         fragmentManager.beginTransaction()
                 .replace(R.id.loginActivity_frame_container, termsOfUseFragment)
                 .commit();
-    }
-
-    public GoogleSignInClient getmGoogleSignInClient() {
-        return mGoogleSignInClient;
     }
 
 }

@@ -1,6 +1,7 @@
 package com.example.win10.giveandtake.Logic;
 
 import com.example.win10.giveandtake.DBLogic.FirebaseManager;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -10,6 +11,8 @@ import java.util.Set;
 
 //Handles all app actions and DB read/write
 public class AppManager {
+
+
 
 
     public interface AppManagerCallback<T> {
@@ -24,6 +27,7 @@ public class AppManager {
     private ArrayList<TagUserInfo> notificationUsers;
     private FirebaseAuth mAuth;
     private Session selectedSession;
+    private GoogleSignInClient googleSignInClient;
 
     private AppManager() {
         firebaseManager = FirebaseManager.getInstance();
@@ -46,6 +50,14 @@ public class AppManager {
     public void updateUserPhoneNumer(String phoneNumber) {
         currentUser.setPhoneNumber(phoneNumber);
         firebaseManager.updateUserPhoneNumber(currentUser.getId(), phoneNumber);
+    }
+
+    public void setGoogleSignInClient(GoogleSignInClient googleSignInClient) {
+        this.googleSignInClient = googleSignInClient;
+    }
+
+    public GoogleSignInClient getGoogleSignInClient() {
+        return googleSignInClient;
     }
 
     public User getCurrentUser() {
