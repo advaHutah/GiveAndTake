@@ -39,7 +39,7 @@ public class OtherUserActivity extends AppCompatActivity {
         takeText = (TextView) this.findViewById(R.id.takeText);
         giveTags = (GridView) this.findViewById(R.id.giveTags);
         takeTags = (GridView) this.findViewById(R.id.takeTags);
-        btnPhoneNumber = (Button) this.findViewById(R.id.btn_otherUserPhone);
+        btnPhoneNumber = (Button) this.findViewById(R.id.btn_phone);
         btnGiveSession = (Button) this.findViewById(R.id.btn_give_session);
         btnTakeSession = (Button) this.findViewById(R.id.btn_take_session);
         otherUser = appManager.getOtherUser();

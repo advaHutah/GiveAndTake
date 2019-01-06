@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ public class HandshakeProcessFragment extends Fragment {
     private HandshakeSummaryFragment handshakeSummaryFragment;
     private AppManager appManager;
     private TextView timerValue, actionText, balanceValue;
+    private Button stopBtn;
     private CountDownTimer timer;
     private long millisPassed;
 
@@ -38,6 +40,7 @@ public class HandshakeProcessFragment extends Fragment {
         timerValue = (TextView) view.findViewById(R.id.timerValue);
         balanceValue = (TextView) view.findViewById(R.id.balanceValue);
         actionText = (TextView) view.findViewById(R.id.handshakeProcessFragment_action_description);
+        stopBtn = (Button) view.findViewById(R.id.handshakeProcessFragment_stopBtn);
         millisPassed = 0;
         parentActivity = (HandshakeActivity) getActivity();
         appManager = AppManager.getInstance();
@@ -50,6 +53,21 @@ public class HandshakeProcessFragment extends Fragment {
                     addToast("The session Started", Toast.LENGTH_SHORT);
                     startTimer();
                 }
+                else if(value == Session.Status.terminated) {
+                    timer.cancel();
+                    appManager.getSelectedSession().setMillisPassed(millisPassed);
+                    addToast("The session  was terminated", Toast.LENGTH_SHORT);
+                    moveToSummaryFragment();
+                }
+            }
+        });
+
+        stopBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timer.cancel();
+                appManager.finishSession(millisPassed + 1000);
+                addToast("The session  was terminated", Toast.LENGTH_SHORT);
 
             }
         });
@@ -75,9 +93,15 @@ public class HandshakeProcessFragment extends Fragment {
                 }
                 //im the taker
                 else {
-                    long newTimeTaker = appManager.getCurrentUser().getBalance() - 1000;
-                    appManager.getCurrentUser().setBalance(newTimeTaker);
-
+                    if(appManager.getCurrentUser().getBalance()- 1000 >= 0) {
+                        long newTimeTaker = appManager.getCurrentUser().getBalance() - 1000;
+                        appManager.getCurrentUser().setBalance(newTimeTaker);
+                    }
+                    else {
+                        appManager.finishSession(millisPassed);
+                        timer.cancel();
+                        moveToSummaryFragment();
+                    }
                 }
                 balanceValue.setText(TimeConvertUtil.convertTime(appManager.getCurrentUser().getBalance()));
                 timerValue.setText(TimeConvertUtil.convertTime(millisUntilFinished));
@@ -86,16 +110,19 @@ public class HandshakeProcessFragment extends Fragment {
 
             @Override
             public void onFinish() {
-                appManager.finishSession(millisPassed);
-                handshakeSummaryFragment = new HandshakeSummaryFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.handshake_frame_container, handshakeSummaryFragment)
-                        .commit();
-
+                appManager.finishSession(millisPassed + 1000);
+                moveToSummaryFragment();
             }
         }.start();
+
     }
 
+    public void moveToSummaryFragment(){
+        handshakeSummaryFragment = new HandshakeSummaryFragment();
+        fragmentManager.beginTransaction()
+                .replace(R.id.handshake_frame_container, handshakeSummaryFragment)
+                .commit();
+    }
 
     @Override
     public void onPause() {
@@ -103,7 +130,7 @@ public class HandshakeProcessFragment extends Fragment {
     }
 
     public void addToast(String text, int duration) {
-        Context context = getActivity().getApplicationContext();
+        Context context = parentActivity.getApplicationContext();
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
