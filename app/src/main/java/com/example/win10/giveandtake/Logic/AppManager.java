@@ -241,8 +241,9 @@ public class AppManager {
     public void finishSession(long millisPassed) {
         updateSessionStatus(Session.Status.terminated);
         updateSessionMillisPassed(millisPassed);
-
+        updateMyBalance();
     }
+
 
     private void updateSessionMillisPassed(long millisPassed) {
         selectedSession.setMillisPassed(millisPassed);
@@ -252,6 +253,9 @@ public class AppManager {
     public void resetOtherUserAndSession() {
         otherUser = null;
         selectedSession = null;
+    }
+    public void updateMyBalance() {
+        firebaseManager.updateBalanceOnDB(currentUser.getId(),currentUser.getBalance());
     }
 
 

@@ -55,6 +55,7 @@ public class HandshakeProcessFragment extends Fragment {
                 }
                 else if(value == Session.Status.terminated) {
                     timer.cancel();
+                    appManager.updateMyBalance();
                     appManager.getSelectedSession().setMillisPassed(millisPassed);
                     addToast("The session  was terminated", Toast.LENGTH_SHORT);
                     moveToSummaryFragment();

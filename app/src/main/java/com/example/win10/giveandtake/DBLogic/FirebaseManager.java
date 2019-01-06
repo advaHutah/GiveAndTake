@@ -24,6 +24,7 @@ public class FirebaseManager {
 
     private static final String TAG = FirebaseManager.class.getSimpleName();
 
+
     public interface FirebaseCallback<T> {
         void onDataArrived(T value);
     }
@@ -232,6 +233,11 @@ public class FirebaseManager {
         });
     }
 
+    public void updateBalanceOnDB(String uid, long balance) {
+        db.child(Keys.USERS).child(uid).child(Keys.BALANCE).setValue(balance);
+
+    }
+
     public void saveSession(Session session) {
         db.child(Keys.SESSIONS).child(session.getId()).setValue(session);
     }
@@ -302,7 +308,7 @@ public class FirebaseManager {
         public static final String SESSIONS = "sessions";
         public static final String SESSION_STATUS = "status";
         public static final String SESSION_MILLIS_PASSED = "millisPassed";
-
+        public static final String BALANCE = "balance";
     }
 
 
