@@ -24,7 +24,6 @@ public class FirebaseManager {
 
     private static final String TAG = FirebaseManager.class.getSimpleName();
 
-
     public interface FirebaseCallback<T> {
         void onDataArrived(T value);
     }
@@ -71,7 +70,6 @@ public class FirebaseManager {
 
     public void getUserDetailFromDB(String uid, final FirebaseCallback<User> callback) {
         db.child(Keys.USERS).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 callback.onDataArrived(dataSnapshot.getValue(User.class));
@@ -81,7 +79,6 @@ public class FirebaseManager {
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 callback.onDataArrived(null);
-
             }
         });
     }
