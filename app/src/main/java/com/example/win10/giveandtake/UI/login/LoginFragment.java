@@ -127,6 +127,13 @@ public class LoginFragment extends Fragment {
             // Signed in successfully, show authenticated UI.
             firebaseAuthWithGoogle(account);
         } catch (ApiException e) {
+            switch (e.getStatusCode()) {
+                case 12500:
+                    // Google Play Services version is too low!
+                    addToast("Please update your Google Play Services");
+                    break;
+            }
+
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.e(TAG, "signInResult:failed code=" + e.getStatusCode());
