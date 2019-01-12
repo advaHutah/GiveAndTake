@@ -15,10 +15,7 @@ import com.example.win10.giveandtake.R;
 public class TermsOfUseFragment extends Fragment {
 
     private View view;
-    private FragmentManager fragmentManager;
-    private LoginFragment loginFragment;
     private Button btnStartLogin;
-
 
     @Nullable
     @Override
@@ -27,19 +24,19 @@ public class TermsOfUseFragment extends Fragment {
 
         btnStartLogin = (Button) view.findViewById(R.id.btn_start_login_screen);
 
-        fragmentManager = getFragmentManager();
         //buttonActions
         btnStartLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                loginFragment = new LoginFragment();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.loginActivity_frame_container, loginFragment)
-                        .commit();
+                getLoginActivity().onBackPressed();
             }
         });
 
         return view;
+    }
+
+    private LoginActivity getLoginActivity() {
+        return (LoginActivity) getActivity();
     }
 
     @Override

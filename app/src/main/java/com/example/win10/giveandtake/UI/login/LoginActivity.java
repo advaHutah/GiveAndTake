@@ -49,6 +49,15 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (loginFragment.isAdded()) {
+            super.onBackPressed();
+        } else {
+            changeToLoginFragment();
+        }
+    }
+
     public void changeToSplashFragment() {
         SplashScreenFragment splashScreenFragment = new SplashScreenFragment();
         fragmentManager.beginTransaction()
