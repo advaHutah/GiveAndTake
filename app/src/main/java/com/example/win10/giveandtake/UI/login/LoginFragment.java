@@ -132,6 +132,10 @@ public class LoginFragment extends Fragment {
                     // Google Play Services version is too low!
                     addToast("Please update your Google Play Services");
                     break;
+                case 7:
+                    // Network error!
+                    addToast("Network error, please try again after your network is fixed.");
+                    break;
             }
 
             // The ApiException status code indicates the detailed failure reason.
