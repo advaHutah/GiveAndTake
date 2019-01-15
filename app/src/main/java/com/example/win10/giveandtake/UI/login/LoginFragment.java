@@ -130,11 +130,15 @@ public class LoginFragment extends Fragment {
             switch (e.getStatusCode()) {
                 case 12500:
                     // Google Play Services version is too low!
-                    addToast("Please update your Google Play Services");
+                    MyApplication.showAlert("Google Play Services is too old", "Please update your Google Play Services.", getActivity());
                     break;
                 case 7:
                     // Network error!
-                    addToast("Network error, please try again after your network is fixed.");
+                    MyApplication.showAlert("Network Error", "please try again after your network is fixed.", getActivity());
+                    break;
+                case 10:
+                    // Developer error!
+                    MyApplication.showAlert("Developer Error", "Details:" + e, getActivity());
                     break;
             }
 
