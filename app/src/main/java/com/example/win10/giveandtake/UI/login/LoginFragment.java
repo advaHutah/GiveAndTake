@@ -44,7 +44,7 @@ public class LoginFragment extends Fragment {
     private MainScreenFragment mainScreenFragment;
     private FragmentManager fragmentManager;
     private Button btnTermsOfUse;
-    private Button btnSignInWithGoogle;
+    private com.google.android.gms.common.SignInButton btnSignInWithGoogle;
     private ProgressBar spinner;
     private GoogleSignInClient mGoogleSignInClient;
     private LoginActivity parentActivity;
@@ -69,7 +69,7 @@ public class LoginFragment extends Fragment {
         spinner = (ProgressBar) view.findViewById(R.id.progressBar1);
 
         btnTermsOfUse = (Button) view.findViewById(R.id.btn_fragment_terms);
-        btnSignInWithGoogle = (Button) view.findViewById(R.id.btn_fragment_login_google);
+        btnSignInWithGoogle = (com.google.android.gms.common.SignInButton) view.findViewById(R.id.btn_fragment_login_google);
 
         //buttonActions
         btnTermsOfUse.setOnClickListener(new View.OnClickListener() {

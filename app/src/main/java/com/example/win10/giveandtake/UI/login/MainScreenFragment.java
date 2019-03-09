@@ -45,7 +45,7 @@ public class MainScreenFragment extends Fragment {
         userBalanceText = (TextView) view.findViewById(R.id.main_screen_fragment_balance);
 
         if (appManager.getCurrentUser() != null) {
-            userNameText.setText("Hello " + appManager.getCurrentUser().getFullName());
+            userNameText.setText("שלום " + appManager.getCurrentUser().getFullName());
             setUserBalance(appManager.getCurrentUser().getBalance());
         }
 

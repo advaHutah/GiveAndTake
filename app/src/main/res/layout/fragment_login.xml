@@ -3,52 +3,74 @@
     android:id="@+id/fragment_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
     android:orientation="vertical">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/banthink"
-        android:text="Login"
-        android:textAlignment="center"
-        android:textSize="30dp"
-        android:textStyle="bold" />
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:orientation="vertical">
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/give_take_icon" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="20"
+            android:background="@drawable/community5"></LinearLayout>
 
-    <Button
-        android:id="@+id/btn_fragment_login_google"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:background="@drawable/button_shape_red"
-        android:text="Login with Google"
-        android:textSize="15dp"
-        android:layout_gravity="center"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/colorPrimary"></LinearLayout>
+    </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_fragment_terms"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:background="@drawable/button_shape_green"
-        android:text="Terms of Use…"
-        android:textSize="15dp" />
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:orientation="vertical">
 
-    <ProgressBar
-        android:id="@+id/progressBar1"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:visibility="gone"/>
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/btn_fragment_login_google"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="10dp" />
+        <ImageView
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            android:src="@drawable/give_take_icon_nobackground"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:layoutDirection="rtl">
+
+        <Button
+            android:id="@+id/btn_fragment_terms"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/button_round_info"
+            android:text="@string/fragmentLogin_info_button_text"
+            android:textAllCaps="false"
+            android:textSize="20dp"
+            android:textAlignment="center"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            />
+
+        <ProgressBar
+            android:id="@+id/progressBar1"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone" />
+    </LinearLayout>
 
 </LinearLayout>
