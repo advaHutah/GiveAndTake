@@ -11,10 +11,6 @@ import java.util.Set;
 
 //Handles all app actions and DB read/write
 public class AppManager {
-
-
-
-
     public interface AppManagerCallback<T> {
         void onDataArrived(T value);
     }
@@ -166,16 +162,17 @@ public class AppManager {
         firebaseManager.addUserInfoToDB(currentUser);
     }
 
-    public void userLogedIn(FirebaseUser account, final AppManager.AppManagerCallback<Boolean> callback) {
+    public void userLoggedIn(FirebaseUser account, final AppManager.AppManagerCallback<Boolean> callback) {
         final FirebaseUser theAccount = account;
         //get user info from db - if exist get info else create new user
         firebaseManager.getUserDetailFromDB(account.getUid(), new FirebaseManager.FirebaseCallback<User>() {
             @Override
             public void onDataArrived(User value) {
-                if (value != null)
+                if (value != null) {
                     AppManager.getInstance().setCurrentUser(value);
-                else
+                } else {
                     createNewUser(theAccount.getUid(), theAccount.getEmail(), theAccount.getDisplayName(), theAccount.getPhoneNumber(), theAccount.getPhotoUrl().toString());
+                }
 
                 callback.onDataArrived(true);
             }
