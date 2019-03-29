@@ -10,6 +10,8 @@ import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.R;
 
+//TODO delete after updating
+
 public class MyMatchActivity extends AppCompatActivity {
 
     private AppManager appManager;

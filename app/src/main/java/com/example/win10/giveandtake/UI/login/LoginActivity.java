@@ -1,18 +1,14 @@
 package com.example.win10.giveandtake.UI.login;
 
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.win10.giveandtake.Logic.AppManager;
-import com.example.win10.giveandtake.Logic.User;
 import com.example.win10.giveandtake.R;
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.example.win10.giveandtake.UI.mainScreen.MainScreenActivity;
 
 // first app activity . includes fragments: login fragment , main screen ,splash screen
 public class LoginActivity extends AppCompatActivity {
@@ -65,13 +61,6 @@ public class LoginActivity extends AppCompatActivity {
                 .commit();
     }
 
-    public void changeToMainScreenFragment() {
-        fragmentManager = getFragmentManager();
-        MainScreenFragment mainScreenFragment = new MainScreenFragment();
-        fragmentManager.beginTransaction()
-                .replace(R.id.loginActivity_frame_container, mainScreenFragment)
-                .commit();
-    }
 
     public void changeToLoginFragment() {
         fragmentManager = getFragmentManager();
@@ -89,4 +78,8 @@ public class LoginActivity extends AppCompatActivity {
                 .commit();
     }
 
+    public void createMainScreenActivity() {
+        Intent mainScreen = new Intent(this, MainScreenActivity.class);
+        startActivity(mainScreen);
+    }
 }

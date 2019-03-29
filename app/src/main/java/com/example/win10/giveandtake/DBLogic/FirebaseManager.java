@@ -24,17 +24,17 @@ public class FirebaseManager {
 
     private static final String TAG = FirebaseManager.class.getSimpleName();
 
-
     public interface FirebaseCallback<T> {
+
+
         void onDataArrived(T value);
     }
-
     private static FirebaseManager singletonUserService = null;
+
     private FirebaseDatabase database;
     private boolean isLoggedIn;
     private DatabaseReference db;
     private FirebaseAuth auth;
-
     private FirebaseManager() {
         //init db connection
         isLoggedIn = FirebaseAuth.getInstance().getCurrentUser() != null;
@@ -86,7 +86,6 @@ public class FirebaseManager {
         });
     }
 
-
     public void getAllRequestFromDB(Request.RequestType requestType, final FirebaseCallback<ArrayList<Request>> callback) {
         //get all requests according to Request.RequestType
         String key = requestType == Request.RequestType.TAKE ? Keys.TAKE_REQUEST : Keys.GIVE_REQUEST;
@@ -108,6 +107,7 @@ public class FirebaseManager {
             }
         });
     }
+
 
     public void addRequestToDB(Request newRequest) {
         if (newRequest.getRequestType() == Request.RequestType.GIVE) {
@@ -186,6 +186,7 @@ public class FirebaseManager {
             }
         });
     }
+
 
     public void getMatchUsers(final String uid, final String tag, final Request.RequestType requestType, final FirebaseCallback<ArrayList<TagUserInfo>> callback) {
 

@@ -77,6 +77,7 @@
     <string name="handshakeProcessFragment_title">Session in progress...</string>
     <string name="fragmentLogin_info_button_text">i</string>
     <string name="fragmentMainScreen_balance_lable_text">יתרה נוכחית:</string>
+    <string name="userMatchActivity_title">משתמשים מתאימים</string>
 
 
 </resources>

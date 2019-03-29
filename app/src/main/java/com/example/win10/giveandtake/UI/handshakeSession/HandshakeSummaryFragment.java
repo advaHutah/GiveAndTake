@@ -2,12 +2,10 @@ package com.example.win10.giveandtake.UI.handshakeSession;
 
 import android.app.AlertDialog;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,13 +15,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.win10.giveandtake.Logic.AppManager;
-import com.example.win10.giveandtake.Logic.Session;
 import com.example.win10.giveandtake.R;
-import com.example.win10.giveandtake.UI.login.MainScreenFragment;
 import com.example.win10.giveandtake.UI.userProfile.UserProfileActivity;
 import com.example.win10.giveandtake.util.TimeConvertUtil;
-
-import java.util.concurrent.TimeUnit;
 
 
 public class HandshakeSummaryFragment extends Fragment {

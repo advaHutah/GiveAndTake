@@ -12,6 +12,8 @@ import android.widget.Button;
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.R;
 
+//TODO delete after updating
+
 //fragment that display user profile info and function like give and take request
 
 public class GiveOrTakeFragment extends Fragment {

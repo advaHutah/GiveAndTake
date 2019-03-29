@@ -41,7 +41,6 @@ public class LoginFragment extends Fragment {
 
     private View view;
     private TermsOfUseFragment termsOfUseFragment;
-    private MainScreenFragment mainScreenFragment;
     private FragmentManager fragmentManager;
     private Button btnTermsOfUse;
     private com.google.android.gms.common.SignInButton btnSignInWithGoogle;
@@ -97,6 +96,11 @@ public class LoginFragment extends Fragment {
         super.onStart();
         dataArrived=false;
         updateUI(appManager.isUserLoggedIn());
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 
     private void signIn() {
@@ -170,7 +174,7 @@ public class LoginFragment extends Fragment {
                     //change to user fragment
                     dataArrived = true;
                     spinner.setVisibility(View.GONE);
-                    parentActivity.changeToMainScreenFragment();
+                    parentActivity.createMainScreenActivity();
                 }
             });
             new Handler().postDelayed(new Runnable() {
@@ -180,7 +184,7 @@ public class LoginFragment extends Fragment {
                         Toast.makeText(parentActivity, "Couldn't connect, please try to login again.", Toast.LENGTH_LONG).show();
                     }
                 }
-            }, 12000);
+            }, 15000);
         }
     }
 

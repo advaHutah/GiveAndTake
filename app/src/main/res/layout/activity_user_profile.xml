@@ -61,24 +61,6 @@
             android:textSize="20dp" />
 
         <Button
-            android:id="@+id/btn_my_profile_hashtags"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_shape_green"
-            android:text="My Hashtags"
-            android:textSize="15dp" />
-
-        <Button
-            android:id="@+id/btn_my_profile_match"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/button_shape_green"
-            android:text="My Match"
-            android:textSize="15dp" />
-
-        <Button
             android:id="@+id/btn_my_profile_phone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

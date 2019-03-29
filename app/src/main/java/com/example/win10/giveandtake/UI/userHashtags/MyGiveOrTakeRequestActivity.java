@@ -1,13 +1,10 @@
 package com.example.win10.giveandtake.UI.userHashtags;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,13 +21,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-//fragment that display user profile info and function like give and take request
+public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
 
-public class MyHashtagsFragment extends Fragment {
-    private static final String TAG = "MyHashtagsFragment";
-
-    private View view;
-    private FragmentManager fragmentManager;
 
     private TextView requestTitle;
     private EditText inputText;
@@ -44,27 +36,24 @@ public class MyHashtagsFragment extends Fragment {
     private Set<String> selectedTags;
     private Request.RequestType requestType;
 
-    public static MyHashtagsFragment newInstance(boolean isTakeRequst) {
-        MyHashtagsFragment myHashtagsFragment = new MyHashtagsFragment();
-        Bundle args = new Bundle();
-        args.putBoolean("isTakeRequst", isTakeRequst);
-        myHashtagsFragment.setArguments(args);
-        return myHashtagsFragment;
-    }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_my_hashtags, container, false);
-        requestTitle = (TextView) view.findViewById(R.id.my_hashtags_fragment_title_request_type);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my_give_or_take_request);
+
+        Intent intent = getIntent();
+        boolean isTakeRequest = intent.getBooleanExtra("isTakeRequst",true);
+
+        requestTitle = (TextView)findViewById(R.id.myHashtagActivity_title_request_type);
         appManager = AppManager.getInstance();
 
-        inputText = (EditText) view.findViewById(R.id.request_input_text);
-        requestBtn = (Button) view.findViewById(R.id.make_request_btn);
-        findTextBtn = (Button) view.findViewById(R.id.request_find_text_btn);
-        tagsGrid = (GridView) view.findViewById(R.id.request_tags_result);
+        inputText = (EditText) findViewById(R.id.request_input_text);
+        requestBtn = (Button) findViewById(R.id.make_request_btn);
+        findTextBtn = (Button) findViewById(R.id.request_find_text_btn);
+        tagsGrid = (GridView) findViewById(R.id.request_tags_result);
 
-        if (this.getArguments().getBoolean("isTakeRequst")) {
+        if (isTakeRequest) {
             requestType = Request.RequestType.TAKE;
             requestTitle.setText("What will you take?");
             text = appManager.getCurrentUser().getMyTakeRequest().getUserInputText();
@@ -101,12 +90,10 @@ public class MyHashtagsFragment extends Fragment {
                 }
             }
         });
-        return view;
     }
 
     public void addToast(String text, int duration) {
-        Context context = getActivity().getApplicationContext();
-        Toast toast = Toast.makeText(context, text, duration);
+        Toast toast = Toast.makeText(this, text, duration);
         toast.show();
     }
 
@@ -123,7 +110,7 @@ public class MyHashtagsFragment extends Fragment {
 
     public void showTags(final ArrayList<String> tags) {
         if (tags != null) {
-            ArrayAdapter arrayadapter = new ArrayAdapter<String>(view.getContext(), R.layout.item, tags);
+            ArrayAdapter arrayadapter = new ArrayAdapter<String>(this, R.layout.item, tags);
             tagsGrid.setAdapter(arrayadapter);
             tagsGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 public void onItemClick(AdapterView<?> parent, View v,
@@ -134,5 +121,4 @@ public class MyHashtagsFragment extends Fragment {
         } else
             addToast("no tags were founds", Toast.LENGTH_SHORT);
     }
-
 }

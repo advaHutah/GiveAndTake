@@ -18,6 +18,8 @@ import com.example.win10.giveandtake.R;
 
 import java.util.ArrayList;
 
+//TODO delete after updating
+
 //fragment that display user profile info and function like give and take request
 
 public class MyMatchTagsFragment extends Fragment {

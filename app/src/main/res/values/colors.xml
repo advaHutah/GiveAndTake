@@ -13,4 +13,8 @@
     <color name="Yellow_GoldenRod">#DAA520</color>
     <color name="Yellow_LightYellow">#FFFFE0</color>
     <color name="Yellow_PaleGoldenrod">#EEE8AA</color>
+    <color name="red">#FF0000</color>
+    <color name="green">#33cc33</color>
+    <color name="blue">#4080bf</color>
+    <color name="tagsColor">#66ccff</color>
 </resources>

@@ -13,8 +13,6 @@ import java.util.Set;
 public class AppManager {
 
 
-
-
     public interface AppManagerCallback<T> {
         void onDataArrived(T value);
     }
@@ -28,6 +26,9 @@ public class AppManager {
     private FirebaseAuth mAuth;
     private Session selectedSession;
     private GoogleSignInClient googleSignInClient;
+    private ArrayList<String> myTakeRequestTags;
+    private ArrayList<String> myGiveRequestTags;
+
 
     private AppManager() {
         firebaseManager = FirebaseManager.getInstance();
@@ -102,6 +103,7 @@ public class AppManager {
         }
     }
 
+    //get all tags in DB based on request type
     public void getTags(Request.RequestType requestType, final AppManagerCallback<ArrayList<String>> callback) {
         this.firebaseManager.getTags(requestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
             @Override
@@ -109,6 +111,51 @@ public class AppManager {
                 callback.onDataArrived(value);
             }
         });
+    }
+
+    //get user match tags based on request type
+    public void getMyTakeMatchTags(final AppManagerCallback<ArrayList<String>> callback) {
+        Request.RequestType otherRequestType = Request.RequestType.GIVE;
+        myTakeRequestTags = currentUser.getMyTakeRequest().getTags();
+        if (myTakeRequestTags != null) {
+            this.firebaseManager.getTags(otherRequestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
+                @Override
+                public void onDataArrived(ArrayList<String> value) {
+                    ArrayList<String> matchTags = new ArrayList<>();
+                    for (String myTag : myTakeRequestTags) {
+                        if (value.contains(myTag)) {
+                            matchTags.add(myTag);
+                        }
+                    }
+                    callback.onDataArrived(matchTags);
+                }
+            });
+        } else {
+            callback.onDataArrived(new ArrayList<String>());
+        }
+    }
+
+    public void getMyGiveMatchTags(final AppManagerCallback<ArrayList<String>> callback) {
+
+        Request.RequestType otherRequestType = Request.RequestType.TAKE;
+        myGiveRequestTags = currentUser.getMyGiveRequest().getTags();
+
+        if (myGiveRequestTags != null) {
+            this.firebaseManager.getTags(otherRequestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
+                @Override
+                public void onDataArrived(ArrayList<String> value) {
+                    ArrayList<String> matchTags = new ArrayList<>();
+                    for (String myTag : myGiveRequestTags) {
+                        if (value.contains(myTag)) {
+                            matchTags.add(myTag);
+                        }
+                    }
+                    callback.onDataArrived(matchTags);
+                }
+            });
+        } else {
+            callback.onDataArrived(new ArrayList<String>());
+        }
     }
 
     public void setSelectedSession(Session selectedSession) {
@@ -247,15 +294,16 @@ public class AppManager {
 
     private void updateSessionMillisPassed(long millisPassed) {
         selectedSession.setMillisPassed(millisPassed);
-        firebaseManager.updateSessionMillisPassed(selectedSession.getId(),millisPassed);
+        firebaseManager.updateSessionMillisPassed(selectedSession.getId(), millisPassed);
     }
 
     public void resetOtherUserAndSession() {
         otherUser = null;
         selectedSession = null;
     }
+
     public void updateMyBalance() {
-        firebaseManager.updateBalanceOnDB(currentUser.getId(),currentUser.getBalance());
+        firebaseManager.updateBalanceOnDB(currentUser.getId(), currentUser.getBalance());
     }
 
 

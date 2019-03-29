@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/tagsColor"
+    tools:context="com.example.win10.giveandtake.UI.userMatch.UserMatchActivity">
+
+    <TextView
+        android:id="@+id/user_info_title"
+        android:text="@string/userMatchActivity_title"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:background="@color/blue"
+        android:textSize="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/uv_event_items"
+        android:paddingBottom="7dp"
+        android:clipToPadding="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:listitem="@layout/users_list_item"/>
+
+</LinearLayout>

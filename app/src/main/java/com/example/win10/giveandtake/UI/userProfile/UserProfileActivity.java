@@ -1,10 +1,8 @@
 package com.example.win10.giveandtake.UI.userProfile;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.HandlerThread;
@@ -18,8 +16,6 @@ import android.widget.TextView;
 
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.R;
-import com.example.win10.giveandtake.UI.userHashtags.HashtagsManagementActivity;
-import com.example.win10.giveandtake.UI.userMatch.MyMatchActivity;
 import com.example.win10.giveandtake.util.TimeConvertUtil;
 
 import java.io.InputStream;
@@ -31,8 +27,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private Handler imagesDownloaderHandler;
     private AppManager appManager;
 
-    private Button btnMyHashtags;
-    private Button btnMyMatch;
+
     private Button btnMyPhone;
     private TextView userNameText;
     private TextView userBalanceText;
@@ -61,8 +56,7 @@ public class UserProfileActivity extends AppCompatActivity {
         userBalanceText = (TextView) findViewById(R.id.my_profile_balance);
         userEmailText = (TextView) findViewById(R.id.my_profile_email);
         userImage = (ImageView) this.findViewById(R.id.my_profile_image);
-        btnMyHashtags = (Button) this.findViewById(R.id.btn_my_profile_hashtags);
-        btnMyMatch = (Button) this.findViewById(R.id.btn_my_profile_match);
+
         btnMyPhone = (Button) this.findViewById(R.id.btn_my_profile_phone);
 
         if (appManager.getCurrentUser() != null) {
@@ -73,19 +67,6 @@ public class UserProfileActivity extends AppCompatActivity {
             setUserBalance(appManager.getCurrentUser().getBalance());
         }
 
-
-        btnMyHashtags.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createHashtagsActivity();
-            }
-        });
-        btnMyMatch.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                createMyMatchActivity();
-            }
-        });
         btnMyPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
@@ -119,15 +100,6 @@ public class UserProfileActivity extends AppCompatActivity {
         }
     }
 
-    private void createHashtagsActivity() {
-        Intent intent = new Intent(this, HashtagsManagementActivity.class);
-        startActivity(intent);
-    }
-
-    private void createMyMatchActivity() {
-        Intent intent = new Intent(this, MyMatchActivity.class);
-        startActivity(intent);
-    }
 
     public void setUserImage(String imageUrl) {
         if (imageUrl != null) {
