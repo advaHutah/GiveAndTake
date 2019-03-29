@@ -43,7 +43,9 @@
         <activity android:name=".UI.handshakeSession.OtherUserSessionRequestActivity" />
         <activity android:name=".UI.mainScreen.MainScreenActivity" />
         <activity android:name=".UI.userHashtags.MyGiveOrTakeRequestActivity" />
-        <activity android:name=".UI.userMatch.UserMatchActivity"></activity>
+        <activity android:name=".UI.userMatch.UserMatchActivity" />
+        <activity android:name=".UI.login.TermsOfUseActivity" />
+        <activity android:name=".UI.login.SplashScreenActivity" />
     </application>
 
 </manifest>

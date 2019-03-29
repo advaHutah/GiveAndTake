@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.DBLogic.GiveAndTakeInstanceIdService;
 import com.example.win10.giveandtake.R;
-import com.example.win10.giveandtake.UI.handshakeSession.HandshakeActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -35,12 +34,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 
+//todo delete after full test of UI
+
 public class LoginFragment extends Fragment {
 
     private static final String TAG = "LoginFragment";
 
     private View view;
-    private TermsOfUseFragment termsOfUseFragment;
     private FragmentManager fragmentManager;
     private Button btnTermsOfUse;
     private com.google.android.gms.common.SignInButton btnSignInWithGoogle;
@@ -60,8 +60,7 @@ public class LoginFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_login, container, false);
 
         fragmentManager = getFragmentManager();
-        mAuth = FirebaseAuth.getInstance();
-        appManager = AppManager.getInstance();
+
         parentActivity = (LoginActivity) getActivity();
         createGoogleClient();
 
@@ -74,7 +73,9 @@ public class LoginFragment extends Fragment {
         btnTermsOfUse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                parentActivity.changeToTermsOfUseFragment();
+                //parentActivity.changeToTermsOfUseFragment();
+                Intent termOfUse = new Intent(parentActivity,TermsOfUseActivity.class);
+                startActivity(termOfUse);
             }
         });
         btnSignInWithGoogle.setOnClickListener(new View.OnClickListener() {
@@ -174,7 +175,7 @@ public class LoginFragment extends Fragment {
                     //change to user fragment
                     dataArrived = true;
                     spinner.setVisibility(View.GONE);
-                    parentActivity.createMainScreenActivity();
+                    parentActivity.startMainScreenActivity();
                 }
             });
             new Handler().postDelayed(new Runnable() {
@@ -192,7 +193,7 @@ public class LoginFragment extends Fragment {
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken(getString(R.string.serverId))
                 .requestEmail()
                 .build();
         // Build a GoogleSignInClient with the options specified by gso.

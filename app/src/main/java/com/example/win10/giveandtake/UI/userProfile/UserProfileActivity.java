@@ -1,11 +1,13 @@
 package com.example.win10.giveandtake.UI.userProfile;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,7 +18,10 @@ import android.widget.TextView;
 
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.R;
+import com.example.win10.giveandtake.UI.login.LoginActivity;
 import com.example.win10.giveandtake.util.TimeConvertUtil;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 
 import java.io.InputStream;
 
@@ -29,6 +34,7 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
     private Button btnMyPhone;
+    private Button btnLogout;
     private TextView userNameText;
     private TextView userBalanceText;
     private TextView userEmailText;
@@ -58,6 +64,7 @@ public class UserProfileActivity extends AppCompatActivity {
         userImage = (ImageView) this.findViewById(R.id.my_profile_image);
 
         btnMyPhone = (Button) this.findViewById(R.id.btn_my_profile_phone);
+        btnLogout = (Button) this.findViewById(R.id.btn_logout);
 
         if (appManager.getCurrentUser() != null) {
             userNameText.setText(appManager.getCurrentUser().getFullName());
@@ -74,6 +81,14 @@ public class UserProfileActivity extends AppCompatActivity {
                 }
 
         });
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View view) {
+               signOut();
+            }
+
+        });
+
     }
 
     @Override
@@ -81,6 +96,25 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onStart();
         if(!bPhoneNumber){
         createPhoneNumberDialog();}
+    }
+
+    private void signOut() {
+        // Firebase sign out
+        appManager.signOut();
+
+        // Google sign out
+        appManager.getGoogleSignInClient().signOut().addOnCompleteListener(this,
+                new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        createLoginActivity();
+                    }
+                });
+    }
+
+    private void createLoginActivity() {
+        Intent loginActivity = new Intent(this, LoginActivity.class);
+        startActivity(loginActivity);
     }
 
     private void setUserBalance(long balance) {

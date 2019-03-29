@@ -213,6 +213,7 @@ public class AppManager {
         firebaseManager.addUserInfoToDB(currentUser);
     }
 
+
     public void userLogedIn(FirebaseUser account, final AppManager.AppManagerCallback<Boolean> callback) {
         final FirebaseUser theAccount = account;
         //get user info from db - if exist get info else create new user

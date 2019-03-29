@@ -1,4 +1,4 @@
-package com.example.win10.giveandtake.UI.login;
+package com.example.win10.giveandtake.UI.mainScreen;
 
 import android.view.View;
 

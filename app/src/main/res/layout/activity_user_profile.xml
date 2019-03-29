@@ -76,5 +76,11 @@
             android:text="* your phone number must be true so others will be able to communicate for services"
             android:textSize="20dp" />
 
+        <Button
+            android:id="@+id/btn_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="התנתק"/>
+
 
 </LinearLayout>

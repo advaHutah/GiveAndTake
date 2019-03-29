@@ -39,9 +39,13 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'com.google.code.gson:gson:2.8.0'
     implementation 'com.github.Cutta:TagView:master'
+    implementation 'com.samigehi:loadingview:1.1'
 
 
 }
+
+
+
 
 
 

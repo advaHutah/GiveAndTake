@@ -13,8 +13,7 @@ import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.Logic.TagUserInfo;
 import com.example.win10.giveandtake.R;
-import com.example.win10.giveandtake.UI.login.AdapterClickListener;
-import com.example.win10.giveandtake.UI.userMatch.UserListAdapter;
+import com.example.win10.giveandtake.UI.mainScreen.AdapterClickListener;
 import com.example.win10.giveandtake.UI.userProfile.OtherUserActivity;
 
 import java.util.ArrayList;
