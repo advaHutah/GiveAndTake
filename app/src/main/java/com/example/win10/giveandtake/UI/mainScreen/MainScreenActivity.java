@@ -16,6 +16,7 @@ import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.UI.tags.TagsMatchFragment;
 import com.example.win10.giveandtake.UI.userHashtags.MyGiveOrTakeRequestActivity;
 import com.example.win10.giveandtake.UI.userProfile.UserProfileActivity;
+import com.example.win10.giveandtake.util.MyConstants;
 import com.example.win10.giveandtake.util.TimeConvertUtil;
 
 public class MainScreenActivity extends FragmentActivity {
@@ -98,7 +99,7 @@ public class MainScreenActivity extends FragmentActivity {
 
     private void createMyGiveOrTakeActivity(boolean isTakeRequest) {
         Intent myGiveOrTakeRequestActivity = new Intent(this, MyGiveOrTakeRequestActivity.class);
-        myGiveOrTakeRequestActivity.putExtra("isTakeRequst",isTakeRequest);
+        myGiveOrTakeRequestActivity.putExtra(MyConstants.IS_TAKE_REQUEST,isTakeRequest);
         startActivity(myGiveOrTakeRequestActivity);
     }
 

@@ -4,44 +4,54 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/blue"
     android:orientation="vertical"
     tools:context="com.example.win10.giveandtake.UI.userHashtags.MyGiveOrTakeRequestActivity">
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/banthink"
+                android:text="@string/GiveOrTakeReq_viewTitle"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="30dp"
+                android:textStyle="bold" />
 
-    <TextView
+            <TextView
+                android:id="@+id/myHashtagActivity_title_request_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="25dp"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/banthink"
-        android:text="My Hashtags"
-        android:textAlignment="center"
-        android:textSize="30dp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/myHashtagActivity_title_request_type"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:textSize="20dp"
-        android:layout_gravity="center"/>
+        android:layout_margin="15dp">
 
-    <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
-
-        <EditText
-            android:id="@+id/request_input_text"
+        <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="type here"
-            android:maxLines="5"
-            android:paddingEnd="10dp"
-            android:paddingStart="10dp"
-            android:textColor="@android:color/black" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_margin="20dp"
+            android:textColorHint="@color/blue">
+
+            <EditText
+                android:id="@+id/request_input_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/GiveOrTakeReq_inputTextHint"
+                android:maxLines="5"
+                android:paddingEnd="10dp"
+                android:paddingStart="10dp"
+                android:textColor="@color/blue"
+                android:textColorHint="@color/blue" />
+        </android.support.design.widget.TextInputLayout>
+    </android.support.v7.widget.CardView>
 
     <Button
         android:id="@+id/request_find_text_btn"
@@ -51,18 +61,22 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:background="@drawable/button_shape_green"
-        android:text="find tags"
-        android:textColor="@android:color/black"
+        android:text="@string/GiveOrTakeReq_findTextBtn"
+        android:textColor="@color/blue"
         android:textStyle="bold" />
 
-    <GridView
-        android:id="@+id/request_tags_result"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:numColumns="3"></GridView>
+        android:layout_marginTop="10dp">
 
+        <com.cunoraz.tagview.TagView
+            android:id="@+id/GiveOrTakeReq_tag_group"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp" />
+
+    </ScrollView>
 
     <Button
         android:id="@+id/make_request_btn"
@@ -72,7 +86,8 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:background="@drawable/button_shape_green"
-        android:text="make request"
+        android:text="@string/GiveOrTakeReq_afterSelectTags"
         android:textColor="@android:color/black"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone" />
 </LinearLayout>

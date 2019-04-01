@@ -1,5 +1,6 @@
 package com.example.win10.giveandtake.UI.handshakeSession;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Context;
@@ -79,12 +80,12 @@ public class HandshakeSettingsFragment extends Fragment {
                     public void onDataArrived(Session.Status value) {
                         if(value == Session.Status.accepted) {
                             changeTextColorToGrey(step2);
-                            addToast("The session request was accepted", Toast.LENGTH_SHORT);
+                            addToast("The session request was accepted", Toast.LENGTH_SHORT,getActivity());
                             // step3: enable start service button
                             enableButton(btnStartProcess);
                         }
                         else if(value == Session.Status.rejected){
-                            addToast("The session request was rejected", Toast.LENGTH_SHORT);
+                            addToast("The session request was rejected", Toast.LENGTH_SHORT,getActivity());
                         }
                     }
                 });
@@ -125,8 +126,8 @@ public class HandshakeSettingsFragment extends Fragment {
         theButton.setEnabled(true);
     }
 
-    public void addToast(String text, int duration) {
-        Context context = getActivity().getApplicationContext();
+    public void addToast(String text, int duration, Activity activity) {
+        Context context = activity.getApplicationContext();
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }

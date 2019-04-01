@@ -79,6 +79,18 @@
     <string name="fragmentMainScreen_balance_lable_text">יתרה נוכחית:</string>
     <string name="userMatchActivity_title">משתמשים מתאימים</string>
     <string name="serverId">917990523248-iq18cvbqbv2uju4sv37t46mv53mgdl6e.apps.googleusercontent.com</string>
+    <string name="GiveOrTakeReq_findTextBtn">מצא תגיות</string>
+    <string name="GiveOrTakeReq_afterSelectTags">המשך</string>
+    <string name="GiveOrTakeReq_viewTitle">הבקשה שלי</string>
+    <string name="GiveOrTakeReq_inputTextHint">הקלד כאן</string>
+    <string name="GiveOrTakeReq_discriptionTake">מה תרצה לקחת?</string>
+    <string name="GiveOrTakeReq_discriptionGive">מה תרצה לתת?</string>
+    <string name="GiveOrTakeReq_successMsg">הבקשה הושלמה</string>
+    <string name="GiveOrTakeReq_noTagsMsg">לא נמצאו תגיות מתאימות</string>
+    <string name="userProfile_phoneNote">*מספר הטלפון יפורסם בעת החלפת שירותים באישורך בלבד</string>
+    <string name="btn_logout_text">התנתק</string>
+    <string name="btnPhoneNum_text">יש להכניס מספר טלפון</string>
+    <string name="phoneNum_InvalidInputErrMsg">המספר לא תקין</string>
 
 
 </resources>

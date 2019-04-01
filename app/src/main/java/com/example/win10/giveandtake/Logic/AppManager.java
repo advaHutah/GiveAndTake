@@ -79,7 +79,7 @@ public class AppManager {
         //cloud function generates tags in DB
     }
 
-    public void addRequestFinal(Set<String> selectedTags, Request.RequestType requestType) {
+    public void addRequestFinal(ArrayList<String> selectedTags, Request.RequestType requestType) {
         this.updateRequestTagsUserValidated(selectedTags, requestType);
     }
 
@@ -197,7 +197,7 @@ public class AppManager {
         firebaseManager.signOut();
     }
 
-    public void updateRequestTagsUserValidated(Set<String> selectedTags, Request.RequestType requestType) {
+    public void updateRequestTagsUserValidated(ArrayList<String> selectedTags, Request.RequestType requestType) {
         Request myRequest;
         //update current user request
         if (requestType == Request.RequestType.TAKE)
@@ -205,7 +205,7 @@ public class AppManager {
         else
             myRequest = currentUser.getMyGiveRequest();
 
-        myRequest.setTags(new ArrayList<String>(selectedTags));
+        myRequest.setTags(selectedTags);
         myRequest.setIsFinal(1);
 
         //update firebase

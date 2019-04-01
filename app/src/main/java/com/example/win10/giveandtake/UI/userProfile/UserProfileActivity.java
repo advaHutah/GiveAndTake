@@ -15,15 +15,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.UI.login.LoginActivity;
+import com.example.win10.giveandtake.util.GeneralUtil;
 import com.example.win10.giveandtake.util.TimeConvertUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.squareup.okhttp.internal.Util;
 
 import java.io.InputStream;
+import java.util.regex.Pattern;
 
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -40,11 +44,11 @@ public class UserProfileActivity extends AppCompatActivity {
     private TextView userEmailText;
     private ImageView userImage;
 
-    private boolean bPhoneNumber = false;
     private String phoneNumber;
 
-    final Activity UActivity = this;
+    public static final String PHONE_RGX = "^[0-9]{10}$";
 
+    final Activity UActivity = this;
 
 
     @Override
@@ -74,28 +78,27 @@ public class UserProfileActivity extends AppCompatActivity {
             setUserBalance(appManager.getCurrentUser().getBalance());
         }
 
+         phoneNumber = appManager.getCurrentUser().getPhoneNumber();
+        if (phoneNumber == null || phoneNumber.isEmpty()) {
+            btnMyPhone.setText(R.string.btnPhoneNum_text);
+
+        }
+
         btnMyPhone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
                 createPhoneNumberDialog();
-                }
+            }
 
         });
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View view) {
-               signOut();
+                signOut();
             }
 
         });
 
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if(!bPhoneNumber){
-        createPhoneNumberDialog();}
     }
 
     private void signOut() {
@@ -124,13 +127,8 @@ public class UserProfileActivity extends AppCompatActivity {
 
 
     private void setUserPhone(String phoneNumber) {
-        if (phoneNumber!=null) {
+        if (phoneNumber != null) {
             btnMyPhone.setText(phoneNumber);
-//            this.phoneNumber = phoneNumber;
-            bPhoneNumber = true;
-        } else {
-            btnMyPhone.setText("Press to add phone number");
-            bPhoneNumber = false;
         }
     }
 
@@ -142,17 +140,20 @@ public class UserProfileActivity extends AppCompatActivity {
             userImage.setImageResource(R.drawable.default_user);
     }
 
-    private void createPhoneNumberDialog(){
+    private void createPhoneNumberDialog() {
         new InputSenderDialog(UActivity, new InputSenderDialog.InputSenderDialogListener() {
             @Override
             public void onOK(final String number) {
-                phoneNumber = number;
-                setUserPhone(phoneNumber);
-                appManager.updateUserPhoneNumer(phoneNumber);
-                Log.d(TAG, "The user tapped OK, number is " + number);
+                Pattern pattern = Pattern.compile(PHONE_RGX);
+                if (pattern.matcher(number).matches()) {
+                    setUserPhone(number);
+                    appManager.updateUserPhoneNumer(number);
+                } else {
+                    GeneralUtil.addToast(getApplication().getString(R.string.phoneNum_InvalidInputErrMsg), Toast.LENGTH_LONG, getApplication());
+                    btnMyPhone.setText(getApplication().getString(R.string.btnPhoneNum_text));
+                }
             }
-
-            @Override
+        @Override
             public void onCancel(String number) {
                 Log.d(TAG, "The user tapped Cancel, number is " + number);
             }

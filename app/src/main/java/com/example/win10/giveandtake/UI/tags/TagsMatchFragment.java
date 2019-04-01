@@ -15,6 +15,7 @@ import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.UI.userMatch.UserMatchActivity;
 import com.example.win10.giveandtake.UI.mainScreen.MainScreenActivity;
+import com.example.win10.giveandtake.util.MyConstants;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +25,6 @@ public class TagsMatchFragment extends Fragment {
     private AppManager appManager;
     private List<String> myTagsString;
     private TagView tagGroup;
-    private MainScreenActivity parentActivity;
     boolean isTakeRequest;
     private Request.RequestType requestType;
 
@@ -32,7 +32,7 @@ public class TagsMatchFragment extends Fragment {
     public static TagsMatchFragment newInstance(boolean isTakeRequst) {
         TagsMatchFragment myMatchTagsFragment = new TagsMatchFragment();
         Bundle args = new Bundle();
-        args.putBoolean("isTakeRequst", isTakeRequst);
+        args.putBoolean(MyConstants.IS_TAKE_REQUEST, isTakeRequst);
         myMatchTagsFragment.setArguments(args);
         return myMatchTagsFragment;
     }
@@ -42,7 +42,6 @@ public class TagsMatchFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_tags_match, container, false);
 
         appManager = AppManager.getInstance();
-        parentActivity = (MainScreenActivity) getActivity();
 
         tagGroup = (TagView) view.findViewById(R.id.fragmentGiveMatch_tag_group);
         myTagsString = new ArrayList<String>();
@@ -58,7 +57,7 @@ public class TagsMatchFragment extends Fragment {
     }
 
     private Request.RequestType getRequestTypeAccordingToArgs() {
-        isTakeRequest = this.getArguments().getBoolean("isTakeRequst");
+        isTakeRequest = this.getArguments().getBoolean(MyConstants.IS_TAKE_REQUEST);
         if (isTakeRequest) {
             return Request.RequestType.TAKE;
         } else {
@@ -74,6 +73,7 @@ public class TagsMatchFragment extends Fragment {
                 ArrayList<Tag> myTags = new ArrayList<>();
                 for (String text : myTagsString) {
                     Tag newTag = new Tag(text);
+                    setTagDesign(newTag);
                     myTags.add(newTag);
                 }
                 tagGroup.addTags(myTags);
@@ -87,11 +87,11 @@ public class TagsMatchFragment extends Fragment {
         tagGroup.setOnTagClickListener(new TagView.OnTagClickListener() {
             @Override
             public void onTagClick(Tag tag, int position) {
-                Intent userMatchActivity = new Intent(parentActivity, UserMatchActivity.class);
-                userMatchActivity.putExtra("tag", tag.getText());
+                Intent userMatchActivity = new Intent(getMainScreenActivity(), UserMatchActivity.class);
+                userMatchActivity.putExtra(MyConstants.SELECTED_TAG, tag.getText());
                 boolean isTakeRequest = requestType == Request.RequestType.TAKE ? true : false;
-                userMatchActivity.putExtra("isTakeRequst", isTakeRequest);
-                userMatchActivity.putExtra("isfromNotification", false);
+                userMatchActivity.putExtra(MyConstants.IS_TAKE_REQUEST, isTakeRequest);
+                userMatchActivity.putExtra(MyConstants.IS_FROM_NOTIFICATION, false);
                 startActivity(userMatchActivity);
             }
         });
@@ -129,5 +129,9 @@ public class TagsMatchFragment extends Fragment {
         tag.setLayoutColor(Color.parseColor("#66ccff"));
         tag.setTagTextSize(30);
         tag.setRadius(30f);
+    }
+
+    private MainScreenActivity getMainScreenActivity(){
+        return (MainScreenActivity)getActivity();
     }
 }

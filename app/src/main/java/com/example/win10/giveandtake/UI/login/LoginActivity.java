@@ -1,20 +1,24 @@
 package com.example.win10.giveandtake.UI.login;
 
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.UI.mainScreen.MainScreenActivity;
+import com.example.win10.giveandtake.util.MyConstants;
 import com.github.loadingview.LoadingDialog;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -46,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
     private SignInButton btnSignInWithGoogle;
 
     LoadingDialog dialog;
+    private boolean dataArrived;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +60,8 @@ public class LoginActivity extends AppCompatActivity {
         appManager = AppManager.getInstance();
         sharedPreferences = getSharedPreferences("com.example.win10.giveandtake", MODE_PRIVATE);
         dialog = LoadingDialog.Companion.get(this);
+
+
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -82,21 +89,21 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onStart() {
+        
         super.onStart();
         //check if it is the firs run , if it is display splash screen
-        if (sharedPreferences.getBoolean("firstRun", true)) {
+        if (sharedPreferences.getBoolean(MyConstants.FIRST_RUN, true)) {
             handleFirstRun();
         } else {
             // Check if user is signed in (non-null) and update UI accordingly.
             FirebaseUser currentUser = mAuth.getCurrentUser();
+            dataArrived=false;
             updateUI(currentUser);
         }
     }
 
     private void handleFirstRun() {
-        editor = sharedPreferences.edit();
-        editor.putBoolean("firstRun", false);
-        editor.apply();
+        sharedPreferences.edit().putBoolean(MyConstants.FIRST_RUN, false).apply();
         startSplashActivity();
     }
 
@@ -118,6 +125,7 @@ public class LoginActivity extends AppCompatActivity {
             appManager.userLogedIn(user, new AppManager.AppManagerCallback<Boolean>() {
                 @Override
                 public void onDataArrived(Boolean value) {
+                    dataArrived = true;
                     hideProgressDialog();
                     //change to user fragment
                     Intent mainScreen = new Intent(getApplication(), MainScreenActivity.class);
@@ -126,12 +134,14 @@ public class LoginActivity extends AppCompatActivity {
             });
 
             //todo delete
-//            new Handler().postDelayed(new Runnable() {
-//                public void run() {
-//                    hideProgressDialog();
-//                    Toast.makeText(getApplication(), "Couldn't connect, please try to login again.", Toast.LENGTH_LONG).show();
-//                }
-//            }, 15000);
+            new Handler().postDelayed(new Runnable() {
+                public void run() {
+                    if(!dataArrived) {
+                        hideProgressDialog();
+                        Toast.makeText(getApplication(), "Couldn't connect, please try to login again.", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }, MyConstants.FETCH_USER_DATA_TIMEOUT);
         }
     }
 
@@ -208,4 +218,5 @@ public class LoginActivity extends AppCompatActivity {
                     }
                 });
     }
+
 }

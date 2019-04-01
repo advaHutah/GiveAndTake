@@ -81,7 +81,7 @@
 
 
             <Button
-                android:id="@+id/mainScreenActivity_giveBtn"
+                android:id="@+id/mainScreenActivity_takeBtn"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@drawable/button_round_give"
@@ -99,7 +99,7 @@
                 android:background="@drawable/ic_search_black_24dp" />
 
             <Button
-                android:id="@+id/mainScreenActivity_takeBtn"
+                android:id="@+id/mainScreenActivity_giveBtn"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:background="@drawable/button_round_take"

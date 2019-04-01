@@ -8,27 +8,26 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.TextView;
 
+import com.cunoraz.tagview.TagView;
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.Logic.TagUserInfo;
 import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.UI.mainScreen.AdapterClickListener;
 import com.example.win10.giveandtake.UI.userProfile.OtherUserActivity;
+import com.example.win10.giveandtake.util.MyConstants;
 
 import java.util.ArrayList;
 
 public class UserMatchActivity extends AppCompatActivity implements AdapterClickListener {
 
-    private FragmentManager fragmentManager;
     private ArrayList<TagUserInfo> usersInfoList;
-    private GridView matchingUsersGrid;
     private AppManager appManager;
-
     private RecyclerView recyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager layoutManager;
     private UserListAdapter adapter;
+    private TextView tagDiscription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,10 +38,12 @@ public class UserMatchActivity extends AppCompatActivity implements AdapterClick
         initList();
 
         Intent intent = getIntent();
-        boolean isTakeRequest = intent.getBooleanExtra("isTakeRequst", true);
-        boolean fromNotification = intent.getBooleanExtra("isfromNotification", false);
-        String selectedTag = intent.getStringExtra("tag");
+        boolean isTakeRequest = intent.getBooleanExtra(MyConstants.IS_TAKE_REQUEST, true);
+        boolean fromNotification = intent.getBooleanExtra(MyConstants.IS_FROM_NOTIFICATION, false);
+        String selectedTag = intent.getStringExtra(MyConstants.SELECTED_TAG);
 
+        tagDiscription=(TextView)findViewById(R.id.userMatchActivity_tag);
+        tagDiscription.setText("עבור "+"'"+selectedTag+"'");
 
         Request.RequestType otherRequestType = isTakeRequest ? Request.RequestType.GIVE : Request.RequestType.TAKE;
         if (fromNotification) {
@@ -69,7 +70,7 @@ public class UserMatchActivity extends AppCompatActivity implements AdapterClick
     private void initList() {
         adapter = new UserListAdapter();
         adapter.setClickListener(this);
-        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.uv_event_items);
+        recyclerView = (RecyclerView) findViewById(R.id.uv_event_items);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
     }

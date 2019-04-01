@@ -1,86 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="10dp"
-    android:fitsSystemWindows="true"
-    android:orientation="vertical"
+    android:background="@color/blue"
     tools:context="com.example.win10.giveandtake.UI.userProfile.UserProfileActivity">
 
-        <TextView
-            android:id="@+id/my_profile_title"
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/banthink"
-            android:text="My Profile"
-            android:textAlignment="center"
-            android:textSize="30dp"
-            android:textStyle="bold" />
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="20dp">
 
-        <ImageView
-            android:id="@+id/my_profile_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_gravity="center" />
+            <ImageView
+                android:id="@+id/my_profile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center" />
 
-        <TextView
-            android:id="@+id/my_profile_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text=""
-            android:textSize="30dp" />
+            <TextView
+                android:id="@+id/my_profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:text=""
+                android:textSize="30dp"
+                android:textColor="@android:color/black"/>
 
-        <TextView
-            android:id="@+id/my_profile_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text=""
-            android:textSize="20dp" />
+            <TextView
+                android:id="@+id/my_profile_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text=""
+                android:textSize="20dp"
+                android:textColor="@android:color/black"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="20dp"
-            android:text="Balance:"
-            android:textSize="20dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:text="@string/fragmentMainScreen_balance_lable_text"
+                android:textSize="20dp"
+                android:textColor="@android:color/black"/>
 
-        <TextView
-            android:id="@+id/my_profile_balance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text=""
-            android:textSize="20dp" />
+            <TextView
+                android:id="@+id/my_profile_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text=""
+                android:textSize="20dp"
+                android:textColor="@color/green"/>
 
-        <Button
-            android:id="@+id/btn_my_profile_phone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@color/white"
-            android:textSize="15dp" />
+            <Button
+                android:id="@+id/btn_my_profile_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/button_shape_green"
+                android:textColor="@color/blue"
+                android:textSize="15dp"
+                android:outlineSpotShadowColor="@color/blue"
+                android:text="@string/btnPhoneNum_text"/>
 
-        <TextView
-            android:id="@+id/my_profile_phone_msg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="* your phone number must be true so others will be able to communicate for services"
-            android:textSize="20dp" />
+            <TextView
+                android:id="@+id/my_profile_phone_msg"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/userProfile_phoneNote"
+                android:textSize="15sp" />
 
-        <Button
-            android:id="@+id/btn_logout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="התנתק"/>
-
-
-</LinearLayout>
+            <Button
+                android:id="@+id/btn_logout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/button_shape_green"
+                android:textColor="@color/red"
+                android:text="@string/btn_logout_text" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
