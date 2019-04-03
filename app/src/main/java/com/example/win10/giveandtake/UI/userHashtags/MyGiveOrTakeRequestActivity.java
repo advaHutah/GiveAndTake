@@ -103,33 +103,32 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
             @Override
             public void onDataArrived(ArrayList<String> value) {
                 myTagsString = value;
-                showTags(myTagsString);
-                handleRequestBtnVisibilty();
+                if (myTagsString != null && !myTagsString.isEmpty()) {
+                    showTags(myTagsString);
+                    setButtonVisibility(requestBtn, View.GONE);
+                } else {
+                    addToast(getString(R.string.GiveOrTakeReq_noTagsMsg), Toast.LENGTH_SHORT);
+                    setButtonVisibility(requestBtn, View.VISIBLE);
+                }
+
             }
         });
     }
 
-    private void handleRequestBtnVisibilty() {
-        if(myTagsString.isEmpty()){
-            requestBtn.setVisibility(View.GONE);
-        }
-        else {
-            requestBtn.setVisibility(View.VISIBLE);
-        }
+    private void setButtonVisibility(Button button, int state) {
+        button.setVisibility(state);
+
     }
 
+
     public void showTags(final ArrayList<String> myTagsString) {
-        if (myTagsString != null && !myTagsString.isEmpty()) {
-            ArrayList<Tag> myTags = new ArrayList<>();
-            for (String text : myTagsString) {
-                Tag newTag = new Tag(text);
-                setTagDesign(newTag);
-                myTags.add(newTag);
-            }
-            tagGroup.addTags(myTags);
-        } else {
-            addToast(getString(R.string.GiveOrTakeReq_noTagsMsg), Toast.LENGTH_SHORT);
+        ArrayList<Tag> myTags = new ArrayList<>();
+        for (String text : myTagsString) {
+            Tag newTag = new Tag(text);
+            setTagDesign(newTag);
+            myTags.add(newTag);
         }
+        tagGroup.addTags(myTags);
     }
 
 
@@ -145,9 +144,11 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         myTagsString.remove(tag.getText());
-                        handleRequestBtnVisibilty();
                         view.remove(position);
                         Toast.makeText(MyGiveOrTakeRequestActivity.this, "\"" + tag.getText() + "\" deleted", Toast.LENGTH_SHORT).show();
+                        if (myTagsString.isEmpty()) {
+                            setButtonVisibility(requestBtn, View.GONE);
+                        }
                     }
                 });
                 builder.setNegativeButton("לא", null);

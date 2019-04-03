@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,8 +20,10 @@ import android.widget.Toast;
 
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.R;
+import com.example.win10.giveandtake.UI.GTActivity;
 import com.example.win10.giveandtake.UI.login.LoginActivity;
 import com.example.win10.giveandtake.util.GeneralUtil;
+import com.example.win10.giveandtake.util.MyConstants;
 import com.example.win10.giveandtake.util.TimeConvertUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,11 +32,10 @@ import com.squareup.okhttp.internal.Util;
 import java.io.InputStream;
 import java.util.regex.Pattern;
 
-public class UserProfileActivity extends AppCompatActivity {
+public class UserProfileActivity extends GTActivity {
 
 
     private static final String TAG = "UserProfileActivity";
-    private Handler imagesDownloaderHandler;
     private AppManager appManager;
 
 
@@ -58,7 +60,6 @@ public class UserProfileActivity extends AppCompatActivity {
 
         HandlerThread handlerThread = new HandlerThread("images-downloader");
         handlerThread.start();
-        imagesDownloaderHandler = new Handler(handlerThread.getLooper());
 
         appManager = AppManager.getInstance();
 
@@ -69,20 +70,6 @@ public class UserProfileActivity extends AppCompatActivity {
 
         btnMyPhone = (Button) this.findViewById(R.id.btn_my_profile_phone);
         btnLogout = (Button) this.findViewById(R.id.btn_logout);
-
-        if (appManager.getCurrentUser() != null) {
-            userNameText.setText(appManager.getCurrentUser().getFullName());
-            userEmailText.setText("(" + appManager.getCurrentUser().getEmail() + ")");
-            setUserImage(appManager.getCurrentUser().getPhotoUrl());
-            setUserPhone(appManager.getCurrentUser().getPhoneNumber());
-            setUserBalance(appManager.getCurrentUser().getBalance());
-        }
-
-         phoneNumber = appManager.getCurrentUser().getPhoneNumber();
-        if (phoneNumber == null || phoneNumber.isEmpty()) {
-            btnMyPhone.setText(R.string.btnPhoneNum_text);
-
-        }
 
         btnMyPhone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -101,6 +88,22 @@ public class UserProfileActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        userNameText.setText(appManager.getCurrentUser().getFullName());
+        userEmailText.setText("(" + appManager.getCurrentUser().getEmail() + ")");
+        setUserImage(appManager.getCurrentUser().getPhotoUrl());
+        setUserPhone(appManager.getCurrentUser().getPhoneNumber());
+        setUserBalance(appManager.getCurrentUser().getBalance());
+        phoneNumber = appManager.getCurrentUser().getPhoneNumber();
+
+        if (phoneNumber == null || phoneNumber.isEmpty()) {
+            btnMyPhone.setText(R.string.btnPhoneNum_text);
+        }
+    }
+
     private void signOut() {
         // Firebase sign out
         appManager.signOut();
@@ -110,14 +113,9 @@ public class UserProfileActivity extends AppCompatActivity {
                 new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
-                        createLoginActivity();
+                        finish();
                     }
                 });
-    }
-
-    private void createLoginActivity() {
-        Intent loginActivity = new Intent(this, LoginActivity.class);
-        startActivity(loginActivity);
     }
 
     private void setUserBalance(long balance) {
@@ -153,7 +151,8 @@ public class UserProfileActivity extends AppCompatActivity {
                     btnMyPhone.setText(getApplication().getString(R.string.btnPhoneNum_text));
                 }
             }
-        @Override
+
+            @Override
             public void onCancel(String number) {
                 Log.d(TAG, "The user tapped Cancel, number is " + number);
             }
@@ -183,5 +182,11 @@ public class UserProfileActivity extends AppCompatActivity {
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
     }
 }

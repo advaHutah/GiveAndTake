@@ -1,5 +1,7 @@
 package com.example.win10.giveandtake.Logic;
 
+import android.support.annotation.Nullable;
+
 import com.example.win10.giveandtake.DBLogic.FirebaseManager;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
@@ -61,6 +63,7 @@ public class AppManager {
         return googleSignInClient;
     }
 
+    @Nullable
     public User getCurrentUser() {
         return currentUser;
     }
@@ -116,8 +119,9 @@ public class AppManager {
     //get user match tags based on request type
     public void getMyTakeMatchTags(final AppManagerCallback<ArrayList<String>> callback) {
         Request.RequestType otherRequestType = Request.RequestType.GIVE;
-        myTakeRequestTags = currentUser.getMyTakeRequest().getTags();
-        if (myTakeRequestTags != null) {
+        if (currentUser != null && currentUser.getMyTakeRequest().getTags() != null) {
+            myTakeRequestTags = currentUser.getMyTakeRequest().getTags();
+
             this.firebaseManager.getTags(otherRequestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
                 @Override
                 public void onDataArrived(ArrayList<String> value) {
@@ -130,6 +134,7 @@ public class AppManager {
                     callback.onDataArrived(matchTags);
                 }
             });
+
         } else {
             callback.onDataArrived(new ArrayList<String>());
         }
@@ -138,9 +143,8 @@ public class AppManager {
     public void getMyGiveMatchTags(final AppManagerCallback<ArrayList<String>> callback) {
 
         Request.RequestType otherRequestType = Request.RequestType.TAKE;
-        myGiveRequestTags = currentUser.getMyGiveRequest().getTags();
-
-        if (myGiveRequestTags != null) {
+        if (currentUser != null && currentUser.getMyGiveRequest().getTags() != null) {
+            myGiveRequestTags = currentUser.getMyGiveRequest().getTags();
             this.firebaseManager.getTags(otherRequestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
                 @Override
                 public void onDataArrived(ArrayList<String> value) {
@@ -195,6 +199,7 @@ public class AppManager {
 
     public void signOut() {
         firebaseManager.signOut();
+        this.setCurrentUser(null);
     }
 
     public void updateRequestTagsUserValidated(ArrayList<String> selectedTags, Request.RequestType requestType) {

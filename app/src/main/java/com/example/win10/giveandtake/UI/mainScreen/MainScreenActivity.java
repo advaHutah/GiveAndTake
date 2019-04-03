@@ -16,8 +16,11 @@ import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.UI.tags.TagsMatchFragment;
 import com.example.win10.giveandtake.UI.userHashtags.MyGiveOrTakeRequestActivity;
 import com.example.win10.giveandtake.UI.userProfile.UserProfileActivity;
+import com.example.win10.giveandtake.util.CreateActivityUtil;
 import com.example.win10.giveandtake.util.MyConstants;
 import com.example.win10.giveandtake.util.TimeConvertUtil;
+
+import org.jetbrains.annotations.Contract;
 
 public class MainScreenActivity extends FragmentActivity {
 
@@ -46,14 +49,15 @@ public class MainScreenActivity extends FragmentActivity {
         takeBtn = (Button) findViewById(R.id.mainScreenActivity_takeBtn);
         exploreBtn = (Button) findViewById(R.id.mainScreenActivity_exploreBtn);
 
-        if (appManager.getCurrentUser() != null) {
-            userNameText.setText("שלום " + appManager.getCurrentUser().getFullName());
-            setUserBalance(appManager.getCurrentUser().getBalance());
-        }
+
         userProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createUserProfileActivity();
+                if (appManager.getCurrentUser() != null) {
+                    createUserProfileActivity();
+                } else {
+                    CreateActivityUtil.createLoginActivity(getMainScreenActivity());
+                }
             }
         });
         giveBtn.setOnClickListener(new View.OnClickListener() {
@@ -78,10 +82,23 @@ public class MainScreenActivity extends FragmentActivity {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         adapter = new TabAdapter(getSupportFragmentManager());
-        adapter.addFragment( TagsMatchFragment.newInstance(false), "התאמות 'קח'");
+        adapter.addFragment(TagsMatchFragment.newInstance(false), "התאמות 'קח'");
         adapter.addFragment(TagsMatchFragment.newInstance(true), "התאמות 'תן'");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (appManager.getCurrentUser() != null) {
+            userNameText.setText("שלום " + appManager.getCurrentUser().getFullName());
+            setUserBalance(appManager.getCurrentUser().getBalance());
+        } else {
+            userNameText.setText("שלום אורח");
+            setUserBalance(0);
+        }
     }
 
     private void createGiveRequestActivity() {
@@ -94,12 +111,13 @@ public class MainScreenActivity extends FragmentActivity {
 
     private void createUserProfileActivity() {
         Intent intent = new Intent(this, UserProfileActivity.class);
+        intent.putExtra(MyConstants.UID, appManager.getCurrentUser() != null ? appManager.getCurrentUser().getId() : null);
         startActivity(intent);
     }
 
     private void createMyGiveOrTakeActivity(boolean isTakeRequest) {
         Intent myGiveOrTakeRequestActivity = new Intent(this, MyGiveOrTakeRequestActivity.class);
-        myGiveOrTakeRequestActivity.putExtra(MyConstants.IS_TAKE_REQUEST,isTakeRequest);
+        myGiveOrTakeRequestActivity.putExtra(MyConstants.IS_TAKE_REQUEST, isTakeRequest);
         startActivity(myGiveOrTakeRequestActivity);
     }
 
@@ -108,22 +126,13 @@ public class MainScreenActivity extends FragmentActivity {
         userBalanceText.setText(time);
     }
 
-    public TabAdapter getAdapter() {
-        return adapter;
+    private MainScreenActivity getMainScreenActivity() {
+        return this;
     }
 
-//    private void signOut() {
-//        final LoginActivity parentActivity= (LoginActivity) getActivity();
-//        appManager.signOut();
-//
-//        appManager.getGoogleSignInClient().signOut()
-//                .addOnCompleteListener(parentActivity, new OnCompleteListener<Void>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<Void> task) {
-//                        parentActivity.changeToLoginFragment();
-//                    }
-//                });
-//    }
-
-    //TODO delete if no needed
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

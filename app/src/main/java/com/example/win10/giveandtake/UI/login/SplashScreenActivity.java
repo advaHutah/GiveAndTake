@@ -17,7 +17,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        btnContinue = (Button) findViewById(R.id.btn_fragment_terms);
+        btnContinue = (Button) findViewById(R.id.btn_continue_terms);
 
         //buttonActions
         btnContinue.setOnClickListener(new View.OnClickListener() {

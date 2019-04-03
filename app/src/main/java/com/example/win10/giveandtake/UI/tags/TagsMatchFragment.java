@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.cunoraz.tagview.Tag;
 import com.cunoraz.tagview.TagView;
@@ -25,6 +26,7 @@ public class TagsMatchFragment extends Fragment {
     private AppManager appManager;
     private List<String> myTagsString;
     private TagView tagGroup;
+    private TextView noTagsText;
     boolean isTakeRequest;
     private Request.RequestType requestType;
 
@@ -65,23 +67,6 @@ public class TagsMatchFragment extends Fragment {
         }
     }
 
-    private void handleTakeTags() {
-        appManager.getMyTakeMatchTags(new AppManager.AppManagerCallback<ArrayList<String>>() {
-            @Override
-            public void onDataArrived(ArrayList<String> value) {
-                myTagsString = value;
-                ArrayList<Tag> myTags = new ArrayList<>();
-                for (String text : myTagsString) {
-                    Tag newTag = new Tag(text);
-                    setTagDesign(newTag);
-                    myTags.add(newTag);
-                }
-                tagGroup.addTags(myTags);
-            }
-        });
-
-        setOnClickEvent();
-    }
 
     private void setOnClickEvent() {
         tagGroup.setOnTagClickListener(new TagView.OnTagClickListener() {
@@ -97,31 +82,43 @@ public class TagsMatchFragment extends Fragment {
         });
     }
 
+    private void handleTakeTags() {
+        appManager.getMyTakeMatchTags(new AppManager.AppManagerCallback<ArrayList<String>>() {
+            @Override
+            public void onDataArrived(ArrayList<String> value) {
+                handleTags(value);
+            }
+        });
+
+    }
+
 
     private void handleGiveTags() {
         appManager.getMyGiveMatchTags(new AppManager.AppManagerCallback<ArrayList<String>>() {
             @Override
             public void onDataArrived(ArrayList<String> value) {
-                myTagsString = value;
-                ArrayList<Tag> myTags = new ArrayList<>();
-                for (String text : myTagsString) {
-                    Tag newTag = new Tag(text);
-                    setTagDesign(newTag);
-                    myTags.add(newTag);
-                }
-//todo remove
-                Tag t = new Tag("ssssss");
-                setTagDesign(t);
-                Tag t2 = new Tag("ssssss2");
-                setTagDesign(t2);
-                myTags.add(t);
-                myTags.add(t2);
-
-                tagGroup.addTags(myTags);
+                handleTags(value);
             }
-
         });
-        setOnClickEvent();
+    }
+
+    private void handleTags(ArrayList<String> aString) {
+        myTagsString = aString;
+        ArrayList<Tag> myTags = new ArrayList<>();
+        if (myTagsString == null || myTagsString.isEmpty()) {
+            noTagsText = view.findViewById(R.id.noTagsText);
+            noTagsText.setVisibility(View.VISIBLE);
+            noTagsText.setText("לא נמצאו תגיות מתאימות");
+        } else {
+            for (String text : myTagsString) {
+                Tag newTag = new Tag(text);
+                setTagDesign(newTag);
+                myTags.add(newTag);
+            }
+            tagGroup.addTags(myTags);
+            setOnClickEvent();
+        }
+
     }
 
     private void setTagDesign(Tag tag) {
@@ -131,7 +128,7 @@ public class TagsMatchFragment extends Fragment {
         tag.setRadius(30f);
     }
 
-    private MainScreenActivity getMainScreenActivity(){
-        return (MainScreenActivity)getActivity();
+    private MainScreenActivity getMainScreenActivity() {
+        return (MainScreenActivity) getActivity();
     }
 }

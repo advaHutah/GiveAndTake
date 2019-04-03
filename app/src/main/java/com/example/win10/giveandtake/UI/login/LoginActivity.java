@@ -13,11 +13,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.UI.mainScreen.MainScreenActivity;
+import com.example.win10.giveandtake.UI.userProfile.UserProfileActivity;
 import com.example.win10.giveandtake.util.MyConstants;
 import com.github.loadingview.LoadingDialog;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -34,7 +36,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 
-// first app activity . includes fragments: login fragment , main screen ,splash screen
 public class LoginActivity extends AppCompatActivity {
 
     private static final String TAG = "LoginActivity";
@@ -48,6 +49,7 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences = null;
     SharedPreferences.Editor editor;
     private SignInButton btnSignInWithGoogle;
+    private Button infoBtn;
 
     LoadingDialog dialog;
     private boolean dataArrived;
@@ -60,7 +62,6 @@ public class LoginActivity extends AppCompatActivity {
         appManager = AppManager.getInstance();
         sharedPreferences = getSharedPreferences("com.example.win10.giveandtake", MODE_PRIVATE);
         dialog = LoadingDialog.Companion.get(this);
-
 
 
         // Configure Google Sign In
@@ -77,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         btnSignInWithGoogle = (com.google.android.gms.common.SignInButton) findViewById(R.id.btn_login_google);
+        infoBtn = (Button)findViewById(R.id.btn_terms);
 
         btnSignInWithGoogle.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,12 +86,22 @@ public class LoginActivity extends AppCompatActivity {
                 signIn();
             }
         });
+        infoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+             createSplashScreenActivity();
+            }
+        });
+    }
+
+    private void createSplashScreenActivity() {
+        Intent intent = new Intent(this,SplashScreenActivity.class);
+        startActivity(intent);
     }
 
 
     @Override
     protected void onStart() {
-        
         super.onStart();
         //check if it is the firs run , if it is display splash screen
         if (sharedPreferences.getBoolean(MyConstants.FIRST_RUN, true)) {
@@ -97,7 +109,7 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             // Check if user is signed in (non-null) and update UI accordingly.
             FirebaseUser currentUser = mAuth.getCurrentUser();
-            dataArrived=false;
+            dataArrived = false;
             updateUI(currentUser);
         }
     }
@@ -127,22 +139,26 @@ public class LoginActivity extends AppCompatActivity {
                 public void onDataArrived(Boolean value) {
                     dataArrived = true;
                     hideProgressDialog();
-                    //change to user fragment
-                    Intent mainScreen = new Intent(getApplication(), MainScreenActivity.class);
-                    startActivity(mainScreen);
+                    createUserProfileActivity();
+                    finish();
                 }
             });
 
             //todo delete
             new Handler().postDelayed(new Runnable() {
                 public void run() {
-                    if(!dataArrived) {
+                    if (!dataArrived) {
                         hideProgressDialog();
                         Toast.makeText(getApplication(), "Couldn't connect, please try to login again.", Toast.LENGTH_LONG).show();
                     }
                 }
             }, MyConstants.FETCH_USER_DATA_TIMEOUT);
         }
+    }
+
+    private void createUserProfileActivity() {
+        Intent intent = new Intent(this, UserProfileActivity.class);
+        startActivity(intent);
     }
 
     private void hideProgressDialog() {
@@ -205,18 +221,11 @@ public class LoginActivity extends AppCompatActivity {
             dialog.show();
     }
 
-    private void signOut() {
-        // Firebase sign out
-        mAuth.signOut();
 
-        // Google sign out
-        mGoogleSignInClient.signOut().addOnCompleteListener(this,
-                new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        updateUI(null);
-                    }
-                });
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this,MainScreenActivity.class);
+        startActivity(intent);
     }
-
 }
