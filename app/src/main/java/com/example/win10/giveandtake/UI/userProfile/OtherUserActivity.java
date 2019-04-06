@@ -2,6 +2,7 @@ package com.example.win10.giveandtake.UI.userProfile;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,22 +11,31 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cunoraz.tagview.Tag;
+import com.cunoraz.tagview.TagView;
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.Logic.User;
 import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.UI.handshakeSession.HandshakeActivity;
+import com.example.win10.giveandtake.util.CreateActivityUtil;
+import com.example.win10.giveandtake.util.GeneralUtil;
+import com.example.win10.giveandtake.util.MyConstants;
 import com.example.win10.giveandtake.util.TimeConvertUtil;
+
+import java.util.ArrayList;
 
 public class OtherUserActivity extends AppCompatActivity {
 
-    private TextView nameText, balanceText, giveText, takeText;
-    private GridView giveTags, takeTags;
-    private Button btnPhoneNumber, btnGiveSession, btnTakeSession;
+    private TextView nameText, balanceText, giveText, takeText, userEmail;
+    private TagView giveTags, takeTags;
+    private Button btnGiveSession, btnTakeSession;
     private AppManager appManager = AppManager.getInstance();
     private User otherUser;
+    private ImageView userImage;
 
 
     @Override
@@ -33,63 +43,61 @@ public class OtherUserActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_user);
 
-        nameText = (TextView) this.findViewById(R.id.user_name_text);
-        balanceText = (TextView) this.findViewById(R.id.user_balance_text);
+        nameText = (TextView) this.findViewById(R.id.otherUser_name);
+        userEmail = (TextView) this.findViewById(R.id.otherUser_email);
+        balanceText = (TextView) this.findViewById(R.id.otherUser_balance);
         giveText = (TextView) this.findViewById(R.id.giveText);
         takeText = (TextView) this.findViewById(R.id.takeText);
-        giveTags = (GridView) this.findViewById(R.id.giveTags);
-        takeTags = (GridView) this.findViewById(R.id.takeTags);
-        btnPhoneNumber = (Button) this.findViewById(R.id.btn_phone);
+        giveTags = (TagView) this.findViewById(R.id.otherUser_giveTags);
+        takeTags = (TagView) this.findViewById(R.id.otherUser_TakeTags);
+        userImage = (ImageView) this.findViewById(R.id.otherUser_image);
+
         btnGiveSession = (Button) this.findViewById(R.id.btn_give_session);
         btnTakeSession = (Button) this.findViewById(R.id.btn_take_session);
+
         otherUser = appManager.getOtherUser();
         if (otherUser != null) {
+            GeneralUtil generalUtil = new GeneralUtil();
+            generalUtil.setUserImage(otherUser.getPhotoUrl(), userImage);
             nameText.setText(otherUser.getFullName());
+            userEmail.setText(otherUser.getEmail());
             balanceText.setText(TimeConvertUtil.convertTime(otherUser.getBalance()));
-            setPhoneNumberText(otherUser.getPhoneNumber());
             giveText.setText(otherUser.getMyGiveRequest().getUserInputText());
             takeText.setText(otherUser.getMyTakeRequest().getUserInputText());
 
-            giveTags.setAdapter(new ArrayAdapter<>(this, R.layout.item, otherUser.getMyGiveRequest().getTags()));
-            takeTags.setAdapter(new ArrayAdapter<String>(this, R.layout.item, otherUser.getMyTakeRequest().getTags()));
-
-            btnPhoneNumber.setEnabled(true);
-            btnPhoneNumber.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    callOtherUser(appManager.getOtherUser().getPhoneNumber());
-                }
-            });
+            ArrayList<String> aGiveStringTags = otherUser.getMyGiveRequest().getTags();
+            ArrayList<String> aTakeStringTags = otherUser.getMyGiveRequest().getTags();
+            displayTags(aGiveStringTags, giveTags);
+            displayTags(aTakeStringTags, takeTags);
         }
+
         btnGiveSession.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //create handshake activity
-                createHandshakeActivity(Request.RequestType.GIVE);
+                CreateActivityUtil.createHandshakeSettingsActivity(getOtherUserActivity(), Request.RequestType.GIVE.toString());
             }
         });
         btnTakeSession.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //create handshake activity
-                createHandshakeActivity(Request.RequestType.TAKE);
+                CreateActivityUtil.createHandshakeSettingsActivity(getOtherUserActivity(), Request.RequestType.TAKE.toString());
             }
         });
     }
 
-    private void setPhoneNumberText(String phoneNumberText) {
-        if (phoneNumberText != null || !phoneNumberText.equals(""))
-            btnPhoneNumber.setText(otherUser.getPhoneNumber());
-        else
-            btnPhoneNumber.setText("no phone number");
 
+    private void displayTags(ArrayList<String> aStringTags, TagView tagView) {
+        if (aStringTags != null || !aStringTags.isEmpty()) {
+            for (String text : aStringTags) {
+                Tag newTag = new Tag(text);
+                setTagDesign(newTag);
+                tagView.addTag(newTag);
+            }
+        }
     }
 
-    private void createHandshakeActivity(Request.RequestType type) {
-        Intent handShake = new Intent(this, HandshakeActivity.class);
-        handShake.putExtra("type", type.toString());
-        startActivity(handShake);
-    }
 
     private void callOtherUser(String phoneNumber) {
         if (phoneNumber != null) {
@@ -99,8 +107,19 @@ public class OtherUserActivity extends AppCompatActivity {
         }
     }
 
+    private void setTagDesign(Tag tag) {
+        //todo check why R.color.tsgColor is not working
+        tag.setLayoutColor(Color.parseColor("#66ccff"));
+        tag.setTagTextSize(15);
+        tag.setRadius(30f);
+    }
+
     @Override
     public void onPause() {
         super.onPause();
+    }
+
+    private Activity getOtherUserActivity() {
+        return this;
     }
 }

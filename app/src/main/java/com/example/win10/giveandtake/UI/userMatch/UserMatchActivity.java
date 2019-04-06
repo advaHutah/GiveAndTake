@@ -56,8 +56,6 @@ public class UserMatchActivity extends AppCompatActivity implements AdapterClick
                 @Override
                 public void onDataArrived(ArrayList<TagUserInfo> value) {
                     usersInfoList = value;
-                    TagUserInfo u = new TagUserInfo("id", "adva", Request.RequestType.TAKE);
-                    usersInfoList.add(u);
                     if (usersInfoList != null)
                         displayMatchingUsers();
                 }

@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.R;
-import com.example.win10.giveandtake.UI.GTActivity;
 import com.example.win10.giveandtake.UI.login.LoginActivity;
 import com.example.win10.giveandtake.util.GeneralUtil;
 import com.example.win10.giveandtake.util.MyConstants;
@@ -32,7 +31,7 @@ import com.squareup.okhttp.internal.Util;
 import java.io.InputStream;
 import java.util.regex.Pattern;
 
-public class UserProfileActivity extends GTActivity {
+public class UserProfileActivity extends AppCompatActivity {
 
 
     private static final String TAG = "UserProfileActivity";
@@ -57,9 +56,6 @@ public class UserProfileActivity extends GTActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_profile);
-
-        HandlerThread handlerThread = new HandlerThread("images-downloader");
-        handlerThread.start();
 
         appManager = AppManager.getInstance();
 
@@ -92,9 +88,11 @@ public class UserProfileActivity extends GTActivity {
     protected void onStart() {
         super.onStart();
 
+        GeneralUtil generalUtil = new GeneralUtil();
+        generalUtil.setUserImage(appManager.getCurrentUser().getPhotoUrl(),userImage);
+
         userNameText.setText(appManager.getCurrentUser().getFullName());
         userEmailText.setText("(" + appManager.getCurrentUser().getEmail() + ")");
-        setUserImage(appManager.getCurrentUser().getPhotoUrl());
         setUserPhone(appManager.getCurrentUser().getPhoneNumber());
         setUserBalance(appManager.getCurrentUser().getBalance());
         phoneNumber = appManager.getCurrentUser().getPhoneNumber();
@@ -131,12 +129,6 @@ public class UserProfileActivity extends GTActivity {
     }
 
 
-    public void setUserImage(String imageUrl) {
-        if (imageUrl != null) {
-            new DownloadImageTask(userImage).execute(imageUrl);
-        } else
-            userImage.setImageResource(R.drawable.default_user);
-    }
 
     private void createPhoneNumberDialog() {
         new InputSenderDialog(UActivity, new InputSenderDialog.InputSenderDialogListener() {
@@ -145,7 +137,7 @@ public class UserProfileActivity extends GTActivity {
                 Pattern pattern = Pattern.compile(PHONE_RGX);
                 if (pattern.matcher(number).matches()) {
                     setUserPhone(number);
-                    appManager.updateUserPhoneNumer(number);
+                    appManager.updateUserPhoneNumber(number);
                 } else {
                     GeneralUtil.addToast(getApplication().getString(R.string.phoneNum_InvalidInputErrMsg), Toast.LENGTH_LONG, getApplication());
                     btnMyPhone.setText(getApplication().getString(R.string.btnPhoneNum_text));
@@ -157,31 +149,6 @@ public class UserProfileActivity extends GTActivity {
                 Log.d(TAG, "The user tapped Cancel, number is " + number);
             }
         }).setNumber(phoneNumber).show();
-    }
-
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
-        ImageView bmImage;
-
-        public DownloadImageTask(ImageView bmImage) {
-            this.bmImage = bmImage;
-        }
-
-        protected Bitmap doInBackground(String... urls) {
-            String urldisplay = urls[0];
-            Bitmap mIcon11 = null;
-            try {
-                InputStream in = new java.net.URL(urldisplay).openStream();
-                mIcon11 = BitmapFactory.decodeStream(in);
-            } catch (Exception e) {
-                Log.e("Error", e.getMessage());
-                e.printStackTrace();
-            }
-            return mIcon11;
-        }
-
-        protected void onPostExecute(Bitmap result) {
-            bmImage.setImageBitmap(result);
-        }
     }
 
     @Override

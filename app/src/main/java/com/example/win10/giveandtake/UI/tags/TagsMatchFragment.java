@@ -50,12 +50,17 @@ public class TagsMatchFragment extends Fragment {
 
         requestType = getRequestTypeAccordingToArgs();
 
+        return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
         if (requestType == Request.RequestType.GIVE) {
             this.handleGiveTags();
         } else {
             this.handleTakeTags();
         }
-        return view;
     }
 
     private Request.RequestType getRequestTypeAccordingToArgs() {
@@ -117,6 +122,7 @@ public class TagsMatchFragment extends Fragment {
             }
             tagGroup.addTags(myTags);
             setOnClickEvent();
+            noTagsText.setVisibility(View.GONE);
         }
 
     }

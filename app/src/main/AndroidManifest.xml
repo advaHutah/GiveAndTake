@@ -30,7 +30,7 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".UI.login.LoginActivity"/>
+        <activity android:name=".UI.login.LoginActivity" />
         <activity android:name=".UI.userProfile.UserProfileActivity" />
         <activity android:name=".UI.handshakeSession.HandshakeActivity" />
         <activity android:name=".UI.userProfile.OtherUserActivity" />
@@ -38,6 +38,7 @@
         <activity android:name=".UI.mainScreen.MainScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -45,6 +46,9 @@
         <activity android:name=".UI.userMatch.UserMatchActivity" />
         <activity android:name=".UI.login.TermsOfUseActivity" />
         <activity android:name=".UI.login.SplashScreenActivity" />
+        <activity android:name=".UI.handshakeSession.HandshakeProcessActivity" />
+        <activity android:name=".UI.handshakeSession.HandshakeSettingsActivity" />
+        <activity android:name=".UI.handshakeSession.HandshakeSummaryActivity"></activity>
     </application>
 
 </manifest>

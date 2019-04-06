@@ -50,17 +50,9 @@ public class AppManager {
         this.firebaseManager.addUserInfoToDB(user);
     }
 
-    public void updateUserPhoneNumer(String phoneNumber) {
+    public void updateUserPhoneNumber(String phoneNumber) {
         currentUser.setPhoneNumber(phoneNumber);
         firebaseManager.updateUserPhoneNumber(currentUser.getId(), phoneNumber);
-    }
-
-    public void setGoogleSignInClient(GoogleSignInClient googleSignInClient) {
-        this.googleSignInClient = googleSignInClient;
-    }
-
-    public GoogleSignInClient getGoogleSignInClient() {
-        return googleSignInClient;
     }
 
     @Nullable
@@ -82,10 +74,28 @@ public class AppManager {
         //cloud function generates tags in DB
     }
 
+    //after set the tags that will describe his request , update the request DB and change isFinal property to 1
     public void addRequestFinal(ArrayList<String> selectedTags, Request.RequestType requestType) {
         this.updateRequestTagsUserValidated(selectedTags, requestType);
     }
 
+    public void updateRequestTagsUserValidated(ArrayList<String> selectedTags, Request.RequestType requestType) {
+        Request myRequest;
+        //update current user request
+        if (requestType == Request.RequestType.TAKE)
+            myRequest = currentUser.getMyTakeRequest();
+        else
+            myRequest = currentUser.getMyGiveRequest();
+
+        myRequest.setTags(selectedTags);
+        myRequest.setIsFinal(1);
+
+        //update firebase
+        firebaseManager.addRequestToDB(myRequest);
+        firebaseManager.addUserInfoToDB(currentUser);
+    }
+
+    //get the tags
     public void getMyRequestTags(Request.RequestType requestType, final AppManagerCallback<ArrayList<String>> callback) {
         this.firebaseManager.getTagsFromRequest(currentUser.getId(), requestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
             @Override
@@ -202,23 +212,6 @@ public class AppManager {
         this.setCurrentUser(null);
     }
 
-    public void updateRequestTagsUserValidated(ArrayList<String> selectedTags, Request.RequestType requestType) {
-        Request myRequest;
-        //update current user request
-        if (requestType == Request.RequestType.TAKE)
-            myRequest = currentUser.getMyTakeRequest();
-        else
-            myRequest = currentUser.getMyGiveRequest();
-
-        myRequest.setTags(selectedTags);
-        myRequest.setIsFinal(1);
-
-        //update firebase
-        firebaseManager.addRequestToDB(myRequest);
-        firebaseManager.addUserInfoToDB(currentUser);
-    }
-
-
     public void userLogedIn(FirebaseUser account, final AppManager.AppManagerCallback<Boolean> callback) {
         final FirebaseUser theAccount = account;
         //get user info from db - if exist get info else create new user
@@ -235,30 +228,20 @@ public class AppManager {
         });
     }
 
+
+
     public void setOtherUser(String uid, final AppManager.AppManagerCallback<Boolean> callback) {
         firebaseManager.getUserDetailFromDB(uid, new FirebaseManager.FirebaseCallback<User>() {
             @Override
             public void onDataArrived(User value) {
                 if (value != null) {
                     otherUser = value;
-                    firebaseManager.getRequestFromDB(otherUser.getId(), Request.RequestType.GIVE, new FirebaseManager.FirebaseCallback<Request>() {
-                        @Override
-                        public void onDataArrived(Request value) {
-                            otherUser.setMyGiveRequests(value);
-                        }
-                    });
-                    firebaseManager.getRequestFromDB(otherUser.getId(), Request.RequestType.TAKE, new FirebaseManager.FirebaseCallback<Request>() {
-                        @Override
-                        public void onDataArrived(Request value) {
-                            otherUser.setMyTakeRequest(value);
-                        }
-                    });
-
                 }
                 callback.onDataArrived(true);
             }
         });
     }
+
 
     public User getOtherUser() {
         return otherUser;
@@ -290,32 +273,40 @@ public class AppManager {
         });
     }
 
-
     public void finishSession(long millisPassed) {
         updateSessionStatus(Session.Status.terminated);
         updateSessionMillisPassed(millisPassed);
         updateMyBalance();
     }
 
-
     private void updateSessionMillisPassed(long millisPassed) {
         selectedSession.setMillisPassed(millisPassed);
         firebaseManager.updateSessionMillisPassed(selectedSession.getId(), millisPassed);
     }
+
 
     public void resetOtherUserAndSession() {
         otherUser = null;
         selectedSession = null;
     }
 
+
     public void updateMyBalance() {
         firebaseManager.updateBalanceOnDB(currentUser.getId(), currentUser.getBalance());
     }
 
-
     public boolean isUserLoggedIn() {
         return FirebaseManager.getInstance().isUserLoggedIn();
         //return FirebaseAuth.getInstance().getCurrentUser() != null && FirebaseInstanceId.getInstance().getToken() != null;
+    }
+
+    public void setGoogleSignInClient(GoogleSignInClient googleSignInClient) {
+        this.googleSignInClient = googleSignInClient;
+    }
+
+
+    public GoogleSignInClient getGoogleSignInClient() {
+        return googleSignInClient;
     }
 
 }

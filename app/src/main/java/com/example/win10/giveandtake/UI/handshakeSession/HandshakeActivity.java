@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.example.win10.giveandtake.R;
+import com.example.win10.giveandtake.util.MyConstants;
 
 public class HandshakeActivity extends AppCompatActivity {
 
@@ -19,8 +20,8 @@ public class HandshakeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         //user started the session
-        type = getIntent().getStringExtra("type");
-        startSession = getIntent().getStringExtra("startSession");
+        type = getIntent().getStringExtra(MyConstants.REQUEST_TYPE);
+        startSession = getIntent().getStringExtra(MyConstants.START_SESSION);
         fragmentManager = getFragmentManager();
         //got here from other user session request activity skip on session settings
         if (type == null && startSession != null  ){

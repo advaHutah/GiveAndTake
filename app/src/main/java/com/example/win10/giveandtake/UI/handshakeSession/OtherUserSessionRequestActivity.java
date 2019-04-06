@@ -1,5 +1,6 @@
 package com.example.win10.giveandtake.UI.handshakeSession;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,11 +17,12 @@ import com.example.win10.giveandtake.Logic.User;
 import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.UI.handshakeSession.HandshakeActivity;
 import com.example.win10.giveandtake.UI.handshakeSession.HandshakeProcessFragment;
+import com.example.win10.giveandtake.util.CreateActivityUtil;
 import com.example.win10.giveandtake.util.TimeConvertUtil;
 
 public class OtherUserSessionRequestActivity extends AppCompatActivity {
 
-    private TextView nameText, balanceText, giveText, takeText,descriptionText,timeSet;
+    private TextView nameText, balanceText, giveText, takeText, descriptionText, timeSet;
     private GridView giveTags, takeTags;
     private Button btnPhoneNumber, btnAcceptSession, btnRejectSession;
     private AppManager appManager = AppManager.getInstance();
@@ -56,30 +58,27 @@ public class OtherUserSessionRequestActivity extends AppCompatActivity {
             timeSet.setText("Session Time: " + TimeConvertUtil.convertTime(appManager.getSelectedSession().getMillisSet()));
 
         }
-            btnAcceptSession.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    appManager.updateSessionStatus(Session.Status.accepted);
-                    //create handshake activity
-                    createHandshakeActivity();
-                }
-            });
-            btnRejectSession.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    appManager.updateSessionStatus(Session.Status.rejected);
+        btnAcceptSession.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                appManager.updateSessionStatus(Session.Status.accepted);
 
-                }
-            });
+                CreateActivityUtil.createHandshakeProcessActivity(getOtherUserSessionRequestActivity(),true);
+            }
+        });
+        btnRejectSession.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                appManager.updateSessionStatus(Session.Status.rejected);
+
+            }
+        });
 
     }
 
-    private void createHandshakeActivity() {
-        Intent handShake = new Intent(this, HandshakeActivity.class);
-        handShake.putExtra("startSession", "true");
-        startActivity(handShake);
+    private Activity getOtherUserSessionRequestActivity() {
+        return this;
     }
-
 
     @Override
     public void onPause() {

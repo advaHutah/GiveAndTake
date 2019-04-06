@@ -54,7 +54,7 @@ public class MainScreenActivity extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 if (appManager.getCurrentUser() != null) {
-                    createUserProfileActivity();
+                    CreateActivityUtil.createUserProfileActivity(getMainScreenActivity(), appManager.getCurrentUser());
                 } else {
                     CreateActivityUtil.createLoginActivity(getMainScreenActivity());
                 }
@@ -63,13 +63,17 @@ public class MainScreenActivity extends FragmentActivity {
         giveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createGiveRequestActivity();
+                if (appManager.getCurrentUser() != null) {
+                    createGiveRequestActivity();
+                }
             }
         });
         takeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createTakeRequestActivity();
+                if (appManager.getCurrentUser() != null) {
+                    createTakeRequestActivity();
+                }
             }
         });
         exploreBtn.setOnClickListener(new View.OnClickListener() {
@@ -109,12 +113,6 @@ public class MainScreenActivity extends FragmentActivity {
         createMyGiveOrTakeActivity(true);
     }
 
-    private void createUserProfileActivity() {
-        Intent intent = new Intent(this, UserProfileActivity.class);
-        intent.putExtra(MyConstants.UID, appManager.getCurrentUser() != null ? appManager.getCurrentUser().getId() : null);
-        startActivity(intent);
-    }
-
     private void createMyGiveOrTakeActivity(boolean isTakeRequest) {
         Intent myGiveOrTakeRequestActivity = new Intent(this, MyGiveOrTakeRequestActivity.class);
         myGiveOrTakeRequestActivity.putExtra(MyConstants.IS_TAKE_REQUEST, isTakeRequest);
@@ -133,6 +131,6 @@ public class MainScreenActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        finish();
+        finishAffinity();
     }
 }

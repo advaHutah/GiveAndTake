@@ -34,6 +34,7 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
     private AppManager appManager;
     private ArrayList<String> myTagsString;
     private Request.RequestType requestType;
+    private ArrayList<String> existingTags;
 
 
     @Override
@@ -58,11 +59,20 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
             requestType = Request.RequestType.TAKE;
             requestTitle.setText(R.string.GiveOrTakeReq_discriptionTake);
             text = appManager.getCurrentUser().getMyTakeRequest().getUserInputText();
+            existingTags = appManager.getCurrentUser().getMyTakeRequest().getTags();
+            if(existingTags!=null && existingTags.isEmpty()){
+                showTags(existingTags);
+            }
 
         } else {
             requestTitle.setText(R.string.GiveOrTakeReq_discriptionGive);
             requestType = Request.RequestType.GIVE;
             text = appManager.getCurrentUser().getMyGiveRequest().getUserInputText();
+            existingTags = appManager.getCurrentUser().getMyTakeRequest().getTags();
+            if(existingTags!=null && existingTags.isEmpty()){
+                showTags(existingTags);
+            }
+
 
         }
         //in case request is already exist
@@ -99,16 +109,17 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
     }
 
     private void getTags() {
+
         appManager.getMyRequestTags(requestType, new AppManager.AppManagerCallback<ArrayList<String>>() {
             @Override
             public void onDataArrived(ArrayList<String> value) {
                 myTagsString = value;
                 if (myTagsString != null && !myTagsString.isEmpty()) {
                     showTags(myTagsString);
-                    setButtonVisibility(requestBtn, View.GONE);
+                    setButtonVisibility(requestBtn, View.VISIBLE);
                 } else {
                     addToast(getString(R.string.GiveOrTakeReq_noTagsMsg), Toast.LENGTH_SHORT);
-                    setButtonVisibility(requestBtn, View.VISIBLE);
+                    setButtonVisibility(requestBtn, View.GONE);
                 }
 
             }
@@ -117,7 +128,6 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
 
     private void setButtonVisibility(Button button, int state) {
         button.setVisibility(state);
-
     }
 
 
