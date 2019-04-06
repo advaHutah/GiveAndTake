@@ -54,36 +54,43 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
         btnSendSession.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!descriptionText.getText().toString().isEmpty() && !mintuesSet.getText().toString().isEmpty()) {
                 String description = descriptionText.getText().toString();
                 long timeSet = TimeUnit.MINUTES.toMillis(Integer.parseInt(mintuesSet.getText().toString()));
-                //user gives to other user
-                if (getType().equals(Request.RequestType.GIVE.toString())) {
-                    appManager.setSelectedSession(new Session(Session.Status.pending, appManager.getOtherUser().getMyTakeRequest(),
-                            appManager.getCurrentUser().getMyGiveRequest(), UUID.randomUUID().toString(), description, timeSet, Session.SessionInitiator.GIVER));
-                }
-                //user takes from other user
-                else {
-                    appManager.setSelectedSession(new Session(Session.Status.pending, appManager.getCurrentUser().getMyTakeRequest()
-                            , appManager.getOtherUser().getMyGiveRequest(), UUID.randomUUID().toString(), description, timeSet, Session.SessionInitiator.TAKER));
-                }
-                //send start request to other user
-                appManager.saveSession();
-                changeTextColorToGrey(step1);
 
-                //step2: wait for accept from other user
-                appManager.sessionStatusChanged(new AppManager.AppManagerCallback<Session.Status>() {
-                    @Override
-                    public void onDataArrived(Session.Status value) {
-                        if (value == Session.Status.accepted) {
-                            changeTextColorToGrey(step2);
-                            addToast("The session request was accepted", Toast.LENGTH_SHORT, getHandshakeSettingActivity());
-                            // step3: enable start service button
-                            enableButton(btnStartProcess);
-                        } else if (value == Session.Status.rejected) {
-                            addToast("The session request was rejected", Toast.LENGTH_SHORT, getHandshakeSettingActivity());
-                        }
+                    //user gives to other user
+                    if (getType().equals(Request.RequestType.GIVE.toString())) {
+                        appManager.setSelectedSession(new Session(Session.Status.pending, appManager.getOtherUser().getMyTakeRequest(),
+                                appManager.getCurrentUser().getMyGiveRequest(), UUID.randomUUID().toString(), description, timeSet, Session.SessionInitiator.GIVER));
                     }
-                });
+                    //user takes from other user
+                    else {
+                        appManager.setSelectedSession(new Session(Session.Status.pending, appManager.getCurrentUser().getMyTakeRequest()
+                                , appManager.getOtherUser().getMyGiveRequest(), UUID.randomUUID().toString(), description, timeSet, Session.SessionInitiator.TAKER));
+                    }
+                    //send start request to other user
+                    appManager.saveSession();
+                    changeTextColorToGrey(step1);
+
+                    //step2: wait for accept from other user
+                    appManager.sessionStatusChanged(new AppManager.AppManagerCallback<Session.Status>() {
+                        @Override
+                        public void onDataArrived(Session.Status value) {
+                            if (value == Session.Status.accepted) {
+                                changeTextColorToGrey(step2);
+                                addToast("The session request was accepted", Toast.LENGTH_SHORT, getHandshakeSettingActivity());
+                                // step3: enable start service button
+                                enableButton(btnStartProcess);
+                            } else if (value == Session.Status.rejected) {
+                                addToast("The session request was rejected", Toast.LENGTH_SHORT, getHandshakeSettingActivity());
+                            }
+                        }
+                    });
+                }else
+                {
+                    addToast("יש להכניס תיאור וזמן", Toast.LENGTH_SHORT, getHandshakeSettingActivity());
+
+                }
 
             }
         });
@@ -93,7 +100,7 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //todo probably will need an extra validation for starting Timer
-                CreateActivityUtil.createHandshakeProcessActivity(getHandshakeSettingActivity(),true);
+                CreateActivityUtil.createHandshakeProcessActivity(getHandshakeSettingActivity(), true);
             }
         });
 

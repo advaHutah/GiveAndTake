@@ -160,7 +160,7 @@
             android:layout_marginTop="30dp"
             android:layout_marginRight="10dp"
             android:layout_marginBottom="10dp"
-            android:background="@drawable/button_shape_green"
+            android:background="@drawable/button_shape_rounded"
             android:enabled="false"
             android:text="Begin session"
             android:textSize="15dp" />

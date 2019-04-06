@@ -60,7 +60,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:background="@drawable/button_shape_green"
+        android:background="@drawable/button_shape_rounded"
         android:text="@string/GiveOrTakeReq_findTextBtn"
         android:textColor="@color/blue"
         android:textStyle="bold" />
@@ -85,7 +85,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:background="@drawable/button_shape_green"
+        android:background="@drawable/button_shape_rounded"
         android:text="@string/GiveOrTakeReq_afterSelectTags"
         android:textColor="@android:color/black"
         android:textStyle="bold"

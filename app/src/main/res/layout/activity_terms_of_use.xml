@@ -8,62 +8,47 @@
     android:orientation="vertical"
     tools:context="com.example.win10.giveandtake.UI.login.TermsOfUseActivity">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:layout_marginTop="20dp"
-            android:fontFamily="@font/banthink"
-            android:text="Term of use"
-            android:textAlignment="center"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/banthink"
+        android:text="תנאי שימוש"
+        android:textAlignment="center"
+        android:textColor="@color/blue"
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Services by law: You cannot trade time for crimes or prostituation."
-            android:textSize="20dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="שירות על פי חוק : לא ניתן להחליף זמן לצורך ביצוע פשע או שירותי זנות."
+        android:textSize="20dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="No overdraft: we don’t loan time here :)"
-            android:textSize="20dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="לא ניתן להיכנס לגרעון ואין הלוואות זמן:)"
+        android:textSize="20dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="No trolling: You must be a real person who wants a real session."
-            android:textSize="20dp" />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="התחזות : עלייך להיות אדם אמיתי שמעוניין בשירות אמיתי."
+        android:textSize="20dp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Do you have time to give? You can enjoy getting services that consumes time."
-            android:textSize="20dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Eventually: Time === Time"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btn_close_screen"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/button_shape_green"
-            android:text="סגור"
-            android:textSize="15dp" />
+    <Button
+        android:id="@+id/btn_close_screen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/button_shape_blue"
+        android:text="סגור"
+        android:textSize="15dp" />
 
 
-    </LinearLayout>
+</LinearLayout>

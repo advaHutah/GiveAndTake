@@ -20,7 +20,6 @@ import com.example.win10.giveandtake.util.TimeConvertUtil;
 
 public class HandshakeProcessActivity extends AppCompatActivity {
 
-    private HandshakeSummaryFragment handshakeSummaryFragment;
     private AppManager appManager;
     private TextView timerValue, actionText, balanceValue;
     private Button stopBtn;

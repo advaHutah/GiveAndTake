@@ -70,7 +70,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:background="@drawable/button_shape_green"
+                android:background="@drawable/button_shape_rounded"
                 android:textColor="@color/blue"
                 android:textSize="15dp"
                 android:outlineSpotShadowColor="@color/blue"
@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:background="@drawable/button_shape_green"
+                android:background="@drawable/button_shape_rounded"
                 android:textColor="@color/red"
                 android:text="@string/btn_logout_text" />
         </LinearLayout>

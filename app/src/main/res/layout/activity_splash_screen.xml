@@ -10,48 +10,56 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="25dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/banthink"
-        android:text="Time ≠ Money"
+        android:text="כסף ≠ זמן"
         android:textAlignment="center"
         android:textSize="30dp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="@color/blue"/>
 
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Give and Take (time bank) is a trading time system."
+        android:text="'תן וקח' (בנק הזמן) היא מערכת להחלפת זמן בין משתמשים."
         android:textSize="20dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Everyone here have their own time balance."
+        android:text="לכל אחד יש את יתרת הזמן שלו."
         android:textSize="20dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Do you want to gain time? You are welcome to suggest any session that consumes time (except sleeping of course). The session you’ll give will increase your time balance."
+        android:text="האם אתה רוצה להרוויח זמן? אתה מוזמן להציע כל שירות שניתן לתמחור בזמן (חוץ משינה כמובן)."
         android:textSize="20dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Do you have time to give? You can enjoy getting services that consumes time."
+        android:text="השירות שתיתן יגדיל את יתרת הזמן שלך במערכת."
         android:textSize="20dp" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Eventually: Time === Time"
+        android:text="יש לך זמן לתת ביתרתך? תוכל להינות מקבלת שירותים שמתומחרים בזמן."
+        android:textSize="20dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="בסופו של דבר: זמן === זמן"
         android:textSize="20dp"
         android:textStyle="bold" />
 
@@ -60,7 +68,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:background="@drawable/button_shape_green"
+        android:background="@drawable/button_shape_blue"
         android:text="המשך"
         android:textSize="15dp" />
 

@@ -91,6 +91,14 @@
     <string name="btn_logout_text">התנתק</string>
     <string name="btnPhoneNum_text">יש להכניס מספר טלפון</string>
     <string name="phoneNum_InvalidInputErrMsg">המספר לא תקין</string>
+    <string name="handshake_viewTitle">החלפת זמן</string>
+    <string name="handshakeDiscription">תיאור ההחלפה</string>
+    <string name="handshake_time">זמן ההחלפה בדקות</string>
+    <string name="handshake_stepTitle">שלבים:</string>
+    <string name="handshake_step1">שולח בקשה להחלפת זמן...</string>
+    <string name="handshake_step2">ממתין לאישור המשתמש...</string>
+    <string name="handshake_step3">לחץ על \'התחל החלפה\' וטיימר יחל לרוץ עבורכם.</string>
+    <string name="handshake_startSessionBtn">התחל החלפה</string>
 
 
 </resources>

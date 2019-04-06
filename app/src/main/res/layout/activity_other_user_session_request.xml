@@ -126,7 +126,7 @@
             android:layout_width="180dp"
             android:layout_height="50dp"
             android:layout_marginTop="60dp"
-            android:background="@drawable/button_shape_green"
+            android:background="@drawable/button_shape_rounded"
             android:text="Accept"
             android:textSize="15dp" />
         <Button
