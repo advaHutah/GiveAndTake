@@ -15,9 +15,11 @@ public class Request {
     protected String userInputText;
     protected String uid;
     protected String userName;
-    protected int isFinal;
     protected RequestType requestType;
-    protected ArrayList<String> tags;
+    protected ArrayList<String> suggestedTags;
+    protected ArrayList<String> keyWords;
+    protected ArrayList<String> stopWords;
+
     private Map<String,ArrayList<TagUserInfo>> match ;
 
     public Request(){
@@ -27,22 +29,41 @@ public class Request {
         this.uid = uid;
         this.userName = userName;
         this.requestType = requestType;
-        this.tags = new ArrayList<>();
+        this.suggestedTags = new ArrayList<>();
         this.match = new HashMap<>();
-        this.isFinal=0;
+        this.keyWords = new ArrayList<>();
+        this.stopWords = new ArrayList<>();
     }
 
-    public Request(String userInputText, String uid, String userName, ArrayList<String> tags,RequestType requestType) {
+    public Request(String userInputText, String uid, String userName, ArrayList<String> suggestedTags,ArrayList<String> keyWords,ArrayList<String> stopWords,RequestType requestType) {
         this(userInputText, uid,userName,requestType);
-        this.tags = tags;
+        this.suggestedTags = suggestedTags;
+        this.keyWords = keyWords;
+        this.stopWords = stopWords;
     }
 
-    public void setTags(ArrayList<String> tags) {
-        this.tags = tags;
+    public void setSuggestedTags(ArrayList<String> suggestedTags) {
+        this.suggestedTags = suggestedTags;
     }
 
-    public ArrayList<String> getTags() {
-        return tags;
+    public ArrayList<String> getSuggestedTags() {
+        return suggestedTags;
+    }
+
+    public ArrayList<String> getKeyWords() {
+        return keyWords;
+    }
+
+    public void setKeyWords(ArrayList<String> keyWords) {
+        this.keyWords = keyWords;
+    }
+
+    public ArrayList<String> getStopWords() {
+        return stopWords;
+    }
+
+    public void setStopWords(ArrayList<String> stopWords) {
+        this.stopWords = stopWords;
     }
 
     public String getUid() {
@@ -83,11 +104,5 @@ public class Request {
         this.match = match;
     }
 
-    public int getIsFinal() {
-        return isFinal;
-    }
 
-    public void setIsFinal(int isFinal) {
-        this.isFinal = isFinal;
-    }
 }

@@ -65,8 +65,8 @@ public class OtherUserActivity extends AppCompatActivity {
             giveText.setText(otherUser.getMyGiveRequest().getUserInputText());
             takeText.setText(otherUser.getMyTakeRequest().getUserInputText());
 
-            ArrayList<String> aGiveStringTags = otherUser.getMyGiveRequest().getTags();
-            ArrayList<String> aTakeStringTags = otherUser.getMyGiveRequest().getTags();
+            ArrayList<String> aGiveStringTags = otherUser.getMyGiveRequest().getSuggestedTags();
+            ArrayList<String> aTakeStringTags = otherUser.getMyGiveRequest().getSuggestedTags();
             displayTags(aGiveStringTags, giveTags);
             displayTags(aTakeStringTags, takeTags);
         }

@@ -52,8 +52,8 @@ public class OtherUserSessionRequestActivity extends AppCompatActivity {
             giveText.setText(otherUser.getMyGiveRequest().getUserInputText());
             takeText.setText(otherUser.getMyTakeRequest().getUserInputText());
 
-            giveTags.setAdapter(new ArrayAdapter<>(this, R.layout.item, otherUser.getMyGiveRequest().getTags()));
-            takeTags.setAdapter(new ArrayAdapter<String>(this, R.layout.item, otherUser.getMyTakeRequest().getTags()));
+            giveTags.setAdapter(new ArrayAdapter<>(this, R.layout.item, otherUser.getMyGiveRequest().getSuggestedTags()));
+            takeTags.setAdapter(new ArrayAdapter<String>(this, R.layout.item, otherUser.getMyTakeRequest().getSuggestedTags()));
             descriptionText.setText("Session Description: " + appManager.getSelectedSession().getDescription());
             timeSet.setText("Session Time: " + TimeConvertUtil.convertTime(appManager.getSelectedSession().getMillisSet()));
 

@@ -75,20 +75,19 @@ public class AppManager {
     }
 
     //after set the tags that will describe his request , update the request DB and change isFinal property to 1
-    public void addRequestFinal(ArrayList<String> selectedTags, Request.RequestType requestType) {
-        this.updateRequestTagsUserValidated(selectedTags, requestType);
+    public void addRequestFinal(ArrayList<String> keyWords,ArrayList<String> stopWords, Request.RequestType requestType) {
+        this.updateRequestTagsUserValidated(keyWords,stopWords, requestType);
     }
 
-    public void updateRequestTagsUserValidated(ArrayList<String> selectedTags, Request.RequestType requestType) {
+    public void updateRequestTagsUserValidated(ArrayList<String> keyWords,ArrayList<String> stopWords, Request.RequestType requestType) {
         Request myRequest;
         //update current user request
         if (requestType == Request.RequestType.TAKE)
             myRequest = currentUser.getMyTakeRequest();
         else
             myRequest = currentUser.getMyGiveRequest();
-
-        myRequest.setTags(selectedTags);
-        myRequest.setIsFinal(1);
+        myRequest.setKeyWords(keyWords);
+        myRequest.setStopWords(stopWords);
 
         //update firebase
         firebaseManager.addRequestToDB(myRequest);
@@ -129,8 +128,8 @@ public class AppManager {
     //get user match tags based on request type
     public void getMyTakeMatchTags(final AppManagerCallback<ArrayList<String>> callback) {
         Request.RequestType otherRequestType = Request.RequestType.GIVE;
-        if (currentUser != null && currentUser.getMyTakeRequest().getTags() != null) {
-            myTakeRequestTags = currentUser.getMyTakeRequest().getTags();
+        if (currentUser != null && currentUser.getMyTakeRequest() != null && currentUser.getMyTakeRequest().getSuggestedTags() != null) {
+            myTakeRequestTags = currentUser.getMyTakeRequest().getSuggestedTags();
 
             this.firebaseManager.getTags(otherRequestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
                 @Override
@@ -153,8 +152,8 @@ public class AppManager {
     public void getMyGiveMatchTags(final AppManagerCallback<ArrayList<String>> callback) {
 
         Request.RequestType otherRequestType = Request.RequestType.TAKE;
-        if (currentUser != null && currentUser.getMyGiveRequest().getTags() != null) {
-            myGiveRequestTags = currentUser.getMyGiveRequest().getTags();
+        if (currentUser != null && currentUser.getMyGiveRequest() != null && currentUser.getMyGiveRequest().getSuggestedTags() != null) {
+            myGiveRequestTags = currentUser.getMyGiveRequest().getSuggestedTags();
             this.firebaseManager.getTags(otherRequestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
                 @Override
                 public void onDataArrived(ArrayList<String> value) {

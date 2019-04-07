@@ -293,7 +293,7 @@ public class FirebaseManager {
 
     private class Keys {
         public static final String USERS = "users";
-        public static final String TAGS = "tags";
+        public static final String TAGS = "suggestedTags";
         public static final String GIVE_REQUEST = "giveRequest";
         public static final String TAKE_REQUEST = "takeRequest";
         public static final String NOTIFICATIONS = "notifications";

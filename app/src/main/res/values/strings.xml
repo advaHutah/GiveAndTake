@@ -99,6 +99,7 @@
     <string name="handshake_step2">ממתין לאישור המשתמש...</string>
     <string name="handshake_step3">לחץ על \'התחל החלפה\' וטיימר יחל לרוץ עבורכם.</string>
     <string name="handshake_startSessionBtn">התחל החלפה</string>
+    <string name="GiveOrTakeAddTags">הוסף תגית</string>
 
 
 </resources>
