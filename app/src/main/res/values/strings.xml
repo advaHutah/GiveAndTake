@@ -74,7 +74,7 @@
     <string name="edit_user_info_btn">בצע</string>
     <string name="handshakeActivity_handshakeTitle">לחיצת יד</string>
     <string name="handshakeActivity_serviceTitle">השירות:</string>
-    <string name="handshakeProcessFragment_title">Session in progress...</string>
+    <string name="handshakeProcessActivity_title">החלפה מתבצעת</string>
     <string name="fragmentLogin_info_button_text">i</string>
     <string name="fragmentMainScreen_balance_lable_text">יתרה נוכחית:</string>
     <string name="userMatchActivity_title">משתמשים מתאימים</string>
@@ -100,6 +100,11 @@
     <string name="handshake_step3">לחץ על \'התחל החלפה\' וטיימר יחל לרוץ עבורכם.</string>
     <string name="handshake_startSessionBtn">התחל החלפה</string>
     <string name="GiveOrTakeAddTags">הוסף תגית</string>
+    <string name="handshakeProcessActivity_balance">יתרת הזמן שלך: </string>
+    <string name="handshakeProcessActivity_time_passed">זמן שעבר: </string>
+    <string name="otherUser_session_request_description_headline">תיאור ההחלפה:</string>
+    <string name="otherUser_session_request_time_headline">זמן ההחלפה בדקות:</string>
+    <string name="otherUser_session_request_headline">בקשת החלפה</string>
 
 
 </resources>

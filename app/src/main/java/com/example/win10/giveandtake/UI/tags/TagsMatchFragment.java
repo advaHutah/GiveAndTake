@@ -3,7 +3,6 @@ package com.example.win10.giveandtake.UI.tags;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,17 +20,21 @@ import com.example.win10.giveandtake.util.MyConstants;
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.fragment.app.Fragment;
+import co.lujun.androidtagview.TagContainerLayout;
+
+
 public class TagsMatchFragment extends Fragment {
     private View view;
     private AppManager appManager;
     private List<String> myTagsString;
-    private TagView tagGroup;
+    private TagContainerLayout tagGroup;
     private TextView noTagsText;
     boolean isTakeRequest;
     private Request.RequestType requestType;
 
 
-    public static TagsMatchFragment newInstance(boolean isTakeRequst) {
+    public static Fragment newInstance(boolean isTakeRequst) {
         TagsMatchFragment myMatchTagsFragment = new TagsMatchFragment();
         Bundle args = new Bundle();
         args.putBoolean(MyConstants.IS_TAKE_REQUEST, isTakeRequst);
@@ -45,10 +48,11 @@ public class TagsMatchFragment extends Fragment {
 
         appManager = AppManager.getInstance();
 
-        tagGroup = (TagView) view.findViewById(R.id.fragmentGiveMatch_tag_group);
+        tagGroup = (TagContainerLayout) view.findViewById(R.id.fragmentGiveMatch_tag_group);
         myTagsString = new ArrayList<String>();
 
         requestType = getRequestTypeAccordingToArgs();
+        noTagsText = view.findViewById(R.id.noTagsText);
 
         return view;
     }
@@ -74,15 +78,30 @@ public class TagsMatchFragment extends Fragment {
 
 
     private void setOnClickEvent() {
-        tagGroup.setOnTagClickListener(new TagView.OnTagClickListener() {
+        tagGroup.setOnTagClickListener(new co.lujun.androidtagview.TagView.OnTagClickListener() {
             @Override
-            public void onTagClick(Tag tag, int position) {
+            public void onTagClick(int position, String text) {
                 Intent userMatchActivity = new Intent(getMainScreenActivity(), UserMatchActivity.class);
-                userMatchActivity.putExtra(MyConstants.SELECTED_TAG, tag.getText());
+                userMatchActivity.putExtra(MyConstants.SELECTED_TAG, text);
                 boolean isTakeRequest = requestType == Request.RequestType.TAKE ? true : false;
                 userMatchActivity.putExtra(MyConstants.IS_TAKE_REQUEST, isTakeRequest);
                 userMatchActivity.putExtra(MyConstants.IS_FROM_NOTIFICATION, false);
                 startActivity(userMatchActivity);
+            }
+
+            @Override
+            public void onTagLongClick(int position, String text) {
+
+            }
+
+            @Override
+            public void onSelectedTagDrag(int position, String text) {
+
+            }
+
+            @Override
+            public void onTagCrossClick(int position) {
+
             }
         });
     }
@@ -109,30 +128,21 @@ public class TagsMatchFragment extends Fragment {
 
     private void handleTags(ArrayList<String> aString) {
         myTagsString = aString;
-        ArrayList<Tag> myTags = new ArrayList<>();
         if (myTagsString == null || myTagsString.isEmpty()) {
-            noTagsText = view.findViewById(R.id.noTagsText);
             noTagsText.setVisibility(View.VISIBLE);
             noTagsText.setText("לא נמצאו תגיות מתאימות");
         } else {
+            tagGroup.removeAllTags();
             for (String text : myTagsString) {
-                Tag newTag = new Tag(text);
-                setTagDesign(newTag);
-                myTags.add(newTag);
+                tagGroup.addTag(text);
+
             }
-            tagGroup.addTags(myTags);
             setOnClickEvent();
             noTagsText.setVisibility(View.GONE);
         }
 
     }
 
-    private void setTagDesign(Tag tag) {
-        //todo check why R.color.tsgColor is not working
-        tag.setLayoutColor(Color.parseColor("#66ccff"));
-        tag.setTagTextSize(30);
-        tag.setRadius(30f);
-    }
 
     private MainScreenActivity getMainScreenActivity() {
         return (MainScreenActivity) getActivity();

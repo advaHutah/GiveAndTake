@@ -3,10 +3,7 @@ package com.example.win10.giveandtake.UI.userHashtags;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,13 +11,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cunoraz.tagview.Tag;
-import com.cunoraz.tagview.TagView;
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.util.MyConstants;
 
 import java.util.ArrayList;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import co.lujun.androidtagview.TagContainerLayout;
+import co.lujun.androidtagview.TagView;
 
 public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
 
@@ -32,13 +33,12 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
     private Button findTextBtn;
     private Button addTagsBtn;
 
-    private TagView tagGroup;
+    private TagContainerLayout tagGroup;
 
 
     private AppManager appManager;
-    private ArrayList<String> myTagsString;
+    private ArrayList<String> tagsToDisplay;
     private Request.RequestType requestType;
-    private ArrayList<String> existingTags;
     private ArrayList<String> keyWords = new ArrayList<>();
     private ArrayList<String> stopWords =new ArrayList<>();
 
@@ -59,34 +59,23 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
         findTextBtn = (Button) findViewById(R.id.request_find_text_btn);
         addTagsBtn = (Button) findViewById(R.id.add_tag_btn);
 
-        tagGroup = (TagView) findViewById(R.id.GiveOrTakeReq_tag_group);
+        tagGroup = (TagContainerLayout) findViewById(R.id.GiveOrTakeReq_tag_group);
 
-        setOnDeleteEvent(tagGroup);
+        setOnClickEvent();
 
         if (isTakeRequest) {
             requestType = Request.RequestType.TAKE;
             requestTitle.setText(R.string.GiveOrTakeReq_discriptionTake);
             text = appManager.getCurrentUser().getMyTakeRequest().getUserInputText();
-            existingTags = appManager.getCurrentUser().getMyTakeRequest().getSuggestedTags();
-            if(existingTags!=null && existingTags.isEmpty()){
-                showTags(existingTags);
-            }
-
         } else {
             requestTitle.setText(R.string.GiveOrTakeReq_discriptionGive);
             requestType = Request.RequestType.GIVE;
             text = appManager.getCurrentUser().getMyGiveRequest().getUserInputText();
-            existingTags = appManager.getCurrentUser().getMyTakeRequest().getSuggestedTags();
-            if(existingTags!=null && existingTags.isEmpty()){
-                showTags(existingTags);
-            }
-
-
         }
         //in case request is already exist
         if (text != null && !text.isEmpty()) {
             inputText.setText(text);
-            getTags();
+            getKeyWords();
         }
 
         findTextBtn.setOnClickListener(new View.OnClickListener() {
@@ -95,15 +84,15 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
                 text = inputText.getText().toString().trim();
                 if (!text.isEmpty()) {
                     appManager.addRequestNotFinal(text, requestType);
-                    getTags();
+                    getSuggestedTags();
                 }
             }
         });
         requestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!text.isEmpty() && !myTagsString.isEmpty()) {
-                    appManager.addRequestFinal(keyWords,stopWords, requestType);
+                if (!text.isEmpty() && !tagsToDisplay.isEmpty()) {
+                    appManager.setFinalRequest(keyWords,stopWords, requestType);
                     //notify the user that the request has been submitted or change the view
                     addToast(getString(R.string.GiveOrTakeReq_successMsg), Toast.LENGTH_SHORT);
                 }
@@ -117,7 +106,7 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
                 builder.setTitle(R.string.GiveOrTakeAddTags);
 
                 // Set up the input
-                final EditText input = new EditText(addTagsBtn.getContext());
+                final EditText input = new EditText(builder.getContext());
 
                 builder.setView(input);
 
@@ -125,11 +114,9 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //todo takes wrong input very weird
-                        keyWords.add(input.getText().toString());
-                        Tag newTag = new Tag(text);
-                        setTagDesign(newTag);
-                        tagGroup.addTag(newTag);
+                        String dialogText= input.getText().toString();
+                        keyWords.add(dialogText);
+                        tagGroup.addTag(dialogText);
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -152,14 +139,32 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
         toast.show();
     }
 
-    private void getTags() {
+    private void getKeyWords() {
 
-        appManager.getMyRequestTags(requestType, new AppManager.AppManagerCallback<ArrayList<String>>() {
+        appManager.getMyRequestKeyWords(requestType, new AppManager.AppManagerCallback<ArrayList<String>>() {
             @Override
             public void onDataArrived(ArrayList<String> value) {
-                myTagsString = value;
-                if (myTagsString != null && !myTagsString.isEmpty()) {
-                    showTags(myTagsString);
+                tagsToDisplay = value;
+                if (tagsToDisplay != null && !tagsToDisplay.isEmpty()) {
+                    showTags(tagsToDisplay);
+                    setButtonVisibility(requestBtn, View.VISIBLE);
+                } else {
+                    addToast(getString(R.string.GiveOrTakeReq_noTagsMsg), Toast.LENGTH_SHORT);
+                    setButtonVisibility(requestBtn, View.GONE);
+                }
+
+            }
+        });
+    }
+
+    private void getSuggestedTags() {
+
+        appManager.getMyRequestSuggestedTags(requestType, new AppManager.AppManagerCallback<ArrayList<String>>() {
+            @Override
+            public void onDataArrived(ArrayList<String> value) {
+                tagsToDisplay = value;
+                if (tagsToDisplay != null && !tagsToDisplay.isEmpty()) {
+                    showTags(tagsToDisplay);
                     setButtonVisibility(requestBtn, View.VISIBLE);
                 } else {
                     addToast(getString(R.string.GiveOrTakeReq_noTagsMsg), Toast.LENGTH_SHORT);
@@ -175,44 +180,48 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
     }
 
 
-    public void showTags(final ArrayList<String> myTagsString) {
-        ArrayList<Tag> myTags = new ArrayList<>();
-        for (String text : myTagsString) {
-            Tag newTag = new Tag(text);
-            setTagDesign(newTag);
-            myTags.add(newTag);
+    public void showTags(final ArrayList<String> tagsToDisplay) {
+        tagGroup.removeAllTags();
+        for (String text : tagsToDisplay) {
+            tagGroup.addTag(text);
+
         }
-        keyWords = myTagsString;
-        tagGroup.addTags(myTags);
+        keyWords = tagsToDisplay;
     }
 
 
-    private void setOnDeleteEvent(final TagView tagGroup) {
-        //set delete listener
-        tagGroup.setOnTagDeleteListener(new TagView.OnTagDeleteListener() {
+    private void setOnClickEvent() {
+        tagGroup.setOnTagClickListener(new TagView.OnTagClickListener() {
+            @Override
+            public void onTagClick(int position, String text) {
+                String tagText = tagGroup.getTagText(position);
+
+                if(stopWords.contains(tagText))
+                    stopWords.remove(tagText);
+                if(!keyWords.contains(tagText)){
+                    keyWords.add(tagText);
+                    tagGroup.getTagView(position).setTagBackgroundColor(Color.parseColor("#33cc33"));
+                }
+            }
 
             @Override
-            public void onTagDeleted(TagView view, Tag tag, final int position) {
-                //todo figure the colors
-                tag.setTagTextColor(R.color.red);
-                tag.setLayoutColor(R.color.Yellow_Gold);
-                tag.setDeletable(false);
-                view.remove(position);
-                view.addTag(tag);
-                stopWords.add(tag.getText());
-                keyWords.remove(tag.getText());
+            public void onTagLongClick(int position, String text) {
 
             }
+
+            @Override
+            public void onSelectedTagDrag(int position, String text) {
+
+            }
+
+            @Override
+            public void onTagCrossClick(int position) {
+                String tagText = tagGroup.getTagText(position);
+                stopWords.add(tagText);
+                keyWords.remove(tagText);
+                tagGroup.getTagView(position).setTagBackgroundColor(Color.RED);
+            }
         });
-
     }
 
-
-    private void setTagDesign(Tag tag) {
-        //todo check why R.color.tsgColor is not working
-        tag.setLayoutColor(R.color.tagsColor);
-        tag.setTagTextSize(30);
-        tag.setRadius(30f);
-        tag.setDeletable(true);
-    }
 }

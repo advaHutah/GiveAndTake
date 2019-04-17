@@ -3,7 +3,7 @@ package com.example.win10.giveandtake.UI.userMatch;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +35,7 @@ public class GiveOrTakeFragment extends Fragment {
 
         appManager = AppManager.getInstance();
         fragmentManager = getFragmentManager();
-        parentActivity = (MyMatchActivity) getActivity();
+        //parentActivity = (MyMatchActivity) getActivity();
 
         btnGive = (Button) view.findViewById(R.id.give_or_take_fragment_give_btn);
         btnTake = (Button) view.findViewById(R.id.give_or_take_fragment_take_btn);

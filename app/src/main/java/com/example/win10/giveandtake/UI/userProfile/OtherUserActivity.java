@@ -4,13 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -20,13 +16,13 @@ import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.Logic.User;
 import com.example.win10.giveandtake.R;
-import com.example.win10.giveandtake.UI.handshakeSession.HandshakeActivity;
 import com.example.win10.giveandtake.util.CreateActivityUtil;
 import com.example.win10.giveandtake.util.GeneralUtil;
-import com.example.win10.giveandtake.util.MyConstants;
 import com.example.win10.giveandtake.util.TimeConvertUtil;
 
 import java.util.ArrayList;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class OtherUserActivity extends AppCompatActivity {
 
@@ -65,8 +61,8 @@ public class OtherUserActivity extends AppCompatActivity {
             giveText.setText(otherUser.getMyGiveRequest().getUserInputText());
             takeText.setText(otherUser.getMyTakeRequest().getUserInputText());
 
-            ArrayList<String> aGiveStringTags = otherUser.getMyGiveRequest().getSuggestedTags();
-            ArrayList<String> aTakeStringTags = otherUser.getMyGiveRequest().getSuggestedTags();
+            ArrayList<String> aGiveStringTags = otherUser.getMyGiveRequest().getKeyWords();
+            ArrayList<String> aTakeStringTags = otherUser.getMyGiveRequest().getStopWords();
             displayTags(aGiveStringTags, giveTags);
             displayTags(aTakeStringTags, takeTags);
         }
@@ -89,11 +85,13 @@ public class OtherUserActivity extends AppCompatActivity {
 
 
     private void displayTags(ArrayList<String> aStringTags, TagView tagView) {
-        if (aStringTags != null || !aStringTags.isEmpty()) {
-            for (String text : aStringTags) {
-                Tag newTag = new Tag(text);
-                setTagDesign(newTag);
-                tagView.addTag(newTag);
+        if (aStringTags != null) {
+            if(!aStringTags.isEmpty()) {
+                for (String text : aStringTags) {
+                    Tag newTag = new Tag(text);
+                    setTagDesign(newTag);
+                    tagView.addTag(newTag);
+                }
             }
         }
     }
@@ -109,9 +107,9 @@ public class OtherUserActivity extends AppCompatActivity {
 
     private void setTagDesign(Tag tag) {
         //todo check why R.color.tsgColor is not working
-        tag.setLayoutColor(Color.parseColor("#66ccff"));
-        tag.setTagTextSize(15);
-        tag.setRadius(30f);
+        tag.layoutColor=Color.parseColor("#66ccff");
+        tag.tagTextSize=15;
+        tag.radius=30f;
     }
 
     @Override

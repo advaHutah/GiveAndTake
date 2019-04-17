@@ -1,6 +1,6 @@
 package com.example.win10.giveandtake.DBLogic;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.example.win10.giveandtake.Logic.Request;
@@ -140,7 +140,30 @@ public class FirebaseManager {
         });
     }
 
-    public void getTagsFromRequest(String uid, Request.RequestType requestType, final FirebaseCallback<ArrayList<String>> callback) {
+    public void getKeyWordsFromRequest(String uid, Request.RequestType requestType, final FirebaseCallback<ArrayList<String>> callback) {
+
+        String sKey = requestType == Request.RequestType.TAKE ? Keys.TAKE_REQUEST : Keys.GIVE_REQUEST;
+
+        db.child(sKey).child(uid).child(Keys.KEYWORDS).addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<String> list = new ArrayList<String>();
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    list.add(child.getValue(String.class));
+                }                // get the values from map.values();
+                callback.onDataArrived((ArrayList<String>) list);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: ");
+                callback.onDataArrived(null);
+            }
+        });
+    }
+
+    public void getSuggestedTagsFromRequest(String uid, Request.RequestType requestType, final FirebaseCallback<ArrayList<String>> callback) {
 
         String sKey = requestType == Request.RequestType.TAKE ? Keys.TAKE_REQUEST : Keys.GIVE_REQUEST;
 
@@ -151,7 +174,7 @@ public class FirebaseManager {
                 List<String> list = new ArrayList<String>();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     list.add(child.getValue(String.class));
-                }                // get the values from map.values();
+                }
                 callback.onDataArrived((ArrayList<String>) list);
             }
 
@@ -310,6 +333,7 @@ public class FirebaseManager {
         public static final String SESSION_STATUS = "status";
         public static final String SESSION_MILLIS_PASSED = "millisPassed";
         public static final String BALANCE = "balance";
+        public static final String KEYWORDS = "keyWords";
     }
 
 

@@ -2,13 +2,14 @@ package com.example.win10.giveandtake.UI.userMatch;
 
 import android.app.FragmentManager;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.R;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 //TODO delete after updating
 

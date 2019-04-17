@@ -2,10 +2,7 @@ package com.example.win10.giveandtake.UI.userMatch;
 
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -20,6 +17,10 @@ import com.example.win10.giveandtake.UI.userProfile.OtherUserActivity;
 import com.example.win10.giveandtake.util.MyConstants;
 
 import java.util.ArrayList;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 public class UserMatchActivity extends AppCompatActivity implements AdapterClickListener {
 

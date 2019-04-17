@@ -1,8 +1,6 @@
 package com.example.win10.giveandtake.UI.userMatch;
 
 
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +13,9 @@ import com.example.win10.giveandtake.UI.mainScreen.AdapterClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.RecyclerView;
 
 class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ItemViewHolder> {
 

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Context;
 import android.os.CountDownTimer;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -34,8 +34,8 @@ public class HandshakeProcessActivity extends AppCompatActivity {
 
         timerValue = (TextView)findViewById(R.id.timerValue);
         balanceValue = (TextView) findViewById(R.id.balanceValue);
-        actionText = (TextView)findViewById(R.id.handshakeProcessFragment_action_description);
-        stopBtn = (Button) findViewById(R.id.handshakeProcessFragment_stopBtn);
+        actionText = (TextView)findViewById(R.id.handshakeProcessActivity_action_description);
+        stopBtn = (Button) findViewById(R.id.handshakeProcessActivity_stopBtn);
         millisPassed = 0;
 
         appManager = AppManager.getInstance();

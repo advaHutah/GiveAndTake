@@ -1,15 +1,6 @@
 package com.example.win10.giveandtake.UI.userProfile;
 
 import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.HandlerThread;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,16 +11,16 @@ import android.widget.Toast;
 
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.R;
-import com.example.win10.giveandtake.UI.login.LoginActivity;
+import com.example.win10.giveandtake.util.CreateActivityUtil;
 import com.example.win10.giveandtake.util.GeneralUtil;
-import com.example.win10.giveandtake.util.MyConstants;
 import com.example.win10.giveandtake.util.TimeConvertUtil;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.squareup.okhttp.internal.Util;
 
-import java.io.InputStream;
 import java.util.regex.Pattern;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class UserProfileActivity extends AppCompatActivity {
 
@@ -112,6 +103,8 @@ public class UserProfileActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         finish();
+                        CreateActivityUtil.createLoginActivity(getUserProfileActivity()  );
+
                     }
                 });
     }
@@ -149,6 +142,10 @@ public class UserProfileActivity extends AppCompatActivity {
                 Log.d(TAG, "The user tapped Cancel, number is " + number);
             }
         }).setNumber(phoneNumber).show();
+    }
+
+    private UserProfileActivity getUserProfileActivity() {
+        return this;
     }
 
     @Override

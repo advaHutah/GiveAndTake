@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_gravity="right"
     android:background="@color/blue"
     android:orientation="vertical"
     tools:context="com.example.win10.giveandtake.UI.userHashtags.MyGiveOrTakeRequestActivity">
@@ -29,12 +30,12 @@
                 android:textColor="@color/white"
                 android:textSize="20dp" />
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp">
 
-        <android.support.design.widget.TextInputLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
@@ -50,8 +51,8 @@
                 android:paddingStart="10dp"
                 android:textColor="@color/blue"
                 android:textColorHint="@color/blue" />
-        </android.support.design.widget.TextInputLayout>
-    </android.support.v7.widget.CardView>
+        </com.google.android.material.textfield.TextInputLayout>
+    </androidx.cardview.widget.CardView>
 
     <Button
         android:id="@+id/request_find_text_btn"
@@ -65,18 +66,23 @@
         android:textColor="@color/blue"
         android:textStyle="bold" />
 
-    <ScrollView
+    <co.lujun.androidtagview.TagContainerLayout
+        android:id="@+id/GiveOrTakeReq_tag_group"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp">
+        android:layout_margin="15dp"
+        android:padding="15dp"
+        android:textDirection="rtl"
+        app:container_enable_drag="false"
+        app:horizontal_interval="10dp"
+        app:vertical_interval="10dp"
+        app:tag_selectable="true"
+        app:tag_clickable="true"
+        app:tag_background_color="@color/green"
+        app:tag_enable_cross="true"
+        app:tag_ripple_duration="0"
+        app:tag_theme="none" />
 
-        <com.cunoraz.tagview.TagView
-            android:id="@+id/GiveOrTakeReq_tag_group"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp" />
-
-    </ScrollView>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -88,7 +94,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             android:background="@drawable/button_shape_rounded"
             android:text="@string/GiveOrTakeAddTags"
             android:textColor="@android:color/black"
@@ -100,7 +105,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
             android:background="@drawable/button_shape_rounded"
             android:text="@string/GiveOrTakeReq_afterSelectTags"
             android:textColor="@android:color/black"

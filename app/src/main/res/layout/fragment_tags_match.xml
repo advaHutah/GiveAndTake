@@ -1,14 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.cunoraz.tagview.TagView
+
+    <co.lujun.androidtagview.TagContainerLayout
         android:id="@+id/fragmentGiveMatch_tag_group"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        />
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:padding="15dp"
+        android:textDirection="rtl"
+        app:container_enable_drag="false"
+        app:horizontal_interval="10dp"
+        app:vertical_interval="10dp"
+        app:tag_selectable="true"
+        app:tag_clickable="true"
+        app:tag_ripple_duration="0"
+        app:tag_theme="none" />
 
     <TextView
         android:id="@+id/noTagsText"

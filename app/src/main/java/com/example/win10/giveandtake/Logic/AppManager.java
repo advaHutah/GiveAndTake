@@ -1,6 +1,8 @@
 package com.example.win10.giveandtake.Logic;
 
-import android.support.annotation.Nullable;
+import android.widget.Toast;
+
+import androidx.annotation.Nullable;
 
 import com.example.win10.giveandtake.DBLogic.FirebaseManager;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -75,7 +77,7 @@ public class AppManager {
     }
 
     //after set the tags that will describe his request , update the request DB and change isFinal property to 1
-    public void addRequestFinal(ArrayList<String> keyWords,ArrayList<String> stopWords, Request.RequestType requestType) {
+    public void setFinalRequest(ArrayList<String> keyWords,ArrayList<String> stopWords, Request.RequestType requestType) {
         this.updateRequestTagsUserValidated(keyWords,stopWords, requestType);
     }
 
@@ -94,12 +96,28 @@ public class AppManager {
         firebaseManager.addUserInfoToDB(currentUser);
     }
 
-    //get the tags
-    public void getMyRequestTags(Request.RequestType requestType, final AppManagerCallback<ArrayList<String>> callback) {
-        this.firebaseManager.getTagsFromRequest(currentUser.getId(), requestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
+    //get the keywords
+    public void getMyRequestKeyWords(Request.RequestType requestType, final AppManagerCallback<ArrayList<String>> callback) {
+        this.firebaseManager.getKeyWordsFromRequest(currentUser.getId(), requestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
             @Override
             public void onDataArrived(ArrayList<String> value) {
                 callback.onDataArrived(value);
+            }
+        });
+    }
+
+
+    //get the suggested tags
+    public void getMyRequestSuggestedTags(final Request.RequestType requestType, final AppManagerCallback<ArrayList<String>> callback) {
+        this.firebaseManager.getSuggestedTagsFromRequest(currentUser.getId(), requestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
+            @Override
+            public void onDataArrived(ArrayList<String> value) {
+                callback.onDataArrived(value);
+                //update current user request
+                if (requestType == Request.RequestType.TAKE)
+                    getCurrentUser().getMyTakeRequest().setSuggestedTags(value);
+                else
+                    getCurrentUser().getMyGiveRequest().setSuggestedTags(value);
             }
         });
     }
@@ -128,8 +146,8 @@ public class AppManager {
     //get user match tags based on request type
     public void getMyTakeMatchTags(final AppManagerCallback<ArrayList<String>> callback) {
         Request.RequestType otherRequestType = Request.RequestType.GIVE;
-        if (currentUser != null && currentUser.getMyTakeRequest() != null && currentUser.getMyTakeRequest().getSuggestedTags() != null) {
-            myTakeRequestTags = currentUser.getMyTakeRequest().getSuggestedTags();
+        if (currentUser != null && currentUser.getMyTakeRequest() != null && currentUser.getMyTakeRequest().getKeyWords() != null) {
+            myTakeRequestTags = currentUser.getMyTakeRequest().getKeyWords();
 
             this.firebaseManager.getTags(otherRequestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
                 @Override
@@ -152,8 +170,8 @@ public class AppManager {
     public void getMyGiveMatchTags(final AppManagerCallback<ArrayList<String>> callback) {
 
         Request.RequestType otherRequestType = Request.RequestType.TAKE;
-        if (currentUser != null && currentUser.getMyGiveRequest() != null && currentUser.getMyGiveRequest().getSuggestedTags() != null) {
-            myGiveRequestTags = currentUser.getMyGiveRequest().getSuggestedTags();
+        if (currentUser != null && currentUser.getMyGiveRequest() != null && currentUser.getMyGiveRequest().getKeyWords(    ) != null) {
+            myGiveRequestTags = currentUser.getMyGiveRequest().getKeyWords();
             this.firebaseManager.getTags(otherRequestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
                 @Override
                 public void onDataArrived(ArrayList<String> value) {
