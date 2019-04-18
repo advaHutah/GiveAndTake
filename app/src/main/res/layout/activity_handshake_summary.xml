@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.example.win10.giveandtake.UI.handshakeSession.HandshakeSummaryActivity">
+    tools:context="com.finalproject.win10.giveandtake.UI.handshakeSession.HandshakeSummaryActivity">
 
     <TextView
         android:layout_width="match_parent"

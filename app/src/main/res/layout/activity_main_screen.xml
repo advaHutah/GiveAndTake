@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/changing_background"
     android:orientation="vertical"
-    tools:context="com.example.win10.giveandtake.UI.mainScreen.MainScreenActivity">
+    tools:context="com.finalproject.win10.giveandtake.UI.mainScreen.MainScreenActivity">
 
 
     <LinearLayout

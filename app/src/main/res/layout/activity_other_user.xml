@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue"
-    tools:context="com.example.win10.giveandtake.UI.userProfile.OtherUserActivity">
+    tools:context="com.finalproject.giveandtake.UI.userProfile.OtherUserActivity">
 
 
     <androidx.cardview.widget.CardView
