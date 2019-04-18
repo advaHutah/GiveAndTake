@@ -2,7 +2,6 @@ package com.example.win10.giveandtake.UI.userProfile;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -10,8 +9,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.cunoraz.tagview.Tag;
-import com.cunoraz.tagview.TagView;
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.Logic.User;
@@ -23,11 +20,12 @@ import com.example.win10.giveandtake.util.TimeConvertUtil;
 import java.util.ArrayList;
 
 import androidx.appcompat.app.AppCompatActivity;
+import co.lujun.androidtagview.TagContainerLayout;
 
 public class OtherUserActivity extends AppCompatActivity {
 
     private TextView nameText, balanceText, giveText, takeText, userEmail;
-    private TagView giveTags, takeTags;
+    private TagContainerLayout giveTags, takeTags;
     private Button btnGiveSession, btnTakeSession;
     private AppManager appManager = AppManager.getInstance();
     private User otherUser;
@@ -44,8 +42,8 @@ public class OtherUserActivity extends AppCompatActivity {
         balanceText = (TextView) this.findViewById(R.id.otherUser_balance);
         giveText = (TextView) this.findViewById(R.id.giveText);
         takeText = (TextView) this.findViewById(R.id.takeText);
-        giveTags = (TagView) this.findViewById(R.id.otherUser_giveTags);
-        takeTags = (TagView) this.findViewById(R.id.otherUser_TakeTags);
+        giveTags = (TagContainerLayout) this.findViewById(R.id.otherUser_GiveTags);
+        takeTags = (TagContainerLayout) this.findViewById(R.id.otherUser_TakeTags);
         userImage = (ImageView) this.findViewById(R.id.otherUser_image);
 
         btnGiveSession = (Button) this.findViewById(R.id.btn_give_session);
@@ -58,13 +56,18 @@ public class OtherUserActivity extends AppCompatActivity {
             nameText.setText(otherUser.getFullName());
             userEmail.setText(otherUser.getEmail());
             balanceText.setText(TimeConvertUtil.convertTime(otherUser.getBalance()));
-            giveText.setText(otherUser.getMyGiveRequest().getUserInputText());
-            takeText.setText(otherUser.getMyTakeRequest().getUserInputText());
+            if(otherUser.getMyGiveRequest()!= null) {
+                giveText.setText(otherUser.getMyGiveRequest().getUserInputText());
+                ArrayList<String> aGiveStringTags = otherUser.getMyGiveRequest().getKeyWords();
+                displayTags(aGiveStringTags, giveTags);
+            }
+            if(otherUser.getMyTakeRequest() != null) {
+                takeText.setText(otherUser.getMyTakeRequest().getUserInputText());
+                ArrayList<String> aTakeStringTags = otherUser.getMyTakeRequest().getKeyWords();
+                displayTags(aTakeStringTags, takeTags);
+            }
 
-            ArrayList<String> aGiveStringTags = otherUser.getMyGiveRequest().getKeyWords();
-            ArrayList<String> aTakeStringTags = otherUser.getMyGiveRequest().getStopWords();
-            displayTags(aGiveStringTags, giveTags);
-            displayTags(aTakeStringTags, takeTags);
+
         }
 
         btnGiveSession.setOnClickListener(new View.OnClickListener() {
@@ -84,13 +87,11 @@ public class OtherUserActivity extends AppCompatActivity {
     }
 
 
-    private void displayTags(ArrayList<String> aStringTags, TagView tagView) {
+    private void displayTags(ArrayList<String> aStringTags, TagContainerLayout tagView) {
         if (aStringTags != null) {
             if(!aStringTags.isEmpty()) {
                 for (String text : aStringTags) {
-                    Tag newTag = new Tag(text);
-                    setTagDesign(newTag);
-                    tagView.addTag(newTag);
+                    tagView.addTag(text);
                 }
             }
         }
@@ -103,13 +104,6 @@ public class OtherUserActivity extends AppCompatActivity {
             intent.setData(Uri.parse("tel:" + phoneNumber));
             startActivity(intent);
         }
-    }
-
-    private void setTagDesign(Tag tag) {
-        //todo check why R.color.tsgColor is not working
-        tag.layoutColor=Color.parseColor("#66ccff");
-        tag.tagTextSize=15;
-        tag.radius=30f;
     }
 
     @Override

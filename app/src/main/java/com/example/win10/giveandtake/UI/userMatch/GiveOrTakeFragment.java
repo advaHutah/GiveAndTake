@@ -3,7 +3,6 @@ package com.example.win10.giveandtake.UI.userMatch;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +10,8 @@ import android.widget.Button;
 
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.R;
+
+import androidx.annotation.Nullable;
 
 //TODO delete after updating
 

@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue"
-
     tools:context="com.example.win10.giveandtake.UI.userProfile.OtherUserActivity">
 
 
@@ -24,22 +23,12 @@
 
             <ImageView
                 android:id="@+id/otherUser_image"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_gravity="center" />
 
             <TextView
                 android:id="@+id/otherUser_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="15dp"
-                android:text=""
-                android:textColor="@android:color/black"
-                android:textSize="25dp" />
-
-            <TextView
-                android:id="@+id/otherUser_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -49,13 +38,23 @@
                 android:textSize="20dp" />
 
             <TextView
+                android:id="@+id/otherUser_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:textSize="15dp" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
                 android:text="@string/fragmentMainScreen_balance_lable_text"
                 android:textColor="@android:color/black"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/otherUser_balance"
@@ -65,7 +64,7 @@
                 android:layout_marginTop="5dp"
                 android:text=""
                 android:textColor="@color/green"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -102,10 +101,19 @@
                             android:text="תגיות:"
                             android:textColor="@color/blue" />
 
-                        <com.cunoraz.tagview.TagView
-                            android:id="@+id/otherUser_giveTags"
+                        <co.lujun.androidtagview.TagContainerLayout
+                            android:id="@+id/otherUser_GiveTags"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:textDirection="rtl"
+                            app:container_enable_drag="false"
+                            app:horizontal_interval="5dp"
+                            app:vertical_interval="5dp"
+                            app:tag_selectable="true"
+                            app:tag_clickable="true"
+                            app:tag_ripple_duration="0"
+                            app:tag_theme="none" />
                     </LinearLayout>
                 </androidx.core.widget.NestedScrollView>
 
@@ -147,10 +155,19 @@
                             android:text="תגיות:"
                             android:textColor="@color/blue" />
 
-                        <com.cunoraz.tagview.TagView
+                        <co.lujun.androidtagview.TagContainerLayout
                             android:id="@+id/otherUser_TakeTags"
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent" />
+                            android:layout_height="wrap_content"
+                            android:padding="5dp"
+                            android:textDirection="rtl"
+                            app:container_enable_drag="false"
+                            app:horizontal_interval="5dp"
+                            app:vertical_interval="5dp"
+                            app:tag_selectable="true"
+                            app:tag_clickable="true"
+                            app:tag_ripple_duration="0"
+                            app:tag_theme="none" />
                     </LinearLayout>
                 </androidx.core.widget.NestedScrollView>
 
@@ -158,7 +175,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
                 android:gravity="center"

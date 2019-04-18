@@ -135,6 +135,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onDataArrived(Boolean value) {
                     dataArrived = true;
                     hideProgressDialog();
+                    appManager.setMessagingService();
                     createMainScreenActivity();
                     finish();
                 }
@@ -179,6 +180,7 @@ public class LoginActivity extends AppCompatActivity {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
+
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e);

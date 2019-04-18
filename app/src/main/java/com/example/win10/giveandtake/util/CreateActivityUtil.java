@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.win10.giveandtake.Logic.User;
-import com.example.win10.giveandtake.UI.handshakeSession.HandshakeActivity;
 import com.example.win10.giveandtake.UI.handshakeSession.HandshakeProcessActivity;
 import com.example.win10.giveandtake.UI.handshakeSession.HandshakeSettingsActivity;
 import com.example.win10.giveandtake.UI.handshakeSession.HandshakeSummaryActivity;

@@ -1,11 +1,8 @@
 package com.example.win10.giveandtake.UI.handshakeSession;
 
 import android.app.Activity;
-import android.app.FragmentManager;
-import android.content.Context;
-import android.os.CountDownTimer;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -15,8 +12,9 @@ import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.Session;
 import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.util.CreateActivityUtil;
-import com.example.win10.giveandtake.util.MyConstants;
 import com.example.win10.giveandtake.util.TimeConvertUtil;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class HandshakeProcessActivity extends AppCompatActivity {
 

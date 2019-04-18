@@ -1,20 +1,17 @@
 package com.example.win10.giveandtake.UI.tags;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.cunoraz.tagview.Tag;
-import com.cunoraz.tagview.TagView;
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.R;
-import com.example.win10.giveandtake.UI.userMatch.UserMatchActivity;
 import com.example.win10.giveandtake.UI.mainScreen.MainScreenActivity;
+import com.example.win10.giveandtake.UI.userMatch.UserMatchActivity;
 import com.example.win10.giveandtake.util.MyConstants;
 
 import java.util.ArrayList;

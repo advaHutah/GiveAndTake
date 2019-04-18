@@ -53,19 +53,36 @@
                 android:textColorHint="@color/blue" />
         </com.google.android.material.textfield.TextInputLayout>
     </androidx.cardview.widget.CardView>
-
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layoutDirection="rtl"
+        android:orientation="horizontal">
     <Button
         android:id="@+id/request_find_text_btn"
         style="?android:textAppearanceSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
         android:layout_gravity="center"
-        android:layout_marginTop="10dp"
         android:background="@drawable/button_shape_rounded"
         android:text="@string/GiveOrTakeReq_findTextBtn"
         android:textColor="@color/blue"
         android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/add_tag_btn"
+        style="?android:textAppearanceSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/button_shape_rounded"
+        android:text="@string/GiveOrTakeAddTags"
+        android:textColor="@color/blue"
+        android:textStyle="bold" />
+    </LinearLayout>
     <co.lujun.androidtagview.TagContainerLayout
         android:id="@+id/GiveOrTakeReq_tag_group"
         android:layout_width="match_parent"
@@ -88,28 +105,19 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_gravity="center">
-        <Button
-            android:id="@+id/add_tag_btn"
-            style="?android:textAppearanceSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/button_shape_rounded"
-            android:text="@string/GiveOrTakeAddTags"
-            android:textColor="@android:color/black"
-            android:textStyle="bold" />
-
-        <Button
+        <com.spark.submitbutton.SubmitButton
             android:id="@+id/make_request_btn"
-            style="?android:textAppearanceSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/button_shape_rounded"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:text="@string/GiveOrTakeReq_afterSelectTags"
             android:textColor="@android:color/black"
-            android:textStyle="bold"
-            android:visibility="gone" />
+            app:sub_btn_background="@color/white"
+            app:sub_btn_duration="1500"
+            app:sub_btn_line_color="@color/green"
+            app:sub_btn_ripple_color="@color/green"
+            app:sub_btn_tick_color="@color/white"
+            android:visibility="gone"/>
+
     </LinearLayout>
 
 </LinearLayout>

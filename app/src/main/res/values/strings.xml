@@ -80,7 +80,7 @@
     <string name="userMatchActivity_title">משתמשים מתאימים</string>
     <string name="serverId">917990523248-iq18cvbqbv2uju4sv37t46mv53mgdl6e.apps.googleusercontent.com</string>
     <string name="GiveOrTakeReq_findTextBtn">מצא תגיות</string>
-    <string name="GiveOrTakeReq_afterSelectTags">המשך</string>
+    <string name="GiveOrTakeReq_afterSelectTags">שמירה</string>
     <string name="GiveOrTakeReq_viewTitle">הבקשה שלי</string>
     <string name="GiveOrTakeReq_inputTextHint">הקלד כאן</string>
     <string name="GiveOrTakeReq_discriptionTake">מה תרצה לקחת?</string>
@@ -99,12 +99,12 @@
     <string name="handshake_step2">ממתין לאישור המשתמש...</string>
     <string name="handshake_step3">לחץ על \'התחל החלפה\' וטיימר יחל לרוץ עבורכם.</string>
     <string name="handshake_startSessionBtn">התחל החלפה</string>
-    <string name="GiveOrTakeAddTags">הוסף תגית</string>
+    <string name="GiveOrTakeAddTags">הוסף תגית +</string>
     <string name="handshakeProcessActivity_balance">יתרת הזמן שלך: </string>
     <string name="handshakeProcessActivity_time_passed">זמן שעבר: </string>
-    <string name="otherUser_session_request_description_headline">תיאור ההחלפה:</string>
-    <string name="otherUser_session_request_time_headline">זמן ההחלפה בדקות:</string>
-    <string name="otherUser_session_request_headline">בקשת החלפה</string>
+    <string name="incoming_session_request_description_headline">תיאור ההחלפה:</string>
+    <string name="incoming_session_request_time_headline">זמן ההחלפה בדקות:</string>
+    <string name="incoming_session_request_headline">בקשת החלפה</string>
 
 
 </resources>

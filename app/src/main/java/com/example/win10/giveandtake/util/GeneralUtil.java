@@ -1,6 +1,5 @@
 package com.example.win10.giveandtake.util;
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -10,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.win10.giveandtake.R;
-import com.example.win10.giveandtake.UI.userProfile.UserProfileActivity;
 
 import java.io.InputStream;
 

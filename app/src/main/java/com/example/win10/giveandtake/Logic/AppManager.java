@@ -1,17 +1,14 @@
 package com.example.win10.giveandtake.Logic;
 
-import android.widget.Toast;
-
-import androidx.annotation.Nullable;
-
 import com.example.win10.giveandtake.DBLogic.FirebaseManager;
+import com.example.win10.giveandtake.DBLogic.GiveAndTakeMessagingService;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.util.ArrayList;
-import java.util.Set;
+
+import androidx.annotation.Nullable;
 
 //Handles all app actions and DB read/write
 public class AppManager {
@@ -32,18 +29,21 @@ public class AppManager {
     private GoogleSignInClient googleSignInClient;
     private ArrayList<String> myTakeRequestTags;
     private ArrayList<String> myGiveRequestTags;
-
+    private GiveAndTakeMessagingService messagingService;
 
     private AppManager() {
         firebaseManager = FirebaseManager.getInstance();
         mAuth = FirebaseAuth.getInstance();
-
     }
 
     public static AppManager getInstance() {
         if (singletonAppManager == null)
             singletonAppManager = new AppManager();
         return singletonAppManager;
+    }
+
+    public void setMessagingService(){
+        messagingService = GiveAndTakeMessagingService.getInstance();
     }
 
     public void createNewUser(String uid, String email, String fullName, String phoneNumber, String photoURL) {

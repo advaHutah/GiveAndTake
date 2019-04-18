@@ -1,10 +1,6 @@
 package com.example.win10.giveandtake.UI.mainScreen;
 
 import android.content.Intent;
-import androidx.fragment.app.FragmentActivity;
-
-import com.google.android.material.tabs.TabLayout;
-import androidx.viewpager.widget.ViewPager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -13,15 +9,15 @@ import android.widget.TextView;
 
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.R;
-
 import com.example.win10.giveandtake.UI.tags.TagsMatchFragment;
 import com.example.win10.giveandtake.UI.userHashtags.MyGiveOrTakeRequestActivity;
-import com.example.win10.giveandtake.UI.userProfile.UserProfileActivity;
 import com.example.win10.giveandtake.util.CreateActivityUtil;
 import com.example.win10.giveandtake.util.MyConstants;
 import com.example.win10.giveandtake.util.TimeConvertUtil;
+import com.google.android.material.tabs.TabLayout;
 
-import org.jetbrains.annotations.Contract;
+import androidx.fragment.app.FragmentActivity;
+import androidx.viewpager.widget.ViewPager;
 
 public class MainScreenActivity extends FragmentActivity {
 

@@ -10,11 +10,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.cunoraz.tagview.Tag;
 import com.example.win10.giveandtake.Logic.AppManager;
 import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.R;
 import com.example.win10.giveandtake.util.MyConstants;
+import com.spark.submitbutton.SubmitButton;
 
 import java.util.ArrayList;
 
@@ -29,7 +29,7 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
     private TextView requestTitle;
     private EditText inputText;
     private String text = "";
-    private Button requestBtn;
+    private SubmitButton saveBtn;
     private Button findTextBtn;
     private Button addTagsBtn;
 
@@ -55,7 +55,7 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
         appManager = AppManager.getInstance();
 
         inputText = (EditText) findViewById(R.id.request_input_text);
-        requestBtn = (Button) findViewById(R.id.make_request_btn);
+        saveBtn = (SubmitButton) findViewById(R.id.make_request_btn);
         findTextBtn = (Button) findViewById(R.id.request_find_text_btn);
         addTagsBtn = (Button) findViewById(R.id.add_tag_btn);
 
@@ -66,11 +66,13 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
         if (isTakeRequest) {
             requestType = Request.RequestType.TAKE;
             requestTitle.setText(R.string.GiveOrTakeReq_discriptionTake);
-            text = appManager.getCurrentUser().getMyTakeRequest().getUserInputText();
+            if(appManager.getCurrentUser().getMyTakeRequest()!=null)
+                text = appManager.getCurrentUser().getMyTakeRequest().getUserInputText();
         } else {
             requestTitle.setText(R.string.GiveOrTakeReq_discriptionGive);
             requestType = Request.RequestType.GIVE;
-            text = appManager.getCurrentUser().getMyGiveRequest().getUserInputText();
+            if (appManager.getCurrentUser().getMyGiveRequest()!=null)
+                text = appManager.getCurrentUser().getMyGiveRequest().getUserInputText();
         }
         //in case request is already exist
         if (text != null && !text.isEmpty()) {
@@ -88,7 +90,7 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
                 }
             }
         });
-        requestBtn.setOnClickListener(new View.OnClickListener() {
+        saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!text.isEmpty() && !tagsToDisplay.isEmpty()) {
@@ -147,10 +149,10 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
                 tagsToDisplay = value;
                 if (tagsToDisplay != null && !tagsToDisplay.isEmpty()) {
                     showTags(tagsToDisplay);
-                    setButtonVisibility(requestBtn, View.VISIBLE);
+                    setButtonVisibility(saveBtn, View.VISIBLE);
                 } else {
                     addToast(getString(R.string.GiveOrTakeReq_noTagsMsg), Toast.LENGTH_SHORT);
-                    setButtonVisibility(requestBtn, View.GONE);
+                    setButtonVisibility(saveBtn, View.GONE);
                 }
 
             }
@@ -165,17 +167,17 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
                 tagsToDisplay = value;
                 if (tagsToDisplay != null && !tagsToDisplay.isEmpty()) {
                     showTags(tagsToDisplay);
-                    setButtonVisibility(requestBtn, View.VISIBLE);
+                    setButtonVisibility(saveBtn, View.VISIBLE);
                 } else {
                     addToast(getString(R.string.GiveOrTakeReq_noTagsMsg), Toast.LENGTH_SHORT);
-                    setButtonVisibility(requestBtn, View.GONE);
+                    setButtonVisibility(saveBtn, View.GONE);
                 }
 
             }
         });
     }
 
-    private void setButtonVisibility(Button button, int state) {
+    private void setButtonVisibility(SubmitButton button, int state) {
         button.setVisibility(state);
     }
 

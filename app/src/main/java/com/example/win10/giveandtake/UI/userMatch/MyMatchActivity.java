@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.example.win10.giveandtake.Logic.AppManager;
-import com.example.win10.giveandtake.Logic.Request;
 import com.example.win10.giveandtake.R;
 
 import androidx.appcompat.app.AppCompatActivity;

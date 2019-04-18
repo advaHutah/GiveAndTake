@@ -12,15 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <service android:name=".DBLogic.GiveAndTakeInstanceIdService">
-            <intent-filter>
-                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
-            </intent-filter>
-        </service>
         <service
             android:name=".DBLogic.GiveAndTakeMessagingService"
-            android:enabled="true"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -38,9 +32,8 @@
         </intent-filter>
         </activity>
         <activity android:name=".UI.userProfile.UserProfileActivity" />
-        <activity android:name=".UI.handshakeSession.HandshakeActivity" />
         <activity android:name=".UI.userProfile.OtherUserActivity" />
-        <activity android:name=".UI.handshakeSession.OtherUserSessionRequestActivity" />
+        <activity android:name=".UI.handshakeSession.IncomingSessionRequestActivity" />
         <activity android:name=".UI.mainScreen.MainScreenActivity"/>
         <activity android:name=".UI.userHashtags.MyGiveOrTakeRequestActivity" />
         <activity android:name=".UI.userMatch.UserMatchActivity" />

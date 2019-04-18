@@ -1,6 +1,5 @@
 package com.example.win10.giveandtake.DBLogic;
 
-import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.example.win10.giveandtake.Logic.Request;
@@ -8,7 +7,6 @@ import com.example.win10.giveandtake.Logic.Session;
 import com.example.win10.giveandtake.Logic.TagUserInfo;
 import com.example.win10.giveandtake.Logic.User;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -16,9 +14,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import androidx.annotation.NonNull;
 
 public class FirebaseManager {
 
