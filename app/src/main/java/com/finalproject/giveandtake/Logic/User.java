@@ -4,6 +4,8 @@ import com.finalproject.giveandtake.Logic.Request;
 import com.finalproject.giveandtake.DBLogic.FirebaseManager;
 
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class User implements Serializable {
@@ -19,7 +21,8 @@ public class User implements Serializable {
     private String email;
     private String fullName;
     private String phoneNumber;
-//    private Gender gender;
+    private float rating;
+    private Map<String,Float> usersRatings;
     private long balance;// milisec
     private String photoUrl;
 
@@ -36,23 +39,26 @@ public class User implements Serializable {
         this.email = email;
         this.fullName = fullName;
         this.phoneNumber = phoneNumber != null ? phoneNumber : "null";
-        //this.gender = gender.equals("נקבה") ? Gender.FEMALE : Gender.MALE;
         this.photoUrl=photoUrl;
         this.balance = INIT_BALANCE;
+        this.rating=0;
+        this.usersRatings = new HashMap<>();
         myTakeRequest = new Request();
         myGiveRequest = new Request();
     }
 
-    public User(String id, String email, String fullName, String phoneNumber, long balance,String photoUrl) {
+    public User(String id, String email, String fullName, String phoneNumber, long balance,String photoUrl,float rating,Map<String,Float> usersRatings) {
         this(id, email, fullName, phoneNumber,photoUrl);
         this.balance = balance;
+        this.rating = rating;
+        this.usersRatings = usersRatings;
+
     }
 
-    public User(String id, String email, String fullName, String phoneNumber, long balance, Request myTakeRequest, Request myGiveRequest ,String photoUrl) {
-        this(id, email, fullName, phoneNumber, balance,photoUrl);
+    public User(String id, String email, String fullName, String phoneNumber, long balance, Request myTakeRequest, Request myGiveRequest ,String photoUrl,float rating,Map<String,Float> usersRatings) {
+        this(id, email, fullName, phoneNumber,balance,photoUrl,rating,usersRatings);
         this.myTakeRequest = myTakeRequest;
         this.myGiveRequest = myGiveRequest;
-        //this.mySessions = mySessions;
     }
 
     public String getId() {
@@ -66,10 +72,6 @@ public class User implements Serializable {
     public String getPhoneNumber() {
         return phoneNumber;
     }
-
-//    public String getGender() {
-//        return gender.name();
-//    }
 
     public long getBalance() {
         return balance;
@@ -103,9 +105,21 @@ public class User implements Serializable {
         this.email = email;
     }
 
-//    public void setGender(String gender) {
-//        this.gender = gender.equals("נקבה") ? Gender.FEMALE : Gender.MALE;
-//    }
+    public float getRating() {
+        return rating;
+    }
+
+    public void setRating(float rating) {
+        this.rating = rating;
+    }
+
+    public Map<String, Float> getUsersRatings() {
+        return usersRatings;
+    }
+
+    public void setUsersRatings(Map<String, Float> usersRatings) {
+        this.usersRatings = usersRatings;
+    }
 
     @Override
     public String toString() {

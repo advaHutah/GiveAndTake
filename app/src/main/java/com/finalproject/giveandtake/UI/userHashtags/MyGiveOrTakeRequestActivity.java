@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,7 +35,7 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
     private Button addTagsBtn;
 
     private TagContainerLayout tagGroup;
-
+    private ProgressBar progressBar;
 
     private AppManager appManager;
     private ArrayList<String> tagsToDisplay;
@@ -58,7 +59,7 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
         saveBtn = (SubmitButton) findViewById(R.id.make_request_btn);
         findTextBtn = (Button) findViewById(R.id.request_find_text_btn);
         addTagsBtn = (Button) findViewById(R.id.add_tag_btn);
-
+        progressBar = (ProgressBar) findViewById(R.id.myHashtagActivity_progress_bar);
         tagGroup = (TagContainerLayout) findViewById(R.id.GiveOrTakeReq_tag_group);
 
         setOnClickEvent();
@@ -86,6 +87,8 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
                 text = inputText.getText().toString().trim();
                 if (!text.isEmpty()) {
                     appManager.addRequestNotFinal(text, requestType);
+                    progressBar.setActivated(true);
+                    progressBar.setVisibility(View.VISIBLE);
                     getSuggestedTags();
                 }
             }
@@ -166,11 +169,10 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
             public void onDataArrived(ArrayList<String> value) {
                 tagsToDisplay = value;
                 if (tagsToDisplay != null && !tagsToDisplay.isEmpty()) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    progressBar.setActivated(false);
                     showTags(tagsToDisplay);
                     setButtonVisibility(saveBtn, View.VISIBLE);
-                } else {
-                    addToast(getString(R.string.GiveOrTakeReq_noTagsMsg), Toast.LENGTH_SHORT);
-                    setButtonVisibility(saveBtn, View.GONE);
                 }
 
             }

@@ -14,7 +14,7 @@ import com.finalproject.giveandtake.Logic.TagUserInfo;
 import com.finalproject.giveandtake.Logic.User;
 import com.finalproject.giveandtake.R;
 import com.finalproject.giveandtake.UI.handshakeSession.IncomingSessionRequestActivity;
-import com.finalproject.giveandtake.UI.userMatch.MyMatchActivity;
+import com.finalproject.giveandtake.UI.userMatch.UserMatchActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -77,22 +77,6 @@ public class GiveAndTakeMessagingService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        // ...
-
-        // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
-
-        // Check if message contains a data payload.
-        if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-
-
-        }
-
-        // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-        }
 
         if(remoteMessage.getNotification().getTitle().contains("Session")){
             getSessionNotification(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
@@ -102,7 +86,7 @@ public class GiveAndTakeMessagingService extends FirebaseMessagingService {
     }
 
     private void getMatchNotification(String title,String messageBody) {
-        Intent intent = new Intent(this, MyMatchActivity.class);
+        Intent intent = new Intent(this, UserMatchActivity.class);
         intent.putExtra("type",getTypeFromMessage(title));
         intent.putExtra("tag",getTagFromMessage(title));
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -112,8 +96,8 @@ public class GiveAndTakeMessagingService extends FirebaseMessagingService {
 
         NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(this);
         notiBuilder.setSmallIcon(R.drawable.temp_logo);
-        notiBuilder.setContentTitle("You Got a Potetntial Match Users!");
-        notiBuilder.setContentText("Tag:" + getTagFromMessage(title) + " Type:"+ getTypeFromMessage(title));
+        notiBuilder.setContentTitle("קיימת עבורך התאמה פוטנציאלית!");
+        notiBuilder.setContentText("תגית:" + getTagFromMessage(title) + " לתת\\לקחת:"+ getTypeFromMessage(title));
         notiBuilder.setAutoCancel(true);
         notiBuilder.setSound(defultSoundUri);
         notiBuilder.setContentIntent(pendingIntent);
@@ -160,8 +144,8 @@ public class GiveAndTakeMessagingService extends FirebaseMessagingService {
 
         NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(this);
         notiBuilder.setSmallIcon(R.drawable.temp_logo);
-        notiBuilder.setContentTitle("New Session Request!");
-        notiBuilder.setContentText("Press To Enter Session");
+        notiBuilder.setContentTitle("בקשה החלפת זמן חדשה");
+        notiBuilder.setContentText("לחץ על מנת להכנס לבקשה");
         notiBuilder.setAutoCancel(true);
         notiBuilder.setSound(defultSoundUri);
         notiBuilder.setContentIntent(pendingIntent);

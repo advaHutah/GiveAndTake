@@ -21,8 +21,8 @@
 
             <ImageView
                 android:id="@+id/my_profile_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_gravity="center" />
 
             <TextView
@@ -30,10 +30,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:text=""
-                android:textSize="30dp"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/black"
+                android:textSize="30dp" />
 
             <TextView
                 android:id="@+id/my_profile_email"
@@ -42,17 +42,17 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:text=""
-                android:textSize="20dp"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:text="@string/fragmentMainScreen_balance_lable_text"
-                android:textSize="20dp"
-                android:textColor="@android:color/black"/>
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/my_profile_balance"
@@ -61,8 +61,14 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:text=""
-                android:textSize="20dp"
-                android:textColor="@color/green"/>
+                android:textColor="@color/green"
+                android:textSize="20dp" />
+
+            <RatingBar
+                android:id="@+id/my_profile_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:isIndicator="true" />
 
             <Button
                 android:id="@+id/btn_my_profile_phone"
@@ -70,10 +76,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/button_shape_rounded"
-                android:textColor="@color/blue"
-                android:textSize="15dp"
                 android:outlineSpotShadowColor="@color/blue"
-                android:text="@string/btnPhoneNum_text"/>
+                android:text="@string/btnPhoneNum_text"
+                android:textColor="@color/blue"
+                android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/my_profile_phone_msg"
@@ -89,8 +95,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/button_shape_rounded"
-                android:textColor="@color/red"
-                android:text="@string/btn_logout_text" />
+                android:text="@string/btn_logout_text"
+                android:textColor="@color/red" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

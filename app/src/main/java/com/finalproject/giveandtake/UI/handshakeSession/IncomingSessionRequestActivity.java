@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.finalproject.giveandtake.Logic.AppManager;
@@ -13,6 +14,7 @@ import com.finalproject.giveandtake.Logic.Session;
 import com.finalproject.giveandtake.Logic.User;
 import com.finalproject.giveandtake.R;
 import com.finalproject.giveandtake.util.CreateActivityUtil;
+import com.finalproject.giveandtake.util.GeneralUtil;
 import com.finalproject.giveandtake.util.TimeConvertUtil;
 
 import java.util.ArrayList;
@@ -22,11 +24,13 @@ import co.lujun.androidtagview.TagContainerLayout;
 
 public class IncomingSessionRequestActivity extends AppCompatActivity {
 
-    private TextView nameText, balanceText, giveText, takeText, descriptionText, timeSet;
+    private TextView nameText,emailText, balanceText, giveText, takeText, descriptionText, timeSet;
     private TagContainerLayout giveTags, takeTags;
     private Button btnPhoneNumber, btnAcceptSession, btnRejectSession;
     private AppManager appManager = AppManager.getInstance();
     private User otherUser;
+    private ImageView userImage;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +39,9 @@ public class IncomingSessionRequestActivity extends AppCompatActivity {
         //user got a session request
         timeSet = (TextView) this.findViewById(R.id.incoming_session_time);
         descriptionText = (TextView) this.findViewById(R.id.incoming_session_request_description);
+        userImage = (ImageView) this.findViewById(R.id.incoming_session_request_image);
         nameText = (TextView) this.findViewById(R.id.incoming_session_request_name);
+        emailText = (TextView) this.findViewById(R.id.incoming_session_request_email);
         balanceText = (TextView) this.findViewById(R.id.incoming_session_request_balance);
         giveText = (TextView) this.findViewById(R.id.giveText);
         takeText = (TextView) this.findViewById(R.id.takeText);
@@ -46,19 +52,25 @@ public class IncomingSessionRequestActivity extends AppCompatActivity {
         btnRejectSession = (Button) this.findViewById(R.id.btn_reject_session);
         otherUser = appManager.getOtherUser();
         if (otherUser != null) {
+            GeneralUtil generalUtil = new GeneralUtil();
+            generalUtil.setUserImage(otherUser.getPhotoUrl(), userImage);
             nameText.setText(otherUser.getFullName());
+            emailText.setText(otherUser.getEmail());
             balanceText.setText(TimeConvertUtil.convertTime(otherUser.getBalance()));
+            if(otherUser.getMyGiveRequest()!=null) {
+                giveText.setText(otherUser.getMyGiveRequest().getUserInputText());
+                ArrayList<String> aGiveStringTags = otherUser.getMyGiveRequest().getKeyWords();
+                displayTags(aGiveStringTags, giveTags);
+            }
+            if(otherUser.getMyTakeRequest()!=null) {
+                takeText.setText(otherUser.getMyTakeRequest().getUserInputText());
+                ArrayList<String> aTakeStringTags = otherUser.getMyTakeRequest().getKeyWords();
+                displayTags(aTakeStringTags, takeTags);
+            }
 
-            giveText.setText(otherUser.getMyGiveRequest().getUserInputText());
-            takeText.setText(otherUser.getMyTakeRequest().getUserInputText());
-            ArrayList<String> aGiveStringTags = otherUser.getMyGiveRequest().getKeyWords();
-            displayTags(aGiveStringTags, giveTags);
-            ArrayList<String> aTakeStringTags = otherUser.getMyTakeRequest().getKeyWords();
-            displayTags(aTakeStringTags, takeTags);
 
-
-            descriptionText.setText("Session Description: " + appManager.getSelectedSession().getDescription());
-            timeSet.setText("Session Time: " + TimeConvertUtil.convertTime(appManager.getSelectedSession().getMillisSet()));
+            descriptionText.setText(appManager.getSelectedSession().getDescription());
+            timeSet.setText(TimeConvertUtil.convertTime(appManager.getSelectedSession().getMillisSet()));
 
 
         }
@@ -66,7 +78,6 @@ public class IncomingSessionRequestActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 appManager.updateSessionStatus(Session.Status.accepted);
-
                 CreateActivityUtil.createHandshakeProcessActivity(getOtherUserSessionRequestActivity(),true);
             }
         });

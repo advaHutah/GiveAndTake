@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,7 +37,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private TextView userBalanceText;
     private TextView userEmailText;
     private ImageView userImage;
-
+    private RatingBar ratingBar;
     private String phoneNumber;
 
     public static final String PHONE_RGX = "^[0-9]{10}$";
@@ -54,7 +55,8 @@ public class UserProfileActivity extends AppCompatActivity {
         userNameText = (TextView) findViewById(R.id.my_profile_name);
         userBalanceText = (TextView) findViewById(R.id.my_profile_balance);
         userEmailText = (TextView) findViewById(R.id.my_profile_email);
-        userImage = (ImageView) this.findViewById(R.id.my_profile_image);
+        userImage = (ImageView) findViewById(R.id.my_profile_image);
+        ratingBar = (RatingBar) findViewById(R.id.my_profile_rating);
 
         btnMyPhone = (Button) this.findViewById(R.id.btn_my_profile_phone);
         btnLogout = (Button) this.findViewById(R.id.btn_logout);
@@ -88,7 +90,7 @@ public class UserProfileActivity extends AppCompatActivity {
         setUserPhone(appManager.getCurrentUser().getPhoneNumber());
         setUserBalance(appManager.getCurrentUser().getBalance());
         phoneNumber = appManager.getCurrentUser().getPhoneNumber();
-
+        ratingBar.setRating(appManager.getCurrentUser().getRating());
         if (phoneNumber == null || phoneNumber.isEmpty()) {
             btnMyPhone.setText(R.string.btnPhoneNum_text);
         }

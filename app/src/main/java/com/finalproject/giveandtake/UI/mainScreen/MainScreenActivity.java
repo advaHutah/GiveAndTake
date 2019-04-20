@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.finalproject.giveandtake.Logic.AppManager;
+import com.finalproject.giveandtake.Logic.Session;
 import com.finalproject.giveandtake.R;
 import com.finalproject.giveandtake.UI.tags.TagsMatchFragment;
 import com.finalproject.giveandtake.UI.userHashtags.MyGiveOrTakeRequestActivity;
@@ -15,6 +16,8 @@ import com.finalproject.giveandtake.util.CreateActivityUtil;
 import com.finalproject.giveandtake.util.MyConstants;
 import com.finalproject.giveandtake.util.TimeConvertUtil;
 import com.google.android.material.tabs.TabLayout;
+
+import java.util.ArrayList;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
@@ -26,7 +29,6 @@ public class MainScreenActivity extends FragmentActivity {
     private TextView userNameText, userBalanceText;
     private Button giveBtn, takeBtn, exploreBtn;
     private ImageButton userProfileBtn;
-
 
     private TabAdapter adapter;
     private TabLayout tabLayout;
@@ -96,6 +98,12 @@ public class MainScreenActivity extends FragmentActivity {
         if (appManager.getCurrentUser() != null) {
             userNameText.setText("שלום " + appManager.getCurrentUser().getFullName());
             setUserBalance(appManager.getCurrentUser().getBalance());
+            appManager.getMySessionHistory(new AppManager.AppManagerCallback<ArrayList<Session>>() {
+                @Override
+                public void onDataArrived(ArrayList<Session> value) {
+
+                }
+            });
         } else {
             userNameText.setText("שלום אורח");
             setUserBalance(0);

@@ -42,15 +42,15 @@ public class HandshakeProcessActivity extends AppCompatActivity {
             @Override
             public void onDataArrived(Session.Status value) {
                 if (value == Session.Status.active) {
-                    addToast("The session Started", Toast.LENGTH_SHORT);
+                    addToast("ההחלפה התתחילה", Toast.LENGTH_SHORT);
                     startTimer();
                 }
                 else if(value == Session.Status.terminated) {
                     timer.cancel();
                     appManager.updateMyBalance();
                     appManager.getSelectedSession().setMillisPassed(millisPassed);
-                    addToast("The session  was terminated", Toast.LENGTH_SHORT);
-                    //todo create Summary Activity
+                    addToast("ההחלפה הסתיימה", Toast.LENGTH_SHORT);
+                    CreateActivityUtil.createHandshakeSummaryActivity(getHandshakeProcessActivity());
                 }
             }
         });
@@ -61,6 +61,7 @@ public class HandshakeProcessActivity extends AppCompatActivity {
                 timer.cancel();
                 appManager.finishSession(millisPassed + 1000);
                 addToast("The session  was terminated", Toast.LENGTH_SHORT);
+                CreateActivityUtil.createHandshakeSummaryActivity(getHandshakeProcessActivity());
 
             }
         });
@@ -69,7 +70,7 @@ public class HandshakeProcessActivity extends AppCompatActivity {
 
     private void setActionText() {
         actionText.setText(appManager.getSelectedSession().getGiveRequest().getUserName() +
-                " Is Giving To " + appManager.getSelectedSession().getTakeRequest().getUserName());
+                " מעביר\\ה זמן ל " + appManager.getSelectedSession().getTakeRequest().getUserName());
     }
 
     private void startTimer() {
@@ -89,9 +90,9 @@ public class HandshakeProcessActivity extends AppCompatActivity {
                         appManager.getCurrentUser().setBalance(newTimeTaker);
                     }
                     else {
-                        appManager.finishSession(millisPassed);
+                        appManager.finishSession(millisPassed +1000);
                         timer.cancel();
-                        //todo create Summary Activity
+                        CreateActivityUtil.createHandshakeSummaryActivity(getHandshakeProcessActivity());
                     }
                 }
                 balanceValue.setText(TimeConvertUtil.convertTime(appManager.getCurrentUser().getBalance()));
@@ -101,6 +102,15 @@ public class HandshakeProcessActivity extends AppCompatActivity {
 
             @Override
             public void onFinish() {
+                if (appManager.getSelectedSession().getGiveRequest().getUid().equals(appManager.getCurrentUser().getId())) {
+                    long newTimeGiver = appManager.getCurrentUser().getBalance() + 1000;
+                    appManager.getCurrentUser().setBalance(newTimeGiver);
+                }
+
+                else {
+                        long newTimeTaker = appManager.getCurrentUser().getBalance() - 1000;
+                        appManager.getCurrentUser().setBalance(newTimeTaker);
+                    }
                 appManager.finishSession(millisPassed + 1000);
                 CreateActivityUtil.createHandshakeSummaryActivity(getHandshakeProcessActivity());
             }

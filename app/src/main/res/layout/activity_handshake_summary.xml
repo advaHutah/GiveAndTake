@@ -5,56 +5,68 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context="com.finalproject.win10.giveandtake.UI.handshakeSession.HandshakeSummaryActivity">
+    android:background="@color/blue"
+    tools:context="com.finalproject.giveandtake.UI.handshakeSession.HandshakeSummaryActivity">
 
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="15dp">
+     <LinearLayout
+         android:orientation="vertical"
+         android:gravity="center"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/banthink"
-        android:text="Session summary"
+        android:text="ההחלפה הסתיימה"
         android:textAlignment="center"
+        android:layout_gravity="center"
         android:textSize="30dp"
         android:textStyle="bold" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
-        android:orientation="horizontal">
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="100dp"
+             android:gravity="center"
+             android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/handshakeSummaryFragment_sessionDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textAlignment="center" />
-    </LinearLayout>
+             <TextView
+                 android:id="@+id/handshakeSummaryFragment_sessionDescription"
+                 android:layout_width="wrap_content"
+                 android:layout_height="match_parent"
+                 android:textAlignment="center" />
+         </LinearLayout>
 
     <TextView
         android:id="@+id/handshakeSummaryFragment_action_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:textDirection="rtl"
+        android:textColor="@color/black"
+        android:textSize="20dp"
         android:textAlignment="center" />
 
     <ImageView
         android:id="@+id/handshakeSummaryFragment_takerImage"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="10dp" />
+        android:layout_width="80dp"
+        android:layout_height="80dp" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:gravity="center"
+        android:layoutDirection="rtl"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Made Time: "
-            android:textSize="30dp" />
+            android:text="זמן ההחלפה:"
+            android:textDirection="rtl"
+            android:textSize="25dp" />
 
         <TextView
             android:id="@+id/handshakeSummaryFragment_timerValue"
@@ -62,7 +74,7 @@
             android:layout_height="wrap_content"
             android:text="00:00"
             android:textColor="#111"
-            android:textSize="30dp" />
+            android:textSize="25dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -70,12 +82,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
+        android:layoutDirection="rtl"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="Your Balance: "
+            android:text="יתרה נוכחית:"
+            android:textDirection="rtl"
             android:textSize="20dp" />
 
         <TextView
@@ -86,16 +100,26 @@
             android:textColor="#111"
             android:textSize="20dp" />
     </LinearLayout>
-
+         <Button
+             android:id="@+id/btn_handshakeSummaryFragment_rating"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_marginBottom="10dp"
+             android:layout_marginLeft="10dp"
+             android:layout_marginRight="10dp"
+             android:layout_marginTop="15dp"
+             android:background="@color/Yellow_DarkGoldenrod"
+             android:textDirection="rtl"
+             android:textSize="15dp" />
     <Button
         android:id="@+id/btn_handshakeSummaryFragment_ok"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="30dp"
-        android:background="@drawable/button_shape_rounded"
-        android:text="OK"
+        android:background="@color/green"
+        android:text="סיום"
         android:textSize="15dp" />
+     </LinearLayout>
+    </androidx.cardview.widget.CardView>
 </LinearLayout>

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.finalproject.giveandtake.Logic.AppManager;
@@ -30,6 +31,7 @@ public class OtherUserActivity extends AppCompatActivity {
     private AppManager appManager = AppManager.getInstance();
     private User otherUser;
     private ImageView userImage;
+    private RatingBar ratingBar;
 
 
     @Override
@@ -45,6 +47,7 @@ public class OtherUserActivity extends AppCompatActivity {
         giveTags = (TagContainerLayout) this.findViewById(R.id.otherUser_GiveTags);
         takeTags = (TagContainerLayout) this.findViewById(R.id.otherUser_TakeTags);
         userImage = (ImageView) this.findViewById(R.id.otherUser_image);
+        ratingBar = (RatingBar) this.findViewById(R.id.otherUser_rating);
 
         btnGiveSession = (Button) this.findViewById(R.id.btn_give_session);
         btnTakeSession = (Button) this.findViewById(R.id.btn_take_session);

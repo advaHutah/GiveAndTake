@@ -23,6 +23,7 @@ public class FirebaseManager {
 
     private static final String TAG = FirebaseManager.class.getSimpleName();
 
+
     public interface FirebaseCallback<T> {
 
 
@@ -273,12 +274,37 @@ public class FirebaseManager {
         db.child(Keys.SESSIONS).child(sessionId).child(Keys.SESSION_MILLIS_PASSED).setValue(millisPassed);
     }
 
+    public void rateOtherUserOnDB(String currentUserUid,String otherUserUid,float rating) {
+        db.child(Keys.USERS).child(otherUserUid).child(Keys.USERS_RATINGS).child(currentUserUid).setValue(rating);
+    }
+
+
     public void getSessionFromDB(String sessionId, final FirebaseCallback<Session> callback) {
 
         db.child(Keys.SESSIONS).child(sessionId).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 callback.onDataArrived(dataSnapshot.getValue(Session.class));
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: ");
+                callback.onDataArrived(null);
+            }
+        });
+    }
+
+    public void getHistoricalSessionsFromDB(String uid,final FirebaseCallback<ArrayList<Session>> callback) {
+
+        db.child(Keys.USERS).child(Keys.SESSIONS).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<String> list = new ArrayList<String>();
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    list.add(child.getKey());
+                }
+
             }
 
             @Override
@@ -303,6 +329,7 @@ public class FirebaseManager {
             }
         });
     }
+
 
     public boolean isUserLoggedIn() {
         return isLoggedIn;
@@ -333,6 +360,7 @@ public class FirebaseManager {
         public static final String SESSION_MILLIS_PASSED = "millisPassed";
         public static final String BALANCE = "balance";
         public static final String KEYWORDS = "keyWords";
+        public static final String USERS_RATINGS = "usersRatings";
     }
 
 

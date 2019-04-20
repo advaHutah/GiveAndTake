@@ -27,7 +27,7 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
 
     private Button btnStartProcess, btnSendSession;
     private TextView step1, step2, step3;
-    private EditText descriptionText, mintuesSet;
+    private EditText descriptionText, minutesSet;
 
     String type;
     String startSession;
@@ -43,7 +43,7 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
         startSession = getIntent().getStringExtra(MyConstants.START_SESSION);
 
         descriptionText = (EditText) findViewById(R.id.sessionDescription);
-        mintuesSet = (EditText) findViewById(R.id.sessionTimeSet);
+        minutesSet = (EditText) findViewById(R.id.sessionTimeSet);
 
         btnSendSession = (Button) findViewById(R.id.btn_handshake_sendSession);
         btnStartProcess = (Button) findViewById(R.id.btn_handshake_start_process);
@@ -55,9 +55,9 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
         btnSendSession.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!descriptionText.getText().toString().isEmpty() && !mintuesSet.getText().toString().isEmpty()) {
+                if (!descriptionText.getText().toString().isEmpty() && !minutesSet.getText().toString().isEmpty()) {
                 String description = descriptionText.getText().toString();
-                long timeSet = TimeUnit.MINUTES.toMillis(Integer.parseInt(mintuesSet.getText().toString()));
+                long timeSet = TimeUnit.MINUTES.toMillis(Integer.parseInt(minutesSet.getText().toString()));
 
                     //user gives to other user
                     if (getType().equals(Request.RequestType.GIVE.toString())) {
@@ -79,11 +79,11 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
                         public void onDataArrived(Session.Status value) {
                             if (value == Session.Status.accepted) {
                                 changeTextColorToGrey(step2);
-                                addToast("The session request was accepted", Toast.LENGTH_SHORT, getHandshakeSettingActivity());
+                                addToast("בקשת ההחלפה אושרה", Toast.LENGTH_SHORT, getHandshakeSettingActivity());
                                 // step3: enable start service button
                                 enableButton(btnStartProcess);
                             } else if (value == Session.Status.rejected) {
-                                addToast("The session request was rejected", Toast.LENGTH_SHORT, getHandshakeSettingActivity());
+                                addToast("בקשת ההחלפה נדחתה", Toast.LENGTH_SHORT, getHandshakeSettingActivity());
                             }
                         }
                     });
@@ -100,7 +100,7 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
         btnStartProcess.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo probably will need an extra validation for starting Timer
+                appManager.updateSessionStatus(Session.Status.active);
                 CreateActivityUtil.createHandshakeProcessActivity(getHandshakeSettingActivity(), true);
             }
         });

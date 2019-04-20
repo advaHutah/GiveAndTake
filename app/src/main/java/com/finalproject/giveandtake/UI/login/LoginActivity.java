@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
     SharedPreferences.Editor editor;
     private SignInButton btnSignInWithGoogle;
     private Button infoBtn;
+    private Button guestSignInBtn;
 
     LoadingDialog dialog;
     private boolean dataArrived;
@@ -58,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         appManager = AppManager.getInstance();
         sharedPreferences = getSharedPreferences("com.example.giveandtake", MODE_PRIVATE);
         dialog = LoadingDialog.Companion.get(this);
-
+        guestSignInBtn = (Button)findViewById(R.id.guest_Sign_in);
 
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -80,6 +81,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 signIn();
+            }
+        });
+        guestSignInBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createMainScreenActivity();
+                finish();
             }
         });
         infoBtn.setOnClickListener(new View.OnClickListener() {

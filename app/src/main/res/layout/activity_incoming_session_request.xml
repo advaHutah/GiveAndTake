@@ -4,277 +4,274 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/blue"
     android:orientation="vertical"
+    android:background="@color/blue"
+
     tools:context="com.finalproject.giveandtake.UI.handshakeSession.IncomingSessionRequestActivity">
 
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="700dp"
-        android:layout_margin="15dp">
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:background="@color/white"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/incoming_session_request_headline"
             android:layout_width="match_parent"
-            android:layout_height="50dp">
-
-            <TextView
-                android:id="@+id/incoming_session_request_headline"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layoutDirection="rtl"
-                android:text="@string/incoming_session_request_headline"
-                android:textColor="@android:color/black"
-                android:textSize="30dp" />
-        </LinearLayout>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layoutDirection="rtl"
+            android:text="@string/incoming_session_request_headline"
+            android:textSize="30dp" />
 
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="160dp"
-            android:layout_marginTop="50dp"
+            android:layout_height="wrap_content"
             android:layoutDirection="rtl"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/incoming_session_request_description_headline"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layoutDirection="rtl"
                 android:text="@string/incoming_session_request_description_headline"
-                android:textColor="@android:color/black"
-                android:textSize="30dp" />
+                android:textColor="@color/blue"
+                android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/incoming_session_request_description"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layoutDirection="rtl"
                 android:textColor="@android:color/black"
-                android:textSize="30dp" />
+                android:textSize="20dp" />
 
             <TextView
                 android:id="@+id/incoming_session_request_time_headline"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layoutDirection="rtl"
                 android:text="@string/incoming_session_request_time_headline"
-                android:textColor="@android:color/black"
-                android:textSize="30dp" />
+                android:textColor="@color/blue"
+                android:textSize="15dp" />
 
             <TextView
                 android:id="@+id/incoming_session_time"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
                 android:layoutDirection="rtl"
                 android:textColor="@android:color/black"
-                android:textSize="30dp" />
+                android:textSize="20dp" />
 
         </LinearLayout>
+
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_marginTop="210dp"
-            android:orientation="vertical">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layoutDirection="rtl"
+            android:orientation="horizontal">
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/incoming_session_request_image"
+                android:layout_marginLeft="20dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/incoming_session_request_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:orientation="horizontal">
+                android:layout_gravity="center"
+                android:text=""
+                android:textColor="@android:color/black"
+                android:textSize="20dp" />
 
-                <ImageView
-                    android:id="@+id/incoming_session_request_image"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center" />
-
-                <TextView
-                    android:id="@+id/incoming_session_request_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="15dp"
-                    android:text=""
-                    android:textColor="@android:color/black"
-                    android:textSize="20dp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/incoming_session_request_email"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:text=""
-                    android:textColor="@android:color/black"
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/fragmentMainScreen_balance_lable_text"
-                    android:textColor="@android:color/black"
-                    android:textSize="20dp" />
-
-                <TextView
-                    android:id="@+id/incoming_session_request_balance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="5dp"
-                    android:text=""
-                    android:textColor="@color/green"
-                    android:textSize="10dp" />
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:outlineAmbientShadowColor="@color/blue">
-
-                    <androidx.core.widget.NestedScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="10dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="רוצה לתת:"
-                                android:textColor="@color/blue" />
-
-                            <TextView
-                                android:id="@+id/giveText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="right"
-                                android:textSize="15dp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="תגיות:"
-                                android:textColor="@color/blue" />
-
-                            <co.lujun.androidtagview.TagContainerLayout
-                                android:id="@+id/incoming_session_request_GiveTags"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:padding="5dp"
-                                android:textDirection="rtl"
-                                app:container_enable_drag="false"
-                                app:horizontal_interval="5dp"
-                                app:vertical_interval="5dp"
-                                app:tag_selectable="true"
-                                app:tag_clickable="true"
-                                app:tag_ripple_duration="0"
-                                app:tag_theme="none" />
-                        </LinearLayout>
-                    </androidx.core.widget.NestedScrollView>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:outlineAmbientShadowColor="@color/blue">
-
-                    <androidx.core.widget.NestedScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent">
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="10dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="רוצה לקבל:"
-                                android:textColor="@color/blue" />
-
-                            <TextView
-                                android:id="@+id/takeText"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="right"
-                                android:text=""
-                                android:textSize="15dp" />
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="תגיות:"
-                                android:textColor="@color/blue" />
-
-                            <co.lujun.androidtagview.TagContainerLayout
-                                android:id="@+id/incoming_session_request_TakeTags"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:padding="5dp"
-                                android:textDirection="rtl"
-                                app:container_enable_drag="false"
-                                app:horizontal_interval="5dp"
-                                app:vertical_interval="5dp"
-                                app:tag_selectable="true"
-                                app:tag_clickable="true"
-                                app:tag_ripple_duration="0"
-                                app:tag_theme="none" />
-                        </LinearLayout>
-                    </androidx.core.widget.NestedScrollView>
-
-                </androidx.cardview.widget.CardView>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="80dp"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/btn_reject_session"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/button_round_give"
-                    android:text="ביטול"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="20dp" />
-
-
-                <Button
-                    android:id="@+id/btn_accept_session"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:background="@drawable/button_round_take"
-                    android:text="אישור"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="20dp" />
-
-
-            </LinearLayout>
         </LinearLayout>
+        <TextView
+            android:id="@+id/incoming_session_request_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:autoLink="email"
+            android:text=""
+            android:textColor="@android:color/black"
+            android:textSize="15dp" />
 
-    </androidx.cardview.widget.CardView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="@string/fragmentMainScreen_balance_lable_text"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/incoming_session_request_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text=""
+            android:textColor="@color/green"
+            android:textSize="20dp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+       <LinearLayout
+           android:orientation="vertical"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content">
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:outlineAmbientShadowColor="@color/blue">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="רוצה לתת:"
+                        android:textColor="@color/blue" />
+
+                    <TextView
+                        android:id="@+id/giveText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="תגיות:"
+                        android:textColor="@color/blue" />
+
+                    <co.lujun.androidtagview.TagContainerLayout
+                        android:id="@+id/incoming_session_request_GiveTags"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:textDirection="rtl"
+                        app:container_enable_drag="false"
+                        app:horizontal_interval="5dp"
+                        app:tag_clickable="true"
+                        app:tag_ripple_duration="0"
+                        app:tag_selectable="true"
+                        app:tag_theme="none"
+                        app:vertical_interval="5dp" />
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:outlineAmbientShadowColor="@color/blue">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="רוצה לקבל:"
+                        android:textColor="@color/blue" />
+
+                    <TextView
+                        android:id="@+id/takeText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:text=""
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="תגיות:"
+                        android:textColor="@color/blue" />
+
+                    <co.lujun.androidtagview.TagContainerLayout
+                        android:id="@+id/incoming_session_request_TakeTags"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:textDirection="rtl"
+                        app:container_enable_drag="false"
+                        app:horizontal_interval="5dp"
+                        app:tag_clickable="true"
+                        app:tag_ripple_duration="0"
+                        app:tag_selectable="true"
+                        app:tag_theme="none"
+                        app:vertical_interval="5dp" />
+                </LinearLayout>
+            </androidx.core.widget.NestedScrollView>
+
+        </androidx.cardview.widget.CardView>
+       </LinearLayout>
+
+        </ScrollView>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_reject_session"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/button_round_give"
+                android:text="ביטול"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+
+            <Button
+                android:id="@+id/btn_accept_session"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/button_round_take"
+                android:text="אישור"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
 
 </LinearLayout>

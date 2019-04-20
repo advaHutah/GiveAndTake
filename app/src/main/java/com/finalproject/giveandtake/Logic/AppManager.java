@@ -7,11 +7,13 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import androidx.annotation.Nullable;
 
 //Handles all app actions and DB read/write
 public class AppManager {
+
 
 
     public interface AppManagerCallback<T> {
@@ -47,7 +49,7 @@ public class AppManager {
     }
 
     public void createNewUser(String uid, String email, String fullName, String phoneNumber, String photoURL) {
-        com.finalproject.giveandtake.Logic.User user = new com.finalproject.giveandtake.Logic.User(uid, email, fullName, phoneNumber, com.finalproject.giveandtake.Logic.User.INIT_BALANCE, photoURL);
+        com.finalproject.giveandtake.Logic.User user = new com.finalproject.giveandtake.Logic.User(uid, email, fullName, phoneNumber, photoURL);
         setCurrentUser(user);
         this.firebaseManager.addUserInfoToDB(user);
     }
@@ -273,7 +275,8 @@ public class AppManager {
     }
 
     public void saveSession() {
-        firebaseManager.saveSession(selectedSession);
+        if(selectedSession!=null)
+            firebaseManager.saveSession(selectedSession);
     }
 
     public void updateSessionStatus(com.finalproject.giveandtake.Logic.Session.Status status) {
@@ -294,11 +297,16 @@ public class AppManager {
         updateSessionStatus(com.finalproject.giveandtake.Logic.Session.Status.terminated);
         updateSessionMillisPassed(millisPassed);
         updateMyBalance();
+        saveMySessionHistory();
     }
 
     private void updateSessionMillisPassed(long millisPassed) {
         selectedSession.setMillisPassed(millisPassed);
         firebaseManager.updateSessionMillisPassed(selectedSession.getId(), millisPassed);
+    }
+
+    private void saveMySessionHistory(){
+        //firebaseManager.saveUserSession(selectedSession);
     }
 
 
@@ -307,9 +315,24 @@ public class AppManager {
         selectedSession = null;
     }
 
+    public void getMySessionHistory(final AppManagerCallback<ArrayList<Session>> callback) {
+        if (currentUser != null) {
+            this.firebaseManager.getHistoricalSessionsFromDB(currentUser.getId(), new FirebaseManager.FirebaseCallback<ArrayList<com.finalproject.giveandtake.Logic.Session>>() {
+                @Override
+                public void onDataArrived(ArrayList<Session> value) {
+                    callback.onDataArrived(value);
+                }
+            });
+        }
+    }
+
 
     public void updateMyBalance() {
         firebaseManager.updateBalanceOnDB(currentUser.getId(), currentUser.getBalance());
+    }
+
+    public void rateOtherUser(String currentUserUid,String otherUserUid,float rating) {
+        firebaseManager.rateOtherUserOnDB(currentUserUid,otherUserUid,rating);
     }
 
     public boolean isUserLoggedIn() {
