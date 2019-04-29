@@ -1,4 +1,4 @@
-package com.finalproject.giveandtake.UI.tags;
+package com.finalproject.giveandtake.UI.mainScreen;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +11,6 @@ import android.widget.TextView;
 import com.finalproject.giveandtake.Logic.AppManager;
 import com.finalproject.giveandtake.Logic.Request;
 import com.finalproject.giveandtake.R;
-import com.finalproject.giveandtake.UI.mainScreen.MainScreenActivity;
 import com.finalproject.giveandtake.UI.userMatch.UserMatchActivity;
 import com.finalproject.giveandtake.util.MyConstants;
 

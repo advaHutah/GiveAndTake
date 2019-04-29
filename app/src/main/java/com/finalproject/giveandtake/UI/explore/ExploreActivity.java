@@ -10,7 +10,6 @@ import android.os.Bundle;
 import com.finalproject.giveandtake.Logic.AppManager;
 import com.finalproject.giveandtake.R;
 import com.finalproject.giveandtake.UI.mainScreen.TabAdapter;
-import com.finalproject.giveandtake.UI.tags.TagsMatchFragment;
 import com.google.android.material.tabs.TabLayout;
 
 public class ExploreActivity extends FragmentActivity {

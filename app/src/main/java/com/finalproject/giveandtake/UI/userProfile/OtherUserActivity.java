@@ -58,6 +58,7 @@ public class OtherUserActivity extends AppCompatActivity {
             GeneralUtil.setUserImage(otherUser.getPhotoUrl(), userImage);
             nameText.setText(otherUser.getFullName());
             userEmail.setText(otherUser.getEmail());
+            ratingBar.setRating(otherUser.getRating());
             balanceText.setText(TimeConvertUtil.convertTime(otherUser.getBalance()));
             if(otherUser.getMyGiveRequest()!= null) {
                 giveText.setText(otherUser.getMyGiveRequest().getUserInputText());

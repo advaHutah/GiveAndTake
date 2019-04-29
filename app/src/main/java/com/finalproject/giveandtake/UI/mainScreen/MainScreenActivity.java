@@ -10,15 +10,11 @@ import android.widget.TextView;
 import com.finalproject.giveandtake.Logic.AppManager;
 import com.finalproject.giveandtake.Logic.Session;
 import com.finalproject.giveandtake.R;
-import com.finalproject.giveandtake.UI.tags.TagsMatchFragment;
 import com.finalproject.giveandtake.UI.userHashtags.MyGiveOrTakeRequestActivity;
 import com.finalproject.giveandtake.util.CreateActivityUtil;
-import com.finalproject.giveandtake.util.GeneralUtil;
 import com.finalproject.giveandtake.util.MyConstants;
 import com.finalproject.giveandtake.util.TimeConvertUtil;
 import com.google.android.material.tabs.TabLayout;
-
-import java.util.ArrayList;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager.widget.ViewPager;
