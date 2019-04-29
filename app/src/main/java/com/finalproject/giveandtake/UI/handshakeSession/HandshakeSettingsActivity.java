@@ -58,7 +58,7 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
                 if (!descriptionText.getText().toString().isEmpty() && !minutesSet.getText().toString().isEmpty()) {
                 String description = descriptionText.getText().toString();
                 long timeSet = TimeUnit.MINUTES.toMillis(Integer.parseInt(minutesSet.getText().toString()));
-
+                    appManager.refreshTimestampDelta();
                     //user gives to other user
                     if (getType().equals(Request.RequestType.GIVE.toString())) {
                         appManager.setSelectedSession(new Session(Session.Status.pending, appManager.getOtherUser().getMyTakeRequest(),
@@ -71,14 +71,14 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
                     }
                     //send start request to other user
                     appManager.saveSession();
-                    changeTextColorToGrey(step1);
+                    changeTextColorToGreen(step1);
 
                     //step2: wait for accept from other user
                     appManager.sessionStatusChanged(new AppManager.AppManagerCallback<Session.Status>() {
                         @Override
                         public void onDataArrived(Session.Status value) {
                             if (value == Session.Status.accepted) {
-                                changeTextColorToGrey(step2);
+                                changeTextColorToGreen(step2);
                                 addToast("בקשת ההחלפה אושרה", Toast.LENGTH_SHORT, getHandshakeSettingActivity());
                                 // step3: enable start service button
                                 enableButton(btnStartProcess);
@@ -101,14 +101,14 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 appManager.updateSessionStatus(Session.Status.active);
-                CreateActivityUtil.createHandshakeProcessActivity(getHandshakeSettingActivity(), true);
+                CreateActivityUtil.createHandshakeProcessActivity(getHandshakeSettingActivity(), true,false);
             }
         });
 
     }
 
-    private void changeTextColorToGrey(TextView step) {
-        step.setTextColor(Color.GRAY);
+    private void changeTextColorToGreen(TextView step) {
+        step.setTextColor(Color.GREEN);
     }
 
     public void enableButton(Button theButton) {

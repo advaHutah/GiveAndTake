@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.finalproject.win10.giveandtake.UI.userMatch.MyMatchActivity">
+    tools:context="com.finalproject.giveandtake.UI.userMatch.MyMatchActivity">
 
 
 

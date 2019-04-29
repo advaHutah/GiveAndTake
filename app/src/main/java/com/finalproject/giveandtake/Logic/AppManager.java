@@ -1,7 +1,10 @@
 package com.finalproject.giveandtake.Logic;
 
 import com.finalproject.giveandtake.DBLogic.FirebaseManager;
+import com.finalproject.giveandtake.Logic.User;
 import com.finalproject.giveandtake.DBLogic.GiveAndTakeMessagingService;
+import com.finalproject.giveandtake.util.GeneralUtil;
+import com.finalproject.giveandtake.util.MyConstants;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -135,9 +138,31 @@ public class AppManager {
         }
     }
 
+    public void getSelectedTagUsers(String tag, com.finalproject.giveandtake.Logic.Request.RequestType requestType, final AppManagerCallback<ArrayList<com.finalproject.giveandtake.Logic.TagUserInfo>> callback) {
+            String uid ="";
+            if(currentUser!= null)
+                uid = currentUser.getId();
+            this.firebaseManager.getSelectedTagUsers(uid,tag, requestType, new FirebaseManager.FirebaseCallback<ArrayList<com.finalproject.giveandtake.Logic.TagUserInfo>>() {
+                @Override
+                public void onDataArrived(ArrayList<com.finalproject.giveandtake.Logic.TagUserInfo> value) {
+                    callback.onDataArrived(value);
+                }
+            });
+
+    }
+
     //get all tags in DB based on request type
-    public void getTags(com.finalproject.giveandtake.Logic.Request.RequestType requestType, final AppManagerCallback<ArrayList<String>> callback) {
+    public void getTags(Request.RequestType requestType, final AppManagerCallback<ArrayList<String>> callback) {
         this.firebaseManager.getTags(requestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
+            @Override
+            public void onDataArrived(ArrayList<String> value) {
+                callback.onDataArrived(value);
+            }
+        });
+    }
+
+    public void getTagsBulk(Request.RequestType requestType,String lastTagShowed, final AppManagerCallback<ArrayList<String>> callback) {
+        this.firebaseManager.getTagsBulk(requestType,lastTagShowed, MyConstants.TAGS_BULK_COUNT, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
             @Override
             public void onDataArrived(ArrayList<String> value) {
                 callback.onDataArrived(value);
@@ -147,7 +172,7 @@ public class AppManager {
 
     //get user match tags based on request type
     public void getMyTakeMatchTags(final AppManagerCallback<ArrayList<String>> callback) {
-        com.finalproject.giveandtake.Logic.Request.RequestType otherRequestType = com.finalproject.giveandtake.Logic.Request.RequestType.GIVE;
+        Request.RequestType otherRequestType = com.finalproject.giveandtake.Logic.Request.RequestType.GIVE;
         if (currentUser != null && currentUser.getMyTakeRequest() != null && currentUser.getMyTakeRequest().getKeyWords() != null) {
             myTakeRequestTags = currentUser.getMyTakeRequest().getKeyWords();
 
@@ -170,8 +195,7 @@ public class AppManager {
     }
 
     public void getMyGiveMatchTags(final AppManagerCallback<ArrayList<String>> callback) {
-
-        com.finalproject.giveandtake.Logic.Request.RequestType otherRequestType = com.finalproject.giveandtake.Logic.Request.RequestType.TAKE;
+        Request.RequestType otherRequestType = Request.RequestType.TAKE;
         if (currentUser != null && currentUser.getMyGiveRequest() != null && currentUser.getMyGiveRequest().getKeyWords(    ) != null) {
             myGiveRequestTags = currentUser.getMyGiveRequest().getKeyWords();
             this.firebaseManager.getTags(otherRequestType, new FirebaseManager.FirebaseCallback<ArrayList<String>>() {
@@ -226,6 +250,18 @@ public class AppManager {
         return selectedSession;
     }
 
+
+    public void checkForOpenSession(boolean isTake,final AppManagerCallback<Session> callback) {
+        if (currentUser != null) {
+            this.firebaseManager.checkForOpenSession(currentUser.getId(),isTake, new FirebaseManager.FirebaseCallback<Session>() {
+                @Override
+                public void onDataArrived(Session value) {
+                    callback.onDataArrived(value);
+                }
+            });
+        }
+    }
+
     public void signOut() {
         firebaseManager.signOut();
         this.setCurrentUser(null);
@@ -262,15 +298,15 @@ public class AppManager {
     }
 
 
-    public com.finalproject.giveandtake.Logic.User getOtherUser() {
+    public User getOtherUser() {
         return otherUser;
     }
 
-    public ArrayList<com.finalproject.giveandtake.Logic.TagUserInfo> getNotificationUsers() {
+    public ArrayList<TagUserInfo> getNotificationUsers() {
         return notificationUsers;
     }
 
-    public void setNotificationUsers(ArrayList<com.finalproject.giveandtake.Logic.TagUserInfo> notificationUsers) {
+    public void setNotificationUsers(ArrayList<TagUserInfo> notificationUsers) {
         this.notificationUsers = notificationUsers;
     }
 
@@ -279,8 +315,13 @@ public class AppManager {
             firebaseManager.saveSession(selectedSession);
     }
 
-    public void updateSessionStatus(com.finalproject.giveandtake.Logic.Session.Status status) {
+    public void updateSessionStatus(Session.Status status) {
         selectedSession.setStatus(status);
+
+        if(status == Session.Status.active) {
+            refreshTimestampDelta();
+            firebaseManager.saveSessionStartTimeStamp(selectedSession.getId(),GeneralUtil.now());
+        }
         firebaseManager.updateSessionStatus(selectedSession.getId(), status);
     }
 
@@ -297,7 +338,6 @@ public class AppManager {
         updateSessionStatus(com.finalproject.giveandtake.Logic.Session.Status.terminated);
         updateSessionMillisPassed(millisPassed);
         updateMyBalance();
-        saveMySessionHistory();
     }
 
     private void updateSessionMillisPassed(long millisPassed) {
@@ -305,19 +345,14 @@ public class AppManager {
         firebaseManager.updateSessionMillisPassed(selectedSession.getId(), millisPassed);
     }
 
-    private void saveMySessionHistory(){
-        //firebaseManager.saveUserSession(selectedSession);
-    }
-
-
     public void resetOtherUserAndSession() {
         otherUser = null;
         selectedSession = null;
     }
 
-    public void getMySessionHistory(final AppManagerCallback<ArrayList<Session>> callback) {
+    public void getMySessionHistory(boolean isTake,final AppManagerCallback<ArrayList<Session>> callback) {
         if (currentUser != null) {
-            this.firebaseManager.getHistoricalSessionsFromDB(currentUser.getId(), new FirebaseManager.FirebaseCallback<ArrayList<com.finalproject.giveandtake.Logic.Session>>() {
+            this.firebaseManager.getHistoricalSessionsFromDB(currentUser.getId(),isTake, new FirebaseManager.FirebaseCallback<ArrayList<com.finalproject.giveandtake.Logic.Session>>() {
                 @Override
                 public void onDataArrived(ArrayList<Session> value) {
                     callback.onDataArrived(value);
@@ -326,6 +361,11 @@ public class AppManager {
         }
     }
 
+    public void refreshTimestampDelta() {
+        if(currentUser!=null) {
+            firebaseManager.refreshTimestampDelta(currentUser.getId());
+        }
+    }
 
     public void updateMyBalance() {
         firebaseManager.updateBalanceOnDB(currentUser.getId(), currentUser.getBalance());

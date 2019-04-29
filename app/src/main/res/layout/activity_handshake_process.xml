@@ -8,7 +8,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:background="@color/blue"
-    tools:context="com.finalproject.win10.giveandtake.UI.handshakeSession.HandshakeProcessActivity">
+    tools:context="com.finalproject.giveandtake.UI.handshakeSession.HandshakeProcessActivity">
     >
 
     <TextView

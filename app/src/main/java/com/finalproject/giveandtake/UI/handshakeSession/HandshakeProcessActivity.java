@@ -1,6 +1,7 @@
 package com.finalproject.giveandtake.UI.handshakeSession;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -12,6 +13,8 @@ import com.finalproject.giveandtake.Logic.AppManager;
 import com.finalproject.giveandtake.Logic.Session;
 import com.finalproject.giveandtake.R;
 import com.finalproject.giveandtake.util.CreateActivityUtil;
+import com.finalproject.giveandtake.util.GeneralUtil;
+import com.finalproject.giveandtake.util.MyConstants;
 import com.finalproject.giveandtake.util.TimeConvertUtil;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,7 +37,28 @@ public class HandshakeProcessActivity extends AppCompatActivity {
         balanceValue = (TextView) findViewById(R.id.balanceValue);
         actionText = (TextView)findViewById(R.id.handshakeProcessActivity_action_description);
         stopBtn = (Button) findViewById(R.id.handshakeProcessActivity_stopBtn);
-        millisPassed = 0;
+        appManager = AppManager.getInstance();
+        boolean sessionRestored = getIntent().getBooleanExtra(MyConstants.SESSION_RESTORED,false);
+
+        if(sessionRestored) {
+            appManager.refreshTimestampDelta();
+            long timePassedAlready = GeneralUtil.now() - appManager.getSelectedSession().getStartTimeStamp();
+
+            //im the giver
+            if (appManager.getSelectedSession().getGiveRequest().getUid().equals(appManager.getCurrentUser().getId())) {
+                appManager.getCurrentUser().setBalance(appManager.getCurrentUser().getBalance()+timePassedAlready);
+            }
+            else {
+                appManager.getCurrentUser().setBalance(appManager.getCurrentUser().getBalance()- timePassedAlready);
+
+            }
+            millisPassed=appManager.getSelectedSession().getMillisSet() - timePassedAlready;
+            startTimer(millisPassed);
+        }
+        else{
+            millisPassed = 0;
+        }
+
 
         appManager = AppManager.getInstance();
         setActionText();
@@ -43,7 +67,8 @@ public class HandshakeProcessActivity extends AppCompatActivity {
             public void onDataArrived(Session.Status value) {
                 if (value == Session.Status.active) {
                     addToast("ההחלפה התתחילה", Toast.LENGTH_SHORT);
-                    startTimer();
+                    appManager.refreshTimestampDelta();
+                    startTimer(appManager.getSelectedSession().getMillisSet());
                 }
                 else if(value == Session.Status.terminated) {
                     timer.cancel();
@@ -73,8 +98,8 @@ public class HandshakeProcessActivity extends AppCompatActivity {
                 " מעביר\\ה זמן ל " + appManager.getSelectedSession().getTakeRequest().getUserName());
     }
 
-    private void startTimer() {
-        timer = new CountDownTimer(appManager.getSelectedSession().getMillisSet(), 1000) {
+    private void startTimer(long timerStartValue) {
+        timer = new CountDownTimer(timerStartValue, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 //im the giver
@@ -127,6 +152,11 @@ public class HandshakeProcessActivity extends AppCompatActivity {
     public void addToast(String text, int duration) {
         Toast toast = Toast.makeText(this, text, duration);
         toast.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        addToast("לא ניתן לחזור אחורה בעת החלפה",Toast.LENGTH_SHORT);
     }
 
     private Activity getHandshakeProcessActivity(){

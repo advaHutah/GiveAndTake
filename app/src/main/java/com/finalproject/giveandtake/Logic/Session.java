@@ -1,8 +1,11 @@
 package com.finalproject.giveandtake.Logic;
 
 
+import com.finalproject.giveandtake.util.GeneralUtil;
+
 //when there is match between take request and give request
 public class Session {
+
 
     public static enum Status {
         pending,
@@ -25,7 +28,9 @@ public class Session {
     private String id;
     private long millisPassed;
     private long millisSet;
+    private Long endTimeStamp;
     private String description;
+    private long startTimeStamp;
 
 
     public Session() {
@@ -106,4 +111,18 @@ public class Session {
     public void setInitiator(SessionInitiator initiator) {
         this.initiator = initiator;
     }
+
+    public long getStartTimeStamp() {
+        return startTimeStamp;
+    }
+
+    public void setStartTimeStamp(long startTimeStamp) {
+        this.startTimeStamp = startTimeStamp;
+    }
+
+    public boolean isAlive() {
+      return endTimeStamp == null;
+    }
+
+
 }

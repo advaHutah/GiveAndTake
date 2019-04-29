@@ -2,16 +2,21 @@ package com.finalproject.giveandtake.DBLogic;
 
 import android.util.Log;
 
+import com.finalproject.giveandtake.Logic.LoginManager;
 import com.finalproject.giveandtake.Logic.Request;
 import com.finalproject.giveandtake.Logic.Session;
 import com.finalproject.giveandtake.Logic.TagUserInfo;
 import com.finalproject.giveandtake.Logic.User;
+import com.finalproject.giveandtake.util.GeneralUtil;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.okhttp.internal.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,12 +28,10 @@ public class FirebaseManager {
 
     private static final String TAG = FirebaseManager.class.getSimpleName();
 
-
     public interface FirebaseCallback<T> {
-
-
         void onDataArrived(T value);
     }
+
     private static FirebaseManager singletonUserService = null;
 
     private FirebaseDatabase database;
@@ -71,17 +74,13 @@ public class FirebaseManager {
 
     public void getUserDetailFromDB(String uid, final FirebaseCallback<User> callback) {
         db.child(Keys.USERS).child(uid).addListenerForSingleValueEvent(new ValueEventListener() {
-
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 callback.onDataArrived(dataSnapshot.getValue(User.class));
-
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 callback.onDataArrived(null);
-
             }
         });
     }
@@ -99,7 +98,6 @@ public class FirebaseManager {
                 }                // get the values from map.values();
                 callback.onDataArrived((ArrayList<Request>) list);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e(TAG, "onCancelled: ");
@@ -107,7 +105,6 @@ public class FirebaseManager {
             }
         });
     }
-
 
     public void addRequestToDB(Request newRequest) {
         if (newRequest.getRequestType() == Request.RequestType.GIVE) {
@@ -131,7 +128,6 @@ public class FirebaseManager {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 callback.onDataArrived(dataSnapshot.getValue(String.class));
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e(TAG, "onCancelled: ");
@@ -141,20 +137,16 @@ public class FirebaseManager {
     }
 
     public void getKeyWordsFromRequest(String uid, Request.RequestType requestType, final FirebaseCallback<ArrayList<String>> callback) {
-
         String sKey = requestType == Request.RequestType.TAKE ? Keys.TAKE_REQUEST : Keys.GIVE_REQUEST;
-
         db.child(sKey).child(uid).child(Keys.KEYWORDS).addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<String> list = new ArrayList<String>();
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     list.add(child.getValue(String.class));
-                }                // get the values from map.values();
+                }
                 callback.onDataArrived((ArrayList<String>) list);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e(TAG, "onCancelled: ");
@@ -164,11 +156,8 @@ public class FirebaseManager {
     }
 
     public void getSuggestedTagsFromRequest(String uid, Request.RequestType requestType, final FirebaseCallback<ArrayList<String>> callback) {
-
         String sKey = requestType == Request.RequestType.TAKE ? Keys.TAKE_REQUEST : Keys.GIVE_REQUEST;
-
         db.child(sKey).child(uid).child(Keys.TAGS).addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 List<String> list = new ArrayList<String>();
@@ -177,7 +166,6 @@ public class FirebaseManager {
                 }
                 callback.onDataArrived((ArrayList<String>) list);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e(TAG, "onCancelled: ");
@@ -187,9 +175,7 @@ public class FirebaseManager {
     }
 
     public void getTags(Request.RequestType requestType, final FirebaseCallback<ArrayList<String>> callback) {
-
         String sKey = requestType == Request.RequestType.TAKE ? Keys.TAKE_TAGS : Keys.GIVE_TAGS;
-
         db.child(sKey).addValueEventListener(new ValueEventListener() {
 
             @Override
@@ -198,10 +184,8 @@ public class FirebaseManager {
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
                     list.add(child.getKey());
                 }
-                // get the values from map.values();
                 callback.onDataArrived((ArrayList<String>) list);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 Log.e(TAG, "onCancelled: ");
@@ -210,6 +194,34 @@ public class FirebaseManager {
         });
     }
 
+
+    public void getTagsBulk(Request.RequestType requestType, String lastTagShowed, final int tagsCount,final FirebaseCallback<ArrayList<String>> callback) {
+        String sKey = requestType == Request.RequestType.TAKE ? Keys.TAKE_TAGS : Keys.GIVE_TAGS;
+        Query query;
+        if( lastTagShowed == null || lastTagShowed.isEmpty() ) {
+            query = db.child(sKey).orderByKey().limitToFirst(tagsCount);
+        }
+        else {
+            query = db.child(sKey).orderByKey().startAt(lastTagShowed).limitToFirst(tagsCount + 1);
+        }
+        query.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<String> list = new ArrayList<String>();
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    list.add(child.getKey());
+                }
+                callback.onDataArrived((ArrayList<String>) list);
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: ");
+                callback.onDataArrived(null);
+            }
+        });
+
+    }
 
     public void getMatchUsers(final String uid, final String tag, final Request.RequestType requestType, final FirebaseCallback<ArrayList<TagUserInfo>> callback) {
 
@@ -228,6 +240,36 @@ public class FirebaseManager {
                         list.add(tagUserInfo);
                     }
                 } // get the values from map.values();
+                callback.onDataArrived((ArrayList<TagUserInfo>) list);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: ");
+                callback.onDataArrived(null);
+            }
+        });
+
+    }
+
+    public void getSelectedTagUsers(final String uid,final String tag, final Request.RequestType requestType, final FirebaseCallback<ArrayList<TagUserInfo>> callback) {
+
+        String sKey = requestType == Request.RequestType.TAKE ? Keys.TAKE_TAGS : Keys.GIVE_TAGS;
+
+        db.child(sKey).child(tag).addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<TagUserInfo> list = new ArrayList<TagUserInfo>();
+                for (DataSnapshot user : dataSnapshot.getChildren()) {
+                    if (!user.getKey().equals(uid)) {
+                        Map<String, String> nameEntry = (Map<String, String>) user.getValue();
+                        String name = nameEntry.get("name");
+                        TagUserInfo tagUserInfo = new TagUserInfo(user.getKey(), name, requestType);
+                        list.add(tagUserInfo);
+                    }
+                }
+
                 callback.onDataArrived((ArrayList<TagUserInfo>) list);
             }
 
@@ -270,6 +312,11 @@ public class FirebaseManager {
         db.child(Keys.SESSIONS).child(sessionId).child(Keys.SESSION_STATUS).setValue(sessionStatus);
     }
 
+    public void saveSessionStartTimeStamp(String sessionId,long startTimeStamp) {
+        db.child(Keys.SESSIONS).child(sessionId).child(Keys.SESSION_START_TIMESTAMP).setValue(startTimeStamp);
+
+    }
+
     public void updateSessionMillisPassed(String sessionId, long millisPassed) {
         db.child(Keys.SESSIONS).child(sessionId).child(Keys.SESSION_MILLIS_PASSED).setValue(millisPassed);
     }
@@ -295,15 +342,17 @@ public class FirebaseManager {
         });
     }
 
-    public void getHistoricalSessionsFromDB(String uid,final FirebaseCallback<ArrayList<Session>> callback) {
-
-        db.child(Keys.USERS).child(Keys.SESSIONS).addValueEventListener(new ValueEventListener() {
+    public void getHistoricalSessionsFromDB(String uid,boolean isTake,final FirebaseCallback<ArrayList<Session>> callback) {
+        String takeOrGive = isTake ? Keys.TAKE_REQUEST : Keys.GIVE_REQUEST;
+        db.child(Keys.SESSIONS).orderByChild(takeOrGive+ "/uid").equalTo(uid).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<String> list = new ArrayList<String>();
+                List<Session> list = new ArrayList();
+
                 for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    list.add(child.getKey());
+                    list.add(child.getValue(Session.class));
                 }
+                callback.onDataArrived((ArrayList<Session>) list);
 
             }
 
@@ -314,6 +363,30 @@ public class FirebaseManager {
             }
         });
     }
+
+    public void checkForOpenSession(String uid, boolean isTake, final FirebaseCallback<Session> callback) {
+        String takeOrGive = isTake ? Keys.TAKE_REQUEST : Keys.GIVE_REQUEST;
+
+        db.child(Keys.SESSIONS).orderByChild(takeOrGive+ "/uid").equalTo(uid).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                List<Session> list = new ArrayList();
+
+                for (DataSnapshot child : dataSnapshot.getChildren()) {
+                    Session session = child.getValue(Session.class);
+                    if(session.isAlive())
+                        callback.onDataArrived(session);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e(TAG, "onCancelled: ");
+                callback.onDataArrived(null);
+            }
+        });
+    }
+
 
     public void sessionStatusChanged(String sessionId, final FirebaseCallback<Session.Status> callback) {
         db.child(Keys.SESSIONS).child(sessionId).child(Keys.SESSION_STATUS).addValueEventListener(new ValueEventListener() {
@@ -329,6 +402,39 @@ public class FirebaseManager {
             }
         });
     }
+
+    public void refreshTimestampDelta(String uid) {
+        final DatabaseReference data = db.child("timestamps").child("uid").child("deleteMe");
+        final long deviceTimestamp = System.currentTimeMillis();
+        db.child("timestamps").child("uid").child("deleteMe").setValue(ServerValue.TIMESTAMP, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(DatabaseError databaseError, final DatabaseReference databaseReference) {
+                data.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot != null) {
+                            Long firebaseTimestamp = dataSnapshot.getValue(Long.class);
+                            if (firebaseTimestamp != null) {
+                                GeneralUtil.setTimestampDiff(firebaseTimestamp - deviceTimestamp);
+                            }
+
+                            // System.currentTimeMillis() + (realTimestamp - System.currentTimeMillis());
+                            // 16:30 + ( {15:00} - {16:00} ) = 15:30
+                            databaseReference.removeValue();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+
+                });
+            }
+        });
+    }
+
+
 
 
     public boolean isUserLoggedIn() {
@@ -358,6 +464,8 @@ public class FirebaseManager {
         public static final String SESSIONS = "sessions";
         public static final String SESSION_STATUS = "status";
         public static final String SESSION_MILLIS_PASSED = "millisPassed";
+        public static final String SESSION_START_TIMESTAMP = "startTimeStamp";
+
         public static final String BALANCE = "balance";
         public static final String KEYWORDS = "keyWords";
         public static final String USERS_RATINGS = "usersRatings";

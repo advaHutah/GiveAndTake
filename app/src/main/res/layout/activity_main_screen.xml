@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/changing_background"
     android:orientation="vertical"
-    tools:context="com.finalproject.win10.giveandtake.UI.mainScreen.MainScreenActivity">
+    tools:context="com.finalproject.giveandtake.UI.mainScreen.MainScreenActivity">
 
 
     <LinearLayout
@@ -18,7 +18,7 @@
         android:orientation="vertical">
 
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginRight="10dp"
@@ -30,22 +30,32 @@
                 android:id="@+id/mainScreenActivity_userProfileBtn"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_alignParentRight="true"
                 android:background="@drawable/profile_icon" />
 
             <TextView
                 android:id="@+id/main_screen_activity_user_name"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="10dp"
-                android:fontFamily="@font/banthink"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@+id/mainScreenActivity_userProfileBtn"
                 android:gravity="center"
                 android:text=""
                 android:textColor="@color/white"
                 android:textSize="25dp"
                 android:textStyle="bold" />
 
-        </LinearLayout>
+            <Button
+                android:id="@+id/mainScreenActivity_historyBtn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentLeft="true"
+                android:gravity=""
+                android:layout_gravity="center"
+                android:background="@drawable/history" />
+
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,27 +86,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="10dp"
+            android:layoutDirection="rtl"
             android:gravity="center"
             android:orientation="horizontal">
-
-
-            <Button
-                android:id="@+id/mainScreenActivity_takeBtn"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/button_round_give"
-                android:text="קח"
-                android:textAlignment="center"
-                android:textColor="@color/white"
-                android:textSize="20dp" />
-
-            <Button
-                android:id="@+id/mainScreenActivity_exploreBtn"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginRight="15dp"
-                android:background="@drawable/ic_search_black_24dp" />
 
             <Button
                 android:id="@+id/mainScreenActivity_giveBtn"
@@ -109,6 +101,26 @@
                 android:textSize="20dp" />
 
 
+            <Button
+                android:id="@+id/mainScreenActivity_exploreBtn"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/ic_search_black_24dp" />
+
+            <Button
+                android:id="@+id/mainScreenActivity_takeBtn"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/button_round_give"
+                android:text="קח"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+
+
         </LinearLayout>
 
         <LinearLayout
@@ -116,8 +128,7 @@
             android:layout_height="0dp"
             android:layout_weight="8"
             android:orientation="vertical"
-            android:layout_marginTop="10dp"
-            >
+            android:layout_marginTop="10dp">
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewPager"

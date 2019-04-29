@@ -78,7 +78,7 @@ public class IncomingSessionRequestActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 appManager.updateSessionStatus(Session.Status.accepted);
-                CreateActivityUtil.createHandshakeProcessActivity(getOtherUserSessionRequestActivity(),true);
+                CreateActivityUtil.createHandshakeProcessActivity(getOtherUserSessionRequestActivity(),true,false);
             }
         });
         btnRejectSession.setOnClickListener(new View.OnClickListener() {

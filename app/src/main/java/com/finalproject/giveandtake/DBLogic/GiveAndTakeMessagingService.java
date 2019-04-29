@@ -86,24 +86,26 @@ public class GiveAndTakeMessagingService extends FirebaseMessagingService {
     }
 
     private void getMatchNotification(String title,String messageBody) {
-        Intent intent = new Intent(this, UserMatchActivity.class);
-        intent.putExtra("type",getTypeFromMessage(title));
-        intent.putExtra("tag",getTagFromMessage(title));
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        AppManager.getInstance().setNotificationUsers(getUsersFromMessage(messageBody,getTypeFromMessage(title)));
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-        Uri defultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        if(!messageBody.isEmpty()) {
+            Intent intent = new Intent(this, UserMatchActivity.class);
+            intent.putExtra("type", getTypeFromMessage(title));
+            intent.putExtra("tag", getTagFromMessage(title));
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            AppManager.getInstance().setNotificationUsers(getUsersFromMessage(messageBody, getTypeFromMessage(title)));
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+            Uri defultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(this);
-        notiBuilder.setSmallIcon(R.drawable.temp_logo);
-        notiBuilder.setContentTitle("קיימת עבורך התאמה פוטנציאלית!");
-        notiBuilder.setContentText("תגית:" + getTagFromMessage(title) + " לתת\\לקחת:"+ getTypeFromMessage(title));
-        notiBuilder.setAutoCancel(true);
-        notiBuilder.setSound(defultSoundUri);
-        notiBuilder.setContentIntent(pendingIntent);
+            NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(this);
+            notiBuilder.setSmallIcon(R.drawable.temp_logo);
+            notiBuilder.setContentTitle("קיימת עבורך התאמה פוטנציאלית!");
+            notiBuilder.setContentText("תגית:" + getTagFromMessage(title) + " לתת\\לקחת:" + getTypeFromMessage(title));
+            notiBuilder.setAutoCancel(true);
+            notiBuilder.setSound(defultSoundUri);
+            notiBuilder.setContentIntent(pendingIntent);
 
-        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0,notiBuilder.build());
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(0, notiBuilder.build());
+        }
 
     }
 

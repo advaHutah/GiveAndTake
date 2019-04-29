@@ -13,6 +13,7 @@ import com.finalproject.giveandtake.R;
 import com.finalproject.giveandtake.UI.tags.TagsMatchFragment;
 import com.finalproject.giveandtake.UI.userHashtags.MyGiveOrTakeRequestActivity;
 import com.finalproject.giveandtake.util.CreateActivityUtil;
+import com.finalproject.giveandtake.util.GeneralUtil;
 import com.finalproject.giveandtake.util.MyConstants;
 import com.finalproject.giveandtake.util.TimeConvertUtil;
 import com.google.android.material.tabs.TabLayout;
@@ -27,7 +28,7 @@ public class MainScreenActivity extends FragmentActivity {
     private AppManager appManager;
 
     private TextView userNameText, userBalanceText;
-    private Button giveBtn, takeBtn, exploreBtn;
+    private Button giveBtn, takeBtn, exploreBtn,historyBtn;
     private ImageButton userProfileBtn;
 
     private TabAdapter adapter;
@@ -47,7 +48,7 @@ public class MainScreenActivity extends FragmentActivity {
         giveBtn = (Button) findViewById(R.id.mainScreenActivity_giveBtn);
         takeBtn = (Button) findViewById(R.id.mainScreenActivity_takeBtn);
         exploreBtn = (Button) findViewById(R.id.mainScreenActivity_exploreBtn);
-
+        historyBtn = (Button) findViewById(R.id.mainScreenActivity_historyBtn);
 
         userProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +79,15 @@ public class MainScreenActivity extends FragmentActivity {
         exploreBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //todo
+                CreateActivityUtil.createExploreActivity(getMainScreenActivity());
+
+            }
+        });
+
+        historyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CreateActivityUtil.createSessionsHistoryActivity(getMainScreenActivity());
             }
         });
 
@@ -89,6 +98,27 @@ public class MainScreenActivity extends FragmentActivity {
         adapter.addFragment(TagsMatchFragment.newInstance(true), "התאמות 'תן'");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
+
+        appManager.checkForOpenSession(false, new AppManager.AppManagerCallback<Session>() {
+            @Override
+            public void onDataArrived(Session value) {
+                if(appManager.getSelectedSession()==null) {
+                    appManager.setSelectedSessionByID(value.getId());
+
+                    CreateActivityUtil.createHandshakeProcessActivity(getMainScreenActivity(),true,true);
+                }
+            }
+        });
+
+        appManager.checkForOpenSession(true, new AppManager.AppManagerCallback<Session>() {
+            @Override
+            public void onDataArrived(Session value) {
+                if(appManager.getSelectedSession()==null) {
+                    appManager.setSelectedSessionByID(value.getId());
+                    CreateActivityUtil.createHandshakeProcessActivity(getMainScreenActivity(), true,true);
+                }
+            }
+        });
     }
 
 
@@ -98,12 +128,6 @@ public class MainScreenActivity extends FragmentActivity {
         if (appManager.getCurrentUser() != null) {
             userNameText.setText("שלום " + appManager.getCurrentUser().getFullName());
             setUserBalance(appManager.getCurrentUser().getBalance());
-            appManager.getMySessionHistory(new AppManager.AppManagerCallback<ArrayList<Session>>() {
-                @Override
-                public void onDataArrived(ArrayList<Session> value) {
-
-                }
-            });
         } else {
             userNameText.setText("שלום אורח");
             setUserBalance(0);

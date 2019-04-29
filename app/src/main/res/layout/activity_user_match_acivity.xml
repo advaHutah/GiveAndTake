@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/tagsColor"
     android:orientation="vertical"
-    tools:context="com.finalproject.win10.giveandtake.UI.userMatch.UserMatchActivity">
+    tools:context="com.finalproject.giveandtake.UI.userMatch.UserMatchActivity">
 
     <TextView
         android:id="@+id/user_info_title"

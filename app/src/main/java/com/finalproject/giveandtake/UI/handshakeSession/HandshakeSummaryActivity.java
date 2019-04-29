@@ -6,8 +6,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import com.finalproject.giveandtake.Logic.AppManager;
 import com.finalproject.giveandtake.R;
 import com.finalproject.giveandtake.UI.mainScreen.MainScreenActivity;
+import com.finalproject.giveandtake.util.CreateActivityUtil;
 import com.finalproject.giveandtake.util.GeneralUtil;
 import com.finalproject.giveandtake.util.TimeConvertUtil;
 
@@ -38,9 +41,10 @@ public class HandshakeSummaryActivity extends AppCompatActivity {
         actionText = (TextView) findViewById(R.id.handshakeSummaryFragment_action_description);
         btnRating = (Button) findViewById(R.id.btn_handshakeSummaryFragment_rating);
         btnOk = (Button) findViewById(R.id.btn_handshakeSummaryFragment_ok);
-
-        timerValue.setText(TimeConvertUtil.convertTime(appManager.getSelectedSession().getMillisPassed()));
-        setActionText();
+        if(appManager.getSelectedSession()!=null){
+            timerValue.setText(TimeConvertUtil.convertTime(appManager.getSelectedSession().getMillisPassed()));
+            setActionText();
+        }
         balanceValue.setText(TimeConvertUtil.convertTime(appManager.getCurrentUser().getBalance()));
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,14 +83,10 @@ public class HandshakeSummaryActivity extends AppCompatActivity {
 
     private void showRatingDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        ratingBar = new RatingBar(this);
-
-        ratingBar.setMax(5);
-        ratingBar.setStepSize(0.5f);
         builder.setTitle("דירוג משתמש");
         builder.setMessage("דרג את "+ appManager.getOtherUser().getFullName());
         builder.setCancelable(true);
-        builder.setView(ratingBar);
+        builder.setView(getRatingBarLayout());
         builder.setPositiveButton(
                 "דרג",
                 new DialogInterface.OnClickListener() {
@@ -105,6 +105,17 @@ public class HandshakeSummaryActivity extends AppCompatActivity {
         alert.show();
     }
 
+    private LinearLayout getRatingBarLayout() {
+        LinearLayout linearLayout = new LinearLayout(this);
+        linearLayout.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        linearLayout.setGravity(Gravity.CENTER);
+        ratingBar = new RatingBar(this);
+        ratingBar.setNumStars(5);
+        ratingBar.setStepSize(0.5f);
+        linearLayout.addView(ratingBar);
+        return linearLayout;
+    }
+
 
     @Override
     public void onPause() {
@@ -121,6 +132,12 @@ public class HandshakeSummaryActivity extends AppCompatActivity {
     public void addToast(String text, int duration) {
         Toast toast = Toast.makeText(this, text, duration);
         toast.show();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        CreateActivityUtil.createMainScreenActivity(getHandshakeSummaryActivity());
     }
 
     private Activity getHandshakeSummaryActivity(){

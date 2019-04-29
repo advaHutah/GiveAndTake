@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="380dp"
+        android:layoutDirection="rtl"
+        android:textDirection="rtl">
     <co.lujun.androidtagview.TagContainerLayout
         android:id="@+id/fragmentGiveMatch_tag_group"
         android:layout_width="match_parent"
@@ -21,7 +26,7 @@
         app:tag_clickable="true"
         app:tag_ripple_duration="0"
         app:tag_theme="none" />
-
+    </ScrollView>
     <TextView
         android:id="@+id/noTagsText"
         android:layout_width="match_parent"
@@ -30,5 +35,20 @@
         android:textAlignment="center"
         android:textColor="@android:color/darker_gray"
         android:visibility="gone"/>
-
-</RelativeLayout>
+    <ProgressBar
+        android:id="@+id/explore_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible"/>
+    <Button
+        android:id="@+id/load_more_btn"
+        style="?android:textAppearanceSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/button_shape_rounded"
+        android:text="טען עוד"
+        android:textColor="@color/blue"
+        android:textStyle="bold" />
+</LinearLayout>

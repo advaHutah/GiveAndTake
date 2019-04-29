@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -54,8 +55,7 @@ public class OtherUserActivity extends AppCompatActivity {
 
         otherUser = appManager.getOtherUser();
         if (otherUser != null) {
-            GeneralUtil generalUtil = new GeneralUtil();
-            generalUtil.setUserImage(otherUser.getPhotoUrl(), userImage);
+            GeneralUtil.setUserImage(otherUser.getPhotoUrl(), userImage);
             nameText.setText(otherUser.getFullName());
             userEmail.setText(otherUser.getEmail());
             balanceText.setText(TimeConvertUtil.convertTime(otherUser.getBalance()));
@@ -87,6 +87,17 @@ public class OtherUserActivity extends AppCompatActivity {
                 CreateActivityUtil.createHandshakeSettingsActivity(getOtherUserActivity(), Request.RequestType.TAKE.toString());
             }
         });
+        if(otherUser.getMyGiveRequest()==null)
+            btnTakeSession.setVisibility(View.INVISIBLE);
+        if(otherUser.getMyTakeRequest() ==null)
+            btnGiveSession.setVisibility(View.INVISIBLE);
+
+
+        if(appManager.getCurrentUser() == null){
+            btnGiveSession.setVisibility(View.INVISIBLE);
+            btnTakeSession.setVisibility(View.INVISIBLE);
+
+        }
     }
 
 
@@ -97,6 +108,7 @@ public class OtherUserActivity extends AppCompatActivity {
                     tagView.addTag(text);
                 }
             }
+            tagView.setGravity(Gravity.RIGHT);
         }
     }
 

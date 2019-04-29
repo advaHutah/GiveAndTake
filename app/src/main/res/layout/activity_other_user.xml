@@ -32,7 +32,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
                 android:text=""
                 android:textColor="@android:color/black"
                 android:textSize="20dp" />
@@ -65,7 +64,9 @@
                 android:textSize="20dp" />
 
             <RatingBar
+                style="?android:attr/ratingBarStyleSmall"
                 android:id="@+id/otherUser_rating"
+                android:minHeight="5dp"
                 android:isIndicator="true"
                 android:layout_gravity="center"
                 android:layout_width="wrap_content"
@@ -73,7 +74,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="120dp"
                 android:layout_margin="5dp"
                 android:outlineAmbientShadowColor="@color/blue">
 
@@ -98,6 +99,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
+                            android:layoutDirection="rtl"
                             android:textSize="15dp" />
 
                         <TextView
@@ -112,6 +114,7 @@
                             android:layout_height="wrap_content"
                             android:padding="5dp"
                             android:textDirection="rtl"
+                            android:layoutDirection="rtl"
                             app:container_enable_drag="false"
                             app:horizontal_interval="5dp"
                             app:vertical_interval="5dp"
@@ -126,7 +129,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="120dp"
                 android:layout_margin="5dp"
                 android:outlineAmbientShadowColor="@color/blue">
 
@@ -138,6 +141,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_margin="10dp"
+                        android:layoutDirection="rtl"
                         android:orientation="vertical">
 
                         <TextView
@@ -166,13 +170,14 @@
                             android:layout_height="wrap_content"
                             android:padding="5dp"
                             android:textDirection="rtl"
+                            android:layoutDirection="rtl"
                             app:container_enable_drag="false"
                             app:horizontal_interval="5dp"
-                            app:vertical_interval="5dp"
-                            app:tag_selectable="true"
                             app:tag_clickable="true"
                             app:tag_ripple_duration="0"
-                            app:tag_theme="none" />
+                            app:tag_selectable="true"
+                            app:tag_theme="none"
+                            app:vertical_interval="5dp" />
                     </LinearLayout>
                 </androidx.core.widget.NestedScrollView>
 
@@ -186,16 +191,6 @@
                 android:orientation="horizontal">
 
 
-                <Button
-                    android:id="@+id/btn_take_session"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_marginRight="10dp"
-                    android:background="@drawable/button_round_give"
-                    android:text="קח"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="20dp" />
 
 
                 <Button
@@ -204,6 +199,17 @@
                     android:layout_height="60dp"
                     android:background="@drawable/button_round_take"
                     android:text="תן"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textSize="20dp" />
+
+                <Button
+                    android:id="@+id/btn_take_session"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@drawable/button_round_give"
+                    android:text="קח"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="20dp" />

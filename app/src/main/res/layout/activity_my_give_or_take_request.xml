@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="right"
+    android:layoutDirection="rtl"
     android:background="@color/blue"
     android:orientation="vertical"
     tools:context="com.finalproject.giveandtake.UI.userHashtags.MyGiveOrTakeRequestActivity">
@@ -12,7 +13,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="@font/banthink"
                 android:text="@string/GiveOrTakeReq_viewTitle"
                 android:textAlignment="center"
@@ -25,8 +26,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
                 android:textColor="@color/white"
                 android:textSize="20dp" />
 
@@ -93,13 +94,16 @@
 
     <ScrollView
         android:layout_width="wrap_content"
-        android:layout_height="160dp">
+        android:layout_height="160dp"
+        android:layoutDirection="rtl"
+        android:textDirection="rtl">
     <co.lujun.androidtagview.TagContainerLayout
         android:id="@+id/GiveOrTakeReq_tag_group"
         android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_margin="15dp"
         android:padding="15dp"
+        android:layoutDirection="rtl"
         android:textDirection="rtl"
         app:container_enable_drag="false"
         app:horizontal_interval="10dp"

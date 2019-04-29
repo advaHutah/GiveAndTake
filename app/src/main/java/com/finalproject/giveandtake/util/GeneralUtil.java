@@ -18,20 +18,30 @@ import java.io.InputStream;
 
 public class GeneralUtil {
 
+    private static long timestampDiff = 0;
+
+    public static void setTimestampDiff(long timestampDiff) {
+        GeneralUtil.timestampDiff = timestampDiff;
+    }
+
     public static void addToast(String text, int duration, Context context) {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
     }
 
-    public void setUserImage(String imageUrl, ImageView imageView) {
+    public static void setUserImage(String imageUrl, ImageView imageView) {
         if (imageUrl != null) {
-            new GeneralUtil.DownloadImageTask(imageView).execute(imageUrl);
+            new DownloadImageTask(imageView).execute(imageUrl);
         } else
             imageView.setImageResource(R.drawable.default_user);
     }
 
+    public static long now() {
+        return System.currentTimeMillis() + timestampDiff;
+    }
 
-    private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
+
+    private static class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
 
         public DownloadImageTask(ImageView bmImage) {

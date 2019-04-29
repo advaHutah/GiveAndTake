@@ -17,7 +17,7 @@ import java.util.List;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ItemViewHolder> {
+public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.ItemViewHolder> {
 
     private static AdapterClickListener clickListener = null;
     private List<TagUserInfo> usersList;
