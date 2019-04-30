@@ -23,6 +23,8 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.UUID;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
@@ -78,8 +80,8 @@ public class GiveAndTakeMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        if(remoteMessage.getNotification().getTitle().contains("Session")){
-            getSessionNotification(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
+        if(remoteMessage.getNotification().getTitle().contains("בקשה החלפת זמן חדשה")){
+            getSessionNotification(remoteMessage.getNotification().getTag());
         }
         else
             getMatchNotification(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
@@ -104,7 +106,7 @@ public class GiveAndTakeMessagingService extends FirebaseMessagingService {
             notiBuilder.setContentIntent(pendingIntent);
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(0, notiBuilder.build());
+            notificationManager.notify(new Random().nextInt(), notiBuilder.build());
         }
 
     }
@@ -135,24 +137,25 @@ public class GiveAndTakeMessagingService extends FirebaseMessagingService {
         return title.substring(title.indexOf("|")+1);
     }
 
-    private void getSessionNotification(String title, String sessionId) {
+    private void getSessionNotification(String sessionId) {
+        if(!sessionId.isEmpty()) {
+            Intent intent = new Intent(this, IncomingSessionRequestActivity.class);
+            AppManager.getInstance().setSelectedSessionByID(sessionId);
 
-        Intent intent = new Intent(this, IncomingSessionRequestActivity.class);
-        AppManager.getInstance().setSelectedSessionByID(sessionId);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+            Uri defultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-        Uri defultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(this);
+            notiBuilder.setSmallIcon(R.drawable.temp_logo);
+            notiBuilder.setContentTitle("בקשה החלפת זמן חדשה");
+            notiBuilder.setContentText("לחץ על מנת להכנס לבקשה");
+            notiBuilder.setAutoCancel(true);
+            notiBuilder.setSound(defultSoundUri);
+            notiBuilder.setContentIntent(pendingIntent);
 
-        NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(this);
-        notiBuilder.setSmallIcon(R.drawable.temp_logo);
-        notiBuilder.setContentTitle("בקשה החלפת זמן חדשה");
-        notiBuilder.setContentText("לחץ על מנת להכנס לבקשה");
-        notiBuilder.setAutoCancel(true);
-        notiBuilder.setSound(defultSoundUri);
-        notiBuilder.setContentIntent(pendingIntent);
-
-        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0,notiBuilder.build());
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(new Random().nextInt(), notiBuilder.build());
+        }
     }
 }

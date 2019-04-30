@@ -36,15 +36,7 @@
                 android:textColor="@android:color/black"
                 android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/otherUser_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:autoLink="email"
-                android:text=""
-                android:textColor="@android:color/black"
-                android:textSize="15dp" />
+
 
             <TextView
                 android:layout_width="wrap_content"

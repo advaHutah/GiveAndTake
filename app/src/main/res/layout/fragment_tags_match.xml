@@ -18,8 +18,8 @@
         app:vertical_interval="10dp"
         app:tag_selectable="true"
         app:tag_background_color="@color/white"
+        app:tag_ripple_color="@color/green"
         app:tag_clickable="true"
-        app:tag_ripple_duration="0"
         app:tag_theme="none" />
 
     <TextView

@@ -100,8 +100,12 @@ public class MainScreenActivity extends FragmentActivity {
             public void onDataArrived(Session value) {
                 if(appManager.getSelectedSession()==null) {
                     appManager.setSelectedSessionByID(value.getId());
-
-                    CreateActivityUtil.createHandshakeProcessActivity(getMainScreenActivity(),true,true);
+                    if(value.getStatus() == Session.Status.pending){
+                        CreateActivityUtil.createIncomingSessionRequestActivity(getMainScreenActivity());
+                    }
+                    else {
+                        CreateActivityUtil.createHandshakeProcessActivity(getMainScreenActivity(), true, true);
+                    }
                 }
             }
         });
@@ -111,7 +115,12 @@ public class MainScreenActivity extends FragmentActivity {
             public void onDataArrived(Session value) {
                 if(appManager.getSelectedSession()==null) {
                     appManager.setSelectedSessionByID(value.getId());
-                    CreateActivityUtil.createHandshakeProcessActivity(getMainScreenActivity(), true,true);
+                    if(value.getStatus() == Session.Status.pending){
+                        CreateActivityUtil.createIncomingSessionRequestActivity(getMainScreenActivity());
+                    }
+                    else {
+                        CreateActivityUtil.createHandshakeProcessActivity(getMainScreenActivity(), true, true);
+                    }
                 }
             }
         });

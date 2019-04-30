@@ -8,6 +8,7 @@ import com.finalproject.giveandtake.UI.explore.ExploreActivity;
 import com.finalproject.giveandtake.UI.handshakeSession.HandshakeProcessActivity;
 import com.finalproject.giveandtake.UI.handshakeSession.HandshakeSettingsActivity;
 import com.finalproject.giveandtake.UI.handshakeSession.HandshakeSummaryActivity;
+import com.finalproject.giveandtake.UI.handshakeSession.IncomingSessionRequestActivity;
 import com.finalproject.giveandtake.UI.login.LoginActivity;
 import com.finalproject.giveandtake.UI.mainScreen.MainScreenActivity;
 import com.finalproject.giveandtake.UI.sessionsHistory.SessionsHistoryActivty;
@@ -57,6 +58,11 @@ public class CreateActivityUtil {
 
     public static void createMainScreenActivity(Context context) {
         Intent intent = new Intent(context, MainScreenActivity.class);
+        context.startActivity(intent);
+    }
+
+    public static void createIncomingSessionRequestActivity(Context context) {
+        Intent intent = new Intent(context, IncomingSessionRequestActivity.class);
         context.startActivity(intent);
     }
 }

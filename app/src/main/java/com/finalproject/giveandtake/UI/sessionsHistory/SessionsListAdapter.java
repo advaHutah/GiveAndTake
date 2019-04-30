@@ -76,7 +76,7 @@ class SessionsListAdapter extends RecyclerView.Adapter<SessionsListAdapter.ItemV
                 holder.otherUserName.setText(sessionsList.get(position).getTakeRequest().getUserName());
             }
             holder.sessionDescription.setText(sessionsList.get(position).getDescription());
-            holder.sessionTime.setText(TimeConvertUtil.convertTime(sessionsList.get(position).getMillisPassed()));
+            holder.sessionTime.setText(TimeConvertUtil.convertTime(sessionsList.get(position).getSessionTime()));
 
 
         }
@@ -94,7 +94,8 @@ class SessionsListAdapter extends RecyclerView.Adapter<SessionsListAdapter.ItemV
 
     public void addUserItems(ArrayList<Session> sessionsList) {
         for (Session session : sessionsList) {
-            this.addUserItem(session);
+            if(session.getStatus() == Session.Status.terminated)
+                this.addUserItem(session);
         }
     }
 

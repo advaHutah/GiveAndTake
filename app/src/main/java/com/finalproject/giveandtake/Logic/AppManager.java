@@ -320,6 +320,7 @@ public class AppManager {
 
         if(status == Session.Status.active) {
             refreshTimestampDelta();
+            selectedSession.setStartTimeStamp(GeneralUtil.now());
             firebaseManager.saveSessionStartTimeStamp(selectedSession.getId(),GeneralUtil.now());
         }
         firebaseManager.updateSessionStatus(selectedSession.getId(), status);
@@ -334,16 +335,16 @@ public class AppManager {
         });
     }
 
-    public void finishSession(long millisPassed) {
-        updateSessionStatus(com.finalproject.giveandtake.Logic.Session.Status.terminated);
-        updateSessionMillisPassed(millisPassed);
+
+
+    public void finishSession() {
+        updateSessionStatus(Session.Status.terminated);
+        refreshTimestampDelta();
+        selectedSession.setEndTimeStamp(GeneralUtil.now());
+        firebaseManager.updateSessionEndTimeStamp(selectedSession.getId(), GeneralUtil.now());
         updateMyBalance();
     }
 
-    private void updateSessionMillisPassed(long millisPassed) {
-        selectedSession.setMillisPassed(millisPassed);
-        firebaseManager.updateSessionMillisPassed(selectedSession.getId(), millisPassed);
-    }
 
     public void resetOtherUserAndSession() {
         otherUser = null;

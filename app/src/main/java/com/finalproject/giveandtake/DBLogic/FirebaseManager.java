@@ -317,8 +317,8 @@ public class FirebaseManager {
 
     }
 
-    public void updateSessionMillisPassed(String sessionId, long millisPassed) {
-        db.child(Keys.SESSIONS).child(sessionId).child(Keys.SESSION_MILLIS_PASSED).setValue(millisPassed);
+    public void updateSessionEndTimeStamp(String sessionId, long endTimeStamp) {
+        db.child(Keys.SESSIONS).child(sessionId).child(Keys.SESSION_END_TIMESTAMP).setValue(endTimeStamp);
     }
 
     public void rateOtherUserOnDB(String currentUserUid,String otherUserUid,float rating) {
@@ -403,6 +403,7 @@ public class FirebaseManager {
         });
     }
 
+
     public void refreshTimestampDelta(String uid) {
         final DatabaseReference data = db.child("timestamps").child("uid").child("deleteMe");
         final long deviceTimestamp = System.currentTimeMillis();
@@ -463,7 +464,7 @@ public class FirebaseManager {
         public static final String USER_PHONE = "phoneNumber";
         public static final String SESSIONS = "sessions";
         public static final String SESSION_STATUS = "status";
-        public static final String SESSION_MILLIS_PASSED = "millisPassed";
+        public static final String SESSION_END_TIMESTAMP = "endTimeStamp";
         public static final String SESSION_START_TIMESTAMP = "startTimeStamp";
 
         public static final String BALANCE = "balance";

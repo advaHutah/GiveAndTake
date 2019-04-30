@@ -57,17 +57,16 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (!descriptionText.getText().toString().isEmpty() && !minutesSet.getText().toString().isEmpty()) {
                 String description = descriptionText.getText().toString();
-                long timeSet = TimeUnit.MINUTES.toMillis(Integer.parseInt(minutesSet.getText().toString()));
                     appManager.refreshTimestampDelta();
                     //user gives to other user
                     if (getType().equals(Request.RequestType.GIVE.toString())) {
                         appManager.setSelectedSession(new Session(Session.Status.pending, appManager.getOtherUser().getMyTakeRequest(),
-                                appManager.getCurrentUser().getMyGiveRequest(), UUID.randomUUID().toString(), description, timeSet, Session.SessionInitiator.GIVER));
+                                appManager.getCurrentUser().getMyGiveRequest(), UUID.randomUUID().toString(), description, Session.SessionInitiator.GIVER));
                     }
                     //user takes from other user
                     else {
                         appManager.setSelectedSession(new Session(Session.Status.pending, appManager.getCurrentUser().getMyTakeRequest()
-                                , appManager.getOtherUser().getMyGiveRequest(), UUID.randomUUID().toString(), description, timeSet, Session.SessionInitiator.TAKER));
+                                , appManager.getOtherUser().getMyGiveRequest(), UUID.randomUUID().toString(), description, Session.SessionInitiator.TAKER));
                     }
                     //send start request to other user
                     appManager.saveSession();

@@ -42,7 +42,7 @@ public class HandshakeSummaryActivity extends AppCompatActivity {
         btnRating = (Button) findViewById(R.id.btn_handshakeSummaryFragment_rating);
         btnOk = (Button) findViewById(R.id.btn_handshakeSummaryFragment_ok);
         if(appManager.getSelectedSession()!=null){
-            timerValue.setText(TimeConvertUtil.convertTime(appManager.getSelectedSession().getMillisPassed()));
+            timerValue.setText(TimeConvertUtil.convertTime(appManager.getSelectedSession().getSessionTime()));
             setActionText();
         }
         balanceValue.setText(TimeConvertUtil.convertTime(appManager.getCurrentUser().getBalance()));
@@ -73,8 +73,7 @@ public class HandshakeSummaryActivity extends AppCompatActivity {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
-                        Intent main = new Intent(getHandshakeSummaryActivity(), MainScreenActivity.class);
-                        startActivity(main);
+                        CreateActivityUtil.createMainScreenActivity(getHandshakeSummaryActivity());
                     }
                 });
         AlertDialog alert = builder.create();
@@ -127,11 +126,6 @@ public class HandshakeSummaryActivity extends AppCompatActivity {
         actionText.setText(appManager.getSelectedSession().getGiveRequest().getUserName() +
                 " העניק\\ה זמן ל " + appManager.getSelectedSession().getTakeRequest().getUserName());
         btnRating.setText("דרג את "+ appManager.getOtherUser().getFullName());
-    }
-
-    public void addToast(String text, int duration) {
-        Toast toast = Toast.makeText(this, text, duration);
-        toast.show();
     }
 
     @Override

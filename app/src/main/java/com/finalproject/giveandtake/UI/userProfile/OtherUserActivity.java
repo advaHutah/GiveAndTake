@@ -26,7 +26,7 @@ import co.lujun.androidtagview.TagContainerLayout;
 
 public class OtherUserActivity extends AppCompatActivity {
 
-    private TextView nameText, balanceText, giveText, takeText, userEmail;
+    private TextView nameText, balanceText, giveText, takeText;
     private TagContainerLayout giveTags, takeTags;
     private Button btnGiveSession, btnTakeSession;
     private AppManager appManager = AppManager.getInstance();
@@ -41,7 +41,6 @@ public class OtherUserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_other_user);
 
         nameText = (TextView) this.findViewById(R.id.otherUser_name);
-        userEmail = (TextView) this.findViewById(R.id.otherUser_email);
         balanceText = (TextView) this.findViewById(R.id.otherUser_balance);
         giveText = (TextView) this.findViewById(R.id.giveText);
         takeText = (TextView) this.findViewById(R.id.takeText);
@@ -57,7 +56,6 @@ public class OtherUserActivity extends AppCompatActivity {
         if (otherUser != null) {
             GeneralUtil.setUserImage(otherUser.getPhotoUrl(), userImage);
             nameText.setText(otherUser.getFullName());
-            userEmail.setText(otherUser.getEmail());
             ratingBar.setRating(otherUser.getRating());
             balanceText.setText(TimeConvertUtil.convertTime(otherUser.getBalance()));
             if(otherUser.getMyGiveRequest()!= null) {

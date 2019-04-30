@@ -7,6 +7,7 @@ import com.finalproject.giveandtake.util.GeneralUtil;
 public class Session {
 
 
+
     public static enum Status {
         pending,
         accepted,
@@ -26,8 +27,6 @@ public class Session {
     private Request takeRequest;
     private Request giveRequest;
     private String id;
-    private long millisPassed;
-    private long millisSet;
     private Long endTimeStamp;
     private String description;
     private long startTimeStamp;
@@ -37,13 +36,11 @@ public class Session {
 
     }
 
-    public Session(Status status, Request takeRequest, Request giveRequest, String id,String description, long millisSet,SessionInitiator initiator) {
+    public Session(Status status, Request takeRequest, Request giveRequest, String id,String description,SessionInitiator initiator) {
         this.status = status;
         this.takeRequest = takeRequest;
         this.giveRequest = giveRequest;
         this.id = id;
-        this.millisPassed = 0;
-        this.millisSet = millisSet;
         this.initiator = initiator;
         this.description = description;
     }
@@ -68,14 +65,6 @@ public class Session {
         return id;
     }
 
-    public long getMillisPassed() {
-        return millisPassed;
-    }
-
-    public long getMillisSet() {
-        return millisSet;
-    }
-
     public String getDescription() {
         return description;
     }
@@ -96,13 +85,6 @@ public class Session {
         this.id = id;
     }
 
-    public void setMillisPassed(long millisPassed) {
-        this.millisPassed = millisPassed;
-    }
-
-    public void setMillisSet(long millisSet) {
-        this.millisSet = millisSet;
-    }
 
     public void setDescription(String description) {
         this.description = description;
@@ -124,5 +106,18 @@ public class Session {
       return endTimeStamp == null;
     }
 
+    public void setEndTimeStamp(Long endTimeStamp) {
+        this.endTimeStamp = endTimeStamp;
+    }
 
+    public Long getEndTimeStamp() {
+        return endTimeStamp;
+    }
+
+    public long getSessionTime() {
+        if(endTimeStamp!= null) {
+            return endTimeStamp.longValue() - startTimeStamp;
+        }
+        else return 0;
+    }
 }
