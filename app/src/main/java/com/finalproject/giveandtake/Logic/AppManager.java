@@ -297,6 +297,9 @@ public class AppManager {
         });
     }
 
+    public void setOtherUser(User otherUser) {
+        this.otherUser = otherUser;
+    }
 
     public User getOtherUser() {
         return otherUser;
@@ -319,9 +322,14 @@ public class AppManager {
         selectedSession.setStatus(status);
 
         if(status == Session.Status.active) {
-            refreshTimestampDelta();
-            selectedSession.setStartTimeStamp(GeneralUtil.now());
-            firebaseManager.saveSessionStartTimeStamp(selectedSession.getId(),GeneralUtil.now());
+            refreshTimestampDelta(new AppManagerCallback<Boolean>() {
+                @Override
+                public void onDataArrived(Boolean value) {
+                    selectedSession.setStartTimeStamp(GeneralUtil.now());
+                    firebaseManager.saveSessionStartTimeStamp(selectedSession.getId(),GeneralUtil.now());
+                }
+            });
+
         }
         firebaseManager.updateSessionStatus(selectedSession.getId(), status);
     }
@@ -339,10 +347,16 @@ public class AppManager {
 
     public void finishSession() {
         updateSessionStatus(Session.Status.terminated);
-        refreshTimestampDelta();
-        selectedSession.setEndTimeStamp(GeneralUtil.now());
-        firebaseManager.updateSessionEndTimeStamp(selectedSession.getId(), GeneralUtil.now());
+        refreshTimestampDelta(new AppManagerCallback<Boolean>() {
+            @Override
+            public void onDataArrived(Boolean value) {
+                selectedSession.setEndTimeStamp(GeneralUtil.now());
+                firebaseManager.updateSessionEndTimeStamp(selectedSession.getId(), GeneralUtil.now());
+            }
+        });
         updateMyBalance();
+
+
     }
 
 
@@ -362,9 +376,14 @@ public class AppManager {
         }
     }
 
-    public void refreshTimestampDelta() {
+    public void refreshTimestampDelta(final AppManagerCallback<Boolean> callback) {
         if(currentUser!=null) {
-            firebaseManager.refreshTimestampDelta(currentUser.getId());
+            firebaseManager.refreshTimestampDelta(currentUser.getId(), new FirebaseManager.FirebaseCallback<Boolean>() {
+                @Override
+                public void onDataArrived(Boolean value) {
+                    callback.onDataArrived(true);
+                }
+            });
         }
     }
 

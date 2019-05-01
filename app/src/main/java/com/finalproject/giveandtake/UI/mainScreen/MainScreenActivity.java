@@ -83,7 +83,9 @@ public class MainScreenActivity extends FragmentActivity {
         historyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CreateActivityUtil.createSessionsHistoryActivity(getMainScreenActivity());
+                if (appManager.getCurrentUser() != null) {
+                    CreateActivityUtil.createSessionsHistoryActivity(getMainScreenActivity());
+                }
             }
         });
 
@@ -99,7 +101,7 @@ public class MainScreenActivity extends FragmentActivity {
             @Override
             public void onDataArrived(Session value) {
                 if(appManager.getSelectedSession()==null) {
-                    appManager.setSelectedSessionByID(value.getId());
+                    appManager.setSelectedSession(value);
                     if(value.getStatus() == Session.Status.pending){
                         CreateActivityUtil.createIncomingSessionRequestActivity(getMainScreenActivity());
                     }
@@ -114,7 +116,7 @@ public class MainScreenActivity extends FragmentActivity {
             @Override
             public void onDataArrived(Session value) {
                 if(appManager.getSelectedSession()==null) {
-                    appManager.setSelectedSessionByID(value.getId());
+                    appManager.setSelectedSession(value);
                     if(value.getStatus() == Session.Status.pending){
                         CreateActivityUtil.createIncomingSessionRequestActivity(getMainScreenActivity());
                     }

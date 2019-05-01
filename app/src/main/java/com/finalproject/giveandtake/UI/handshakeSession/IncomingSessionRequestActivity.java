@@ -64,6 +64,7 @@ public class IncomingSessionRequestActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 appManager.updateSessionStatus(Session.Status.rejected);
+                CreateActivityUtil.createMainScreenActivity(getOtherUserSessionRequestActivity());
 
             }
         });

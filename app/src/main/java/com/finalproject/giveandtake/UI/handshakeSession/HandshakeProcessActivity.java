@@ -48,6 +48,7 @@ public class HandshakeProcessActivity extends AppCompatActivity {
         stopBtn = (Button) findViewById(R.id.handshakeProcessActivity_stopBtn);
         appManager = AppManager.getInstance();
         sessionRestored = getIntent().getBooleanExtra(MyConstants.SESSION_RESTORED,false);
+
         checkIfSessionIsRestored();
 
         setActionText();
@@ -61,20 +62,27 @@ public class HandshakeProcessActivity extends AppCompatActivity {
 
     private void checkIfSessionIsRestored() {
         if(sessionRestored) {
-             appManager.refreshTimestampDelta();
-             millisPassed = GeneralUtil.now() - appManager.getSelectedSession().getStartTimeStamp();
+            appManager.refreshTimestampDelta(new AppManager.AppManagerCallback<Boolean>() {
+                @Override
+                public void onDataArrived(Boolean value) {
+                    millisPassed = GeneralUtil.now() - appManager.getSelectedSession().getStartTimeStamp();
 
-            //im the giver
-            if (appManager.getSelectedSession().getGiveRequest().getUid().equals(appManager.getCurrentUser().getId())) {
-                appManager.getCurrentUser().setBalance(appManager.getCurrentUser().getBalance()+millisPassed);
-            }
-            else {
-                appManager.getCurrentUser().setBalance(appManager.getCurrentUser().getBalance()- millisPassed);
+                    //im the giver
+                    if (appManager.getSelectedSession().getGiveRequest().getUid().equals(appManager.getCurrentUser().getId())) {
+                        appManager.getCurrentUser().setBalance(appManager.getCurrentUser().getBalance()+millisPassed);
+                    }
+                    else {
+                        appManager.getCurrentUser().setBalance(appManager.getCurrentUser().getBalance()- millisPassed);
+                        updateTimerValueView();
+                        updateBalanceValueView();
+                    }
 
-            }
+                    startTimer();
+                }
+            });
 
-            startTimer();
         }
+
         else{
             millisPassed = 0;
         }
@@ -86,17 +94,27 @@ public class HandshakeProcessActivity extends AppCompatActivity {
             public void onDataArrived(Session.Status value) {
                 if (value == Session.Status.active && !sessionRestored) {
                     addToast("ההחלפה התתחילה", Toast.LENGTH_SHORT);
-                    appManager.refreshTimestampDelta();
-                    appManager.getSelectedSession().setStartTimeStamp(GeneralUtil.now());
-                    startTimer();
+                    appManager.refreshTimestampDelta(new AppManager.AppManagerCallback<Boolean>() {
+                        @Override
+                        public void onDataArrived(Boolean value) {
+                            appManager.getSelectedSession().setStartTimeStamp(GeneralUtil.now());
+                            startTimer();
+                        }
+                    });
+
                 }
                 else if(value == Session.Status.terminated) {
                     timer.cancel();
                     appManager.updateMyBalance();
-                    appManager.refreshTimestampDelta();
-                    appManager.getSelectedSession().setEndTimeStamp(GeneralUtil.now());
-                    addToast("ההחלפה הסתיימה", Toast.LENGTH_SHORT);
-                    CreateActivityUtil.createHandshakeSummaryActivity(getHandshakeProcessActivity());
+                    appManager.refreshTimestampDelta(new AppManager.AppManagerCallback<Boolean>() {
+                        @Override
+                        public void onDataArrived(Boolean value) {
+                            appManager.getSelectedSession().setEndTimeStamp(GeneralUtil.now());
+                            addToast("ההחלפה הסתיימה", Toast.LENGTH_SHORT);
+                            CreateActivityUtil.createHandshakeSummaryActivity(getHandshakeProcessActivity());
+                        }
+                    });
+
                 }
             }
         });
@@ -162,7 +180,7 @@ public class HandshakeProcessActivity extends AppCompatActivity {
             }
         };
 
-            timer.schedule(timerTask, 0, 1000);
+        timer.schedule(timerTask, 0, 1000);
 
     }
 

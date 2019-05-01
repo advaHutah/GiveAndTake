@@ -12,7 +12,6 @@ public class Session {
         pending,
         accepted,
         active,
-        paused,
         terminated,
         rejected
     }
@@ -103,7 +102,7 @@ public class Session {
     }
 
     public boolean isAlive() {
-      return endTimeStamp == null;
+      return endTimeStamp == null && status!= Status.rejected;
     }
 
     public void setEndTimeStamp(Long endTimeStamp) {

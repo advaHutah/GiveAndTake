@@ -27,7 +27,7 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
 
     private Button btnStartProcess, btnSendSession;
     private TextView step1, step2, step3;
-    private EditText descriptionText, minutesSet;
+    private EditText descriptionText;
 
     String type;
     String startSession;
@@ -43,7 +43,6 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
         startSession = getIntent().getStringExtra(MyConstants.START_SESSION);
 
         descriptionText = (EditText) findViewById(R.id.sessionDescription);
-        minutesSet = (EditText) findViewById(R.id.sessionTimeSet);
 
         btnSendSession = (Button) findViewById(R.id.btn_handshake_sendSession);
         btnStartProcess = (Button) findViewById(R.id.btn_handshake_start_process);
@@ -55,22 +54,27 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
         btnSendSession.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!descriptionText.getText().toString().isEmpty() && !minutesSet.getText().toString().isEmpty()) {
-                String description = descriptionText.getText().toString();
-                    appManager.refreshTimestampDelta();
-                    //user gives to other user
-                    if (getType().equals(Request.RequestType.GIVE.toString())) {
-                        appManager.setSelectedSession(new Session(Session.Status.pending, appManager.getOtherUser().getMyTakeRequest(),
-                                appManager.getCurrentUser().getMyGiveRequest(), UUID.randomUUID().toString(), description, Session.SessionInitiator.GIVER));
-                    }
-                    //user takes from other user
-                    else {
-                        appManager.setSelectedSession(new Session(Session.Status.pending, appManager.getCurrentUser().getMyTakeRequest()
-                                , appManager.getOtherUser().getMyGiveRequest(), UUID.randomUUID().toString(), description, Session.SessionInitiator.TAKER));
-                    }
-                    //send start request to other user
-                    appManager.saveSession();
-                    changeTextColorToGreen(step1);
+                if (!descriptionText.getText().toString().isEmpty()) {
+                final String description = descriptionText.getText().toString();
+                    appManager.refreshTimestampDelta(new AppManager.AppManagerCallback<Boolean>() {
+                        @Override
+                        public void onDataArrived(Boolean value) {
+                            //user gives to other user
+                            if (getType().equals(Request.RequestType.GIVE.toString())) {
+                                appManager.setSelectedSession(new Session(Session.Status.pending, appManager.getOtherUser().getMyTakeRequest(),
+                                        appManager.getCurrentUser().getMyGiveRequest(), UUID.randomUUID().toString(), description, Session.SessionInitiator.GIVER));
+                            }
+                            //user takes from other user
+                            else {
+                                appManager.setSelectedSession(new Session(Session.Status.pending, appManager.getCurrentUser().getMyTakeRequest()
+                                        , appManager.getOtherUser().getMyGiveRequest(), UUID.randomUUID().toString(), description, Session.SessionInitiator.TAKER));
+                            }
+                            //send start request to other user
+                            appManager.saveSession();
+                            changeTextColorToGreen(step1);
+                        }
+                    });
+
 
                     //step2: wait for accept from other user
                     appManager.sessionStatusChanged(new AppManager.AppManagerCallback<Session.Status>() {
@@ -83,6 +87,7 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
                                 enableButton(btnStartProcess);
                             } else if (value == Session.Status.rejected) {
                                 addToast("בקשת ההחלפה נדחתה", Toast.LENGTH_SHORT, getHandshakeSettingActivity());
+
                             }
                         }
                     });

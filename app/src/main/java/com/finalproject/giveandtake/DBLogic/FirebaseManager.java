@@ -404,7 +404,7 @@ public class FirebaseManager {
     }
 
 
-    public void refreshTimestampDelta(String uid) {
+    public void refreshTimestampDelta(String uid,final FirebaseCallback<Boolean> callback) {
         final DatabaseReference data = db.child("timestamps").child("uid").child("deleteMe");
         final long deviceTimestamp = System.currentTimeMillis();
         db.child("timestamps").child("uid").child("deleteMe").setValue(ServerValue.TIMESTAMP, new DatabaseReference.CompletionListener() {
@@ -422,6 +422,7 @@ public class FirebaseManager {
                             // System.currentTimeMillis() + (realTimestamp - System.currentTimeMillis());
                             // 16:30 + ( {15:00} - {16:00} ) = 15:30
                             databaseReference.removeValue();
+                            callback.onDataArrived(true);
                         }
                     }
 
