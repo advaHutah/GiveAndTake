@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/blue"
+
+    tools:context="com.finalproject.giveandtake.UI.userProfile.PhoneRequestActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="15dp"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/incoming_session_request_headline"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layoutDirection="rtl"
+            android:layout_marginBottom="20dp"
+            android:text="@string/phone_request_headline"
+            android:textSize="30dp" />
+
+
+
+
+        <TextView
+            android:id="@+id/phone_request_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text=""
+            android:padding="5dp"
+            android:textSize="25dp" />
+
+        <Button
+            android:id="@+id/btn_phone_request_view_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/button_shape_rounded"
+            android:outlineSpotShadowColor="@color/blue"
+            android:text="צפה בפרופיל"
+            android:textColor="@color/blue"
+            android:textSize="20dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layoutDirection="rtl"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
+
+            <Button
+                android:id="@+id/btn_accept_phone"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/button_round_take"
+                android:text="אישור"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+            <Button
+                android:id="@+id/btn_reject_phone"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/button_round_give"
+                android:text="ביטול"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="20dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

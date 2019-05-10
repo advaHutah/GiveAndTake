@@ -25,7 +25,7 @@ import co.lujun.androidtagview.TagContainerLayout;
 public class IncomingSessionRequestActivity extends AppCompatActivity {
 
     private TextView nameText, balanceText,descriptionText;
-    private Button btnPhoneNumber, btnAcceptSession, btnRejectSession;
+    private Button btnAcceptSession, btnRejectSession;
     private AppManager appManager = AppManager.getInstance();
     private User otherUser;
     private ImageView userImage;
@@ -41,7 +41,6 @@ public class IncomingSessionRequestActivity extends AppCompatActivity {
         nameText = (TextView) this.findViewById(R.id.incoming_session_request_name);
         balanceText = (TextView) this.findViewById(R.id.incoming_session_request_balance);
 
-//        btnPhoneNumber = (Button)this.findViewById(R.id.btn_otherUserPhone);
         btnAcceptSession = (Button) this.findViewById(R.id.btn_accept_session);
         btnRejectSession = (Button) this.findViewById(R.id.btn_reject_session);
         otherUser = appManager.getOtherUser();

@@ -38,7 +38,7 @@ public class UserProfileActivity extends AppCompatActivity {
     private TextView userEmailText;
     private ImageView userImage;
     private RatingBar ratingBar;
-    private String phoneNumber;
+    private String phoneNumber = "";
 
     public static final String PHONE_RGX = "^[0-9]{10}$";
 
@@ -83,7 +83,7 @@ public class UserProfileActivity extends AppCompatActivity {
         super.onStart();
 
         GeneralUtil generalUtil = new GeneralUtil();
-        generalUtil.setUserImage(appManager.getCurrentUser().getPhotoUrl(),userImage);
+        generalUtil.setUserImage(appManager.getCurrentUser().getPhotoUrl(), userImage);
 
         userNameText.setText(appManager.getCurrentUser().getFullName());
         userEmailText.setText("(" + appManager.getCurrentUser().getEmail() + ")");
@@ -91,8 +91,10 @@ public class UserProfileActivity extends AppCompatActivity {
         setUserBalance(appManager.getCurrentUser().getBalance());
         phoneNumber = appManager.getCurrentUser().getPhoneNumber();
         ratingBar.setRating(appManager.getCurrentUser().getRating());
-        if (phoneNumber == null || phoneNumber.isEmpty()) {
+        if (phoneNumber == null || phoneNumber.equals("Null") || phoneNumber.isEmpty()) {
             btnMyPhone.setText(R.string.btnPhoneNum_text);
+        } else {
+            btnMyPhone.setText(phoneNumber);
         }
     }
 
@@ -106,8 +108,7 @@ public class UserProfileActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         finish();
-                        CreateActivityUtil.createLoginActivity(getUserProfileActivity()  );
-
+                        CreateActivityUtil.createLoginActivity(getUserProfileActivity());
                     }
                 });
     }
@@ -125,18 +126,20 @@ public class UserProfileActivity extends AppCompatActivity {
     }
 
 
-
     private void createPhoneNumberDialog() {
         new InputSenderDialog(UActivity, new InputSenderDialog.InputSenderDialogListener() {
             @Override
             public void onOK(final String number) {
                 Pattern pattern = Pattern.compile(PHONE_RGX);
                 if (pattern.matcher(number).matches()) {
-                    setUserPhone(number);
-                    appManager.updateUserPhoneNumber(number);
+                    phoneNumber = number;
+                    btnMyPhone.setText(phoneNumber);
+                    appManager.updateUserPhoneNumber(phoneNumber);
                 } else {
                     GeneralUtil.addToast(getApplication().getString(R.string.phoneNum_InvalidInputErrMsg), Toast.LENGTH_LONG, getApplication());
+                    phoneNumber = "";
                     btnMyPhone.setText(getApplication().getString(R.string.btnPhoneNum_text));
+                    appManager.updateUserPhoneNumber(phoneNumber);
                 }
             }
 

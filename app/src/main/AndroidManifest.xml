@@ -13,7 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
-
         <service
             android:name=".DBLogic.GiveAndTakeMessagingService"
             android:exported="false">
@@ -45,8 +44,9 @@
         <activity android:name=".UI.handshakeSession.HandshakeSettingsActivity" />
         <activity android:name=".UI.handshakeSession.HandshakeSummaryActivity" />
         <activity android:name=".UI.sessionsHistory.SessionsHistoryActivty" />
-        <activity android:name=".UI.explore.ExploreActivity"/>
+        <activity android:name=".UI.explore.ExploreActivity" />
         <activity android:name=".UI.explore.ExploreTagUsersActivity" />
+        <activity android:name=".UI.userProfile.PhoneRequestActivity"/>
 
     </application>
 

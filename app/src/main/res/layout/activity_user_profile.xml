@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/blue"
-    tools:context="com.finalproject.win10.giveandtake.UI.userProfile.UserProfileActivity">
+    tools:context="com.finalproject.giveandtake.UI.userProfile.UserProfileActivity">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

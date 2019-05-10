@@ -12,6 +12,7 @@ import com.finalproject.giveandtake.UI.handshakeSession.IncomingSessionRequestAc
 import com.finalproject.giveandtake.UI.login.LoginActivity;
 import com.finalproject.giveandtake.UI.mainScreen.MainScreenActivity;
 import com.finalproject.giveandtake.UI.sessionsHistory.SessionsHistoryActivty;
+import com.finalproject.giveandtake.UI.userProfile.OtherUserActivity;
 import com.finalproject.giveandtake.UI.userProfile.UserProfileActivity;
 
 public class CreateActivityUtil {
@@ -64,5 +65,10 @@ public class CreateActivityUtil {
     public static void createIncomingSessionRequestActivity(Context context) {
         Intent intent = new Intent(context, IncomingSessionRequestActivity.class);
         context.startActivity(intent);
+    }
+
+    public static void createOtherUserActivity(Context context) {
+        Intent otherUser = new Intent(context, OtherUserActivity.class);
+        context.startActivity(otherUser);
     }
 }

@@ -15,6 +15,9 @@ import com.finalproject.giveandtake.Logic.User;
 import com.finalproject.giveandtake.R;
 import com.finalproject.giveandtake.UI.handshakeSession.IncomingSessionRequestActivity;
 import com.finalproject.giveandtake.UI.userMatch.UserMatchActivity;
+import com.finalproject.giveandtake.UI.userProfile.PhoneRequestActivity;
+import com.finalproject.giveandtake.util.GeneralUtil;
+import com.finalproject.giveandtake.util.MyConstants;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -31,9 +34,8 @@ import androidx.core.app.NotificationCompat;
 
 
 public class GiveAndTakeMessagingService extends FirebaseMessagingService {
-    private static final String TAG ="MyFirebaseMessagingServ" ;
+    private static final String TAG = "MyFirebaseMessagingServ";
     private static GiveAndTakeMessagingService singletonGiveAndTakeMessagingService = null;
-
 
 
     public static GiveAndTakeMessagingService getInstance() {
@@ -80,15 +82,41 @@ public class GiveAndTakeMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        if(remoteMessage.getNotification().getTitle().contains("בקשה החלפת זמן חדשה")){
+        if (remoteMessage.getNotification().getTitle().contains("בקשה החלפת זמן חדשה")) {
             getSessionNotification(remoteMessage.getNotification().getTag());
-        }
-        else
-            getMatchNotification(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody());
+        } else if (remoteMessage.getNotification().getTitle().contains("בקשה לקבלת מספר טלפון") &&
+                remoteMessage.getNotification().getBody().contains("לחץ על מנת להכנס לבקשה")) {
+            getPhoneRequestNotification(remoteMessage.getNotification().getTag());
+        } else
+            getMatchNotification(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
     }
 
-    private void getMatchNotification(String title,String messageBody) {
-        if(!messageBody.isEmpty()) {
+    private void getPhoneRequestNotification(String otherUserID) {
+        //create dialog of phone request
+        if (!otherUserID.isEmpty()) {
+            Intent intent = new Intent(this, PhoneRequestActivity.class);
+            intent.putExtra(MyConstants.PHONE_OTHER_USER, otherUserID);
+
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+            Uri defultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+            NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(this);
+            notiBuilder.setSmallIcon(R.drawable.temp_logo);
+            notiBuilder.setContentTitle("בקשה החלפת טלפון חדשה");
+            notiBuilder.setContentText("לחץ על מנת להכנס לבקשה");
+            notiBuilder.setAutoCancel(true);
+            notiBuilder.setSound(defultSoundUri);
+            notiBuilder.setContentIntent(pendingIntent);
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(new Random().nextInt(), notiBuilder.build());
+        }
+
+    }
+
+    private void getMatchNotification(String title, String messageBody) {
+        if (!messageBody.isEmpty()) {
             Intent intent = new Intent(this, UserMatchActivity.class);
             intent.putExtra("type", getTypeFromMessage(title));
             intent.putExtra("tag", getTagFromMessage(title));
@@ -111,10 +139,10 @@ public class GiveAndTakeMessagingService extends FirebaseMessagingService {
 
     }
 
-    private ArrayList<TagUserInfo> getUsersFromMessage(String message,String type){
-        ArrayList<TagUserInfo>  users = new ArrayList();
+    private ArrayList<TagUserInfo> getUsersFromMessage(String message, String type) {
+        ArrayList<TagUserInfo> users = new ArrayList();
         Request.RequestType requestType;
-        if(type.equalsIgnoreCase("give"))
+        if (type.equalsIgnoreCase("give"))
             //notification was sent to giver about potential takers
             requestType = Request.RequestType.TAKE;
         else
@@ -122,23 +150,24 @@ public class GiveAndTakeMessagingService extends FirebaseMessagingService {
             requestType = Request.RequestType.GIVE;
 
         String[] info = message.split("#");
-        for(int i =0 ; i < info.length ; i= i+2){
+        for (int i = 0; i < info.length; i = i + 2) {
             String uid = info[i].substring("uid:".length());
-            String uname = info[i+1].substring("uname:".length());
-            users.add(new TagUserInfo(uid,uname,requestType));
+            String uname = info[i + 1].substring("uname:".length());
+            users.add(new TagUserInfo(uid, uname, requestType));
         }
         return users;
     }
-    private String getTagFromMessage(String title){
-        return title.substring(0,title.indexOf("|"));
+
+    private String getTagFromMessage(String title) {
+        return title.substring(0, title.indexOf("|"));
     }
 
-    private String getTypeFromMessage(String title){
-        return title.substring(title.indexOf("|")+1);
+    private String getTypeFromMessage(String title) {
+        return title.substring(title.indexOf("|") + 1);
     }
 
     private void getSessionNotification(String sessionId) {
-        if(!sessionId.isEmpty()) {
+        if (!sessionId.isEmpty()) {
             Intent intent = new Intent(this, IncomingSessionRequestActivity.class);
             AppManager.getInstance().setSelectedSessionByID(sessionId);
 

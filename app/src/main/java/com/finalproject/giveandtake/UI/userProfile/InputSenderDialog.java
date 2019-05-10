@@ -31,7 +31,7 @@ public class InputSenderDialog extends AlertDialog.Builder {
 
         mNumberEdit = dialogLayout.findViewById(R.id.numberEdit);
 
-        setPositiveButton("OK", new DialogInterface.OnClickListener() {
+        setPositiveButton("אישור", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 if( listener != null )
@@ -40,7 +40,7 @@ public class InputSenderDialog extends AlertDialog.Builder {
             }
         });
 
-        setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        setNegativeButton("ביטול", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 if( listener != null )

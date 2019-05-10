@@ -15,4 +15,11 @@ public class MyConstants
 
     public static final String UID = "uid";
     public static final String SESSION_RESTORED ="sessionRestored" ;
+    public static final String PHONE_OTHER_USER ="phoneRequestOtherUserId" ;
+
+    public  enum PhonePermissionStatus  {
+        PENDING,
+        ACCEPT,
+        REJECT
+    }
 }

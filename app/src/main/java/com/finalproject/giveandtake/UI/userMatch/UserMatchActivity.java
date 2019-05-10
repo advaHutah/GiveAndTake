@@ -11,6 +11,7 @@ import com.finalproject.giveandtake.Logic.TagUserInfo;
 import com.finalproject.giveandtake.R;
 import com.finalproject.giveandtake.UI.mainScreen.AdapterClickListener;
 import com.finalproject.giveandtake.UI.userProfile.OtherUserActivity;
+import com.finalproject.giveandtake.util.CreateActivityUtil;
 import com.finalproject.giveandtake.util.MyConstants;
 
 import java.util.ArrayList;
@@ -78,8 +79,7 @@ public class UserMatchActivity extends AppCompatActivity implements AdapterClick
             @Override
             public void onDataArrived(Boolean value) {
                 if (appManager.getOtherUser() != null) {
-                    Intent otherUser = new Intent(getApplication(), OtherUserActivity.class);
-                    startActivity(otherUser);
+                    CreateActivityUtil.createOtherUserActivity(getUserMatchActivity());
                 }
             }
         });
@@ -88,5 +88,10 @@ public class UserMatchActivity extends AppCompatActivity implements AdapterClick
     private void displayMatchingUsers() {
         adapter.addUserItems(usersInfoList);
 
+    }
+
+    private UserMatchActivity getUserMatchActivity()
+    {
+        return this;
     }
 }

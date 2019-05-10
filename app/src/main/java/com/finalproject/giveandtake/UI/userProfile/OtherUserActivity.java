@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.finalproject.giveandtake.Logic.AppManager;
 import com.finalproject.giveandtake.Logic.Request;
@@ -28,7 +29,7 @@ public class OtherUserActivity extends AppCompatActivity {
 
     private TextView nameText, balanceText, giveText, takeText;
     private TagContainerLayout giveTags, takeTags;
-    private Button btnGiveSession, btnTakeSession;
+    private Button btnGiveSession, btnTakeSession,btnPhoneRequest;
     private AppManager appManager = AppManager.getInstance();
     private User otherUser;
     private ImageView userImage;
@@ -51,6 +52,7 @@ public class OtherUserActivity extends AppCompatActivity {
 
         btnGiveSession = (Button) this.findViewById(R.id.btn_give_session);
         btnTakeSession = (Button) this.findViewById(R.id.btn_take_session);
+        btnPhoneRequest = (Button) this.findViewById(R.id.phoneRequestButton);
 
         otherUser = appManager.getOtherUser();
         if (otherUser != null) {
@@ -68,9 +70,15 @@ public class OtherUserActivity extends AppCompatActivity {
                 ArrayList<String> aTakeStringTags = otherUser.getMyTakeRequest().getKeyWords();
                 displayTags(aTakeStringTags, takeTags);
             }
-
-
         }
+
+        btnPhoneRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                appManager.setNewPhonePermission(appManager.getCurrentUser(),otherUser);
+                GeneralUtil.addToast("הבקשה נשלחה", Toast.LENGTH_SHORT,getOtherUserActivity());
+            }
+        });
 
         btnGiveSession.setOnClickListener(new View.OnClickListener() {
             @Override

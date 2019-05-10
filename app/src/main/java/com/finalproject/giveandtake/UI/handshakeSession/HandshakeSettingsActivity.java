@@ -56,9 +56,6 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if (!descriptionText.getText().toString().isEmpty()) {
                 final String description = descriptionText.getText().toString();
-                    appManager.refreshTimestampDelta(new AppManager.AppManagerCallback<Boolean>() {
-                        @Override
-                        public void onDataArrived(Boolean value) {
                             //user gives to other user
                             if (getType().equals(Request.RequestType.GIVE.toString())) {
                                 appManager.setSelectedSession(new Session(Session.Status.pending, appManager.getOtherUser().getMyTakeRequest(),
@@ -72,8 +69,6 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
                             //send start request to other user
                             appManager.saveSession();
                             changeTextColorToGreen(step1);
-                        }
-                    });
 
 
                     //step2: wait for accept from other user

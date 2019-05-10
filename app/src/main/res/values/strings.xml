@@ -105,6 +105,7 @@
     <string name="incoming_session_request_description_headline">תיאור ההחלפה:</string>
     <string name="incoming_session_request_time_headline">זמן ההחלפה בדקות:</string>
     <string name="incoming_session_request_headline">בקשת החלפה</string>
+    <string name="phone_request_headline">בקשת טלפון</string>
 
 
 </resources>
