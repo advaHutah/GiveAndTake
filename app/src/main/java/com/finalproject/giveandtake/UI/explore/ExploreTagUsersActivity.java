@@ -1,6 +1,7 @@
 package com.finalproject.giveandtake.UI.explore;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -12,7 +13,7 @@ import com.finalproject.giveandtake.R;
 import com.finalproject.giveandtake.UI.mainScreen.AdapterClickListener;
 import com.finalproject.giveandtake.UI.userMatch.UserListAdapter;
 import com.finalproject.giveandtake.UI.userProfile.OtherUserActivity;
-import com.finalproject.giveandtake.util.MyConstants;
+import com.finalproject.giveandtake.Util.MyConstants;
 
 import java.util.ArrayList;
 
@@ -32,6 +33,8 @@ public class ExploreTagUsersActivity extends AppCompatActivity implements Adapte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_match_acivity);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         appManager = AppManager.getInstance();
 
         initList();

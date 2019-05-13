@@ -1,4 +1,4 @@
-package com.finalproject.giveandtake.util;
+package com.finalproject.giveandtake.Util;
 
 import android.content.Context;
 import android.content.Intent;
@@ -24,21 +24,21 @@ public class CreateActivityUtil {
 
     public static void createUserProfileActivity(Context context, User currentUser) {
         Intent intent = new Intent(context, UserProfileActivity.class);
-        intent.putExtra(com.finalproject.giveandtake.util.MyConstants.UID, currentUser != null ? currentUser.getId() : null);
+        intent.putExtra(com.finalproject.giveandtake.Util.MyConstants.UID, currentUser != null ? currentUser.getId() : null);
         context.startActivity(intent);
     }
 
     public static void createHandshakeProcessActivity(Context context, boolean startSession,boolean sessionRestored) {
         Intent intent = new Intent(context, HandshakeProcessActivity.class);
-        intent.putExtra(com.finalproject.giveandtake.util.MyConstants.START_SESSION, startSession);
-        intent.putExtra(com.finalproject.giveandtake.util.MyConstants.SESSION_RESTORED,sessionRestored);
+        intent.putExtra(com.finalproject.giveandtake.Util.MyConstants.START_SESSION, startSession);
+        intent.putExtra(com.finalproject.giveandtake.Util.MyConstants.SESSION_RESTORED,sessionRestored);
 
         context.startActivity(intent);
     }
 
     public static void createHandshakeSettingsActivity(Context context, String type) {
         Intent intent = new Intent(context, HandshakeSettingsActivity.class);
-        intent.putExtra(com.finalproject.giveandtake.util.MyConstants.REQUEST_TYPE, type);
+        intent.putExtra(com.finalproject.giveandtake.Util.MyConstants.REQUEST_TYPE, type);
         context.startActivity(intent);
     }
 

@@ -1,10 +1,9 @@
 package com.finalproject.giveandtake.UI.handshakeSession;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -16,10 +15,9 @@ import android.widget.Toast;
 
 import com.finalproject.giveandtake.Logic.AppManager;
 import com.finalproject.giveandtake.R;
-import com.finalproject.giveandtake.UI.mainScreen.MainScreenActivity;
-import com.finalproject.giveandtake.util.CreateActivityUtil;
-import com.finalproject.giveandtake.util.GeneralUtil;
-import com.finalproject.giveandtake.util.TimeConvertUtil;
+import com.finalproject.giveandtake.Util.CreateActivityUtil;
+import com.finalproject.giveandtake.Util.GeneralUtil;
+import com.finalproject.giveandtake.Util.TimeConvertUtil;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,6 +31,7 @@ public class HandshakeSummaryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_handshake_summary);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         appManager = AppManager.getInstance();
 

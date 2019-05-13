@@ -1,6 +1,7 @@
 package com.finalproject.giveandtake.UI.mainScreen;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,9 +12,9 @@ import com.finalproject.giveandtake.Logic.AppManager;
 import com.finalproject.giveandtake.Logic.Session;
 import com.finalproject.giveandtake.R;
 import com.finalproject.giveandtake.UI.userHashtags.MyGiveOrTakeRequestActivity;
-import com.finalproject.giveandtake.util.CreateActivityUtil;
-import com.finalproject.giveandtake.util.MyConstants;
-import com.finalproject.giveandtake.util.TimeConvertUtil;
+import com.finalproject.giveandtake.Util.CreateActivityUtil;
+import com.finalproject.giveandtake.Util.MyConstants;
+import com.finalproject.giveandtake.Util.TimeConvertUtil;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.fragment.app.FragmentActivity;
@@ -35,6 +36,7 @@ public class MainScreenActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         appManager = AppManager.getInstance();
 
@@ -101,7 +103,7 @@ public class MainScreenActivity extends FragmentActivity {
             @Override
             public void onDataArrived(Session value) {
                 if(appManager.getSelectedSession()==null) {
-                    appManager.setSelectedSession(value);
+                    appManager.setSelectedSessionRestored(value);
                     if(value.getStatus() == Session.Status.pending){
                         CreateActivityUtil.createIncomingSessionRequestActivity(getMainScreenActivity());
                     }
@@ -116,7 +118,7 @@ public class MainScreenActivity extends FragmentActivity {
             @Override
             public void onDataArrived(Session value) {
                 if(appManager.getSelectedSession()==null) {
-                    appManager.setSelectedSession(value);
+                    appManager.setSelectedSessionRestored(value);
                     if(value.getStatus() == Session.Status.pending){
                         CreateActivityUtil.createIncomingSessionRequestActivity(getMainScreenActivity());
                     }

@@ -1,4 +1,4 @@
-package com.finalproject.giveandtake.util;
+package com.finalproject.giveandtake.Util;
 
 import android.content.Context;
 import android.graphics.Bitmap;

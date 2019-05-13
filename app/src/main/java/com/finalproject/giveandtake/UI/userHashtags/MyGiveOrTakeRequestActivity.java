@@ -2,6 +2,7 @@ package com.finalproject.giveandtake.UI.userHashtags;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -15,7 +16,8 @@ import android.widget.Toast;
 import com.finalproject.giveandtake.Logic.AppManager;
 import com.finalproject.giveandtake.Logic.Request;
 import com.finalproject.giveandtake.R;
-import com.finalproject.giveandtake.util.MyConstants;
+import com.finalproject.giveandtake.Util.GeneralUtil;
+import com.finalproject.giveandtake.Util.MyConstants;
 import com.spark.submitbutton.SubmitButton;
 
 import java.util.ArrayList;
@@ -49,6 +51,7 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_give_or_take_request);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         Intent intent = getIntent();
         boolean isTakeRequest = intent.getBooleanExtra(MyConstants.IS_TAKE_REQUEST, true);
@@ -87,6 +90,7 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
             public void onClick(View view) {
                 text = inputText.getText().toString().trim();
                 if (!text.isEmpty()) {
+                    stopWords.clear();
                     appManager.addRequestNotFinal(text, requestType);
                     progressBar.setActivated(true);
                     progressBar.setVisibility(View.VISIBLE);
@@ -100,7 +104,7 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
                 if (!text.isEmpty() && !tagsToDisplay.isEmpty()) {
                     appManager.setFinalRequest(keyWords,stopWords, requestType);
                     //notify the user that the request has been submitted or change the view
-                    addToast(getString(R.string.GiveOrTakeReq_successMsg), Toast.LENGTH_SHORT);
+                    GeneralUtil.addToast(getString(R.string.GiveOrTakeReq_successMsg), Toast.LENGTH_SHORT,getMyGiveOrTakeRequestActivity());
                 }
             }
         });
@@ -140,10 +144,6 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
         });
     }
 
-    public void addToast(String text, int duration) {
-        Toast toast = Toast.makeText(this, text, duration);
-        toast.show();
-    }
 
     private void getKeyWords() {
 
@@ -155,7 +155,6 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
                     showTags(tagsToDisplay);
                     setButtonVisibility(saveBtn, View.VISIBLE);
                 } else {
-                    addToast(getString(R.string.GiveOrTakeReq_noTagsMsg), Toast.LENGTH_SHORT);
                     setButtonVisibility(saveBtn, View.GONE);
                 }
 
@@ -228,6 +227,10 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
                 tagGroup.getTagView(position).setTagBackgroundColor(Color.RED);
             }
         });
+    }
+
+    private MyGiveOrTakeRequestActivity getMyGiveOrTakeRequestActivity() {
+        return this;
     }
 
 }

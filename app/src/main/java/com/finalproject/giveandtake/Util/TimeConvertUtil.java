@@ -1,4 +1,4 @@
-package com.finalproject.giveandtake.util;
+package com.finalproject.giveandtake.Util;
 
 /**
  * Created by win10 on 1/1/2019.

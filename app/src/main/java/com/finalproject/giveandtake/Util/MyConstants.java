@@ -1,4 +1,4 @@
-package com.finalproject.giveandtake.util;
+package com.finalproject.giveandtake.Util;
 
 
 public class MyConstants

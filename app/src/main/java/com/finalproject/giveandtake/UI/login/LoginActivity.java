@@ -2,6 +2,7 @@ package com.finalproject.giveandtake.UI.login;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -12,7 +13,7 @@ import android.widget.Toast;
 import com.finalproject.giveandtake.Logic.AppManager;
 import com.finalproject.giveandtake.R;
 import com.finalproject.giveandtake.UI.mainScreen.MainScreenActivity;
-import com.finalproject.giveandtake.util.MyConstants;
+import com.finalproject.giveandtake.Util.MyConstants;
 import com.github.loadingview.LoadingDialog;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -55,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         appManager = AppManager.getInstance();
         sharedPreferences = getSharedPreferences("com.example.giveandtake", MODE_PRIVATE);

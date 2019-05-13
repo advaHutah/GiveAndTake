@@ -1,9 +1,8 @@
 package com.finalproject.giveandtake.UI.handshakeSession;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
@@ -13,10 +12,10 @@ import android.widget.Toast;
 import com.finalproject.giveandtake.Logic.AppManager;
 import com.finalproject.giveandtake.Logic.Session;
 import com.finalproject.giveandtake.R;
-import com.finalproject.giveandtake.util.CreateActivityUtil;
-import com.finalproject.giveandtake.util.GeneralUtil;
-import com.finalproject.giveandtake.util.MyConstants;
-import com.finalproject.giveandtake.util.TimeConvertUtil;
+import com.finalproject.giveandtake.Util.CreateActivityUtil;
+import com.finalproject.giveandtake.Util.GeneralUtil;
+import com.finalproject.giveandtake.Util.MyConstants;
+import com.finalproject.giveandtake.Util.TimeConvertUtil;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,12 +34,11 @@ public class HandshakeProcessActivity extends AppCompatActivity {
     private boolean sessionRestored;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_handshake_process);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         timerValue = (TextView)findViewById(R.id.timerValue);
         balanceValue = (TextView) findViewById(R.id.balanceValue);
@@ -92,29 +90,34 @@ public class HandshakeProcessActivity extends AppCompatActivity {
         appManager.sessionStatusChanged(new AppManager.AppManagerCallback<Session.Status>() {
             @Override
             public void onDataArrived(Session.Status value) {
-                if (value == Session.Status.active && !sessionRestored) {
-                    addToast("ההחלפה התתחילה", Toast.LENGTH_SHORT);
-                    appManager.refreshTimestampDelta(new AppManager.AppManagerCallback<Boolean>() {
-                        @Override
-                        public void onDataArrived(Boolean value) {
-                            appManager.getSelectedSession().setStartTimeStamp(GeneralUtil.now());
-                            startTimer();
-                        }
-                    });
+                if (appManager.getSelectedSession() != null) {
+                    if (value == Session.Status.active && !sessionRestored) {
+                        GeneralUtil.addToast("ההחלפה התתחילה", Toast.LENGTH_SHORT, getHandshakeProcessActivity());
 
-                }
-                else if(value == Session.Status.terminated) {
-                    timer.cancel();
-                    appManager.updateMyBalance();
-                    appManager.refreshTimestampDelta(new AppManager.AppManagerCallback<Boolean>() {
-                        @Override
-                        public void onDataArrived(Boolean value) {
-                            appManager.getSelectedSession().setEndTimeStamp(GeneralUtil.now());
-                            addToast("ההחלפה הסתיימה", Toast.LENGTH_SHORT);
-                            CreateActivityUtil.createHandshakeSummaryActivity(getHandshakeProcessActivity());
-                        }
-                    });
+                        appManager.refreshTimestampDelta(new AppManager.AppManagerCallback<Boolean>() {
+                            @Override
+                            public void onDataArrived(Boolean value) {
+                                appManager.getSelectedSession().setStartTimeStamp(GeneralUtil.now());
+                                startTimer();
+                            }
+                        });
 
+                    } else if (value == Session.Status.terminated) {
+                        if(!sessionRestored) {
+                            timer.cancel();
+                        }
+                            appManager.updateMyBalance();
+                            appManager.refreshTimestampDelta(new AppManager.AppManagerCallback<Boolean>() {
+                                @Override
+                                public void onDataArrived(Boolean value) {
+                                    appManager.getSelectedSession().setEndTimeStamp(GeneralUtil.now());
+                                    GeneralUtil.addToast("ההחלפה הסתיימה", Toast.LENGTH_SHORT, getHandshakeProcessActivity());
+                                    CreateActivityUtil.createHandshakeSummaryActivity(getHandshakeProcessActivity());
+                                }
+                            });
+
+
+                    }
                 }
             }
         });
@@ -133,9 +136,7 @@ public class HandshakeProcessActivity extends AppCompatActivity {
             public void onClick(View view) {
                 stopTimer();
                 appManager.finishSession();
-                addToast("The session  was terminated", Toast.LENGTH_SHORT);
-                CreateActivityUtil.createHandshakeSummaryActivity(getHandshakeProcessActivity());
-
+                GeneralUtil.addToast("ההחלפה הסתיימה",Toast.LENGTH_SHORT,getHandshakeProcessActivity());
             }
         });
     }
@@ -200,14 +201,10 @@ public class HandshakeProcessActivity extends AppCompatActivity {
         super.onPause();
     }
 
-    public void addToast(String text, int duration) {
-        Toast toast = Toast.makeText(this, text, duration);
-        toast.show();
-    }
 
     @Override
     public void onBackPressed() {
-        addToast("לא ניתן לחזור אחורה בעת החלפה",Toast.LENGTH_SHORT);
+        GeneralUtil.addToast("לא ניתן לחזור אחורה בעת החלפה",Toast.LENGTH_SHORT,getHandshakeProcessActivity());
     }
 
     private Activity getHandshakeProcessActivity(){

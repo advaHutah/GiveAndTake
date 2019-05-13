@@ -9,11 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.finalproject.giveandtake.Logic.Session;
-import com.finalproject.giveandtake.Logic.TagUserInfo;
 import com.finalproject.giveandtake.R;
-import com.finalproject.giveandtake.UI.mainScreen.AdapterClickListener;
-import com.finalproject.giveandtake.util.TimeConvertUtil;
-import com.squareup.okhttp.internal.Util;
+import com.finalproject.giveandtake.Util.TimeConvertUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +62,6 @@ class SessionsListAdapter extends RecyclerView.Adapter<SessionsListAdapter.ItemV
     @Override
     public void onBindViewHolder(ItemViewHolder holder, int position) {
         if (getItemCount() > 0) {
-            //todo fix image
             holder.image.setImageResource(R.drawable.default_user);
             if(isTake) {
                 holder.cardItem.setCardBackgroundColor(Color.RED);

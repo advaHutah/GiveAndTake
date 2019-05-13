@@ -1,5 +1,6 @@
 package com.finalproject.giveandtake.UI.sessionsHistory;
 
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 
 import com.finalproject.giveandtake.Logic.AppManager;
@@ -12,8 +13,6 @@ import androidx.viewpager.widget.ViewPager;
 
 public class SessionsHistoryActivty extends FragmentActivity {
 
-    private AppManager appManager;
-
     private TabAdapter adapter;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -22,8 +21,8 @@ public class SessionsHistoryActivty extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sessions_history_activty);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        appManager = AppManager.getInstance();
 
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
@@ -32,14 +31,6 @@ public class SessionsHistoryActivty extends FragmentActivity {
         adapter.addFragment(HistoryFragment.newInstance(false), "נתת");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
-    }
-
-
-
-
-
-    private SessionsHistoryActivty getMainScreenActivity() {
-        return this;
     }
 
 }

@@ -1,8 +1,6 @@
 package com.finalproject.giveandtake.Logic;
 
 
-import com.finalproject.giveandtake.util.GeneralUtil;
-
 //when there is match between take request and give request
 public class Session {
 

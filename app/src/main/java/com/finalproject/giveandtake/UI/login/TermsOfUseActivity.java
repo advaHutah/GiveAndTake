@@ -1,6 +1,7 @@
 package com.finalproject.giveandtake.UI.login;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,7 @@ public class TermsOfUseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terms_of_use);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         btnClose = (Button) findViewById(R.id.btn_close_screen);
         btnClose.setOnClickListener(new View.OnClickListener() {

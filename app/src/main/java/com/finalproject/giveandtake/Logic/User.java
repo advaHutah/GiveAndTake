@@ -12,11 +12,6 @@ public class User implements Serializable {
 
     final static long INIT_BALANCE = TimeUnit.HOURS.toMillis(2);
 
-    public enum Gender {
-        MALE,
-        FEMALE
-    }
-
     private String id;
     private String email;
     private String fullName;
@@ -28,8 +23,8 @@ public class User implements Serializable {
 
     private Request myTakeRequest;
     private Request myGiveRequest;
+    private Map<String,String> phonePermissions;
 
-    private FirebaseManager userService = FirebaseManager.getInstance();
 
     public User() {
     }
@@ -47,16 +42,17 @@ public class User implements Serializable {
         myGiveRequest = new Request();
     }
 
-    public User(String id, String email, String fullName, String phoneNumber, long balance,String photoUrl,float rating,Map<String,Float> usersRatings) {
+    public User(String id, String email, String fullName, String phoneNumber, long balance,String photoUrl,float rating,Map<String,Float> usersRatings,Map<String,String> phonePermissions) {
         this(id, email, fullName, phoneNumber,photoUrl);
         this.balance = balance;
         this.rating = rating;
         this.usersRatings = usersRatings;
+        this.phonePermissions = phonePermissions;
 
     }
 
-    public User(String id, String email, String fullName, String phoneNumber, long balance, Request myTakeRequest, Request myGiveRequest ,String photoUrl,float rating,Map<String,Float> usersRatings) {
-        this(id, email, fullName, phoneNumber,balance,photoUrl,rating,usersRatings);
+    public User(String id, String email, String fullName, String phoneNumber, long balance, Request myTakeRequest, Request myGiveRequest ,String photoUrl,float rating,Map<String,Float> usersRatings,Map<String,String> phonePermissions) {
+        this(id, email, fullName, phoneNumber,balance,photoUrl,rating,usersRatings,phonePermissions);
         this.myTakeRequest = myTakeRequest;
         this.myGiveRequest = myGiveRequest;
     }
@@ -119,6 +115,14 @@ public class User implements Serializable {
 
     public void setUsersRatings(Map<String, Float> usersRatings) {
         this.usersRatings = usersRatings;
+    }
+
+    public void setPhonePermissions(Map<String, String> phonePermissions) {
+        this.phonePermissions = phonePermissions;
+    }
+
+    public Map<String, String> getPhonePermissions() {
+        return phonePermissions;
     }
 
     @Override

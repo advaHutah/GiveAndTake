@@ -1,11 +1,10 @@
 package com.finalproject.giveandtake.UI.handshakeSession;
 
 import android.app.Activity;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,14 +12,11 @@ import com.finalproject.giveandtake.Logic.AppManager;
 import com.finalproject.giveandtake.Logic.Session;
 import com.finalproject.giveandtake.Logic.User;
 import com.finalproject.giveandtake.R;
-import com.finalproject.giveandtake.util.CreateActivityUtil;
-import com.finalproject.giveandtake.util.GeneralUtil;
-import com.finalproject.giveandtake.util.TimeConvertUtil;
-
-import java.util.ArrayList;
+import com.finalproject.giveandtake.Util.CreateActivityUtil;
+import com.finalproject.giveandtake.Util.GeneralUtil;
+import com.finalproject.giveandtake.Util.TimeConvertUtil;
 
 import androidx.appcompat.app.AppCompatActivity;
-import co.lujun.androidtagview.TagContainerLayout;
 
 public class IncomingSessionRequestActivity extends AppCompatActivity {
 
@@ -35,6 +31,8 @@ public class IncomingSessionRequestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_incoming_session_request);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         //user got a session request
         descriptionText = (TextView) this.findViewById(R.id.incoming_session_request_description);
         userImage = (ImageView) this.findViewById(R.id.incoming_session_request_image);

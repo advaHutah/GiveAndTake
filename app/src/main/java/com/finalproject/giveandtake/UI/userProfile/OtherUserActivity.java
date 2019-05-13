@@ -2,6 +2,7 @@ package com.finalproject.giveandtake.UI.userProfile;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -16,9 +17,9 @@ import com.finalproject.giveandtake.Logic.AppManager;
 import com.finalproject.giveandtake.Logic.Request;
 import com.finalproject.giveandtake.Logic.User;
 import com.finalproject.giveandtake.R;
-import com.finalproject.giveandtake.util.CreateActivityUtil;
-import com.finalproject.giveandtake.util.GeneralUtil;
-import com.finalproject.giveandtake.util.TimeConvertUtil;
+import com.finalproject.giveandtake.Util.CreateActivityUtil;
+import com.finalproject.giveandtake.Util.GeneralUtil;
+import com.finalproject.giveandtake.Util.TimeConvertUtil;
 
 import java.util.ArrayList;
 
@@ -40,6 +41,7 @@ public class OtherUserActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_other_user);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         nameText = (TextView) this.findViewById(R.id.otherUser_name);
         balanceText = (TextView) this.findViewById(R.id.otherUser_balance);
@@ -70,15 +72,9 @@ public class OtherUserActivity extends AppCompatActivity {
                 ArrayList<String> aTakeStringTags = otherUser.getMyTakeRequest().getKeyWords();
                 displayTags(aTakeStringTags, takeTags);
             }
-        }
 
-        btnPhoneRequest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                appManager.setNewPhonePermission(appManager.getCurrentUser(),otherUser);
-                GeneralUtil.addToast("הבקשה נשלחה", Toast.LENGTH_SHORT,getOtherUserActivity());
-            }
-        });
+            setPhoneButtonMode();
+        }
 
         btnGiveSession.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,6 +100,49 @@ public class OtherUserActivity extends AppCompatActivity {
             btnGiveSession.setVisibility(View.INVISIBLE);
             btnTakeSession.setVisibility(View.INVISIBLE);
 
+        }
+    }
+
+    private void setPhoneButtonMode() {
+        if(otherUser.getPhonePermissions()!=null) {
+            if (otherUser.getPhonePermissions().containsKey(appManager.getCurrentUser().getId())) {
+                String status = otherUser.getPhonePermissions().get(appManager.getCurrentUser().getId());
+                if (status.equalsIgnoreCase("PENDING")) {
+                    btnPhoneRequest.setText("בקשה ממתינה");
+                    btnPhoneRequest.setClickable(false);
+                }
+
+                if (status.equalsIgnoreCase("ACCEPT")) {
+                    if (otherUser.getPhoneNumber() != null) {
+                        btnPhoneRequest.setText(otherUser.getPhoneNumber());
+                        btnPhoneRequest.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                callOtherUser(otherUser.getPhoneNumber());
+                            }
+                        });
+                    } else {
+                        btnPhoneRequest.setText("המשתמש לא הזין מספר");
+                    }
+                }
+
+                if (status.equalsIgnoreCase("REJECT")) {
+                    btnPhoneRequest.setText("הבקשה נדחתה");
+                }
+
+            }
+        }
+        else {
+            btnPhoneRequest.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    appManager.setNewPhonePermission(appManager.getCurrentUser(),otherUser);
+                    GeneralUtil.addToast("הבקשה נשלחה", Toast.LENGTH_SHORT,getOtherUserActivity());
+                    btnPhoneRequest.setText("בקשה ממתינה");
+                    btnPhoneRequest.setClickable(false);
+
+                }
+            });
         }
     }
 

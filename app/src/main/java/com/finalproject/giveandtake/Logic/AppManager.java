@@ -1,16 +1,14 @@
 package com.finalproject.giveandtake.Logic;
 
 import com.finalproject.giveandtake.DBLogic.FirebaseManager;
-import com.finalproject.giveandtake.Logic.User;
 import com.finalproject.giveandtake.DBLogic.GiveAndTakeMessagingService;
-import com.finalproject.giveandtake.util.GeneralUtil;
-import com.finalproject.giveandtake.util.MyConstants;
+import com.finalproject.giveandtake.Util.GeneralUtil;
+import com.finalproject.giveandtake.Util.MyConstants;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import androidx.annotation.Nullable;
 
@@ -216,7 +214,43 @@ public class AppManager {
         }
     }
 
-    public void setSelectedSession(Session selectedSession) {
+        public void setSelectedSession(Session selectedSession) {
+        if (selectedSession.getInitiator().equals(Session.SessionInitiator.GIVER)) {
+            firebaseManager.getUserDetailFromDB(selectedSession.getGiveRequest().getUid(), new FirebaseManager.FirebaseCallback<com.finalproject.giveandtake.Logic.User>() {
+                @Override
+                public void onDataArrived(com.finalproject.giveandtake.Logic.User value) {
+                    otherUser = value;
+                }
+            });
+
+        } else {
+            firebaseManager.getUserDetailFromDB(selectedSession.getTakeRequest().getUid(), new FirebaseManager.FirebaseCallback<com.finalproject.giveandtake.Logic.User>() {
+                @Override
+                public void onDataArrived(com.finalproject.giveandtake.Logic.User value) {
+                    otherUser = value;
+                }
+            });
+        }
+        this.selectedSession = selectedSession;
+    }
+
+    public void setSelectedSessionRestored(Session selectedSession) {
+        if (selectedSession.getInitiator().equals(Session.SessionInitiator.GIVER)) {
+            firebaseManager.getUserDetailFromDB(selectedSession.getTakeRequest().getUid(), new FirebaseManager.FirebaseCallback<com.finalproject.giveandtake.Logic.User>() {
+                @Override
+                public void onDataArrived(com.finalproject.giveandtake.Logic.User value) {
+                    otherUser = value;
+                }
+            });
+
+        } else {
+            firebaseManager.getUserDetailFromDB(selectedSession.getGiveRequest().getUid(), new FirebaseManager.FirebaseCallback<com.finalproject.giveandtake.Logic.User>() {
+                @Override
+                public void onDataArrived(com.finalproject.giveandtake.Logic.User value) {
+                    otherUser = value;
+                }
+            });
+        }
         this.selectedSession = selectedSession;
     }
 

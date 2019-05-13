@@ -1,15 +1,13 @@
 package com.finalproject.giveandtake.DBLogic;
 
-import android.mtp.MtpConstants;
 import android.util.Log;
 
-import com.finalproject.giveandtake.Logic.LoginManager;
 import com.finalproject.giveandtake.Logic.Request;
 import com.finalproject.giveandtake.Logic.Session;
 import com.finalproject.giveandtake.Logic.TagUserInfo;
 import com.finalproject.giveandtake.Logic.User;
-import com.finalproject.giveandtake.util.GeneralUtil;
-import com.finalproject.giveandtake.util.MyConstants;
+import com.finalproject.giveandtake.Util.GeneralUtil;
+import com.finalproject.giveandtake.Util.MyConstants;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -18,7 +16,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.okhttp.internal.Util;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -388,12 +385,12 @@ public class FirebaseManager {
 
     public void setNewPhonePermission(String currentUid, String otherUserUid, MyConstants.PhonePermissionStatus status) {
         //only in case of status pending - insert other user permission array with current user id
-        db.child(Keys.USERS).child(otherUserUid).child(Keys.PHONE_PERMISSION).child(currentUid).child(Keys.PHONE_REQUEST_STATUS).setValue(status);
+        db.child(Keys.USERS).child(otherUserUid).child(Keys.PHONE_PERMISSION).child(currentUid).setValue(status);
     }
 
     public void updatePhonePermissionStatus(String currentUserId, String otherUserId, MyConstants.PhonePermissionStatus status) {
         //only in case of cancel or accept - update other user status in current user permission array
-        db.child(Keys.USERS).child(currentUserId).child(Keys.PHONE_PERMISSION).child(otherUserId).child(Keys.PHONE_REQUEST_STATUS).setValue(status);
+        db.child(Keys.USERS).child(currentUserId).child(Keys.PHONE_PERMISSION).child(otherUserId).setValue(status);
 
     }
 

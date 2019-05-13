@@ -1,7 +1,7 @@
 package com.finalproject.giveandtake.UI.handshakeSession;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -14,11 +14,11 @@ import com.finalproject.giveandtake.Logic.AppManager;
 import com.finalproject.giveandtake.Logic.Request;
 import com.finalproject.giveandtake.Logic.Session;
 import com.finalproject.giveandtake.R;
-import com.finalproject.giveandtake.util.CreateActivityUtil;
-import com.finalproject.giveandtake.util.MyConstants;
+import com.finalproject.giveandtake.Util.CreateActivityUtil;
+import com.finalproject.giveandtake.Util.GeneralUtil;
+import com.finalproject.giveandtake.Util.MyConstants;
 
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,6 +36,7 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_handshake_settings);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         appManager = AppManager.getInstance();
 
@@ -77,18 +78,18 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
                         public void onDataArrived(Session.Status value) {
                             if (value == Session.Status.accepted) {
                                 changeTextColorToGreen(step2);
-                                addToast("בקשת ההחלפה אושרה", Toast.LENGTH_SHORT, getHandshakeSettingActivity());
+                                GeneralUtil.addToast("בקשת ההחלפה אושרה",Toast.LENGTH_SHORT, getHandshakeSettingActivity());
                                 // step3: enable start service button
                                 enableButton(btnStartProcess);
                             } else if (value == Session.Status.rejected) {
-                                addToast("בקשת ההחלפה נדחתה", Toast.LENGTH_SHORT, getHandshakeSettingActivity());
+                                GeneralUtil.addToast("בקשת ההחלפה נדחתה", Toast.LENGTH_SHORT, getHandshakeSettingActivity());
 
                             }
                         }
                     });
                 }else
                 {
-                    addToast("יש להכניס תיאור וזמן", Toast.LENGTH_SHORT, getHandshakeSettingActivity());
+                    GeneralUtil.addToast("יש להכניס תיאור וזמן", Toast.LENGTH_SHORT, getHandshakeSettingActivity());
 
                 }
 
@@ -114,11 +115,7 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
         theButton.setEnabled(true);
     }
 
-    public void addToast(String text, int duration, Activity activity) {
-        Context context = activity.getApplicationContext();
-        Toast toast = Toast.makeText(context, text, duration);
-        toast.show();
-    }
+
 
     public Activity getHandshakeSettingActivity() {
         return this;

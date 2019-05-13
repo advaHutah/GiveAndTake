@@ -12,7 +12,7 @@ import com.finalproject.giveandtake.Logic.AppManager;
 import com.finalproject.giveandtake.Logic.Request;
 import com.finalproject.giveandtake.R;
 import com.finalproject.giveandtake.UI.userMatch.UserMatchActivity;
-import com.finalproject.giveandtake.util.MyConstants;
+import com.finalproject.giveandtake.Util.MyConstants;
 
 import java.util.ArrayList;
 import java.util.List;

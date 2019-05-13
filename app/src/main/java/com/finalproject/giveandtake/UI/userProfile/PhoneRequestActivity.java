@@ -4,16 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.QuickContactBadge;
 import android.widget.TextView;
 
 import com.finalproject.giveandtake.Logic.AppManager;
 import com.finalproject.giveandtake.R;
-import com.finalproject.giveandtake.util.CreateActivityUtil;
-import com.finalproject.giveandtake.util.MyConstants;
+import com.finalproject.giveandtake.Util.CreateActivityUtil;
+import com.finalproject.giveandtake.Util.MyConstants;
 
 public class PhoneRequestActivity extends AppCompatActivity {
 
@@ -26,6 +26,8 @@ public class PhoneRequestActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_phone_request);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         appManager = AppManager.getInstance();
         btnViewUserProfile = (Button) findViewById(R.id.btn_phone_request_view_profile);
         description = (TextView) findViewById(R.id.phone_request_description);
@@ -45,7 +47,7 @@ public class PhoneRequestActivity extends AppCompatActivity {
         btnViewUserProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CreateActivityUtil.createOtherUserActivity(getApplicationContext());
+                CreateActivityUtil.createOtherUserActivity(getPhoneRequestActivity());
             }
         });
 
