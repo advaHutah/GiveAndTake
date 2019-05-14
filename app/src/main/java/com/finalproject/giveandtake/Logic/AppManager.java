@@ -313,7 +313,7 @@ public class AppManager {
     public void userLogedIn(FirebaseUser account, final AppManager.AppManagerCallback<Boolean> callback) {
         final FirebaseUser theAccount = account;
         //get user info from db - if exist get info else create new user
-        firebaseManager.getUserDetailFromDB(account.getUid(), new FirebaseManager.FirebaseCallback<com.finalproject.giveandtake.Logic.User>() {
+        firebaseManager.getUserDetailFromDB(account.getUid(), new FirebaseManager.FirebaseCallback<User>() {
             @Override
             public void onDataArrived(com.finalproject.giveandtake.Logic.User value) {
                 if (value != null)

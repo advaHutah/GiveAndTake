@@ -113,12 +113,12 @@ public class FirebaseManager {
         if (newRequest.getRequestType() == Request.RequestType.GIVE) {
             db.child(Keys.GIVE_REQUEST).child(newRequest.getUid()).setValue(newRequest);
             if(!uid.isEmpty())
-                db.child(Keys.USERS).child(uid).child(Keys.GIVE_REQUEST).setValue(newRequest);
+                db.child(Keys.USERS).child(uid).child(Keys.MY_GIVE_REQUEST).setValue(newRequest);
 
         } else {
             db.child(Keys.TAKE_REQUEST).child(newRequest.getUid()).setValue(newRequest);
             if(!uid.isEmpty())
-            db.child(Keys.USERS).child(uid).child(Keys.TAKE_REQUEST).setValue(newRequest);
+                db.child(Keys.USERS).child(uid).child(Keys.MY_TAKE_REQUEST).setValue(newRequest);
         }
     }
 
@@ -414,6 +414,8 @@ public class FirebaseManager {
         public static final String TAGS = "suggestedTags";
         public static final String GIVE_REQUEST = "giveRequest";
         public static final String TAKE_REQUEST = "takeRequest";
+        public static final String MY_GIVE_REQUEST = "myGiveRequest";
+        public static final String MY_TAKE_REQUEST = "myTakeRequest";
         public static final String NOTIFICATIONS = "notifications";
         public static final String USERS_TOKENS = "usersTokens";
         public static final String FSM_TOKEN = "fcmToken";
@@ -433,8 +435,6 @@ public class FirebaseManager {
         public static final String KEYWORDS = "keyWords";
         public static final String USERS_RATINGS = "usersRatings";
         public static final String PHONE_PERMISSION = "phonePermissions";
-        public static final String PHONE_REQUEST_STATUS = "status";
     }
-
 
 }
