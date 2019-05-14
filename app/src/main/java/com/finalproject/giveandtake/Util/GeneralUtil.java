@@ -1,10 +1,13 @@
 package com.finalproject.giveandtake.Util;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -27,6 +30,17 @@ public class GeneralUtil {
     public static void addToast(String text, int duration, Context context) {
         Toast toast = Toast.makeText(context, text, duration);
         toast.show();
+    }
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
     public static void setUserImage(String imageUrl, ImageView imageView) {
@@ -64,6 +78,7 @@ public class GeneralUtil {
         protected void onPostExecute(Bitmap result) {
             bmImage.setImageBitmap(result);
         }
+
     }
 }
 

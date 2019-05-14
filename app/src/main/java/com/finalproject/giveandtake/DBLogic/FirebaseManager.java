@@ -109,11 +109,16 @@ public class FirebaseManager {
         });
     }
 
-    public void addRequestToDB(Request newRequest) {
+    public void addRequestToDB(String uid,Request newRequest) {
         if (newRequest.getRequestType() == Request.RequestType.GIVE) {
             db.child(Keys.GIVE_REQUEST).child(newRequest.getUid()).setValue(newRequest);
+            if(!uid.isEmpty())
+                db.child(Keys.USERS).child(uid).child(Keys.GIVE_REQUEST).setValue(newRequest);
+
         } else {
             db.child(Keys.TAKE_REQUEST).child(newRequest.getUid()).setValue(newRequest);
+            if(!uid.isEmpty())
+            db.child(Keys.USERS).child(uid).child(Keys.TAKE_REQUEST).setValue(newRequest);
         }
     }
 

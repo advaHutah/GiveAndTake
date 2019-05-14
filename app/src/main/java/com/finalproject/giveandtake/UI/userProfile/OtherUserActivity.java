@@ -104,46 +104,48 @@ public class OtherUserActivity extends AppCompatActivity {
     }
 
     private void setPhoneButtonMode() {
-        if(otherUser.getPhonePermissions()!=null) {
-            if (otherUser.getPhonePermissions().containsKey(appManager.getCurrentUser().getId())) {
-                String status = otherUser.getPhonePermissions().get(appManager.getCurrentUser().getId());
-                if (status.equalsIgnoreCase("PENDING")) {
-                    btnPhoneRequest.setText("בקשה ממתינה");
-                    btnPhoneRequest.setClickable(false);
-                }
-
-                if (status.equalsIgnoreCase("ACCEPT")) {
-                    if (otherUser.getPhoneNumber() != null) {
-                        btnPhoneRequest.setText(otherUser.getPhoneNumber());
-                        btnPhoneRequest.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                callOtherUser(otherUser.getPhoneNumber());
-                            }
-                        });
-                    } else {
-                        btnPhoneRequest.setText("המשתמש לא הזין מספר");
+        if(appManager.getCurrentUser()!=null) {
+            if (otherUser.getPhonePermissions() != null) {
+                if (otherUser.getPhonePermissions().containsKey(appManager.getCurrentUser().getId())) {
+                    String status = otherUser.getPhonePermissions().get(appManager.getCurrentUser().getId());
+                    if (status.equalsIgnoreCase("PENDING")) {
+                        btnPhoneRequest.setText("בקשה ממתינה");
+                        btnPhoneRequest.setClickable(false);
                     }
-                }
 
-                if (status.equalsIgnoreCase("REJECT")) {
-                    btnPhoneRequest.setText("הבקשה נדחתה");
-                }
+                    if (status.equalsIgnoreCase("ACCEPT")) {
+                        if (otherUser.getPhoneNumber() != null) {
+                            btnPhoneRequest.setText(otherUser.getPhoneNumber());
+                            btnPhoneRequest.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    callOtherUser(otherUser.getPhoneNumber());
+                                }
+                            });
+                        } else {
+                            btnPhoneRequest.setText("המשתמש לא הזין מספר");
+                        }
+                    }
 
+                    if (status.equalsIgnoreCase("REJECT")) {
+                        btnPhoneRequest.setText("הבקשה נדחתה");
+                    }
+
+                }
+            } else {
+                btnPhoneRequest.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        appManager.setNewPhonePermission(appManager.getCurrentUser(), otherUser);
+                        GeneralUtil.addToast("הבקשה נשלחה", Toast.LENGTH_SHORT, getOtherUserActivity());
+                        btnPhoneRequest.setText("בקשה ממתינה");
+                        btnPhoneRequest.setClickable(false);
+
+                    }
+                });
             }
-        }
-        else {
-            btnPhoneRequest.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    appManager.setNewPhonePermission(appManager.getCurrentUser(),otherUser);
-                    GeneralUtil.addToast("הבקשה נשלחה", Toast.LENGTH_SHORT,getOtherUserActivity());
-                    btnPhoneRequest.setText("בקשה ממתינה");
-                    btnPhoneRequest.setClickable(false);
-
-                }
-            });
-        }
+        }else
+            btnPhoneRequest.setVisibility(View.INVISIBLE);
     }
 
 

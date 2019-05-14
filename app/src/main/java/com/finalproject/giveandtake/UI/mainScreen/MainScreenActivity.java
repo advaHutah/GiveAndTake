@@ -99,22 +99,8 @@ public class MainScreenActivity extends FragmentActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
-        appManager.checkForOpenSession(false, new AppManager.AppManagerCallback<Session>() {
-            @Override
-            public void onDataArrived(Session value) {
-                if(appManager.getSelectedSession()==null) {
-                    appManager.setSelectedSessionRestored(value);
-                    if(value.getStatus() == Session.Status.pending){
-                        CreateActivityUtil.createIncomingSessionRequestActivity(getMainScreenActivity());
-                    }
-                    else {
-                        CreateActivityUtil.createHandshakeProcessActivity(getMainScreenActivity(), true, true);
-                    }
-                }
-            }
-        });
 
-        appManager.checkForOpenSession(true, new AppManager.AppManagerCallback<Session>() {
+        appManager.checkForOpenSession( new AppManager.AppManagerCallback<Session>() {
             @Override
             public void onDataArrived(Session value) {
                 if(appManager.getSelectedSession()==null) {

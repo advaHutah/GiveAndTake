@@ -68,6 +68,7 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
                                         , appManager.getOtherUser().getMyGiveRequest(), UUID.randomUUID().toString(), description, Session.SessionInitiator.TAKER));
                             }
                             //send start request to other user
+                            GeneralUtil.hideKeyboard(getHandshakeSettingActivity());
                             appManager.saveSession();
                             changeTextColorToGreen(step1);
 

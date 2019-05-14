@@ -70,13 +70,13 @@ public class AppManager {
         currentUser = user;
     }
 
-    public void addRequestNotFinal(String text, com.finalproject.giveandtake.Logic.Request.RequestType requestType) {
+    public void addRequest(String text, Request.RequestType requestType) {
         //create new request with the relevant type
         Request newRequest = new Request(text, currentUser.getId(), currentUser.getFullName(), requestType);
         // add this request to the user
         this.currentUser.addRequest(newRequest);
         //add the request to firebase
-        this.firebaseManager.addRequestToDB(newRequest);
+        this.firebaseManager.addRequestToDB("",newRequest);
         //cloud function generates tags in DB
     }
 
@@ -96,8 +96,7 @@ public class AppManager {
         myRequest.setStopWords(stopWords);
 
         //update firebase
-        firebaseManager.addRequestToDB(myRequest);
-        firebaseManager.addUserInfoToDB(currentUser);
+        firebaseManager.addRequestToDB(currentUser.getId(),myRequest);
     }
 
     //get the keywords
@@ -286,9 +285,18 @@ public class AppManager {
     }
 
 
-    public void checkForOpenSession(boolean isTake, final AppManagerCallback<Session> callback) {
+    public void checkForOpenSession(final AppManagerCallback<Session> callback) {
         if (currentUser != null) {
-            this.firebaseManager.checkForOpenSession(currentUser.getId(), isTake, new FirebaseManager.FirebaseCallback<Session>() {
+            this.firebaseManager.checkForOpenSession(currentUser.getId(), true, new FirebaseManager.FirebaseCallback<Session>() {
+                @Override
+                public void onDataArrived(Session value) {
+                    callback.onDataArrived(value);
+                }
+            });
+        }
+
+        if (currentUser != null) {
+            this.firebaseManager.checkForOpenSession(currentUser.getId(), false, new FirebaseManager.FirebaseCallback<Session>() {
                 @Override
                 public void onDataArrived(Session value) {
                     callback.onDataArrived(value);

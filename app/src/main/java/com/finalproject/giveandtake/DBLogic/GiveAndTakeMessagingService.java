@@ -151,6 +151,8 @@ public class GiveAndTakeMessagingService extends FirebaseMessagingService {
             NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(this);
             notiBuilder.setSmallIcon(R.drawable.temp_logo);
             notiBuilder.setAutoCancel(true);
+            notiBuilder.setContentTitle(title);
+            notiBuilder.setContentText(messageBody);
             notiBuilder.setSound(defultSoundUri);
             notiBuilder.setContentIntent(pendingIntent);
 

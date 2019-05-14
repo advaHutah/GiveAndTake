@@ -88,10 +88,11 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
         findTextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                GeneralUtil.hideKeyboard(getMyGiveOrTakeRequestActivity());
                 text = inputText.getText().toString().trim();
                 if (!text.isEmpty()) {
                     stopWords.clear();
-                    appManager.addRequestNotFinal(text, requestType);
+                    appManager.addRequest(text, requestType);
                     progressBar.setActivated(true);
                     progressBar.setVisibility(View.VISIBLE);
                     getSuggestedTags();
