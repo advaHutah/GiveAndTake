@@ -92,7 +92,7 @@ public class HandshakeProcessActivity extends AppCompatActivity {
             public void onDataArrived(Session.Status value) {
                 if (appManager.getSelectedSession() != null) {
                     if (value == Session.Status.active && !sessionRestored) {
-                        GeneralUtil.addToast("ההחלפה התתחילה", Toast.LENGTH_SHORT, getHandshakeProcessActivity());
+                        GeneralUtil.addToast(getString(R.string.startSessionMsg), Toast.LENGTH_SHORT, getHandshakeProcessActivity());
 
                         appManager.refreshTimestampDelta(new AppManager.AppManagerCallback<Boolean>() {
                             @Override
@@ -111,7 +111,7 @@ public class HandshakeProcessActivity extends AppCompatActivity {
                                 @Override
                                 public void onDataArrived(Boolean value) {
                                     appManager.getSelectedSession().setEndTimeStamp(GeneralUtil.now());
-                                    GeneralUtil.addToast("ההחלפה הסתיימה", Toast.LENGTH_SHORT, getHandshakeProcessActivity());
+                                    GeneralUtil.addToast(getString(R.string.endSessionMsg), Toast.LENGTH_SHORT, getHandshakeProcessActivity());
                                     CreateActivityUtil.createHandshakeSummaryActivity(getHandshakeProcessActivity());
                                 }
                             });
@@ -136,7 +136,7 @@ public class HandshakeProcessActivity extends AppCompatActivity {
             public void onClick(View view) {
                 stopTimer();
                 appManager.finishSession();
-                GeneralUtil.addToast("ההחלפה הסתיימה",Toast.LENGTH_SHORT,getHandshakeProcessActivity());
+                GeneralUtil.addToast(getString(R.string.endSessionMsg),Toast.LENGTH_SHORT,getHandshakeProcessActivity());
             }
         });
     }
@@ -204,7 +204,7 @@ public class HandshakeProcessActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        GeneralUtil.addToast("לא ניתן לחזור אחורה בעת החלפה",Toast.LENGTH_SHORT,getHandshakeProcessActivity());
+        GeneralUtil.addToast(getString(R.string.goBackErrMsg),Toast.LENGTH_SHORT,getHandshakeProcessActivity());
     }
 
     private Activity getHandshakeProcessActivity(){

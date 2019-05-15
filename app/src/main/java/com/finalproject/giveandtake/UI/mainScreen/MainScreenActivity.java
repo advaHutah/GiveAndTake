@@ -94,8 +94,8 @@ public class MainScreenActivity extends FragmentActivity {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         adapter = new TabAdapter(getSupportFragmentManager());
-        adapter.addFragment(TagsMatchFragment.newInstance(false), "התאמות 'קח'");
-        adapter.addFragment(TagsMatchFragment.newInstance(true), "התאמות 'תן'");
+        adapter.addFragment(TagsMatchFragment.newInstance(false), getString(R.string.mainScreenTakeFregmantTitle));
+        adapter.addFragment(TagsMatchFragment.newInstance(true), getString(R.string.mainScreenGiveFregmantTitle));
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
@@ -124,7 +124,7 @@ public class MainScreenActivity extends FragmentActivity {
             userNameText.setText("שלום " + appManager.getCurrentUser().getFullName());
             setUserBalance(appManager.getCurrentUser().getBalance());
         } else {
-            userNameText.setText("שלום אורח");
+            userNameText.setText(R.string.helloGuestTitle);
             setUserBalance(0);
         }
     }

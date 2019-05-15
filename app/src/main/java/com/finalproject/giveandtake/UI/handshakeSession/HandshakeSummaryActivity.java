@@ -24,8 +24,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class HandshakeSummaryActivity extends AppCompatActivity {
     private AppManager appManager;
     private TextView timerValue, actionText, balanceValue;
-    private Button btnRating;
-    private Button btnOk;
+    private Button btnRating,btnOk;
     RatingBar ratingBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +62,12 @@ public class HandshakeSummaryActivity extends AppCompatActivity {
 
     private void showThanksDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("תודה!!");
-        builder.setMessage("תרמת לעתיד טוב יותר");
+        builder.setTitle(R.string.thanksDialogTitle);
+        builder.setMessage(R.string.thanksDialogMsg);
         builder.setCancelable(true);
 
         builder.setPositiveButton(
-                "Ok",
+                "אישור",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
@@ -81,7 +80,7 @@ public class HandshakeSummaryActivity extends AppCompatActivity {
 
     private void showRatingDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("דירוג משתמש");
+        builder.setTitle(R.string.ratingDialogTitle);
         builder.setMessage("דרג את "+ appManager.getOtherUser().getFullName());
         builder.setCancelable(true);
         builder.setView(getRatingBarLayout());
@@ -95,7 +94,7 @@ public class HandshakeSummaryActivity extends AppCompatActivity {
                             appManager.rateOtherUser(appManager.getCurrentUser().getId(),appManager.getOtherUser().getId(),rating);
                         }
                         else {
-                            GeneralUtil.addToast("הדירוג חייב להיות בטווח הערכים 1-5", Toast.LENGTH_SHORT,getHandshakeSummaryActivity());
+                            GeneralUtil.addToast(getString(R.string.ratingDialogErrMsg), Toast.LENGTH_SHORT,getHandshakeSummaryActivity());
                         }
                     }
                 });

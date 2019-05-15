@@ -44,7 +44,6 @@ public class LoginActivity extends AppCompatActivity {
 
     // init for first time login to app
     SharedPreferences sharedPreferences = null;
-    SharedPreferences.Editor editor;
     private SignInButton btnSignInWithGoogle;
     private Button infoBtn;
     private Button guestSignInBtn;

@@ -33,7 +33,7 @@ public class User implements Serializable {
         this.id = id;
         this.email = email;
         this.fullName = fullName;
-        this.phoneNumber = phoneNumber != null ? phoneNumber : "null";
+        this.phoneNumber = phoneNumber != null ? phoneNumber : "";
         this.photoUrl=photoUrl;
         this.balance = INIT_BALANCE;
         this.rating=0;
@@ -128,8 +128,6 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User details : email : " + email + ", full name : " + fullName + ", phone : " + phoneNumber;
-     //   return "User details : email : " + email + ", full name : " + fullName + ", phone : " + phoneNumber + ", gender : " + gender;
-
     }
 
     public void addRequest(Request newRequest) {

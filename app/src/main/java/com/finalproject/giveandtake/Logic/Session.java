@@ -4,8 +4,6 @@ package com.finalproject.giveandtake.Logic;
 //when there is match between take request and give request
 public class Session {
 
-
-
     public static enum Status {
         pending,
         accepted,

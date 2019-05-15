@@ -34,10 +34,10 @@ public class ExploreTagsFragment extends Fragment {
     private ProgressBar progressBar;
 
 
-    public static Fragment newInstance(boolean isTakeRequst) {
+    public static Fragment newInstance(boolean isTakeRequest) {
         ExploreTagsFragment exploreTagsFragment = new ExploreTagsFragment();
         Bundle args = new Bundle();
-        args.putBoolean(MyConstants.IS_TAKE_REQUEST, isTakeRequst);
+        args.putBoolean(MyConstants.IS_TAKE_REQUEST, isTakeRequest);
         exploreTagsFragment.setArguments(args);
         return exploreTagsFragment;
     }

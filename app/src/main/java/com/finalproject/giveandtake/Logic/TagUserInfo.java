@@ -1,11 +1,5 @@
 package com.finalproject.giveandtake.Logic;
 
-import com.finalproject.giveandtake.Logic.Request;
-
-/**
- * Created by win10 on 12/19/2018.
- */
-
 public class TagUserInfo {
 
     private String uid;

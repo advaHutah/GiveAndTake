@@ -1,34 +1,27 @@
 package com.finalproject.giveandtake.Logic;
 
+import androidx.annotation.Nullable;
+
 import com.finalproject.giveandtake.DBLogic.FirebaseManager;
 import com.finalproject.giveandtake.DBLogic.GiveAndTakeMessagingService;
 import com.finalproject.giveandtake.Util.GeneralUtil;
 import com.finalproject.giveandtake.Util.MyConstants;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 
-import androidx.annotation.Nullable;
-
-//Handles all app actions and DB read/write
 public class AppManager {
-
-
-
 
     public interface AppManagerCallback<T> {
         void onDataArrived(T value);
     }
-
 
     private static AppManager singletonAppManager = null;
     private FirebaseManager firebaseManager;
     private com.finalproject.giveandtake.Logic.User currentUser;
     private com.finalproject.giveandtake.Logic.User otherUser;
     private ArrayList<com.finalproject.giveandtake.Logic.TagUserInfo> notificationUsers;
-    private FirebaseAuth mAuth;
     private Session selectedSession;
     private GoogleSignInClient googleSignInClient;
     private ArrayList<String> myTakeRequestTags;
@@ -37,7 +30,6 @@ public class AppManager {
 
     private AppManager() {
         firebaseManager = FirebaseManager.getInstance();
-        mAuth = FirebaseAuth.getInstance();
     }
 
     public static AppManager getInstance() {
@@ -438,7 +430,6 @@ public class AppManager {
 
     public boolean isUserLoggedIn() {
         return FirebaseManager.getInstance().isUserLoggedIn();
-        //return FirebaseAuth.getInstance().getCurrentUser() != null && FirebaseInstanceId.getInstance().getToken() != null;
     }
 
     public void setGoogleSignInClient(GoogleSignInClient googleSignInClient) {

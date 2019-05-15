@@ -15,10 +15,6 @@ import com.finalproject.giveandtake.R;
 
 import java.io.InputStream;
 
-/**
- * Created by win10 on 3/23/2019.
- */
-
 public class GeneralUtil {
 
     private static long timestampDiff = 0;

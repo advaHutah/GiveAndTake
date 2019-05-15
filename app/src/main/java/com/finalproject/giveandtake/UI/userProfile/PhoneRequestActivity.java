@@ -41,6 +41,8 @@ public class PhoneRequestActivity extends AppCompatActivity {
             @Override
             public void onDataArrived(Boolean value) {
                 btnViewUserProfile.setEnabled(true);
+                description.setText(appManager.getOtherUser().getFullName()+" מבקש את מספר הטלפון שלך האם אתה מאשר? ");
+
             }
         });
 

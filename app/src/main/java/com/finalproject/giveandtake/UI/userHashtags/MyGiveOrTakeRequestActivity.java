@@ -122,7 +122,7 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
                 builder.setView(input);
 
                 // Set up the buttons
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("אישור", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String dialogText= input.getText().toString();
@@ -130,7 +130,7 @@ public class MyGiveOrTakeRequestActivity extends AppCompatActivity {
                         tagGroup.addTag(dialogText);
                     }
                 });
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("ביטול", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.cancel();

@@ -27,7 +27,6 @@ public class FirebaseManager {
 
     private static final String TAG = FirebaseManager.class.getSimpleName();
 
-
     public interface FirebaseCallback<T> {
         void onDataArrived(T value);
     }
@@ -416,9 +415,6 @@ public class FirebaseManager {
         public static final String TAKE_REQUEST = "takeRequest";
         public static final String MY_GIVE_REQUEST = "myGiveRequest";
         public static final String MY_TAKE_REQUEST = "myTakeRequest";
-        public static final String NOTIFICATIONS = "notifications";
-        public static final String USERS_TOKENS = "usersTokens";
-        public static final String FSM_TOKEN = "fcmToken";
         public static final String FIRTS_NAME = "firstName";
         public static final String LAST_NAME = "lastName";
         public static final String PHONE = "phoneNumber";
@@ -430,7 +426,6 @@ public class FirebaseManager {
         public static final String SESSION_STATUS = "status";
         public static final String SESSION_END_TIMESTAMP = "endTimeStamp";
         public static final String SESSION_START_TIMESTAMP = "startTimeStamp";
-
         public static final String BALANCE = "balance";
         public static final String KEYWORDS = "keyWords";
         public static final String USERS_RATINGS = "usersRatings";

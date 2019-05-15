@@ -33,6 +33,11 @@ import androidx.core.app.NotificationCompat;
 
 public class GiveAndTakeMessagingService extends FirebaseMessagingService {
     private static final String TAG = "MyFirebaseMessagingServ";
+    private static final String PHONE_NOTE_TITLE = "בקשה לקבלת מספר טלפון";
+    private static final String PHONE_NOTE_REQUEST_BODY = "לחץ על מנת להכנס לבקשה";
+    private static final String PHONE_NOTE_ANSWER_BODY = "בקשתך";
+    private static final String SESSION_NOTE_TITLE = "בקשה החלפת זמן חדשה";
+    private static final String SESSION_NOTE_BODY = "לחץ על מנת להכנס לבקשה";
     private static GiveAndTakeMessagingService singletonGiveAndTakeMessagingService = null;
 
 
@@ -80,14 +85,14 @@ public class GiveAndTakeMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
 
-        if (remoteMessage.getNotification().getTitle().contains("בקשה החלפת זמן חדשה")) {
+        if (remoteMessage.getNotification().getTitle().contains(SESSION_NOTE_TITLE)) {
             getSessionNotification(remoteMessage.getNotification().getTag());
-        } else if (remoteMessage.getNotification().getTitle().contains("בקשה לקבלת מספר טלפון") &&
-                remoteMessage.getNotification().getBody().contains("לחץ על מנת להכנס לבקשה")) {
+        } else if (remoteMessage.getNotification().getTitle().contains(PHONE_NOTE_TITLE) &&
+                remoteMessage.getNotification().getBody().contains(PHONE_NOTE_REQUEST_BODY)) {
             getPhoneRequestNotification(remoteMessage.getNotification().getTag());
         }
-        else if (remoteMessage.getNotification().getTitle().contains("בקשה לקבלת מספר טלפון") &&
-                remoteMessage.getNotification().getBody().contains("בקשתך")) {
+        else if (remoteMessage.getNotification().getTitle().contains(PHONE_NOTE_TITLE) &&
+                remoteMessage.getNotification().getBody().contains(PHONE_NOTE_ANSWER_BODY)) {
             getPhoneRequestNotificationAnswer(remoteMessage.getNotification().getTitle(),remoteMessage.getNotification().getBody(),remoteMessage.getNotification().getTag());
         }
         else
@@ -97,7 +102,6 @@ public class GiveAndTakeMessagingService extends FirebaseMessagingService {
     private void getPhoneRequestNotificationAnswer(String title, String body, String otherUserID) {
         //create dialog of phone request
         if (!otherUserID.isEmpty()) {
-
 
             Uri defultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
@@ -126,8 +130,8 @@ public class GiveAndTakeMessagingService extends FirebaseMessagingService {
 
             NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(this);
             notiBuilder.setSmallIcon(R.drawable.temp_logo);
-            notiBuilder.setContentTitle("בקשה החלפת טלפון חדשה");
-            notiBuilder.setContentText("לחץ על מנת להכנס לבקשה");
+            notiBuilder.setContentTitle(PHONE_NOTE_TITLE);
+            notiBuilder.setContentText(PHONE_NOTE_REQUEST_BODY);
             notiBuilder.setAutoCancel(true);
             notiBuilder.setSound(defultSoundUri);
             notiBuilder.setContentIntent(pendingIntent);
@@ -201,8 +205,8 @@ public class GiveAndTakeMessagingService extends FirebaseMessagingService {
 
             NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(this);
             notiBuilder.setSmallIcon(R.drawable.temp_logo);
-            notiBuilder.setContentTitle("בקשה החלפת זמן חדשה");
-            notiBuilder.setContentText("לחץ על מנת להכנס לבקשה");
+            notiBuilder.setContentTitle(SESSION_NOTE_TITLE);
+            notiBuilder.setContentText(SESSION_NOTE_BODY);
             notiBuilder.setAutoCancel(true);
             notiBuilder.setSound(defultSoundUri);
             notiBuilder.setContentIntent(pendingIntent);

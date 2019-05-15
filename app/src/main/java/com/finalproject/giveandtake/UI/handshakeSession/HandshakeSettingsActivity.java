@@ -79,18 +79,18 @@ public class HandshakeSettingsActivity extends AppCompatActivity {
                         public void onDataArrived(Session.Status value) {
                             if (value == Session.Status.accepted) {
                                 changeTextColorToGreen(step2);
-                                GeneralUtil.addToast("בקשת ההחלפה אושרה",Toast.LENGTH_SHORT, getHandshakeSettingActivity());
+                                GeneralUtil.addToast(getString(R.string.acceptSessionMsg),Toast.LENGTH_SHORT, getHandshakeSettingActivity());
                                 // step3: enable start service button
                                 enableButton(btnStartProcess);
                             } else if (value == Session.Status.rejected) {
-                                GeneralUtil.addToast("בקשת ההחלפה נדחתה", Toast.LENGTH_SHORT, getHandshakeSettingActivity());
+                                GeneralUtil.addToast(getString(R.string.rejectSessionMsg), Toast.LENGTH_SHORT, getHandshakeSettingActivity());
 
                             }
                         }
                     });
                 }else
                 {
-                    GeneralUtil.addToast("יש להכניס תיאור וזמן", Toast.LENGTH_SHORT, getHandshakeSettingActivity());
+                    GeneralUtil.addToast(getString(R.string.timeSessionErrMsg), Toast.LENGTH_SHORT, getHandshakeSettingActivity());
 
                 }
 

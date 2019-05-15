@@ -3,9 +3,6 @@ package com.finalproject.giveandtake;
 import android.app.Application;
 import android.content.Context;
 
-/**
- * Created by win10 on 8/9/2018.
- */
 
 public class MyApplication extends Application {
     private static Context context;

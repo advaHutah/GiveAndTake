@@ -1,79 +1,5 @@
 <resources>
     <string name="app_name">GiveAndTake</string>
-    <string name="action_sign_in_short">הירשם</string>
-    <string name="email">כתובת דואר אלקטרוני</string>
-    <string name="btn_link_to_register">לא רשום? הירשם עכשיו!</string>
-    <string name="btn_link_to_login">כבר רשום. הכנס אותי!</string>
-    <string name="btn_forgot_password">שכחת סיסמא?</string>
-    <string name="btn_login">התחבר</string>
-    <string name="btn_explore">סייר</string>
-    <string name="hint_email">כתובת דואר אלקטרוני</string>
-    <string name="hint_password">סיסמא</string>
-    <string name="hint_first_name">שם פרטי</string>
-    <string name="hint_last_name">שם משפחה</string>
-    <string name="hint_phone">מספר טלפון</string>
-    <string name="enter_email">הזן כתובת מייל</string>
-    <string name="enter_password">הכנס סיסמא</string>
-    <string name="enter_firstName">הכנס שם פרטי</string>
-    <string name="enter_lastName">הכנס שם משפחה</string>
-    <string name="gender_female">נקבה</string>
-    <string name="gender_male">זכר</string>
-    <string name="enter_more_then_6_characters">הסיסמא קצרה מדי, הכנס מינימום 6 תוים</string>
-    <string name="lbl_forgot_password">שכחת סיסמא?</string>
-    <string name="forgot_password_msg">אנו צריכים את כתובת הדואר האלקטרוני שלך על מנת לשלוח לך סיסמא חדשה.</string>
-    <string name="btn_reset_password">איפוס סיסמא</string>
-    <string name="btn_back"><![CDATA[<< חזור]]></string>
-
-
-    <string name="menu_explore">סייר</string>
-    <string name="menu_full_account_info">החשבון שלי</string>
-    <string name="menu_history">היסטוריה</string>
-    <string name="menu_give_request">לתת</string>
-    <string name="menu_take_request">לקחת</string>
-    <string name="menu_header">מה תרצה לעשות?</string>
-    <string name="menu_editUser">ערוך פרטי משתמש</string>
-    <string name="menu_connect">צור קשר</string>
-    <string name="balance">יתרה :</string>
-    <string name="user_name">שם :</string>
-    <string name="create_req_lable">צור בקשה</string>
-    <string name="take">לקחת</string>
-    <string name="give">לתת</string>
-    <string name="match_details">פרטי התאמה </string>
-    <string name="match_discription">תיאור:</string>
-    <string name="create_meeting">צור מפגש</string>
-
-    <string name="title_activity_temp">tempActivity</string>
-    <string name="search_text_hint">הכנס טקסט לחיפוש</string>
-    <string name="btn_search_text">חפש</string>
-    <string name="new_notification_task">התראה חדשה</string>
-    <string name="user_created">המשתמש נוצר</string>
-    <string name="authentication_faild">ההזדהות נכשלה</string>
-
-    <string name="invalid_phone">"מספר טלפון לא תקין"</string>
-    <string name="invalid_full_name">שם מלא לא תקין</string>
-    <string name="menu_logout">התנתק</string>
-    <string name="enter_email_address">הכנס כתובת אימייל</string>
-    <string name="reset_password_txt">נשלח מייל לאתחול הסיסמא</string>
-    <string name="cannot_send_reset_email">מייל אתחול סיסמא לא נשלח</string>
-    <string name="female_hebrew">נקבה</string>
-    <string name="email_title">דואר אלקטרוני:</string>
-    <string name="phone_title">טלפון:</string>
-    <string name="gender_title">מין:</string>
-    <string name="give_request_input_text">מה ברצונך לתת?</string>
-    <string name="request_btn">בצע</string>
-    <string name="take_request_input_text">מה ברצונך לקחת?</string>
-    <string name="take_request_find_text_btn">סנן טקסט</string>
-    <string name="confirm_meeting">אישור מפגש</string>
-    <string name="giver_name_match">שם נותן השירות:</string>
-    <string name="taker_name_match">שם מקבל השירות:</string>
-    <string name="service_type_match">סוג השירות :</string>
-    <string name="nav_my_services">השירותים שלי</string>
-    <string name="start_service">התחל שירות</string>
-    <string name="finish_service">סיים שירות</string>
-    <string name="cancel_service">בטל שירות</string>
-    <string name="edit_user_info_btn">בצע</string>
-    <string name="handshakeActivity_handshakeTitle">לחיצת יד</string>
-    <string name="handshakeActivity_serviceTitle">השירות:</string>
     <string name="handshakeProcessActivity_title">החלפה מתבצעת</string>
     <string name="fragmentLogin_info_button_text">i</string>
     <string name="fragmentMainScreen_balance_lable_text">יתרה נוכחית:</string>
@@ -106,6 +32,19 @@
     <string name="incoming_session_request_time_headline">זמן ההחלפה בדקות:</string>
     <string name="incoming_session_request_headline">בקשת החלפה</string>
     <string name="phone_request_headline">בקשת טלפון</string>
+    <string name="startSessionMsg">ההחלפה התתחילה</string>
+    <string name="endSessionMsg">ההחלפה הסתיימה</string>
+    <string name="goBackErrMsg">לא ניתן לחזור אחורה בעת החלפה</string>
+    <string name="acceptSessionMsg">בקשת ההחלפה אושרה</string>
+    <string name="rejectSessionMsg">בקשת ההחלפה נדחתה</string>
+    <string name="timeSessionErrMsg">יש להכניס תיאור וזמן</string>
+    <string name="thanksDialogTitle">תודה!!</string>
+    <string name="thanksDialogMsg">תרמת לעתיד טוב יותר</string>
+    <string name="ratingDialogTitle">דירוג משתמש</string>
+    <string name="ratingDialogErrMsg">הדירוג חייב להיות בטווח הערכים 1-5</string>
+    <string name="mainScreenTakeFregmantTitle">התאמות \'קח\'</string>
+    <string name="mainScreenGiveFregmantTitle">התאמות \'תן\'</string>
+    <string name="helloGuestTitle">שלום אורח</string>
 
 
 </resources>
