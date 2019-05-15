@@ -205,23 +205,7 @@ public class AppManager {
         }
     }
 
-        public void setSelectedSession(Session selectedSession) {
-        if (selectedSession.getInitiator().equals(Session.SessionInitiator.GIVER)) {
-            firebaseManager.getUserDetailFromDB(selectedSession.getGiveRequest().getUid(), new FirebaseManager.FirebaseCallback<com.finalproject.giveandtake.Logic.User>() {
-                @Override
-                public void onDataArrived(com.finalproject.giveandtake.Logic.User value) {
-                    otherUser = value;
-                }
-            });
-
-        } else {
-            firebaseManager.getUserDetailFromDB(selectedSession.getTakeRequest().getUid(), new FirebaseManager.FirebaseCallback<com.finalproject.giveandtake.Logic.User>() {
-                @Override
-                public void onDataArrived(com.finalproject.giveandtake.Logic.User value) {
-                    otherUser = value;
-                }
-            });
-        }
+    public void setSelectedSession(Session selectedSession) {
         this.selectedSession = selectedSession;
     }
 

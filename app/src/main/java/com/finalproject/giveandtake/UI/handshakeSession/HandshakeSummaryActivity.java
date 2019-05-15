@@ -123,6 +123,7 @@ public class HandshakeSummaryActivity extends AppCompatActivity {
     private void setActionText() {
         actionText.setText(appManager.getSelectedSession().getGiveRequest().getUserName() +
                 " העניק\\ה זמן ל " + appManager.getSelectedSession().getTakeRequest().getUserName());
+
         btnRating.setText("דרג את "+ appManager.getOtherUser().getFullName());
     }
 
