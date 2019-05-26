@@ -143,25 +143,29 @@ public class GiveAndTakeMessagingService extends FirebaseMessagingService {
     }
 
     private void getMatchNotification(String title, String messageBody, String tag) {
-        if (!messageBody.isEmpty()) {
+        if (!messageBody.isEmpty() && !tag.isEmpty()) {
             Intent intent = new Intent(this, UserMatchActivity.class);
             intent.putExtra("type", getTypeFromMessage(title));
             intent.putExtra("tag", getTagFromMessage(messageBody));
+            intent.putExtra(MyConstants.IS_FROM_NOTIFICATION,true);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            AppManager.getInstance().setNotificationUsers(getUsersFromMessage(tag, getTypeFromMessage(title)));
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
-            Uri defultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            ArrayList usersFromMessage =getUsersFromMessage(tag, getTypeFromMessage(title));
+            AppManager.getInstance().setNotificationUsers(usersFromMessage);
+            if(!usersFromMessage.isEmpty()) {
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, new Random().nextInt(), intent, PendingIntent.FLAG_ONE_SHOT);
+                Uri defultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-            NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(this);
-            notiBuilder.setSmallIcon(R.drawable.temp_logo);
-            notiBuilder.setAutoCancel(true);
-            notiBuilder.setContentTitle(title);
-            notiBuilder.setContentText(messageBody);
-            notiBuilder.setSound(defultSoundUri);
-            notiBuilder.setContentIntent(pendingIntent);
+                NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(this);
+                notiBuilder.setSmallIcon(R.drawable.temp_logo);
+                notiBuilder.setAutoCancel(true);
+                notiBuilder.setContentTitle(title);
+                notiBuilder.setContentText(messageBody);
+                notiBuilder.setSound(defultSoundUri);
+                notiBuilder.setContentIntent(pendingIntent);
 
-            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify(new Random().nextInt(), notiBuilder.build());
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(new Random().nextInt(), notiBuilder.build());
+            }
         }
 
     }
