@@ -125,7 +125,7 @@ public class GiveAndTakeMessagingService extends FirebaseMessagingService {
             intent.putExtra(MyConstants.PHONE_OTHER_USER, otherUserID);
 
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, new Random().nextInt(), intent, PendingIntent.FLAG_ONE_SHOT);
             Uri defultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
             NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(this);
@@ -204,7 +204,7 @@ public class GiveAndTakeMessagingService extends FirebaseMessagingService {
             AppManager.getInstance().setSelectedSessionByID(sessionId);
 
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+            PendingIntent pendingIntent = PendingIntent.getActivity(this, new Random().nextInt(), intent, PendingIntent.FLAG_ONE_SHOT);
             Uri defultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
             NotificationCompat.Builder notiBuilder = new NotificationCompat.Builder(this);
